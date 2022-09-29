@@ -1,0 +1,39 @@
+$slide: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 normal both running;
+
+@keyframes slide-in-fwd-top {
+    from {
+        opacity: 0.8;
+        top: 0;
+        scale: 0.8;
+    }
+    to {
+        top: 8em;
+        opacity: 1;
+        scale: 1;
+    }   
+}
+
+@keyframes slide-in-right {
+    from {
+        transform: translateX(120%);
+    }
+    to {
+        transform: translateX(0);
+    } 
+}
+
+@keyframes slide-in-left {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(0);
+    } 
+}
+
+@mixin animate($animation, $duration, $method, $forward) {
+    animation: $animation $duration $method;
+    @if $forward {
+        animation-fill-mode: forwards;
+    }
+}

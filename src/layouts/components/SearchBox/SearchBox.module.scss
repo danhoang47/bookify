@@ -1,0 +1,6 @@
+@use 'src/global';
+
+.search-box {
+    flex-basis: 60%;
+    @include global.vertical-center();
+}
