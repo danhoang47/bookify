@@ -3,7 +3,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import { Home, Profile, PersonalInfo } from "@/pages";
+import { Home, Profile, PersonalInfo, LoginandSecurity } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
 const router = createBrowserRouter(
@@ -13,6 +13,7 @@ const router = createBrowserRouter(
         <Route path="" element={<Home />} />
         <Route path="profile" element={<Profile />} />
         <Route path="profile/info" element={<PersonalInfo />} />
+        <Route path="profile/log&sec" element={<LoginandSecurity />} />
       </Route>
     </Route>
   )

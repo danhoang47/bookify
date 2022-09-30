@@ -35,6 +35,10 @@ function Profile() {
         icon: faShield,
         title: "Đăng nhập và bảo mật",
         description: "Cập nhật mật khẩu và bảo mật tài khoản của bạn",
+        onClickHandler: (event) => {
+          event.stopPropagation();
+          navigate("/profile/log&sec");
+        },
       },
       {
         icon: faMoneyBills,
