@@ -1,6 +1,6 @@
 import LoginandSecurityStyle from "./LoginandSecurity.module.scss";
-import HeaderInfo from "./components/headerInfo";
-import FormUpdate from "./components/form";
+import HeaderInfo from "./components/HeaderInfo";
+import FormUpdate from "./components/Form";
 
 const account = {
   username: "duc123",
