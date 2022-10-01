@@ -42,11 +42,36 @@ function FormUpdate({ account }) {
     setDob(e.target.value);
   };
 
-  const getSelectedFile = (image) => {};
+  const onAvatarUpload = (data) => {
+    setAvatar(data);
+  };
 
   const onSubmitClick = (e) => {
     e.preventDefault();
-    console.log(subname, name, email, phone, dob, des);
+    console.log(subname, name, email, phone, dob, des, avatar);
+
+    // const formData = new FormData();
+    // formData.append("subname", subname);
+    // formData.append("name", name);
+    // formData.append("email", email);
+    // formData.append("phone", phone);
+    // formData.append("dob", dob);
+    // formData.append("des", des);
+    // formData.append("avatar", avatar);
+
+    // fetch("<link>", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((data) => {
+    //     data.json();
+    //   })
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -140,7 +165,10 @@ function FormUpdate({ account }) {
             <Grid item xs={12} md={6}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={5}>
-                  <FileUpload avatar={account.avatar} />
+                  <FileUpload
+                    avatar={account.avatar}
+                    onAvatarUpload={onAvatarUpload}
+                  />
                 </Grid>
               </Grid>
             </Grid>

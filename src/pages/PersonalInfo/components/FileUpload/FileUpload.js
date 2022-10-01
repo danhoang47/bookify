@@ -3,13 +3,13 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-function FileUpload({ avatar, getSlectedFile }) {
+function FileUpload({ avatar, onAvatarUpload }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [preview, setPreview] = useState(avatar);
 
   useEffect(() => {
-    if (avatar) {
+    if (preview == avatar && avatar) {
       setIsFilePicked(true);
       return;
     }
@@ -35,6 +35,7 @@ function FileUpload({ avatar, getSlectedFile }) {
     // using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
     setPreview(e.target.files[0]);
+    onAvatarUpload(e.target.files[0]);
     setIsFilePicked(true);
   };
   return (
