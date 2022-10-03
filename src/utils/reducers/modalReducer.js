@@ -1,10 +1,11 @@
-import { SignInModal, SignUpModal } from "@/features/account";
+import { SignInModal, SignUpModal, PasswordModal,NewPasswordModal } from "@/features/account";
 
 const modalType = {
   SIGN_IN: "sign-in",
   SIGN_UP: "sign-up",
   FILTER: "filter",
   PASSWORD: "password",
+  NEWPASSWORD: "newpassword",
 };
 
 const getSignInModal = (payload) => {
@@ -27,6 +28,18 @@ const getFilterModal = (payload) => {
     type: modalType.SIGN_IN,
   };
 };
+const getPasswordModal = (payload) => {
+  return {
+    ...payload,
+    type: modalType.PASSWORD,
+  };
+};
+const getNewPasswordModal = (payload) => {
+  return {
+    ...payload,
+    type: modalType.NEWPASSWORD,
+  };
+};
 
 const reducer = (state, modal) => {
   const newState = {
@@ -43,8 +56,17 @@ const reducer = (state, modal) => {
     case modalType.SIGN_UP:
       return {
         ...newState,
-        isOpen: modal.isOpen,
         renderModal: () => <SignUpModal animation={modal?.animation} />,
+      };
+    case modalType.PASSWORD:
+      return {
+        ...newState,
+        renderModal: () => <PasswordModal animation={modal?.animation} />,
+      };
+    case modalType.NEWPASSWORD:
+      return {
+        ...newState,
+        renderModal: () => <NewPasswordModal animation={modal?.animation} />,
       };
     case modalType.FILTER:
       break;
@@ -53,4 +75,12 @@ const reducer = (state, modal) => {
   }
 };
 
-export { reducer, modalType, getSignInModal, getSignUpModal, getFilterModal };
+export {
+  reducer,
+  modalType,
+  getSignInModal,
+  getSignUpModal,
+  getFilterModal,
+  getPasswordModal,
+  getNewPasswordModal,
+};

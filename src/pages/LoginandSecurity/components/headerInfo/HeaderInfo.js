@@ -13,7 +13,7 @@ function HeaderInfo() {
     <>
       <ul className={HeaderInfoStyle["breadcrumb"]}>
         <li>
-          <a href="" onClick={onClickHandler}>
+          <a href="http://localhost:3000/profile" onClick={onClickHandler}>
             Tài Khoản
           </a>
         </li>
