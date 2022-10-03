@@ -32,7 +32,7 @@ const reducer = (state, modal) => {
   const newState = {
     ...state,
     isOpen: modal.isOpen,
-  };
+  }
 
   switch (modal.type) {
     case modalType.SIGN_IN:

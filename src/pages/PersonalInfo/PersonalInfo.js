@@ -1,6 +1,6 @@
 import PersonalInfoStyle from "./PersonalInfo.module.scss";
-import HeaderInfo from "./components/headerInfo";
-import FormUpdate from "./components/form";
+import HeaderInfo from "./components/HeaderInfo";
+import FormUpdate from "./components/FormUpdate";
 
 const account = {
   subname: "Le Quy",
@@ -10,6 +10,7 @@ const account = {
   dob: "02/02/2002",
   selfDes:
     "Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi labore id. Eu dolor quis cupidatat occaecat laborum cillum culpa minim dolore. Aliqua est ullamco enim voluptate in. ",
+  avatar: "https://variety.com/wp-content/uploads/2021/04/Avatar.jpg",
 };
 
 function PersonalInfo() {
