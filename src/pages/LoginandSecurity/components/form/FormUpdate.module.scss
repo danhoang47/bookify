@@ -18,38 +18,8 @@ $input-width: 330px;
     width: $input-width;
 }
 
-.buttons-field {
-    margin-top: 2rem;
-    .buttons-1 {
-        cursor: pointer;
-        font-weight: bold;
-        color: black;
-        font-size: 16px;
-        height: 2rem;
-        width: 7rem;
-        border-radius: 10px;
-        border: 1px solid;
-        transition: 0.2s;
-        &:hover {
-            background-color: $background-light;
-            color: white;
-        }
-    }
-    .buttons-2 {
-        cursor: pointer;
-        font-weight: bold;
-        margin-left: 1rem;
-        font-size: 16px;
-        height: 2rem;
-        width: 7rem;
-        border-radius: 10px;
-        border: 1px solid;
-        transition: 0.2s;
-        &:hover {
-            background-color: $background-light;
-            color: white;
-        }
-    }
+.button {
+    cursor: pointer;
 }
 
 .label {

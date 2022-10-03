@@ -8,6 +8,7 @@ import {
   faMoneyBills,
   faSliders,
   faHistory,
+  
 } from "@fortawesome/free-solid-svg-icons";
 import profileStyle from "./Profile.module.scss";
 import { useMemo } from "react";

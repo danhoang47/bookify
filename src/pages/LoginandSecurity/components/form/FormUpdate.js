@@ -9,11 +9,19 @@ import {
 } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
 import Form from "../../../../components/Form";
-import DropDown from "../../../../components/Input/DropDown";
-import InputText from "../../../../components/Input/inputText";
+import {
+  getPasswordModal,
+  getNewPasswordModal,
+} from "@/utils/reducers/modalReducer";
+import InputText from "../../../../features/account/components/inputText";
 import { accountValidation } from "@/utils/validation";
+import { useUppercase } from "@/utils/hooks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWrench } from "@fortawesome/free-solid-svg-icons";
 
 function FormUpdate() {
+  const { dispatch } = useContext(ModalContext);
+  const { isLogin } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [inputs, setInputs] = useState({
     username: user.username,
@@ -21,21 +29,12 @@ function FormUpdate() {
   });
   const [account, setAccount] = useState({
     username: user.username,
-    password: null,
+    password: "abcxyz",
   });
   const [isAccountValid, setAccountValid] = useState({
     username: true,
     password: true,
   });
-  const isInformationFilled = useMemo(() => {
-    const isAllFilled = Object.keys(account).every((key) => {
-      return account[key] !== null;
-    });
-    const isAllValid = Object.keys(isAccountValid).every((key) => {
-      return isAccountValid[key];
-    });
-    return isAllFilled && isAllValid;
-  }, [account, isAccountValid]);
   const changedKey = useRef();
   const handleAccountChange = useCallback(
     (value, key) => {
@@ -52,7 +51,6 @@ function FormUpdate() {
   );
   useEffect(() => {
     const changedField = changedKey.current;
-
     if (changedField) {
       setAccountValid((prev) => {
         return {
@@ -68,7 +66,6 @@ function FormUpdate() {
     }
   }, [account]);
 
-  console.log(user);
   const banks = useMemo(
     () => [
       {
@@ -100,18 +97,34 @@ function FormUpdate() {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const clearInput = () => {
-    setInputs({});
+  const onClickHandler = (e) => {};
+  const formSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(getPasswordModal({ isOpen: true }));
   };
-  const handleForm = async (data) => {
-    data.preventDefault();
-    console.log(inputs);
-  };
+
   return (
     <div className={FormUpdateStyle["container"]}>
-      <form onSubmit={handleForm}>
+      <form onSubmit={formSubmit}>
         <div className={FormUpdateStyle["form-field"]}>
-          <span className={FormUpdateStyle["text-input-field"]}>
+          {Object.keys(account).map((key) => (
+            <>
+              <InputText
+                key={key}
+                value={account[key]}
+                id={key}
+                onValueChange={handleAccountChange}
+                isValid={isAccountValid[key]}
+                isSignIn={true}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                label={useUppercase(key)}
+                type={key === "password" ? "password" : "text"}
+                icon="faWrench"
+              />
+            </>
+          ))}
+          {/* <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="username">
               <b className={FormUpdateStyle["label"]}>username</b>
             </label>
@@ -137,7 +150,7 @@ function FormUpdate() {
               onChange={handleChange}
               className={FormUpdateStyle["input-update"]}
             />
-          </span>
+          </span> */}
           <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="card-number">
               <b className={FormUpdateStyle["label"]}>Mã số thẻ</b>
@@ -150,6 +163,7 @@ function FormUpdate() {
               value={user.cardNumber}
               className={FormUpdateStyle["input-update"]}
             />
+            <span></span>
           </span>
           <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="bank">
