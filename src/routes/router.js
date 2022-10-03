@@ -23,7 +23,7 @@ export default router;
 
 // / -> <Home />
 //         /profile => <Profile />
-// /host/register -> <Register />
+// /hosting/register -> <Register />
 // /hosting -> <Hosting />
 //         /today -> <Today />
 //         /insight -> <Insight />
