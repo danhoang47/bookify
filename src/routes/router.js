@@ -1,22 +1,24 @@
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
 } from "react-router-dom";
 import { Home, Profile, PersonalInfo, LoginandSecurity } from "@/pages";
-import DefaultLayout from "@/layouts/DefaultLayout";
+import { DefaultLayout, ProfileLayout } from "@/layouts";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="" element={<Home />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="profile/info" element={<PersonalInfo />} />
-        <Route path="profile/log&sec" element={<LoginandSecurity />} />
-      </Route>
-    </Route>
-  )
+    createRoutesFromElements(
+        <Route>
+            <Route path="/" element={<DefaultLayout />}>
+                <Route path="" element={<Home />} />
+            </Route>
+            <Route path="profile" element={<ProfileLayout />}>
+                <Route path="" element={<Profile />} />
+                <Route path="info" element={<PersonalInfo />} />
+                <Route path="loginandsecurity" element={<LoginandSecurity />} />
+            </Route>
+        </Route>
+    )
 );
 
 export default router;
