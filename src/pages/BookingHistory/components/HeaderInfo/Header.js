@@ -1,29 +1,28 @@
-import HeaderInfoStyle from "./HeaderInfo.module.scss";
+import HeaderStyles from "../../BookingHistory.module.scss";
 import { useNavigate } from "react-router-dom";
 
-function HeaderInfo() {
+function Header() {
   const navigate = useNavigate();
 
   const onClickHandler = (event) => {
     event.stopPropagation();
-    navigate(-1);
+    navigate("/profile");
   };
 
   return (
     <>
-      <ul className={HeaderInfoStyle["breadcrumb"]}>
+      <ul className={HeaderStyles["breadcrumb"]}>
         <li>
           <a onClick={onClickHandler}>Tài Khoản</a>
         </li>
-        <li>Đăng nhập và bảo mật</li>
+        <li>Lịch sử đặt phòng</li>
       </ul>
-      <h2 className={HeaderInfoStyle["title"]}>Đăng nhập và bảo mật</h2>
-      <p className={HeaderInfoStyle["sub-title"]}>
+      <h2 className={HeaderStyles["title"]}>Lịch sử đặt phòng</h2>
+      <p className={HeaderStyles["sub-title"]}>
         Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi
         labore id.
       </p>
     </>
   );
 }
-
-export default HeaderInfo;
+export default Header;

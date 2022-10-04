@@ -8,20 +8,13 @@ import {
   useMemo,
 } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
-import Form from "../../../../components/Form";
-import {
-  getPasswordModal,
-  getNewPasswordModal,
-} from "@/utils/reducers/modalReducer";
-import InputText from "../../../../features/account/components/inputText";
+import { getPasswordModal } from "@/utils/reducers/modalReducer";
+import InputText from "@/features/account/components/inputText";
 import { accountValidation } from "@/utils/validation";
 import { useUppercase } from "@/utils/hooks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
 
 function FormUpdate() {
   const { dispatch } = useContext(ModalContext);
-  const { isLogin } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [inputs, setInputs] = useState({
     username: user.username,

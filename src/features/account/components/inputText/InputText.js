@@ -1,7 +1,5 @@
-import { Input } from "@/components";
 import InputTextStyles from "./inputText.module.scss";
 import React, { memo } from "react";
-import { getErrorMessage } from "@/utils/validation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,7 +22,7 @@ function InputText({
           <label htmlFor={label}>
             <b className={InputTextStyles["label"]}>{label}</b>
           </label>
-          <div >
+          <div>
             <input
               id={id}
               className={[

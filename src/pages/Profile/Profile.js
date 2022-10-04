@@ -8,7 +8,6 @@ import {
   faMoneyBills,
   faSliders,
   faHistory,
-  
 } from "@fortawesome/free-solid-svg-icons";
 import profileStyle from "./Profile.module.scss";
 import { useMemo } from "react";
@@ -56,6 +55,10 @@ function Profile() {
         icon: faHistory,
         title: "Lịch sử đặt phòng",
         description: "Xem lịch sử các phòng bạn đã đặt hay hủy bỏ",
+        onClickHandler: (event) => {
+          event.stopPropagation();
+          navigate("/profile/history");
+        },
       },
     ],
     []
