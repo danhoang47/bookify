@@ -3,7 +3,14 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import { Home, Profile, PersonalInfo, Introduction } from "@/pages";
+import {
+  Home,
+  Profile,
+  PersonalInfo,
+  Introduction,
+  HotelManage,
+  HotelManageDetail,
+} from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
 const router = createBrowserRouter(
@@ -18,6 +25,10 @@ const router = createBrowserRouter(
       </Route>
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
+      </Route>
+      <Route path="hotelmanage" element={<DefaultLayout />}>
+        <Route path="" element={<HotelManage />} />
+        <Route path="detail" element={<HotelManageDetail />} />
       </Route>
     </Route>
   )

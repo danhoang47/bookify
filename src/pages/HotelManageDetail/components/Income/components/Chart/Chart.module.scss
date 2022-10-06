@@ -1,0 +1,56 @@
+@use "src/global";
+.chart-wrapper {
+    height: 270px;
+    width: 70%;
+    margin-bottom: 245px;
+}
+
+.static {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    p {
+        font-family: global.$default-font;
+        font-size: 12px;
+    }
+    h1 {
+        font-family: global.$default-font;
+    }
+}
+
+.sub-static {
+    display: flex;
+    margin-left: 10px;
+    font-family: global.$default-font;
+    .realistic {
+        width: 96px;
+    }
+    margin-bottom: -20px;
+}
+
+@media (max-width: 500px) {
+    .chart-wrapper {
+        height: 300px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .chart-wrapper {
+        height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .chart-wrapper {
+        height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .chart-wrapper {
+        height: 270px;
+        width: 70%;
+    }
+}
