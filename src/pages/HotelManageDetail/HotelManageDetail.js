@@ -6,6 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useState } from "react";
 import Income from "./components/Income";
+import Views from "./components/Views";
 
 function HotelManageDetail() {
   const [value, setValue] = useState("1");
@@ -47,7 +48,9 @@ function HotelManageDetail() {
           <TabPanel value="1">
             <Income />
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2">
+            <Views />
+          </TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
       </Box>
