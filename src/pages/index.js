@@ -3,6 +3,6 @@ import Profile from "./Profile";
 import PersonalInfo from "./PersonalInfo";
 import LoginandSecurity from "./LoginandSecurity";
 import BookingHistory from "./BookingHistory";
-import List from "./BookingHistory/components/Body/components/List";
+import Tabs from "./BookingHistory/components/Body/components/Tabs";
 
-export { Home, Profile, PersonalInfo, LoginandSecurity, BookingHistory, List };
+export { Home, Profile, PersonalInfo, LoginandSecurity, BookingHistory, Tabs };

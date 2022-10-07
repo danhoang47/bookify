@@ -8,7 +8,10 @@ import {
   useMemo,
 } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
-import { getPasswordModal } from "@/utils/reducers/modalReducer";
+import {
+  getPasswordModal,
+  getHotelSettingModal,
+} from "@/utils/reducers/modalReducer";
 import InputText from "@/features/account/components/inputText";
 import { accountValidation } from "@/utils/validation";
 import { useUppercase } from "@/utils/hooks";
@@ -93,8 +96,7 @@ function FormUpdate() {
   const onClickHandler = (e) => {};
   const formSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    dispatch(getPasswordModal({ isOpen: true }));
+    dispatch(getHotelSettingModal({ isOpen: true }));
   };
 
   return (

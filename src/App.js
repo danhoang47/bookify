@@ -4,9 +4,6 @@ import { useMemo, useReducer, useState } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
-import { RouterProvider } from "react-router-dom";
-import router from "./routes";
-import { Outlet } from "react-router-dom";
 
 const initState = {
   isOpen: false,

@@ -20,14 +20,14 @@ function HistoryCard({
         <h5>
           Phòng {room} - Hotel {hotel}
         </h5>
-        <label htmlFor="cancle" onClick={handleClick} ref={containerRef}>
+        <label htmlFor="cancel" onClick={handleClick} ref={containerRef}>
           <button className={CardStyle["button"]}>
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
           <div className={CardStyle["pop-up"]}>
             <input
               type="checkbox"
-              id="cancle"
+              id="cancel"
               onChange={() => {}}
               hidden
               checked={isButtonOpen}
