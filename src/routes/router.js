@@ -28,7 +28,7 @@ const router = createBrowserRouter(
             <Route path="today" element={<Tabs />} />
             <Route path="cancel" element={<Tabs />} />
             <Route path="booked" element={<Tabs />} />
-          </Route>
+          </Route>``
           {/* <Route path="hotelmanage" element={<HotelManage />}>
             {" "}
           </Route> */}
