@@ -51,7 +51,7 @@ function SelectBox({ onChangeMonth }) {
           onChange={monthSelect}
           className={SelectBoxStyle["months"]}
         >
-          <option value="">Chọn một tháng</option>
+          <option value="">Tất cả các tháng</option>
           {months.map((data, index) => {
             return (
               <option value={monthsKey[index]} key={index}>
