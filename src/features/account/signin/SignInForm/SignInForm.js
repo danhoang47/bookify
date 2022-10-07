@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 
+
 function SignInForm() {
   const [account, setAccount] = useState({
     username: null,

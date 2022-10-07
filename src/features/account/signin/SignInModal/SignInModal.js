@@ -9,6 +9,7 @@ import { usePopup } from "@/utils/hooks";
 import { getSignInModal, getSignUpModal } from "@/utils/reducers/modalReducer";
 
 function SignInModal({ animation }) {
+
   const [isModalOpen, handleClick, containerRef] = usePopup(true);
   const { dispatch } = useContext(ModalContext);
 

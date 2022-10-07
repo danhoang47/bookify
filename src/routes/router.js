@@ -11,7 +11,9 @@ import {
   LoginandSecurity,
   BookingHistory,
   Tabs,
+  Introduction,
   HotelManage,
+  HotelManageDetail,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
@@ -20,7 +22,8 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="" element={<Home />} />
-        <Route path="profile" element={<Profile />}>
+        <Route path="profile">
+          <Route path="" element={<Profile />} />
           <Route path="info" element={<PersonalInfo />} />
           <Route path="log&sec" element={<LoginandSecurity />} />
           <Route path="history" element={<BookingHistory />}>
@@ -28,10 +31,14 @@ const router = createBrowserRouter(
             <Route path="today" element={<Tabs />} />
             <Route path="cancel" element={<Tabs />} />
             <Route path="booked" element={<Tabs />} />
-          </Route>``
-          {/* <Route path="hotelmanage" element={<HotelManage />}>
-            {" "}
-          </Route> */}
+          </Route>
+        </Route>
+        <Route path="introduction" element={<DefaultLayout />}>
+          <Route path="" element={<Introduction />} />
+        </Route>
+        <Route path="hotelmanage" element={<DefaultLayout />}>
+          <Route path="" element={<HotelManage />} />
+          <Route path="detail" element={<HotelManageDetail />} />
         </Route>
       </Route>
     </Route>
@@ -40,22 +47,6 @@ const router = createBrowserRouter(
 
 export default router;
 
-// / -> <Home />
-//         /profile => <Profile />
-// /host/register -> <Register />
-// /hosting -> <Hosting />
-//         /today -> <Today />
-//         /insight -> <Insight />
-//             /reviews -> <Reviews />
-//             /earnings -> <Earnings />
-//             /views -> <Views />
-//             /reservation -> <Reservation />
-//             /transactions -> <Transactions />
-// /dashboard -> <Dashboard />
-//         /listing -> <Listing />
-//             /all
-//             /pending
-//             /onstream
 //src/components/Tab
 //pages/History/components
 //            import Tab

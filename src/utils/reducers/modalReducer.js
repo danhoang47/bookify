@@ -35,6 +35,7 @@ const getFilterModal = (payload) => {
     type: modalType.SIGN_IN,
   };
 };
+
 const getPasswordModal = (payload) => {
   return {
     ...payload,
@@ -88,7 +89,6 @@ const reducer = (state, modal) => {
       throw new Error("Invalid Modal Type");
   }
 };
-
 export {
   reducer,
   modalType,
