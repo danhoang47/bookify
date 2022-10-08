@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SelectBoxStyle from "./SelectBox.module.scss";
 
 const months = [
@@ -32,10 +31,7 @@ const monthsKey = [
 ];
 
 function SelectBox({ onChangeMonth }) {
-  const [month, setMonth] = useState("");
-
   const monthSelect = (e) => {
-    setMonth(e.target.value);
     onChangeMonth(e.target.value);
   };
 

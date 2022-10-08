@@ -6,9 +6,7 @@ import { useState } from "react";
 
 function Income() {
   const [month, setMonth] = useState("");
-
   const months = [];
-
   const days = [];
   const dayIncome = [];
   let daysTotal = 0;
