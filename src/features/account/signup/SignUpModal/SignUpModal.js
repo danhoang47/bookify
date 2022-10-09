@@ -67,5 +67,4 @@ function SignUpModal({ animation }) {
     </div>
   );
 }
-
 export default SignUpModal;

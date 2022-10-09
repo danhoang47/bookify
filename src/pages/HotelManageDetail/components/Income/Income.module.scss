@@ -1,0 +1,38 @@
+.months-label {
+    display: block;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+select {
+    /*for firefox*/
+    -moz-appearance: none;
+    /*for chrome*/
+    -webkit-appearance: none;
+    // appearance: none;
+    border: none;
+}
+
+
+/*for IE10+*/
+
+select::-ms-expand {
+    // display: none;
+}
+
+.styled-select {
+    border: none;
+    border-bottom: 1px solid;
+    border-color: #ababab;
+    overflow: hidden;
+    width: 50%;
+    margin-top: 10px;
+}
+
+.styled-select select {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 7px 10px;
+}

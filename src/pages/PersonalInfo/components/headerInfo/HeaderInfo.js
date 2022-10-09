@@ -19,6 +19,7 @@ function HeaderInfo() {
         </li>
         <li>Thông tin cá nhân</li>
       </ul>
+
       <h2 className={HeaderInfoStyle["title"]}>Thông tin cá nhân</h2>
       <p className={HeaderInfoStyle["sub-title"]}>
         Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi

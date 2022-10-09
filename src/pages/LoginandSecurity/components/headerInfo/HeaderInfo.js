@@ -6,16 +6,14 @@ function HeaderInfo() {
 
   const onClickHandler = (event) => {
     event.stopPropagation();
-    navigate("/profile");
+    navigate(-1);
   };
 
   return (
     <>
       <ul className={HeaderInfoStyle["breadcrumb"]}>
         <li>
-          <button onClick={onClickHandler}>
-            Tài Khoản
-          </button>
+          <a onClick={onClickHandler}>Tài Khoản</a>
         </li>
         <li>Đăng nhập và bảo mật</li>
       </ul>

@@ -8,6 +8,7 @@ function PersonalInput({
   value,
   onChange,
   labelContent,
+  readOnly = true,
 }) {
   return (
     <span className={PersonalInputStyle["input-field"]}>
@@ -20,6 +21,7 @@ function PersonalInput({
         value={value}
         className={PersonalInputStyle["input-update"]}
         onChange={onChange}
+        readOnly
       />
       <label className={PersonalInputStyle["input-label"]} htmlFor={name}>
         {labelContent}

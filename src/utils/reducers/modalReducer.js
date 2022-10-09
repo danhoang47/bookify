@@ -1,4 +1,10 @@
-import { SignInModal, SignUpModal, PasswordModal,NewPasswordModal } from "@/features/account";
+import {
+  SignInModal,
+  SignUpModal,
+  PasswordModal,
+  NewPasswordModal,
+  HotelSettingModal,
+} from "@/features/account";
 
 const modalType = {
   SIGN_IN: "sign-in",
@@ -6,6 +12,7 @@ const modalType = {
   FILTER: "filter",
   PASSWORD: "password",
   NEWPASSWORD: "newpassword",
+  HOTELSETTING: "hotelsetting",
 };
 
 const getSignInModal = (payload) => {
@@ -40,13 +47,15 @@ const getNewPasswordModal = (payload) => {
     type: modalType.NEWPASSWORD,
   };
 };
+const getHotelSettingModal = (payload) => {
+  return { ...payload, type: modalType.HOTELSETTING };
+};
 
 const reducer = (state, modal) => {
   const newState = {
     ...state,
     isOpen: modal.isOpen,
-  }
-
+  };
   switch (modal.type) {
     case modalType.SIGN_IN:
       return {
@@ -68,13 +77,17 @@ const reducer = (state, modal) => {
         ...newState,
         renderModal: () => <NewPasswordModal animation={modal?.animation} />,
       };
+    case modalType.HOTELSETTING:
+      return {
+        ...newState,
+        renderModal: () => <HotelSettingModal animation={modal?.animation} />,
+      };
     case modalType.FILTER:
       break;
     default:
       throw new Error("Invalid Modal Type");
   }
 };
-
 export {
   reducer,
   modalType,
@@ -83,4 +96,5 @@ export {
   getFilterModal,
   getPasswordModal,
   getNewPasswordModal,
+  getHotelSettingModal,
 };
