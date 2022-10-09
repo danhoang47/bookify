@@ -33,8 +33,6 @@ function Views() {
     return prev + curr;
   }, 0);
 
-  console.log(viewsNumber);
-
   return (
     <div>
       <div className={ViewStyle["static-wrapper"]}>
