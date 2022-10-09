@@ -26,6 +26,15 @@ function Views() {
     booking.push(data.booking);
   });
 
+  let viewsNumber = views.reduce((prev, curr) => {
+    return curr + prev;
+  }, 0);
+  let bookingNumber = booking.reduce((prev, curr) => {
+    return prev + curr;
+  }, 0);
+
+  console.log(viewsNumber);
+
   return (
     <div>
       <div className={ViewStyle["static-wrapper"]}>
@@ -38,7 +47,7 @@ function Views() {
           />
           <div className={ViewStyle["static"]}>
             <h6>Lượt xem trong tháng</h6>
-            <h1>100</h1>
+            <h1>{viewsNumber}</h1>
           </div>
         </div>
         <div className={ViewStyle["book-number"]}>
@@ -50,7 +59,7 @@ function Views() {
           />
           <div className={ViewStyle["static"]}>
             <h6>Lượt đặt phòng trong tháng</h6>
-            <h1>100</h1>
+            <h1>{bookingNumber}</h1>
           </div>
         </div>
       </div>
