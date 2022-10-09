@@ -48,10 +48,10 @@ function HotelManageDetail() {
           <TabPanel value="1">
             <Income />
           </TabPanel>
-          <TabPanel value="2">
+          <TabPanel value="2">Rating</TabPanel>
+          <TabPanel value="3">
             <Views />
           </TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
       </Box>
     </div>
