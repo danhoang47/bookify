@@ -13,9 +13,9 @@ function HeaderInfo() {
     <>
       <ul className={HeaderInfoStyle["breadcrumb"]}>
         <li>
-          <a href="http://localhost:3000/profile" onClick={onClickHandler}>
+          <button onClick={onClickHandler}>
             Tài Khoản
-          </a>
+          </button>
         </li>
         <li>Đăng nhập và bảo mật</li>
       </ul>

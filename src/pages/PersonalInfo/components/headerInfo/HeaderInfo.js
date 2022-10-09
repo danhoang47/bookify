@@ -5,8 +5,8 @@ function HeaderInfo() {
   const navigate = useNavigate();
 
   const onClickHandler = (event) => {
-    event.stopPropagation();
-    navigate("/profile");
+    event.preventDefault();
+    navigate(-1);
   };
 
   return (
