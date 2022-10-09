@@ -1,4 +1,5 @@
 import BodyStyle from "../../HotelManage.module.scss";
+
 function Body({ hotel }) {
   const hotelexample = {
     name: "Khách sạn Vin Pearl Nam Hội An",
