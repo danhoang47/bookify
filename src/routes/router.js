@@ -33,13 +33,14 @@ const router = createBrowserRouter(
             <Route path="booked" element={<Tabs />} />
           </Route>
         </Route>
-        <Route path="introduction" element={<DefaultLayout />}>
-          <Route path="" element={<Introduction />} />
-        </Route>
-        <Route path="hotelmanage" element={<DefaultLayout />}>
+
+        <Route path="hotelmanage">
           <Route path="" element={<HotelManage />} />
           <Route path="detail" element={<HotelManageDetail />} />
         </Route>
+      </Route>
+      <Route path="introduction" element={<DefaultLayout />}>
+        <Route path="" element={<Introduction />} />
       </Route>
     </Route>
   )

@@ -1,32 +1,71 @@
-.task1 {
-    button {
-        background-color: red;
+    $background-color-1: #4361EE;
+    $background-color-2: #7252E9;
+    $background-color-3: #7209B7;
+    .task1 {
+        button {
+            background-color: red;
+        }
     }
-}
-
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 60px;
-}
-
-@media (min-width: 768px) {
+    
     .container {
-        width: 750px;
-        // margin-bottom: 250px;
+        height: auto;
+        .header {
+            z-index: -1;
+            width: 100vw;
+            height: 250px;
+            position: absolute;
+            left: 0;
+            background-image: linear-gradient(to right, $background-color-1, $background-color-2, $background-color-3);
+            .header-text {
+                width: 60%;
+                height: 250px;
+                color: white;
+                margin-left: calc((100% - 25rem)/2);
+                padding-top: calc((250px - 100px)/2);
+                h2 {
+                    width: 25rem;
+                }
+                p {
+                    width: 25rem;
+                    padding-top: 1rem;
+                }
+                @media (min-width: 768px) {
+                    margin-left: 10rem;
+                }
+            }
+        }
+        .body {
+            width: 100%;
+            padding-top: 16rem;
+            padding-bottom: 200px;
+            padding-left: calc((100% - 300px) /2);
+            .body-header {
+                display: block;
+                h2 {
+                    width: 300px;
+                }
+                a {
+                    width: 160px;
+                    text-align: center;
+                    padding-left: 80px;
+                    ;
+                    @media (min-width: 992px) {
+                        margin-left: 50%;
+                        padding-left: 0;
+                    }
+                }
+                @media (min-width: 992px) {
+                    display: flex;
+                }
+            }
+            @media (min-width:992px) {
+                padding-left: 6rem;
+            }
+            @media (min-width: 1200px) {
+                padding-left: 4rem;
+            }
+            @media (min-width: 1400px) {
+                padding-left: 0;
+            }
+        }
     }
-}
-
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px;
-    }
-}

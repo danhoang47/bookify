@@ -18,7 +18,7 @@ const user = {
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(reducer, initState);
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState(true );
 
   const modal = useMemo(() => {
     return {
