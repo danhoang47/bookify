@@ -1,6 +1,6 @@
 import Chart from "chart.js/auto";
-import { Line, Bar } from "react-chartjs-2";
-import SingleLineChartStyle from "./SingleLineChart.module.scss";
+import { Bar } from "react-chartjs-2";
+import BarChartStyle from "./BarChart.module.scss";
 
 const plugin = {
   beforeInit(chart) {
@@ -17,10 +17,10 @@ const plugin = {
   },
 };
 
-function SingleLineChart({ labels, label, data }) {
+function BarChart({ labels, label, data }) {
   return (
-    <div className={SingleLineChartStyle["chart-wrapper"]}>
-      <Line
+    <div className={BarChartStyle["chart-wrapper"]}>
+      <Bar
         plugins={[plugin]}
         data={{
           labels: labels,
@@ -29,9 +29,9 @@ function SingleLineChart({ labels, label, data }) {
               label: label,
               data: data,
               backgroundColor: "#4361ee",
-              borderColor: "#4361ee",
-              borderWidth: 1,
-              tension: 0.4,
+              // borderColor: "#4361ee",
+              // borderWidth: 1,
+              // tension: 0.4,
             },
           ],
         }}
@@ -56,6 +56,7 @@ function SingleLineChart({ labels, label, data }) {
             },
             y: {
               beginAtZero: true,
+              display: false,
 
               ticks: {
                 display: false,
@@ -98,4 +99,4 @@ function SingleLineChart({ labels, label, data }) {
   );
 }
 
-export default SingleLineChart;
+export default BarChart;
