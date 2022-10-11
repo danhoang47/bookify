@@ -17,7 +17,7 @@ function Footer() {
                   <h3 className={footerStyle["item-title"]}>Hỗ trợ</h3>
                   <ul>
                     <li>
-                      <a href="">Trung tâm trợ giúp</a>
+                      <p>Trung tâm trợ giúp</p>
                     </li>
                   </ul>
                 </div>
@@ -27,7 +27,7 @@ function Footer() {
                   <h3 className={footerStyle["item-title"]}>Khách sạn</h3>
                   <ul>
                     <li>
-                      <a href="">Bắt đầu tạo khách sạn của bạn</a>
+                      <p>Bắt đầu tạo khách sạn của bạn</p>
                     </li>
                   </ul>
                 </div>
@@ -37,9 +37,7 @@ function Footer() {
                   <h3 className={footerStyle["item-title"]}>Địa chỉ</h3>
                   <ul>
                     <li>
-                      <a href="">
-                        Khu đô thị FPT, Hòa Hải, Ngũ Hành Sơn, Đà Nẵng
-                      </a>
+                      <p>Khu đô thị FPT, Hòa Hải, Ngũ Hành Sơn, Đà Nẵng</p>
                     </li>
                   </ul>
                 </div>

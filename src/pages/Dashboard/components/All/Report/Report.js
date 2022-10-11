@@ -23,6 +23,7 @@ function Report() {
               <div className={ReportStyle["card-body"]}>
                 <div className={ReportStyle["card-title"]}>
                   <h4>Le Duc</h4>
+                  <h6>Khách sạn Vinpearl Nam Hội An</h6>
                 </div>
                 <div className={ReportStyle["card-content"]}>
                   <p>

@@ -14,31 +14,39 @@ const barChartLabel = [
 
 const days = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
 
-function Chart() {
+function Chart({ typeBooking, bookingNumber }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
           <div className={ChartStyle["chart-1"]}>
-            <BarChart labels={barChartLabel} />
+            <BarChart
+              label="Xu hướng đặt phòng"
+              labels={typeBooking.type}
+              data={typeBooking.numberBooking}
+            />
+          </div>
+          <div className={ChartStyle["chart-1-title"]}>
+            <h5>Xu hướng đặt phòng</h5>
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
           <div className={ChartStyle["chart-2"]}>
-            <SingleLineChart labels={days} isY={false} color={"#f72585"} />
+            <SingleLineChart
+              label="Lượt đặt phòng"
+              labels={bookingNumber.day}
+              data={bookingNumber.numberBooking}
+              isY={false}
+              color={"#f72585"}
+            />
             {/* <BarChart labels={barChartLabel} /> */}
+          </div>
+          <div className={ChartStyle["chart-2-title"]}>
+            <h5>Lượt đặt phòng</h5>
           </div>
         </Grid>
       </Grid>
     </Box>
-    // <div className={ChartStyle["chart-wrapper"]}>
-    //   <div className={ChartStyle["chart-1"]}>
-    //     <BarChart labels={barChartLabel} />
-    //   </div>
-    //   <div className={ChartStyle["chart-2"]}>
-    //     <SingleLineChart />
-    //   </div>
-    // </div>
   );
 }
 

@@ -5,28 +5,33 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useMemo } from "react";
 
-function StaticCard() {
+function StaticCard({ staticData }) {
   const options = useMemo(
     () => [
       {
         class: "booking-number",
         title: "Lượt đặt phòng",
+        data: staticData.booking,
       },
       {
         class: "views-number",
         title: "Lượt truy cập",
+        data: staticData.views,
       },
       {
         class: "checkout-number",
         title: "Lượt thanh toán",
+        data: staticData.checkOut,
       },
       {
         class: "rate-number",
         title: "Lượt đánh giá",
+        data: staticData.rating,
       },
       {
         class: "register-number",
         title: "Lượt đăng ký",
+        data: staticData.register,
       },
     ],
     []
@@ -45,7 +50,7 @@ function StaticCard() {
                   ].join(" ")}
                 >
                   <div className={StaticStyle["static"]}>
-                    <h1 className={StaticStyle["number"]}>352</h1>
+                    <h1 className={StaticStyle["number"]}>{option.data}</h1>
                     <span className={StaticStyle["increase-number"]}>
                       <FontAwesomeIcon icon={faArrowUp} /> 9%
                     </span>

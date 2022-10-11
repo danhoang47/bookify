@@ -2,8 +2,18 @@ import AllStyle from "./All.module.scss";
 import StaticCard from "./StaticCard";
 import Chart from "./Chart";
 import Report from "./Report";
+import {
+  getStatic,
+  typeBookingData,
+  BookingNumberData,
+  ReportData,
+} from "./AllService";
 
 function All() {
+  const staticData = getStatic("Oct");
+  const typeBooking = typeBookingData("Oct");
+  const bookingNumber = BookingNumberData("Oct");
+  ReportData("Oct");
   return (
     <div className={AllStyle["dashboard-all"]}>
       <div className={AllStyle["time-wrapper"]}>
@@ -15,10 +25,10 @@ function All() {
         </div>
       </div>
       <div className={AllStyle["static"]}>
-        <StaticCard />
+        <StaticCard staticData={staticData} />
       </div>
       <div className={AllStyle["charts"]}>
-        <Chart />
+        <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
       </div>
       <div>
         <Report />

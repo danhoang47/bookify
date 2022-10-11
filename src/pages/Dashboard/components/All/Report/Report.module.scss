@@ -39,21 +39,16 @@
     .card-body {
         .card-title {
             margin-top: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             h4 {
                 font-family: global.$default-font;
                 margin-right: 5px;
             }
-            span {
-                color: #6a6a6a;
-                display: flex;
-                align-items: center;
-                margin-left: 5px;
-                font-family: global.$default-font;
-                svg {
-                    font-size: 12px;
-                    color: #6a6a6a;
-                    margin-bottom: 2px;
-                }
+            h6 {
+                text-decoration: underline;
+                cursor: pointer;
             }
         }
         .card-content {
