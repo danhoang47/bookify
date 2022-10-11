@@ -143,6 +143,8 @@ public class UserDetailDAO {
             while (rs.next()) {
                 ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDouble(13)));
+                
+                
                 return ud;
             }
 
@@ -252,6 +254,34 @@ public class UserDetailDAO {
         }
         return false;
     }
+    
+//    ---------------------------- Get hotel owner -------------------------------------------
+    public static UserDetail getOwner(String id) {
+        try {
+            String query = "select * from userDetail where user_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+
+            UserDetail ud = null;
+            while (rs.next()) {
+                ud = (new UserDetail(rs.getString(1), rs.getString(2), null, null, null, rs.getString(6),
+                        rs.getString(7), 0, null, null, rs.getString(11), null, 0));
+                
+                
+                return ud;
+            }
+
+            return null;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+
+    
 
 //    public static void main(String[] args) {
 //        String data = "{deletes: [a, b, c]}";
@@ -263,7 +293,7 @@ public class UserDetailDAO {
 //        UserDetail ud = new UserDetailDAO().login("duclq", "12345zxc");
 //
 //        System.out.println(new UserDetailDAO().getUsername("newAcc1"));
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 10; i++) {
             UUID uuid = UUID.randomUUID();
 
             System.out.println(uuid.toString());

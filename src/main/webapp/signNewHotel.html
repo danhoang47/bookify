@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Jersey 2.x : File Upload</title>
+    </head>
+    <body>
+        <center>
+            <b>Hotel upload</b>
+
+            <h4>Uploading multiple files</h4>
+
+
+            <div style="width: 400px; border: 1px solid blue; padding: 20px; text-align: center;">
+
+
+                <form method="post" action="rest/hotel/signhotel" enctype="multipart/form-data">
+
+                    <table align="center" border="1" bordercolor="black" cellpadding="0" cellspacing="0">
+
+                        <tr>
+                            <td>Select Hotel type  </td>
+                            <td>
+                                                                
+                                <select id="hotelType" name="hotelType" required>
+                                    <option value="" selected>Please select...</option>
+                                    <option value="314ec1bd-204b-4e8e-8b3a-098b4cc110fa">House</option>
+                                    <option value="39ed093c-720a-4fc7-aca5-70b15d338da8">Boutique hotel</option>
+                                    <option value="5403d2ea-0c94-44b8-81f7-7b4986051570">Bed and breakfast</option>
+                                    <option value="91bb91b4-adcb-45ba-a0bf-1669a4d5878f">Apartment</option>
+                                    <option value="9d5050f0-3d2f-4c80-a6f5-d82a215dda21">Unique space</option>
+                                    <option value="afbd51cf-8353-4303-ab47-f0785dc9c34f">Secondary unit</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hotel name</td>
+                            <td><input type="text" name="hotelName" /></td>
+                        </tr>
+                        <tr>
+                            <td>Select  background image :</td>
+                            <td><input type="file" name="backgroundImage" /></td>
+                        </tr>
+                        <tr>
+                            <td>Description: </td>
+                            <td><textarea type="text" name="description" rows="4" cols="40" placeholder="Hotel Description"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td><input type="text" name="country" /></td>
+                        </tr>
+                        <tr>
+                            <td>District</td>
+                            <td><input type="text" name="district" /></td>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <td><input type="text" name="city" /></td>
+                        </tr>
+                        <tr>
+                            <td>Street Name</td>
+                            <td><input type="text" name="streetName" /></td>
+                        </tr>
+                        <tr>
+                            <td>Street Number</td>
+                            <td><input type="text" name="streetNumber" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>Amenities:</td>
+                            <td>
+                                <label><input type="checkbox" name="amenities" value="01d8e6d4-bd0e-49d4-b21a-660cd2809184">Pool</label><br>
+                                <label><input type="checkbox" name="amenities" value="0d9fd954-78d7-49ae-a465-043be9c1d07c">Wifi</label><br>
+                                <label><input type="checkbox" name="amenities" value="56b783ce-d881-4287-b0e7-0a8f8f6140cf">Exercise equipment</label><br>
+                                <label><input type="checkbox" name="amenities" value="6ac90bf9-0a08-48c2-a2aa-3092c6f3574f">BBQ grill</label><br>
+                                <label><input type="checkbox" name="amenities" value="73c67c79-1657-4b03-9b8b-925d4f38d48d">Fire pit</label><br>
+                                <label><input type="checkbox" name="amenities" value="81995780-b20c-4b4b-9219-8187ce831359">Indoor fireplace</label><br>
+                                <label><input type="checkbox" name="amenities" value="8a436006-7e92-49fa-a9ca-54c0705fcf74">Hot tub</label><br>
+                                <label><input type="checkbox" name="amenities" value="99fd19a0-818b-412f-a6e2-fc13f69dff58">Outdoor dining area</label><br>
+                                <label><input type="checkbox" name="amenities" value="d26df333-4df2-4e84-94ee-80eaa6bd97a9">Air conditioning</label><br>
+                                <label><input type="checkbox" name="amenities" value="eba60c2c-60e7-4bf3-9376-b55e0028d4c1">Patio</label><br>
+                                <label><input type="checkbox" name="amenities" value="fe384dc7-b633-4ed8-a86e-60a2fb4705f0">Pool table</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Select File 1 :</td>
+                            <td><input type="file" name="uploadFile" multiple="multiple" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="hidden" name="userId" value="123" /></td>
+                        </tr>
+
+                        <tr>
+
+                            <td><input type="submit" value="Upload File" /></td>
+
+
+                            <td><input type="reset" value="Reset" /></td>
+
+                        </tr>
+
+                    </table>
+
+                </form>
+
+            </div>
+
+        </center>
+    </body>
+</html>
