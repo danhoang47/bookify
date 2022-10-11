@@ -1,5 +1,20 @@
 import { dashboarData } from "./FakeDataDashBoardAll";
 
+const monthsKey = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 export const getStatic = (month) => {
   let staticObj = {
     views: 0,
@@ -8,12 +23,13 @@ export const getStatic = (month) => {
     rating: 0,
     register: 0,
   };
+
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((monthStatic) => {
       return monthStatic.details;
     });
-  dataByMonth[0].forEach((data) => {
+  dataByMonth[0]?.forEach((data) => {
     staticObj.views += data.views;
     staticObj.booking += data.booking;
     staticObj.checkOut += data.checkOut;
@@ -22,6 +38,49 @@ export const getStatic = (month) => {
   });
 
   return staticObj;
+};
+
+export const getIncreasePercent = (month) => {
+  let increasePercent = {
+    views: 0,
+    booking: 0,
+    checkOut: 0,
+    rating: 0,
+    register: 0,
+  };
+
+  if (month === "Jan") {
+    return increasePercent;
+  }
+  // monthsKey[monthsKey.indexOf(month) - 1]
+  const prevMonth = getStatic(monthsKey[monthsKey.indexOf(month) - 1]);
+  const curMonth = getStatic(monthsKey[monthsKey.indexOf(month)]);
+  increasePercent.views =
+    Math.round(
+      ((curMonth.views - prevMonth.views) / prevMonth.views) * 100 * 100
+    ) / 100;
+  increasePercent.booking =
+    Math.round(
+      ((curMonth.booking - prevMonth.booking) / prevMonth.booking) * 100 * 100
+    ) / 100;
+  increasePercent.checkOut =
+    Math.round(
+      ((curMonth.checkOut - prevMonth.checkOut) / prevMonth.checkOut) *
+        100 *
+        100
+    ) / 100;
+  increasePercent.rating =
+    Math.round(
+      ((curMonth.rating - prevMonth.rating) / prevMonth.rating) * 100 * 100
+    ) / 100;
+  increasePercent.register =
+    Math.round(
+      ((curMonth.register - prevMonth.register) / prevMonth.register) *
+        100 *
+        100
+    ) / 100;
+
+  return increasePercent;
 };
 
 export const typeBookingData = (month) => {

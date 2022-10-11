@@ -9,6 +9,7 @@ import {
   typeBookingData,
   BookingNumberData,
   ReportData,
+  getIncreasePercent,
 } from "./AllService";
 import { createContext } from "react";
 import { useState } from "react";
@@ -21,6 +22,7 @@ function All() {
     date.toLocaleString("default", { month: "short" })
   );
   let staticData = getStatic(month);
+  let staticTracking = getIncreasePercent(month);
   let typeBooking = typeBookingData(month);
   let bookingNumber = BookingNumberData(month);
   let reportData = ReportData(month);
@@ -32,7 +34,7 @@ function All() {
           <MonthPicker />
         </div>
         <div className={AllStyle["static"]}>
-          <StaticCard staticData={staticData} />
+          <StaticCard staticData={staticData} staticTracking={staticTracking} />
         </div>
         <div className={AllStyle["charts"]}>
           <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
