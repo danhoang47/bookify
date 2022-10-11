@@ -4,7 +4,8 @@ function usePopup(state = false) {
   const [isOpen, setOpen] = useState(state);
   const containerRef = useRef(); 
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation();
     setOpen(prev => !prev)
   }
 

@@ -1,0 +1,136 @@
+@use "src/global";
+
+.rdp-months {
+    display: flex;
+    padding: 1em;
+    justify-content: center;
+    gap: 1em;
+
+    .rdp-month {
+        .rdp-caption {
+            @include global.center();
+            position: relative;
+            padding: 1em 0;
+
+            .rdp-caption_label {
+                font-size: 1.1em;
+                font-weight: 400;
+            }
+
+            .rdp-nav {
+                position: absolute;
+                top: 50%;
+                translate: 0 -50%;
+
+                button {
+                    @include global.center();
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &.rdp-caption_start {
+            .rdp-nav {
+                left: 4%;
+            }
+        }
+
+        &.rdp-caption_end {
+            .rdp-nav {
+                right: 4%;
+            }
+        }
+
+        .rdp-table {
+            font-size: 0.9em;
+            color: global.$gray-600;
+            margin: 0 auto;
+            border-spacing: 0;
+
+            .rdp-head {
+                .rdp-vhidden {
+                    display: none;
+                }
+
+                .rdp-head_row {
+                    .rdp-head_cell {
+                        width: 2.4em;
+                    }
+                }
+            }
+
+            .rdp-tbody {
+                .rdp-row {
+                    .rdp-cell {
+                        text-align: center;
+
+                        .rdp-button {
+                            position: relative;
+                            padding: 0.6em 0;
+                            font-family: "Poppin", sans-serif;
+                            font-size: 1em;
+                            color: global.$gray-600;
+                            cursor: pointer;
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            border-width: 2px;
+                            box-sizing: border-box;
+
+                            &::before {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                bottom: 0;
+                                left: 0;
+                                content: "";
+                                border-radius: 50%;
+                                border: 1px solid black;
+                                display: none;
+                            }
+                            
+                            &:hover::before {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.selected_day {
+    position: relative !important;
+}
+
+.selected_day:not([disabled]) {
+    background: global.$gray-100;
+    color: global.$black !important;
+    font-weight: 600;
+}
+.my-today {
+    font-weight: bold;
+    font-size: 140%;
+    color: red;
+}
+
+.rdp-day_range_start {
+    border-radius: 50% 0 0 50% !important;
+}
+
+.rdp-day_range_end.rdp-day_range_start {
+    border-radius: 50% !important;
+}
+
+.rdp-day_range_middle {
+    border-radius: 0 !important;
+}
+
+.rdp-day_range_middle:hover::before {
+    display: block;
+}
+
+.rdp-day_range_end {
+    border-radius: 0 50% 50% 0 !important;
+}
