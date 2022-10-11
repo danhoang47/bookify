@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid";
 
 function Report() {
   return (
-    <div>
-      <h3>Báo cáo gần đấy</h3>
+    <div className={ReportStyle["wrap-report"]}>
+      <h3 className={ReportStyle["header-title"]}>Báo cáo gần đây</h3>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           <Grid item xs={12} md={6}>

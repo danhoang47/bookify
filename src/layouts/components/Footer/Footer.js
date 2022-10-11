@@ -14,30 +14,30 @@ function Footer() {
             <Grid container spacing={2}>
               <Grid item xs={0} md={3}>
                 <div className={footerStyle["item"]}>
-                  <h3>Hỗ trợ</h3>
+                  <h3 className={footerStyle["item-title"]}>Hỗ trợ</h3>
                   <ul>
                     <li>
-                      <a href="#">Trung tâm trợ giúp</a>
+                      <a href="">Trung tâm trợ giúp</a>
                     </li>
                   </ul>
                 </div>
               </Grid>
               <Grid item xs={0} md={3}>
                 <div className={footerStyle["item"]}>
-                  <h3>Khách sạn</h3>
+                  <h3 className={footerStyle["item-title"]}>Khách sạn</h3>
                   <ul>
                     <li>
-                      <a href="#">Bắt đầu tạo khách sạn của bạn</a>
+                      <a href="">Bắt đầu tạo khách sạn của bạn</a>
                     </li>
                   </ul>
                 </div>
               </Grid>
               <Grid item xs={0} md={3}>
                 <div className={footerStyle["item"]}>
-                  <h3>Địa chỉ</h3>
+                  <h3 className={footerStyle["item-title"]}>Địa chỉ</h3>
                   <ul>
                     <li>
-                      <a href="#">
+                      <a href="">
                         Khu đô thị FPT, Hòa Hải, Ngũ Hành Sơn, Đà Nẵng
                       </a>
                     </li>
