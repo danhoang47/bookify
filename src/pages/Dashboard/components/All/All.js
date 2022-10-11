@@ -1,6 +1,7 @@
 import AllStyle from "./All.module.scss";
 import StaticCard from "./StaticCard";
 import Chart from "./Chart";
+import Report from "./Report";
 
 function All() {
   return (
@@ -18,6 +19,9 @@ function All() {
       </div>
       <div className={AllStyle["charts"]}>
         <Chart />
+      </div>
+      <div>
+        <Report />
       </div>
     </div>
   );
