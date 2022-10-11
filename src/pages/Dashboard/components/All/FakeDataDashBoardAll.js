@@ -2245,6 +2245,8 @@ export const dashboarData = [
           "https://variety.com/wp-content/uploads/2022/02/Screen-Shot-2022-05-09-at-10.04.13-AM.png",
         hotel: "Khách sạn 8",
         hotelId: "Toi se quay lai day khi co co hoi",
+        content:
+          "Toi rat thich khach san nay. No cho toi mot cam giac giong nhu dang o nha vay. Canh vat xung quanh khach san rat dep. Bai bien rat trong xanh va sach se. ",
         reportTime: "10:20 13/07/2002",
       },
     ],
@@ -2695,6 +2697,8 @@ export const dashboarData = [
           "https://variety.com/wp-content/uploads/2022/02/Screen-Shot-2022-05-09-at-10.04.13-AM.png",
         hotel: "Khách sạn 8",
         hotelId: "Toi se quay lai day khi co co hoi",
+        content:
+          "Toi rat thich khach san nay. No cho toi mot cam giac giong nhu dang o nha vay. Canh vat xung quanh khach san rat dep. Bai bien rat trong xanh va sach se. ",
         reportTime: "10:20 13/07/2002",
       },
     ],

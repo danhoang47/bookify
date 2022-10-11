@@ -55,15 +55,9 @@ export const BookingNumberData = (month) => {
 };
 
 export const ReportData = (month) => {
-  let data = [];
-
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((data) => data.report);
 
-  console.log(dataByMonth[0]);
-  // dataByMonth[0].forEach((data) => {
-  //   bookingObj.day.push(data.day);
-  //   bookingObj.numberBooking.push(data.booking);
-  // });
+  return dataByMonth[0];
 };

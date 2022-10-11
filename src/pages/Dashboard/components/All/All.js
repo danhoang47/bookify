@@ -13,6 +13,7 @@ function All() {
   const staticData = getStatic("Oct");
   const typeBooking = typeBookingData("Oct");
   const bookingNumber = BookingNumberData("Oct");
+  const reportData = ReportData("Oct");
   ReportData("Oct");
   return (
     <div className={AllStyle["dashboard-all"]}>
@@ -31,7 +32,7 @@ function All() {
         <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
       </div>
       <div>
-        <Report />
+        <Report reportData={reportData} />
       </div>
     </div>
   );
