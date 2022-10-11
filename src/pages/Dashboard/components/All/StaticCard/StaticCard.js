@@ -34,7 +34,7 @@ function StaticCard({ staticData }) {
         data: staticData.register,
       },
     ],
-    []
+    [staticData]
   );
   return (
     <div className={StaticStyle["static-wrapper"]}>

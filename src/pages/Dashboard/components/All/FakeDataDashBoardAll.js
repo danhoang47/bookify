@@ -163,7 +163,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -388,7 +388,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -613,7 +613,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -838,7 +838,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -1063,7 +1063,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -1288,7 +1288,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -1513,7 +1513,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -1738,7 +1738,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -1963,7 +1963,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -2188,7 +2188,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -2415,7 +2415,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {
@@ -2640,7 +2640,7 @@ export const dashboarData = [
         hotel: "Khách sạn 2",
         hotelId: "1awndu1h290dh129d8n2cn1o2ch",
         content:
-          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc uiqwbcabcawcbawjkcbawcuywqbcquycbubcwyebuwybechzbchjzbcc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
+          "qwhiuqwdh qwiudhqid hqiwudhq dhqwiuwuic qwibcqiuwcbqwic qwucbqwcoqwc ybca ubcua cbawyuc abwoicua wcoaywcb aowucb awcbaw cbaocbacb zocb ",
         reportTime: "10:20 13/07/2002",
       },
       {

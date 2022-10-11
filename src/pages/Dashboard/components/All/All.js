@@ -2,38 +2,45 @@ import AllStyle from "./All.module.scss";
 import StaticCard from "./StaticCard";
 import Chart from "./Chart";
 import Report from "./Report";
+import MonthPicker from "./MonthPicker";
+
 import {
   getStatic,
   typeBookingData,
   BookingNumberData,
   ReportData,
 } from "./AllService";
+import { createContext } from "react";
+import { useState } from "react";
+
+export const MonthContext = createContext();
 
 function All() {
-  const staticData = getStatic("Oct");
-  const typeBooking = typeBookingData("Oct");
-  const bookingNumber = BookingNumberData("Oct");
-  const reportData = ReportData("Oct");
-  ReportData("Oct");
+  let date = new Date();
+  const [month, setMonth] = useState(
+    date.toLocaleString("default", { month: "short" })
+  );
+  let staticData = getStatic(month);
+  let typeBooking = typeBookingData(month);
+  let bookingNumber = BookingNumberData(month);
+  let reportData = ReportData(month);
+  ReportData(month);
   return (
     <div className={AllStyle["dashboard-all"]}>
-      <div className={AllStyle["time-wrapper"]}>
+      <MonthContext.Provider value={[month, setMonth]}>
         <div>
-          <h2>Tháng 10, năm 2022</h2>
+          <MonthPicker />
+        </div>
+        <div className={AllStyle["static"]}>
+          <StaticCard staticData={staticData} />
+        </div>
+        <div className={AllStyle["charts"]}>
+          <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
         </div>
         <div>
-          <h4>Tháng này</h4>
+          <Report reportData={reportData} />
         </div>
-      </div>
-      <div className={AllStyle["static"]}>
-        <StaticCard staticData={staticData} />
-      </div>
-      <div className={AllStyle["charts"]}>
-        <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
-      </div>
-      <div>
-        <Report reportData={reportData} />
-      </div>
+      </MonthContext.Provider>
     </div>
   );
 }
