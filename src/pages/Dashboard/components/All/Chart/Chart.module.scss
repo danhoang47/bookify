@@ -1,3 +1,10 @@
 .chart-wrapper {
     display: flex;
 }
+
+@media (min-width: 1200px) {
+    .chart-wrapper {
+        height: 340px;
+        width: 100% !important;
+    }
+}

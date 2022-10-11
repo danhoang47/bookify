@@ -1,5 +1,5 @@
 import ChartStyle from "./Chart.module.scss";
-import SingleLineChartWithoutY from "@/components/Chart/SingleLineChartWithoutY";
+import SingleLineChart from "@/components/Chart/SingleLineChart";
 import BarChart from "@/components/Chart/BarChartWithoutYScale";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -12,6 +12,8 @@ const barChartLabel = [
   "Thiên hiên",
 ];
 
+const days = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
+
 function Chart() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -23,7 +25,8 @@ function Chart() {
         </Grid>
         <Grid item xs={12} md={6}>
           <div className={ChartStyle["chart-2"]}>
-            <SingleLineChartWithoutY labels={barChartLabel} isY={false} />
+            <SingleLineChart labels={days} isY={false} color={"#f72585"} />
+            {/* <BarChart labels={barChartLabel} /> */}
           </div>
         </Grid>
       </Grid>

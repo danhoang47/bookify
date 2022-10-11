@@ -17,7 +17,13 @@ const plugin = {
   },
 };
 
-function SingleLineChart({ labels, label, data }) {
+function SingleLineChart({
+  labels,
+  label,
+  data,
+  isY = true,
+  color = "#4361ee",
+}) {
   return (
     <div className={SingleLineChartStyle["chart-wrapper"]}>
       <Line
@@ -28,8 +34,8 @@ function SingleLineChart({ labels, label, data }) {
             {
               label: label,
               data: data,
-              backgroundColor: "#4361ee",
-              borderColor: "#4361ee",
+              backgroundColor: color,
+              borderColor: color,
               borderWidth: 1,
               tension: 0.4,
             },
@@ -56,7 +62,7 @@ function SingleLineChart({ labels, label, data }) {
             },
             y: {
               beginAtZero: true,
-
+              display: isY,
               ticks: {
                 display: false,
                 beginAtZero: true,
