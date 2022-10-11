@@ -1,44 +1,38 @@
 import { DayPicker } from "react-day-picker";
 import { addDays, format } from "date-fns";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import './DatePickerTable.scss';
+import './Cell.scss';
 
 
 const pastMonth = new Date();
-function DateRangePicker() {
-    const defaultSelected = {
-        from: pastMonth,
-        to: addDays(pastMonth, 4),
-    };
-    const [range, setRange] = useState(defaultSelected);
-
-    let footer = <p>Please pick the first day.</p>;
-    if (range?.from) {
-        if (!range.to) {
-            footer = <p>{format(range.from, "PPP")}</p>;
-        } else if (range.to) {
-            footer = (
-                <p>
-                    {format(range.from, "PPP")}–{format(range.to, "PPP")}
-                </p>
-            );
-        }
+function DateRangePicker({ numberOfMonths, mode }) {
+    const defaultSelectedDays = {
+        from: new Date(),
+        to: addDays(new Date(), 7)
     }
+    const disabledDays = {
+        from: new Date('2000/1/1'),
+        to: addDays(new Date(), -1)
+    }
+    const [range, setRange] = useState(defaultSelectedDays);
 
     return (
         <>
             <DayPicker
-                mode="range"
+                mode={mode}
                 defaultMonth={pastMonth}
-                selected={range}
+                disabled={disabledDays}
                 // footer={footer}
+                selected={range}
                 modifiersClassNames={{
                     selected: 'selected_day',
                     range_end: 'range_end_day',
                     range_start: 'range_start_day',
-                    range_middle: 'range_middle'
+                    range_middle: 'range_middle',
+                    disabled: 'disabled_day'
                 }}
-                numberOfMonths={2}
+                numberOfMonths={numberOfMonths}
                 onSelect={setRange}
             />
         </>
