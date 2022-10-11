@@ -12,6 +12,8 @@
 
 .chart-1-title,
 .chart-2-title {
-    text-align: center;
-    font-family: global.$default-font;
+    h5 {
+        text-align: center;
+        font-family: global.$default-font;
+    }
 }
