@@ -1,18 +1,14 @@
 import ListStyle from "../../../../BookingHistory.module.scss";
 import { useContext, useState, useEffect, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { HistoryContext } from "@/utils/contexts";
 import { HistoryCard } from "@/features/account";
 
-function Tabs() {
+function Tabs({ category }) {
   const list = useContext(HistoryContext);
-  const location = useLocation();
-  console.log(location.state);
-
-  const renderList = location.state
+  const renderList = category
     ? list.filter((element) => {
-        return Object.keys(location.state).every((property) => {
-          return location.state[property] == element[property];
+        return Object.keys(category).every((property) => {
+          return category[property] === element[property];
         });
       })
     : list;

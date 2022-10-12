@@ -12,7 +12,8 @@ import {
   BookingHistory,
   Tabs,
   Introduction,
-  HotelManage,
+  HotelManageMain,
+  HotelManageBooking,
   HotelManageDetail,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
@@ -26,19 +27,15 @@ const router = createBrowserRouter(
           <Route path="" element={<Profile />} />
           <Route path="info" element={<PersonalInfo />} />
           <Route path="loginandsecurity" element={<LoginandSecurity />} />
-          <Route path="history" element={<BookingHistory />}>
-            <Route path="" element={<Tabs />} />
-            <Route path="today" element={<Tabs />} />
-            <Route path="cancel" element={<Tabs />} />
-            <Route path="booked" element={<Tabs />} />
-          </Route>
-        </Route>
-
-        <Route path="hotelmanage">
-          <Route path="" element={<HotelManage />} />
-          <Route path="detail" element={<HotelManageDetail />} />
+          <Route path="history" element={<BookingHistory />} />
         </Route>
       </Route>
+      <Route path="hotelmanage" element={<DefaultLayout />}>
+        <Route path="" element={<HotelManageMain />} />
+        <Route path="detail" element={<HotelManageDetail />} />
+        <Route path="booking" element={<HotelManageBooking />} />
+      </Route>
+
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
       </Route>

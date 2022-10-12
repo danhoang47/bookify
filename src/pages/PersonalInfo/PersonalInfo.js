@@ -1,5 +1,5 @@
 import PersonalInfoStyle from "./PersonalInfo.module.scss";
-import HeaderInfo from "./components/HeaderInfo";
+import HeaderInfo from "./components/headerInfo";
 import FormUpdate from "./components/FormUpdate";
 
 const account = {

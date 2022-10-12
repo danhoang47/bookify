@@ -2,7 +2,7 @@ import HotelManageStyle from "./HotelManage.module.scss";
 import Header from "./components/header";
 import Body from "./components/Body";
 
-function HotelManage() {
+function HotelManageMain() {
   return (
     <div className={HotelManageStyle["container"]}>
       <Header />
@@ -11,4 +11,4 @@ function HotelManage() {
   );
 }
 
-export default HotelManage;
+export default HotelManageMain;
