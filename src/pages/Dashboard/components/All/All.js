@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import AllStyle from "./All.module.scss";
 import StaticCard from "./StaticCard";
 import Chart from "./Chart";
@@ -26,23 +27,28 @@ function All() {
   let typeBooking = typeBookingData(month);
   let bookingNumber = BookingNumberData(month);
   let reportData = ReportData(month);
-  ReportData(month);
+
   return (
     <div className={AllStyle["dashboard-all"]}>
-      <MonthContext.Provider value={[month, setMonth]}>
-        <div>
-          <MonthPicker />
-        </div>
-        <div className={AllStyle["static"]}>
-          <StaticCard staticData={staticData} staticTracking={staticTracking} />
-        </div>
-        <div className={AllStyle["charts"]}>
-          <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
-        </div>
-        <div>
-          <Report reportData={reportData} />
-        </div>
-      </MonthContext.Provider>
+      <Suspense fallback={<div>Loading</div>}>
+        <MonthContext.Provider value={[month, setMonth]}>
+          <div>
+            <MonthPicker />
+          </div>
+          <div className={AllStyle["static"]}>
+            <StaticCard
+              staticData={staticData}
+              staticTracking={staticTracking}
+            />
+          </div>
+          <div className={AllStyle["charts"]}>
+            <Chart typeBooking={typeBooking} bookingNumber={bookingNumber} />
+          </div>
+          <div>
+            <Report reportData={reportData ? reportData : null} />
+          </div>
+        </MonthContext.Provider>
+      </Suspense>
     </div>
   );
 }

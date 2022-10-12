@@ -24,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="profile" element={<DefaultLayout />}>
         <Route path="" element={<Profile />} />
         <Route path="info" element={<PersonalInfo />} />
+        <Route path="payment" element={<Payment />} />
       </Route>
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
@@ -34,9 +35,6 @@ const router = createBrowserRouter(
       </Route>
       <Route path="dashboard" element={<DefaultLayout />}>
         <Route path="all" element={<Dashboard />} />
-      </Route>
-      <Route path="payment" element={<DefaultLayout />}>
-        <Route path="" element={<Payment />} />
       </Route>
     </Route>
   )

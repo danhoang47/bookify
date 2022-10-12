@@ -15,9 +15,9 @@ function HeaderInfo() {
         <li>
           <p onClick={onClickHandler}>Tài Khoản</p>
         </li>
-        <li>Thông tin cá nhân</li>
+        <li>Thanh toán và chi trả</li>
       </ul>
-      <h2 className={HeaderInfoStyle["title"]}>Thông tin cá nhân lượt</h2>
+      <h2 className={HeaderInfoStyle["title"]}>Thanh toán và chi trả</h2>
       <p className={HeaderInfoStyle["sub-title"]}>
         Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi
         labore id.

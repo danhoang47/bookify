@@ -41,6 +41,10 @@ function Profile() {
         title: "Thanh toán và chi trả",
         description:
           "Tìm hiểu lại các khoản thanh toán, chi trả, phiếu giảm giá, thẻ quà tặng",
+        onClickHandler: (event) => {
+          event.stopPropagation();
+          navigate("/profile/payment");
+        },
       },
       {
         icon: faSliders,

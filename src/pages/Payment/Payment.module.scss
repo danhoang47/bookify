@@ -1,3 +1,4 @@
+@use "src/global";
 .container {
     padding-right: 15px;
     padding-left: 15px;
@@ -29,4 +30,25 @@
     .container {
         width: 1170px;
     }
+}
+
+.task1 {
+    button {
+        font-size: 14px;
+        font-family: global.$default-font;
+        text-transform: none;
+        font-weight: 500;
+        color: black;
+        padding: 5px 10px;
+    }
+    button.Mui-selected {
+        color: black;
+        font-weight: 550;
+    }
+}
+
+.bank-card {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
 }
