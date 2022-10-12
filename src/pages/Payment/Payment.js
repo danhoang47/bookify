@@ -8,6 +8,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import BankCard from "./components/BankCard";
+import Overall from "./components/Overrall/Overall";
 
 function Payment() {
   const [value, setValue] = useState("1");
@@ -48,7 +49,9 @@ function Payment() {
                     <Tab label="Phiếu giảm giá" value="2" />
                   </TabList>
                 </Box>
-                <TabPanel value="1">Thanh toan</TabPanel>
+                <TabPanel value="1">
+                  <Overall />
+                </TabPanel>
                 <TabPanel value="2">
                   <h1>Giao dichj</h1>
                 </TabPanel>
