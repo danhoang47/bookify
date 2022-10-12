@@ -2,12 +2,12 @@
 .chart-wrapper {
     height: 270px;
     width: 70%;
-    margin-bottom: 245px;
+    margin-bottom: 230px;
 }
 
 .static {
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     p {
         font-family: global.$default-font;
         font-size: 12px;
@@ -15,6 +15,10 @@
     h1 {
         font-family: global.$default-font;
     }
+}
+
+.signleChart-static {
+    margin-bottom: 200px;
 }
 
 .sub-static {

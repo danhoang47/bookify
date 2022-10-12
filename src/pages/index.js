@@ -8,6 +8,8 @@ import Introduction from "./Introduction";
 import HotelManageMain from "./HotelManage/HotelManageMain";
 import HotelManageBooking from "./HotelManage/HotelManageBooking";
 import HotelManageDetail from "./HotelManageDetail";
+import Dashboard from "./Dashboard";
+import Payment from "./Payment";
 
 export {
   Home,
@@ -20,4 +22,6 @@ export {
   HotelManageMain,
   HotelManageBooking,
   HotelManageDetail,
+  Dashboard,
+  Payment,
 };

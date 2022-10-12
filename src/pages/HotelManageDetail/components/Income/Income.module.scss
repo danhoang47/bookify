@@ -4,35 +4,34 @@
     margin-top: 30px;
 }
 
-select {
-    /*for firefox*/
-    -moz-appearance: none;
-    /*for chrome*/
-    -webkit-appearance: none;
-    // appearance: none;
-    border: none;
+.income-wrapper {
+    padding-bottom: 50px;
 }
 
-
-/*for IE10+*/
-
-select::-ms-expand {
-    // display: none;
+.chart-wrapper {
+    width: 70%;
 }
 
-.styled-select {
-    border: none;
-    border-bottom: 1px solid;
-    border-color: #ababab;
-    overflow: hidden;
-    width: 50%;
-    margin-top: 10px;
+@media (max-width: 500px) {
+    .chart-wrapper {
+        width: 100%;
+    }
 }
 
-.styled-select select {
-    width: 100%;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    padding: 7px 10px;
+@media (min-width: 768px) {
+    .chart-wrapper {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .chart-wrapper {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .chart-wrapper {
+        width: 70%;
+    }
 }

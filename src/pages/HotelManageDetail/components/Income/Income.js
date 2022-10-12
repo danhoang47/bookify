@@ -1,75 +1,61 @@
 import IncomeStyle from "./Income.module.scss";
 import SelectBox from "./components/SelectBox";
 import Chart from "./components/Chart";
-
-const income = [
-  {
-    month: "Jan",
-    income: 7000,
-    expected: 8000,
-  },
-  {
-    month: "Feb",
-    income: 6000,
-    expected: 5000,
-  },
-  {
-    month: "Mar",
-    income: 8000,
-    expected: 7000,
-  },
-  {
-    month: "Apr",
-    income: 5000,
-    expected: 9000,
-  },
-  {
-    month: "May",
-    income: 10000,
-    expected: 6000,
-  },
-  {
-    month: "Jun",
-    income: 12000,
-    expected: 10000,
-  },
-  {
-    month: "Jul",
-    income: 8000,
-    expected: 6000,
-  },
-  {
-    month: "Aug",
-    income: 5000,
-    expected: 5000,
-  },
-  {
-    month: "Sep",
-    income: 6000,
-    expected: 7000,
-  },
-  {
-    month: "Oct",
-    income: 9000,
-    expected: 8000,
-  },
-  {
-    month: "Nov",
-    income: 10000,
-    expected: 12000,
-  },
-  {
-    month: "Dec",
-    income: 15000,
-    expected: 13000,
-  },
-];
+import { income } from "./fakeIncomeData";
+import { useState } from "react";
 
 function Income() {
+  const [month, setMonth] = useState("");
+  const months = [];
+  const days = [];
+  const dayIncome = [];
+  let daysTotal = 0;
+  const incomeByMonth = [];
+  const expected = [];
+  const total = income.reduce((prev, curr) => {
+    return curr.income + prev;
+  }, 0);
+  const expectIncome = income.reduce((prev, curr) => {
+    return curr.expected + prev;
+  }, 0);
+
+  income.forEach((data) => {
+    months.push(data.month);
+    incomeByMonth.push(data.income);
+    expected.push(data.expected);
+  });
+
+  const onChangeMonth = (data) => {
+    setMonth(data);
+  };
+
+  if (month) {
+    const dayData = income.filter((data) => data.month === month);
+    dayData[0].details.forEach((data) => {
+      days.push(data.day);
+      dayIncome.push(data.dayIncome);
+    });
+    daysTotal = dayIncome.reduce((prev, cur) => {
+      return cur + prev;
+    });
+  }
+
   return (
     <div className={IncomeStyle["income-wrapper"]}>
-      <SelectBox />
-      <Chart income={income} />
+      <SelectBox onChangeMonth={onChangeMonth} />
+      <div className={IncomeStyle["chart-wrapper"]}>
+        <Chart
+          monthSelected={month}
+          total={total}
+          days={days}
+          dayIncome={dayIncome}
+          daysTotal={daysTotal}
+          expectIncome={expectIncome}
+          months={months}
+          incomeByMonth={incomeByMonth}
+          expected={expected}
+        />
+      </div>
     </div>
   );
 }
