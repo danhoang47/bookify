@@ -1,0 +1,64 @@
+@use "src/global";
+.Check-out-title {
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+
+.form-title {
+    margin-bottom: 20px;
+}
+
+.basic-info {
+    border-bottom: 1px solid #ababab;
+    padding-bottom: 20px;
+    .info-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .info-alter {
+            font-size: 13px;
+            text-decoration: underline;
+        }
+    }
+    .info-detail {
+        margin-bottom: 10px;
+        p {
+            color: #6a6a6a;
+        }
+    }
+}
+
+.select-box {
+    border: 1px solid #ababab;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 8px;
+}
+
+.pay-title {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.money-amount {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.sub-payment-btn {
+    background-color: #4361ee;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px 0px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: global.$default-font;
+}

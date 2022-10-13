@@ -6,6 +6,7 @@ import HotelManage from "./HotelManage";
 import HotelManageDetail from "./HotelManageDetail";
 import Dashboard from "./Dashboard";
 import Payment from "./Payment";
+import CheckOut from "./CheckOut";
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   HotelManageDetail,
   Dashboard,
   Payment,
+  CheckOut,
 };

@@ -12,6 +12,7 @@ import {
   HotelManageDetail,
   Dashboard,
   Payment,
+  CheckOut,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
@@ -34,7 +35,10 @@ const router = createBrowserRouter(
         <Route path="detail" element={<HotelManageDetail />} />
       </Route>
       <Route path="dashboard" element={<DefaultLayout />}>
-        <Route path="all" element={<Dashboard />} />
+        <Route path="" element={<Dashboard />} />
+      </Route>
+      <Route path="checkout" element={<DefaultLayout />}>
+        <Route path="" element={<CheckOut />} />
       </Route>
     </Route>
   )
