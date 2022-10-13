@@ -1,10 +1,10 @@
-import { DateRangePicker } from "@/components";
+import { DatePicker } from "@/components";
+import { useState } from 'react';
 
 function DateSearchField() {
-    
 
     return (
-        <DateRangePicker 
+        <DatePicker 
             numberOfMonths="2"
             mode="range"
         />

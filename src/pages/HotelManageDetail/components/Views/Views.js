@@ -33,10 +33,8 @@ function Views() {
     return prev + curr;
   }, 0);
 
-  console.log(viewsNumber);
-
   return (
-    <div>
+    <div className={ViewStyle["view-wrapper"]}>
       <div className={ViewStyle["static-wrapper"]}>
         <div className={ViewStyle["view-number"]}>
           <FontAwesomeIcon
@@ -63,13 +61,15 @@ function Views() {
           </div>
         </div>
       </div>
-      <div className="info-detail">
+      <div className={ViewStyle["info-detail"]}>
         <h1>{staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}</h1>
-        <Chart
-          days={days}
-          label={staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}
-          data={staticView === "views" ? views : booking}
-        />
+        <div className={ViewStyle["chart-wrapper"]}>
+          <Chart
+            days={days}
+            label={staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}
+            data={staticView === "views" ? views : booking}
+          />
+        </div>
       </div>
       <div className={ViewStyle["month-picker"]}>
         <MonthPicker monthChanging={monthChanging} />

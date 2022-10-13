@@ -1,4 +1,8 @@
 @use "src/global";
+.view-wrapper {
+    padding-bottom: 450px;
+}
+
 .static-wrapper {
     margin-top: 20px;
     display: flex;
@@ -33,7 +37,34 @@
 .chart-wrapper {
     height: 270px;
     width: 70%;
-    margin-bottom: 50px !important;
+}
+
+@media (max-width: 500px) {
+    .chart-wrapper {
+        // height: 300px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .chart-wrapper {
+        // height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .chart-wrapper {
+        // height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .chart-wrapper {
+        height: 340px;
+        width: 70%;
+    }
 }
 
 .month-picker {

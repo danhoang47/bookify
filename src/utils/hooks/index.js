@@ -1,9 +1,9 @@
-import useDebouce from "./useDebounce";
+import useDebounce from "./useDebounce";
 import usePopup from './usePopup';
 import useUppercase from "./useUppercase";
 
 export {
-    useDebouce,
+    useDebounce,
     usePopup,
     useUppercase
 }

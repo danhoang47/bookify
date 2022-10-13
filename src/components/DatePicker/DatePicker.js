@@ -1,21 +1,17 @@
 import { DayPicker } from "react-day-picker";
-import { addDays, format } from "date-fns";
-import { useState, useRef } from "react";
+import { addDays } from "date-fns";
+import { useContext } from "react";
 import './DatePickerTable.scss';
 import './Cell.scss';
-
+import { SearchContext } from "@/utils/contexts";
 
 const pastMonth = new Date();
-function DateRangePicker({ numberOfMonths, mode }) {
-    const defaultSelectedDays = {
-        from: new Date(),
-        to: addDays(new Date(), 7)
-    }
+function DatePicker({ numberOfMonths, mode }) {
     const disabledDays = {
         from: new Date('2000/1/1'),
         to: addDays(new Date(), -1)
     }
-    const [range, setRange] = useState(defaultSelectedDays);
+    const { selectedDays, setSelectedDays } = useContext(SearchContext);
 
     return (
         <>
@@ -24,7 +20,7 @@ function DateRangePicker({ numberOfMonths, mode }) {
                 defaultMonth={pastMonth}
                 disabled={disabledDays}
                 // footer={footer}
-                selected={range}
+                selected={selectedDays}
                 modifiersClassNames={{
                     selected: 'selected_day',
                     range_end: 'range_end_day',
@@ -33,10 +29,10 @@ function DateRangePicker({ numberOfMonths, mode }) {
                     disabled: 'disabled_day'
                 }}
                 numberOfMonths={numberOfMonths}
-                onSelect={setRange}
+                onSelect={setSelectedDays}
             />
         </>
     );
 }
 
-export default DateRangePicker;
+export default DatePicker;

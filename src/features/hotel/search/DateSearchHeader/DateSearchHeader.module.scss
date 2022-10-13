@@ -1,0 +1,22 @@
+@use "src/global";
+
+#date-search {
+    .heading {
+    }
+
+    .date-inputs {
+        .date-from,
+        .date-to {
+            width: 8.4em;
+            font-size: 0.8em;
+            font-weight: 500;
+            outline: none;
+            border: none;
+            color: global.$gray-600;
+        }
+
+        .date-to {
+            margin-left: 0.2em;
+        }
+    }
+}

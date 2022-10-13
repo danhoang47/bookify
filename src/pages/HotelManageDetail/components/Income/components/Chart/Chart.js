@@ -46,7 +46,9 @@ function ChartComponent({
           <div className={ChartStyle["sub-static"]}>
             <h4 className={ChartStyle["realistic"]}>${daysTotal}</h4>
           </div>
-          <SingleLineChart labels={days} label="Đã thu" data={dayIncome} />
+          <div className={ChartStyle["signleChart-static"]}>
+            <SingleLineChart labels={days} label="Đã thu" data={dayIncome} />
+          </div>
         </>
       )}
     </div>

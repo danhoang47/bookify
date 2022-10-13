@@ -7,6 +7,8 @@ import Tabs from "./BookingHistory/components/Body/components/Tabs";
 import Introduction from "./Introduction";
 import HotelManage from "./HotelManage";
 import HotelManageDetail from "./HotelManageDetail";
+import Dashboard from "./Dashboard";
+import Payment from "./Payment";
 
 export {
   Home,
@@ -18,4 +20,6 @@ export {
   Introduction,
   HotelManage,
   HotelManageDetail,
+  Dashboard,
+  Payment,
 };

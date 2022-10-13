@@ -14,8 +14,9 @@ function usePopup(state = false) {
     const container = containerRef.current;
 
     setOpen((prev) => {
-      if (prev && !container.contains(target))
+      if (prev && !container.contains(target)) {
         return !prev;
+      }
       else 
         return prev;
     })

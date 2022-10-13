@@ -1,0 +1,45 @@
+@use "src/global";
+select {
+    /*for firefox*/
+    -moz-appearance: none;
+    /*for chrome*/
+    -webkit-appearance: none;
+    // appearance: none;
+    border: none;
+    font-family: global.$default-font;
+    font-size: 14px;
+    option {
+        font-family: global.$default-font;
+        align-items: center;
+    }
+}
+
+
+/*for IE10+*/
+
+select::-ms-expand {
+    // display: none;
+}
+
+.styled-select {
+    border: 1px solid #000;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 10px;
+    text-align: center;
+    select {
+        text-align-last: center;
+        padding-right: 29px;
+        direction: rtl;
+    }
+}
+
+.styled-select select {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 7px 20px;
+}
