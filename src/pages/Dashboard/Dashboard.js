@@ -6,6 +6,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import DashboardStyle from "./Dashboard.module.scss";
 import { useState } from "react";
 import All from "./components/All";
+import Hotel from "./components/Hotel";
 
 function Dashboard() {
   const [value, setValue] = useState("1");
@@ -50,7 +51,7 @@ function Dashboard() {
             <h1>Giao dichj</h1>
           </TabPanel>
           <TabPanel value="3">
-            <h1>Khcahs sanj</h1>
+            <Hotel />
           </TabPanel>
         </TabContext>
       </Box>

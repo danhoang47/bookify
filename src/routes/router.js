@@ -12,7 +12,8 @@ import {
   BookingHistory,
   Tabs,
   Introduction,
-  HotelManage,
+  HotelManageMain,
+  HotelManageBooking,
   HotelManageDetail,
   Dashboard,
   Payment,
@@ -24,21 +25,27 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="" element={<Home />} />
+        <Route path="profile">
+          <Route path="" element={<Profile />} />
+          <Route path="info" element={<PersonalInfo />} />
+          <Route path="loginandsecurity" element={<LoginandSecurity />} />
+          <Route path="history" element={<BookingHistory />} />
+        </Route>
       </Route>
-      <Route path="profile" element={<DefaultLayout />}>
-        <Route path="" element={<Profile />} />
-        <Route path="info" element={<PersonalInfo />} />
-        <Route path="payment" element={<Payment />} />
+      <Route path="hotelmanage" element={<DefaultLayout />}>
+        <Route path="" element={<HotelManageMain />} />
+        <Route path="detail" element={<HotelManageDetail />} />
+        <Route path="booking" element={<HotelManageBooking />} />
       </Route>
+
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
       </Route>
-      <Route path="hotelmanage" element={<DefaultLayout />}>
-        <Route path="" element={<HotelManage />} />
-        <Route path="detail" element={<HotelManageDetail />} />
-      </Route>
       <Route path="dashboard" element={<DefaultLayout />}>
-        <Route path="all" element={<Dashboard />} />
+        <Route path="" element={<Dashboard />} />
+      </Route>
+      <Route path="payment" element={<DefaultLayout />}>
+        <Route path="" element={<Payment />} />
       </Route>
     </Route>
   )
