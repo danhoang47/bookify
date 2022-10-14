@@ -1,9 +1,17 @@
 import AccountCardStyles from "./AccountCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
-function AccountCard({ icon, title, description, onClick }) {
+function AccountCard({ icon, title, description, path}) {
+  const navigate = useNavigate();
+
+  const routing = (e) => {
+    e.stopPropagation();
+    navigate(path);
+  }
+
   return (
-    <div className={AccountCardStyles["card"]} onClick={onClick}>
+    <div className={AccountCardStyles["card"]} onClick={routing}>
       <div className={AccountCardStyles["container"]}>
         <span className={AccountCardStyles["icon"]}>
           <FontAwesomeIcon icon={icon} />

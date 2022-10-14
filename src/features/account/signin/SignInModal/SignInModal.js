@@ -9,60 +9,66 @@ import { usePopup } from "@/utils/hooks";
 import { getSignInModal, getSignUpModal } from "@/utils/reducers/modalReducer";
 
 function SignInModal({ animation }) {
-    const [isModalOpen, handleClick, containerRef] = usePopup(true);
-    const { dispatch } = useContext(ModalContext);
+  const [isModalOpen, handleClick, containerRef] = usePopup(true);
+  const { dispatch } = useContext(ModalContext);
 
-    useEffect(() => {
-        if(!isModalOpen) {
-            dispatch(getSignInModal({ isOpen: false }))
-        }
-    }, [isModalOpen, dispatch])
-    
-    return (
-        <div
-        className={[
-            signInModalStyles['sign-in-modal'],
-            signInModalStyles[animation] ?? ''
-        ].join(' ')}
-            tabIndex="-1"
-            ref={containerRef}
-        >
-            <div className={signInModalStyles["page-logo"]}>
-                <Logo />
-                <h3 className={signInModalStyles["welcome-heading"]}>
-                    Welcome back, Mate
-                </h3>
-            </div>
-            <SignInForm />
-            <div className={signInModalStyles["sign-up-link"]}>
-                <p>
-                    Don't have account yet?
-                    <span 
-                        className={signInModalStyles["link"]}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            dispatch(getSignUpModal({ 
-                                isOpen: true, 
-                                animation: 'slide-in-right'
-                            }))
-                        }}    
-                    >Sign Up</span>
-                </p>
-            </div>
-            <button
-                onClick={(event) => {
-                    event.stopPropagation();
-                    dispatch(getSignUpModal({ 
-                        isOpen: false,
-                    }));
-                    handleClick();
-                }}
-                className={signInModalStyles["close-button"]}
-            >
-                <FontAwesomeIcon icon={faXmark} />
-            </button>
-        </div>
-    );
+  useEffect(() => {
+    if (!isModalOpen) {
+      dispatch(getSignInModal({ isOpen: false }));
+    }
+  }, [isModalOpen, dispatch]);
+
+  return (
+    <div
+      className={[
+        signInModalStyles["sign-in-modal"],
+        signInModalStyles[animation] ?? "",
+      ].join(" ")}
+      tabIndex="-1"
+      ref={containerRef}
+    >
+      <div className={signInModalStyles["page-logo"]}>
+        <Logo />
+        <h3 className={signInModalStyles["welcome-heading"]}>
+          Welcome back, Mate
+        </h3>
+      </div>
+      <SignInForm />
+      <div className={signInModalStyles["sign-up-link"]}>
+        <p>
+          Don't have account yet?
+          <span
+            className={signInModalStyles["link"]}
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(
+                getSignUpModal({
+                  isOpen: true,
+                  animation: "slide-in-right",
+                })
+              );
+            }}
+          >
+            Sign Up
+          </span>
+        </p>
+      </div>
+      <button
+        onClick={(event) => {
+          event.stopPropagation();
+          dispatch(
+            getSignUpModal({
+              isOpen: false,
+            })
+          );
+          handleClick();
+        }}
+        className={signInModalStyles["close-button"]}
+      >
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
+    </div>
+  );
 }
 
 export default SignInModal;

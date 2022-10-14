@@ -1,4 +1,3 @@
-import DefaultLayout from "./layouts/DefaultLayout";
 import "./_global.scss";
 import { useMemo, useReducer, useState } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
@@ -13,10 +12,12 @@ const initState = {
 const user = {
   id: 123456,
   username: "Quoc Dat",
+  cardNumber: "1542 - 5644 - 2545 - 2871",
 };
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(reducer, initState);
+
   const [isLogin, setLogin] = useState(true);
 
   const modal = useMemo(() => {
@@ -28,6 +29,7 @@ function App({ children }) {
 
   const userModifier = useMemo(() => {
     return {
+      user,
       isLogin,
       setLogin,
     };

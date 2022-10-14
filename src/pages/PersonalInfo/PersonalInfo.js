@@ -1,6 +1,6 @@
 import PersonalInfoStyle from "./PersonalInfo.module.scss";
-import HeaderInfo from "./components/headerInfo";
-import FormUpdate from "./components/Form";
+import HeaderInfo from "./components/HeaderInfo";
+import FormUpdate from "./components/FormUpdate";
 
 const account = {
   subname: "Le Quy",

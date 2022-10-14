@@ -1,7 +1,6 @@
 import ProfileCard from "./components/card";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
 import {
   faIdCard,
   faShield,
@@ -10,7 +9,7 @@ import {
   faHistory,
 } from "@fortawesome/free-solid-svg-icons";
 import profileStyle from "./Profile.module.scss";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 const account = {
   name: "Le Duc",
@@ -18,7 +17,9 @@ const account = {
 };
 
 function Profile() {
-  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Profile";
+  }, []);
 
   const options = useMemo(
     () => [
@@ -26,25 +27,20 @@ function Profile() {
         icon: faIdCard,
         title: "Thông tin cá nhân",
         description: "Cung cấp thông tin cá nhân cần thiết của bạn",
-        onClickHandler: (event) => {
-          event.stopPropagation();
-          navigate("/profile/info");
-        },
+        path: "info",
       },
       {
         icon: faShield,
         title: "Đăng nhập và bảo mật",
         description: "Cập nhật mật khẩu và bảo mật tài khoản của bạn",
+        path: "loginandsecurity",
       },
       {
         icon: faMoneyBills,
         title: "Thanh toán và chi trả",
         description:
           "Tìm hiểu lại các khoản thanh toán, chi trả, phiếu giảm giá, thẻ quà tặng",
-        onClickHandler: (event) => {
-          event.stopPropagation();
-          navigate("/profile/payment");
-        },
+        path: "payment",
       },
       {
         icon: faSliders,
@@ -55,6 +51,7 @@ function Profile() {
         icon: faHistory,
         title: "Lịch sử đặt phòng",
         description: "Xem lịch sử các phòng bạn đã đặt hay hủy bỏ",
+        path: "history",
       },
     ],
     []
@@ -78,7 +75,7 @@ function Profile() {
                   title={option.title}
                   icon={option.icon}
                   description={option.description}
-                  onClick={option.onClickHandler}
+                  path={option.path}
                 />
               </Grid>
             );

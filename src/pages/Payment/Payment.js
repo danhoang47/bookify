@@ -20,7 +20,16 @@ function Payment() {
     <div className={PaymentStyle["container"]}>
       <HeaderInfo />
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
+        <Grid
+          container
+          spacing={1}
+          // direction={{
+          //   xs: "column-reverse",
+          //   sm: "column-reverse",
+          //   md: "row",
+          //   lg: "row",
+          // }}
+        >
           <Grid item xs={12} md={6}>
             <Box sx={{ width: "100%", typography: "body1" }}>
               <TabContext value={value}>

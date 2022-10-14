@@ -5,8 +5,8 @@ function HeaderInfo() {
   const navigate = useNavigate();
 
   const onClickHandler = (event) => {
-    event.stopPropagation();
-    navigate("/profile");
+    event.preventDefault();
+    navigate(-1);
   };
 
   return (
@@ -17,7 +17,8 @@ function HeaderInfo() {
         </li>
         <li>Thông tin cá nhân</li>
       </ul>
-      <h2 className={HeaderInfoStyle["title"]}>Thông tin cá nhân lượt</h2>
+
+      <h2 className={HeaderInfoStyle["title"]}>Thông tin cá nhân</h2>
       <p className={HeaderInfoStyle["sub-title"]}>
         Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi
         labore id.

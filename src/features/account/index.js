@@ -1,4 +1,13 @@
 import SignInModal from "./signin";
 import SignUpModal from "./signup";
-
-export { SignInModal, SignUpModal };
+import { PasswordModal, NewPasswordModal } from "./password";
+import HistoryCard from "./historycard";
+import HotelSettingModal from "./hotelsetting";
+export {
+  SignInModal,
+  SignUpModal,
+  PasswordModal,
+  NewPasswordModal,
+  HistoryCard,
+  HotelSettingModal,
+};

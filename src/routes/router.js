@@ -2,13 +2,18 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Routes,
 } from "react-router-dom";
 import {
   Home,
   Profile,
   PersonalInfo,
+  LoginandSecurity,
+  BookingHistory,
+  Tabs,
   Introduction,
-  HotelManage,
+  HotelManageMain,
+  HotelManageBooking,
   HotelManageDetail,
   Dashboard,
   Payment,
@@ -26,16 +31,19 @@ const router = createBrowserRouter(
         <Route path="" element={<Profile />} />
         <Route path="info" element={<PersonalInfo />} />
         <Route path="payment" element={<Payment />} />
+        <Route path="loginandsecurity" element={<LoginandSecurity />} />
+        <Route path="history" element={<BookingHistory />} />
       </Route>
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
       </Route>
       <Route path="hotelmanage" element={<DefaultLayout />}>
-        <Route path="" element={<HotelManage />} />
+        <Route path="" element={<HotelManageMain />} />
         <Route path="detail" element={<HotelManageDetail />} />
+        <Route path="booking" element={<HotelManageBooking />} />
       </Route>
       <Route path="dashboard" element={<DefaultLayout />}>
-        <Route path="" element={<Dashboard />} />
+        <Route path="all" element={<Dashboard />} />
       </Route>
       <Route path="checkout" element={<DefaultLayout />}>
         <Route path="" element={<CheckOut />} />
@@ -48,7 +56,7 @@ export default router;
 
 // / -> <Home />
 //         /profile => <Profile />
-// /host/register -> <Register />
+// /hosting/register -> <Register />
 // /hosting -> <Hosting />
 //         /today -> <Today />
 //         /insight -> <Insight />
