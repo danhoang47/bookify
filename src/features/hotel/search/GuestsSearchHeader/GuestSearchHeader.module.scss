@@ -1,0 +1,12 @@
+@use "src/global";
+
+#guest-search {
+    .heading {
+    }
+
+    .guests-input {
+        font-size: 0.8em;
+        color: global.$gray-600;
+        margin-top: 0.14em;
+    }
+}

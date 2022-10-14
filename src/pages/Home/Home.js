@@ -1,9 +1,12 @@
+import { Grid } from "@mui/material";
 
 function Home() {
-    return (  
-        <div>
-            Home
-        </div>
+    return (
+        <Grid container spacing={0}>
+            <Grid item xs={12}>
+                Hello
+            </Grid>
+        </Grid>
     );
 }
 

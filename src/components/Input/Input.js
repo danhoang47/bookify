@@ -8,8 +8,12 @@ function Input({
     value = '',
     onValueChange,
     width = '',
-    isValid = true
+    isValid = true,
+    style,
+    handleOpenSearchBar,
+    isOpen = false
 }) {
+
     return (  
         <>
             <input 
@@ -17,12 +21,18 @@ function Input({
                 className={[
                     inputStyles["input-bar"],
                     inputStyles[width] ?? '',
-                    isValid ? '' : inputStyles['error']
+                    isValid ? '' : inputStyles['error'],
+                    style ?? ''
                 ].join(' ')}
                 type={type}
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onValueChange(e.target.value)}
+                onFocus={(event) => {
+                    if (!isOpen) {
+                        handleOpenSearchBar(event);
+                    }
+                }}
             />
         </>
     );

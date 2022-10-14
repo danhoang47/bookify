@@ -3,14 +3,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 
-function Report({ reportData }) {
+function Report({ reportData = [] }) {
   const navigate = useNavigate();
   return (
     <div className={ReportStyle["wrap-report"]}>
       <h3 className={ReportStyle["header-title"]}>Báo cáo gần đây</h3>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
-          {reportData.map((data, index) => {
+          {reportData?.map((data, index) => {
             return (
               <Grid item xs={12} md={6} key={index}>
                 <div className={ReportStyle["card"]}>

@@ -1,0 +1,34 @@
+@use 'src/global';
+
+#advance-search {
+    padding: 1em;
+    
+    .advance-search-header {
+        display: flex;
+        gap: 1em;
+
+        > *:not(:nth-child(3)) {
+            border-right: 1px solid global.$gray-200;
+        }
+
+        .advance-search-button {
+            margin-left: auto;
+            @include global.center();
+            background-color: global.$main-color;
+            border-radius: 0.8em;
+            transition: all 0.2s ease-out;
+            border-left: none !important;
+
+            .search-button {
+                padding: 1.2em 1.3em;
+                color: global.$white;
+                cursor: pointer;
+            }
+
+            
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}

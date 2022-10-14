@@ -1,6 +1,45 @@
 @use 'src/global';
 
 .search-box {
-    flex-basis: 60%;
-    @include global.vertical-center();
+    position: relative;
+
+    .search-bar {
+        position: relative;
+    
+        .search-input-field {
+            font-size: 1em;
+            padding: 0.4em 2em;
+            border-radius: 1em;
+            outline: none;
+            border: 1.8px solid global.$gray-500;
+            font-weight: 500;
+    
+            &:focus {
+                border: 2px solid global.$main-color;
+                padding-left: 0.6em;
+                padding-right: 0.6em;
+            }
+        }
+    
+        .search-glass-icon, .search-close-icon {
+            position: absolute;
+            top: 50%;
+            translate: 0 -50%;
+            color: global.$gray-600;
+        }
+    
+        .search-glass-icon {
+            left: 1.2%;
+        }
+    
+        .search-close-icon {
+            right: 1%;
+            text-align: center;
+            padding: 0.1em 0.4em;
+            
+            &:hover {
+                color: global.$main-color
+            }
+        }
+    }
 }

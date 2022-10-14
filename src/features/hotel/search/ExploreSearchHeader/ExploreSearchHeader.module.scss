@@ -1,0 +1,12 @@
+@use 'src/global';
+
+#explore-search {
+     
+    .place-input {
+        font-size: 0.8em;
+        font-weight: 500;
+        outline: none;
+        border: none;
+        color: global.$gray-600;
+    }
+}

@@ -13,9 +13,7 @@ function HeaderInfo() {
     <>
       <ul className={HeaderInfoStyle["breadcrumb"]}>
         <li>
-          <button onClick={onClickHandler}>
-            Tài Khoản
-          </button>
+          <p onClick={onClickHandler}>Tài Khoản</p>
         </li>
         <li>Thông tin cá nhân</li>
       </ul>

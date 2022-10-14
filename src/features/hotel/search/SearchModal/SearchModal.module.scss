@@ -1,0 +1,9 @@
+@use 'src/global';
+
+.search-modal {
+    position: absolute;
+    top: 100%;
+    background: global.$white;
+    left: 1.3%;
+    right: 1.3%;
+}
