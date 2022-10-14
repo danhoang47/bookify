@@ -2,7 +2,7 @@
 
 .trending-card {
     width: 25%;
-    height: 7em;
+    height: 10em;
     border-radius: 1em;
     background-position: center;
     overflow: hidden;
@@ -10,7 +10,7 @@
 
     div {
         @include global.horizontal-center();
-        align-items: end;
+        align-items: flex-end;
         color: global.$white;
 
         &:hover {

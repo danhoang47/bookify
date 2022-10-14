@@ -1,38 +1,34 @@
 import searchModalStyles from "./SearchModal.module.scss";
 import AdvanceSearch from "../AdvanceSearch";
 import SearchResult from "../SearchResult";
-import TrendingCard from "../TrendingCard";
-import { Box } from "@mui/material";
-
-// testing purpose only
-const trending = ["Bể bơi", "Bãi biển", "Thiên nhiên"];
+import SearchTrending from "../SearchTrending";
+import { useState } from "react";
 
 function SearchModal({ searchTerms }) {
+    const [isAdvanceSearchActive, setAdvanceSearchActive] = useState(true);
+
     return (
         <div tabIndex={-1} className={searchModalStyles["search-modal"]}>
             <div className={searchModalStyles["search-section"]}>
-                <div className={searchModalStyles["search-trending"]}>
-                    <h4 className={searchModalStyles["heading"]}>
-                        Xu hướng tìm kiếm
-                    </h4>
-                    <Box
-                        className={searchModalStyles["search-trending-list"]}
-                        sx={{
-                            display: "flex",
-                            gap: '0.5em'
-                        }}
-                    >
-                        {trending.map((trend, index) => (
-                            <TrendingCard 
-                                key={index}
-                                title={trend} 
-                                src={""} 
-                            />
-                        ))}
-                    </Box>
-                </div>
+                {
+                    isAdvanceSearchActive || !!searchTerms || (
+                        <>
+                            <SearchTrending style={searchModalStyles} />
+                            <div className={searchModalStyles['as-mode__active']}>
+                                <div className={searchModalStyles['as-mode__active-button']}
+                                    onClick={(event) => {
+                                        setAdvanceSearchActive(true)
+                                    }}
+                                    style={{ textAlign: 'center' }}
+                                >
+                                    Tìm kiếm nâng cao
+                                </div>
+                            </div>
+                        </>
+                    )
+                }
             </div>
-            {/* <AdvanceSearch />    */}
+            {isAdvanceSearchActive && <AdvanceSearch />}   
         </div>
     );
 }

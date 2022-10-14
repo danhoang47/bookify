@@ -1,65 +1,50 @@
-import  { Input } from '@/components'
-import { useState, memo, useEffect } from 'react';
-import {
-    usePopup
-} from '@/utils/hooks';
-import searchBoxStyles from './SearchBox.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { SearchModal } from '@/features/hotel/search'
+import SearchInputField from "../SearchInputField";
+import { useState, memo } from "react";
+import { usePopup } from "@/utils/hooks";
+import searchBoxStyles from "./SearchBox.module.scss";
+import { SearchModal } from "@/features/hotel/search";
+import { Box } from "@mui/material";
 
 function SearchBox() {
-    const [searchTerms, setSearchTerms] = useState('');
+    const [searchTerms, setSearchTerms] = useState("");
     const [isOpen, handleClick, containerRef] = usePopup();
 
     const handleOpenSearchBar = (event) => {
         handleClick(event);
-    }
+    };
 
-    return (  
-        <div 
-            className={searchBoxStyles['search-box']}
-            ref={containerRef}            
-        >
-            <div 
-                className={searchBoxStyles['search-bar']}
-            >
-                <Input 
-                    style={searchBoxStyles['search-input-field']}
-                    value={searchTerms}
-                    onValueChange={setSearchTerms}
-                    placeholder="Tìm kiếm"
-                    width="f-width"
-                    id="search-input-field"
-                    isOpen={isOpen}
-                    handleOpenSearchBar={handleOpenSearchBar}
-                />
-                {   isOpen || (
-                    <label 
-                        htmlFor='search-input-field'
-                        className={searchBoxStyles['search-glass-icon']}
-                    >
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />                    
-                    </label>
-                    )
-                }
-                {   isOpen && (
-                    <label 
-                        className={searchBoxStyles['search-close-icon']}
-                    >
-                        <FontAwesomeIcon icon={faXmark} />                    
-                    </label>
-                    )
-                }
-            </div>
-            {
-                (
-                    <SearchModal 
-                        searchTerms={searchTerms}
+    console.log(isOpen);
+    return (
+        <>
+            <div className={searchBoxStyles["search-box"]} ref={containerRef}>
+                <div className={searchBoxStyles["search-bar"]}>
+                    <SearchInputField
+                        style={searchBoxStyles["search-input-field"]}
+                        value={searchTerms}
+                        onValueChange={setSearchTerms}
+                        placeholder="Tìm kiếm"
+                        width="f-width"
+                        id="search-input-field"
+                        isOpen={isOpen}
+                        handleOpenSearchBar={handleOpenSearchBar}
                     />
-                )
-            }
-        </div>
+                </div>
+                { <SearchModal searchTerms={searchTerms} />}
+            </div>
+            {/* overlay */}
+            {isOpen && <Box
+                sx={{
+                    position: "absolute",
+                    left: 0,
+                    top: "84.11px",
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: "#000",
+                    zIndex: "1",
+                    opacity: "0.5",
+                }}
+            />}
+        </>
     );
 }
 

@@ -9,9 +9,7 @@ function Input({
     onValueChange,
     width = '',
     isValid = true,
-    style,
-    handleOpenSearchBar,
-    isOpen = false
+    style
 }) {
 
     return (  
@@ -28,11 +26,6 @@ function Input({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onValueChange(e.target.value)}
-                onFocus={(event) => {
-                    if (!isOpen) {
-                        handleOpenSearchBar(event);
-                    }
-                }}
             />
         </>
     );
