@@ -2,6 +2,17 @@
 
 .explore-search-places {
     margin-top: 1em;
+    display: inline-block;
+    position: absolute;
+    top: 125.58px;
+    left: 3em;
+    background: global.$white;
+    padding: 2em;
+    border-radius: 1.6em;
+    
+    .explore-search-header {
+        padding-bottom: 1em;
+    }
 
     .explore-search-list {
         width: max-content;

@@ -13,7 +13,6 @@ function SearchBox() {
         handleClick(event);
     };
 
-    console.log(isOpen);
     return (
         <>
             <div className={searchBoxStyles["search-box"]} ref={containerRef}>
@@ -29,7 +28,7 @@ function SearchBox() {
                         handleOpenSearchBar={handleOpenSearchBar}
                     />
                 </div>
-                { <SearchModal searchTerms={searchTerms} />}
+                { isOpen && <SearchModal searchTerms={searchTerms} /> }
             </div>
             {/* overlay */}
             {isOpen && <Box

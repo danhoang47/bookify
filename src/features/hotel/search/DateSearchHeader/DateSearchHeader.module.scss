@@ -1,10 +1,26 @@
 @use "src/global";
 
 #date-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.6em 1.4em;
+    border-radius: 1.6em;
+    cursor: pointer;
+
+    &.active {
+        background: global.$white;
+        box-shadow:  1px 9px 36px -3px #9b9b9b;
+    }
+
     .heading {
+        font-size: 0.8em;
     }
 
     .date-inputs {
+        height: 18px;
+        @include global.vertical-center();
+
         .date-from,
         .date-to {
             width: 8.4em;
@@ -13,7 +29,7 @@
             outline: none;
             border: none;
             color: global.$gray-600;
-            background: global.$gray-100;
+            background: transparent;
         }
 
         .date-to {

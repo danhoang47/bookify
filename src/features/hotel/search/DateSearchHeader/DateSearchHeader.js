@@ -13,13 +13,17 @@ function formatDay(date) {
     return undefined;
 }
 
-function DateSearchHeader({ onTabChange }) {
+function DateSearchHeader({ currentTab, onTabChange }) {
     const { selectedDays } = useContext(SearchContext);
+    const index = 1;
     
     return (  
         <div
             id={dateHeader["date-search"]}
-            className={dateHeader["advance-search__input-field"]}
+            className={[
+                dateHeader["advance-search__input-field"],
+                currentTab === index ? dateHeader['active'] : ''  
+            ].join(' ')}
             index='1'
             onClick={onTabChange}
         >

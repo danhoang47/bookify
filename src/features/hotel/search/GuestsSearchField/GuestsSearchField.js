@@ -1,6 +1,7 @@
 import { GuestsPicker } from "@/components";
 import { SearchContext } from "@/utils/contexts";
 import { useContext } from "react";
+import guestSearchStyles from './GuestsSearchField.module.scss';
 
 const description = {
     adult: "Từ 13 tuổi trở lên",
@@ -20,7 +21,7 @@ function GuestsSearchField() {
     const { guests, setGuests } = useContext(SearchContext);
 
     return (
-        <div>
+        <div className={guestSearchStyles['guests-search-field']}>
             <GuestsPicker
                 guests={guests}
                 setGuests={setGuests}

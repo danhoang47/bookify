@@ -22,6 +22,9 @@ function ExploreSearchField({ handler: fetchData }) {
 
     return (  
         <div className={exploreSearchStyles['explore-search-places']}>
+            <h4 className={exploreSearchStyles['explore-search-header']}>
+                Tìm kiếm theo địa điểm
+            </h4>
             <div className={exploreSearchStyles['explore-search-list']}>
                 {
                     foundPlaces?.map(({code, name}) => (

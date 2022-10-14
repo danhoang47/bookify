@@ -13,6 +13,19 @@ $slide: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 normal both running;
     }   
 }
 
+@keyframes slide-in-fwd-top-no-pos {
+    from {
+        opacity: 0.8;
+        transform: translateY(-70%);
+        scale: 0.6;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+        scale: 1;
+    }   
+}
+
 @keyframes slide-in-right {
     from {
         transform: translateX(120%);
