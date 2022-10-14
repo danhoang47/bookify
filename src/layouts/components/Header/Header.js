@@ -11,7 +11,7 @@ const BookmarkIconButton = IconButton;
 function Header() {
     return (
         <Box sx={{
-          padding: '1em 0'
+          padding: '1em 0',
         }}>
             <Grid container alignItems={"center"}>
                 <Grid item md={2}>

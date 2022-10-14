@@ -13,6 +13,7 @@ function usePopup(state = false) {
     const target = event.relatedTarget;
     const container = containerRef.current;
 
+    console.log('blur ', target);
     setOpen((prev) => {
       if (prev && !container.contains(target)) {
         return !prev;

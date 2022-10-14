@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Routes,
 } from "react-router-dom";
 import {
   Home,
@@ -10,7 +9,6 @@ import {
   PersonalInfo,
   LoginandSecurity,
   BookingHistory,
-  Tabs,
   Introduction,
   HotelManageMain,
   HotelManageBooking,

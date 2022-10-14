@@ -1,15 +1,18 @@
 @use 'src/global';
 
 #advance-search {
-    padding: 1em;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: global.$white;
     
     .advance-search-header {
         display: flex;
         gap: 1em;
-
-        > *:not(:nth-child(3)) {
-            border-right: 1px solid global.$gray-200;
-        }
+        padding: 0.3em 1.2em;
+        border-radius: 2em;
+        background: global.$gray-100;
 
         .advance-search-button {
             margin-left: auto;
@@ -17,12 +20,18 @@
             background-color: global.$main-color;
             border-radius: 0.8em;
             transition: all 0.2s ease-out;
-            border-left: none !important;
+            border-radius: 1.6em;
+            margin-right: -0.8em;
+            
 
             .search-button {
                 padding: 1.2em 1.3em;
                 color: global.$white;
                 cursor: pointer;
+
+                .fa-magnifying-glass {
+                    margin-right: 0.4em;
+                }
             }
 
             

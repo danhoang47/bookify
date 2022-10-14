@@ -16,29 +16,8 @@
     
             &:focus {
                 border: 2px solid global.$main-color;
-                padding-left: 0.6em;
+                padding-left: 0.8em;
                 padding-right: 0.6em;
-            }
-        }
-    
-        .search-glass-icon, .search-close-icon {
-            position: absolute;
-            top: 50%;
-            translate: 0 -50%;
-            color: global.$gray-600;
-        }
-    
-        .search-glass-icon {
-            left: 1.2%;
-        }
-    
-        .search-close-icon {
-            right: 1%;
-            text-align: center;
-            padding: 0.1em 0.4em;
-            
-            &:hover {
-                color: global.$main-color
             }
         }
     }

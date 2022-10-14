@@ -68,6 +68,7 @@ function AdvanceSearch() {
                             className={advanceSearchStyles['search-button']}
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            Tìm kiếm
                         </button>
                     </div>
                 </div>

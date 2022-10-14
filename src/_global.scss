@@ -83,6 +83,8 @@ ul {
     padding: 0 0.5em;
     position: relative;
     min-height: 100%;
+    overflow-x: hidden;
+
     .overlay {
         position: absolute;
         top: 0;

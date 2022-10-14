@@ -8,5 +8,10 @@
         outline: none;
         border: none;
         color: global.$gray-600;
+        background: global.$gray-100;
+
+        &:focus {
+            background: global.$white;
+        }
     }
 }
