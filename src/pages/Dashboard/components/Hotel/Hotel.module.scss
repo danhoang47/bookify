@@ -1,0 +1,31 @@
+.container {
+    table {
+        border-collapse: collapse;
+        width: 70rem;
+        background-color: #E7E7E7;
+        border-radius: 22px;
+        text-align: left;
+        thead {
+            th {
+                color: #6A6A6A;
+                padding: 0.5rem 2rem;
+                &:first-child {
+                    width: 15rem;
+                }
+            }
+        }
+        tbody {
+            border: 1px solid #E7E7E7;
+            tr {
+                border-top: 1px solid #E7E7E7;
+                background-color: white;
+                td {
+                    padding: 0.5rem 2rem;
+                }
+                &:last-child {
+                    border-radius: 22px;
+                }
+            }
+        }
+    }
+}

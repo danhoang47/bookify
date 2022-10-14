@@ -1,19 +1,38 @@
 import TableStyle from "./Hotel.module.scss";
+import Table from "./Table";
 function Hotel({ data }) {
+  const fakeData = [
+    {
+      hotelhostName: "Lê Quý Đức",
+      hotelName: "Đức cạp",
+      Time: "October 24,2022",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      hotelName: "Đức cạp",
+      Time: "October 24,2022",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      hotelName: "Đức cạp",
+      Time: "October 24,2022",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      hotelName: "Đức cạp",
+      Time: "October 24,2022",
+      status: 1,
+    },
+  ];
   return (
     <div className={TableStyle["container"]}>
       <h2>
         <b>Danh sách khách sạn</b>
       </h2>
-      <table>
-        <thead>
-          <th>Tên chủ khách sạn</th>
-          <th>Tên khách sạn</th>
-          <th>Thời gian</th>
-          <th>Trạng thái</th>
-          <th>Chi tiết</th>
-        </thead>
-      </table>
+      <Table data={fakeData} />
     </div>
   );
 }
