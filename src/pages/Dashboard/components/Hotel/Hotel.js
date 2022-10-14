@@ -4,26 +4,30 @@ function Hotel({ data }) {
   const fakeData = [
     {
       hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
       hotelName: "Đức cạp",
-      Time: "October 24,2022",
+      Time: "10/24/2022 12:30:06",
       status: 1,
     },
     {
       hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
       hotelName: "Đức cạp",
-      Time: "October 24,2022",
-      status: 1,
+      Time: "10/24/2022 12:30:06 ",
+      status: 2,
     },
     {
       hotelhostName: "Lê Quý Đức",
       hotelName: "Đức cạp",
-      Time: "October 24,2022",
-      status: 1,
+      ID: 1209231202121,
+      Time: "10/24/2022 12:30:06",
+      status: 3,
     },
     {
       hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
       hotelName: "Đức cạp",
-      Time: "October 24,2022",
+      Time: "10/24/2022 12:30:06",
       status: 1,
     },
   ];

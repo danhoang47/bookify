@@ -1,5 +1,6 @@
 .container {
     table {
+        margin-top: 1rem;
         border-collapse: collapse;
         width: 70rem;
         background-color: #E7E7E7;
@@ -21,6 +22,22 @@
                 background-color: white;
                 td {
                     padding: 0.5rem 2rem;
+                    button {
+                        padding: 0.6rem;
+                        border: 2px solid #ABABAB;
+                        border-radius: 12px;
+                        transition: all 0.1s linear;
+                        &:hover {
+                            color: white;
+                            background-color: #4361EE;
+                            border: 2px solid #4361EE;
+                        }
+                    }
+                    p {
+                        &:nth-child(2) {
+                            color: #6A6A6A;
+                        }
+                    }
                 }
                 &:last-child {
                     border-radius: 22px;
@@ -28,4 +45,19 @@
             }
         }
     }
+}
+
+.active {
+    font-weight: bold;
+    color: #4361EE;
+}
+
+.waiting {
+    font-weight: bold;
+    color: #F72585;
+}
+
+.cancel {
+    font-weight: bold;
+    color: rgba(255, 1, 1, 0.75);
 }
