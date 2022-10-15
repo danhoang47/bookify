@@ -36,11 +36,13 @@ function CheckOutInfo() {
           </div>
           <div>
             <h4 className={CheckOutInfoStyle["pay-title"]}>Trả với</h4>
-            <select name="" id="" className={CheckOutInfoStyle["select-box"]}>
-              <option value="">****-9123</option>
-              <option value="">****-9123</option>
-              <option value="">****-9123</option>
-            </select>
+            <div className={CheckOutInfoStyle["select-wrapper"]}>
+              <select name="" id="" className={CheckOutInfoStyle["select-box"]}>
+                <option value="">****-9123</option>
+                <option value="">****-9123</option>
+                <option value="">****-9123</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

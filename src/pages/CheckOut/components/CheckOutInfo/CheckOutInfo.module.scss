@@ -28,12 +28,49 @@
     }
 }
 
-.select-box {
-    border: 1px solid #ababab;
+.select-wrapper {
+    border: 1px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
     width: 100%;
+    margin-top: 10px;
+    padding: 0 10px;
     text-align: center;
-    padding: 10px 0;
-    border-radius: 8px;
+    select {
+        text-align-last: left;
+        padding-right: 29px;
+        direction: right;
+    }
+}
+
+.select-box {
+    outline: none;
+    // padding: 7px 10px;
+    height: 35px;
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    width: 100%;
+    // -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    -webkit-padding-end: 30px;
+    -webkit-padding-start: 20px;
+    -webkit-padding-before: 30px;
+    -webkit-padding-after: 20px;
+    -webkit-user-select: none;
+    background-image: url(../../../../../public/photo/select-arrow.png);
+    background-position: center right;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    border: 0px solid #aaa;
+    // color: #555;
+    font-family: global.$default-font;
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .pay-title {
