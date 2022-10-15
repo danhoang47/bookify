@@ -2,13 +2,17 @@ import exploreHeader from "./ExploreSearchHeader.module.scss";
 import { memo, useContext } from "react";
 import { SearchContext } from "@/utils/contexts";
 
-function ExploreSearchHeader({ onTabChange }) {
+function ExploreSearchHeader({ currentTab, onTabChange }) {
     const { place, setPlace } = useContext(SearchContext);
+    const index = 0;
 
     return (
         <label
             id={exploreHeader["explore-search"]}
-            className={exploreHeader["advance-search__input-field"]}
+            className={[
+                exploreHeader["advance-search__input-field"],
+                currentTab === index ? exploreHeader['active'] : ''             
+            ].join(' ')}
             index="0"
             onFocus={onTabChange}
         >
@@ -20,6 +24,7 @@ function ExploreSearchHeader({ onTabChange }) {
                 onChange={(event) => {
                     setPlace(event.target.value);
                 }}
+                spellCheck={false}
             />
         </label>
     );

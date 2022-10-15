@@ -1,39 +1,82 @@
 @use 'src/global';
+@use 'src/static/styles/animations';
 
 #advance-search {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: -51.31px;
     right: 0;
+    left: 0;
     background: global.$white;
-    
+
     .advance-search-header {
-        display: flex;
+        @include global.center();
+        font-size: 0.9em;
         gap: 1em;
-        padding: 0.3em 1.2em;
+        height: 71.31px;
+
+        .search-field-nav {
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+
+            &.active {
+                font-weight: bold;
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+
+            &:not(.active):hover {
+                font-weight: bold;
+            }
+        }
+    }
+    
+    .advance-search-header-field {
+        display: flex;
+        width: 100%;
+        justify-content: center;
         border-radius: 2em;
-        background: global.$gray-100;
+        @include animations.animate(slide-in-fwd-top-no-pos, 0.25s, animations.$slide, false);
+        position: relative;
+        padding-bottom: 1em;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            right: -100%;
+            bottom: 0;
+            top: 0;
+            background: global.$white;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            left: -100%;
+            bottom: 0;
+            top: 0;
+            background: global.$white;
+        }
 
         .advance-search-button {
-            margin-left: auto;
-            @include global.center();
+            position: absolute;
+            right: 0.25em;
+            top: 50%;
+            transform: translateY(-50%);
             background-color: global.$main-color;
             border-radius: 0.8em;
             transition: all 0.2s ease-out;
             border-radius: 1.6em;
-            margin-right: -0.8em;
-            
 
             .search-button {
                 padding: 1.2em 1.3em;
                 color: global.$white;
                 cursor: pointer;
-
-                .fa-magnifying-glass {
-                    margin-right: 0.4em;
-                }
+                
             }
-
             
             &:hover {
                 opacity: 0.8;

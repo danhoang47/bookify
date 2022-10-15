@@ -5,7 +5,7 @@ import SearchTrending from "../SearchTrending";
 import { useState } from "react";
 
 function SearchModal({ searchTerms }) {
-    const [isAdvanceSearchActive, setAdvanceSearchActive] = useState(true);
+    const [isAdvanceSearchActive, setAdvanceSearchActive] = useState(false);
 
     return (
         <div tabIndex={-1} className={searchModalStyles["search-modal"]}>
@@ -28,7 +28,7 @@ function SearchModal({ searchTerms }) {
                     )
                 }
             </div>
-            {isAdvanceSearchActive && <AdvanceSearch />}   
+            {isAdvanceSearchActive && <AdvanceSearch handleChangeMode={setAdvanceSearchActive}/>}   
         </div>
     );
 }

@@ -1,13 +1,15 @@
 import { DatePicker } from "@/components";
-import { useState } from 'react';
+import dateSearchStyles from './DateSearchField.module.scss';
 
 function DateSearchField() {
 
     return (
-        <DatePicker 
-            numberOfMonths="2"
-            mode="range"
-        />
+        <div className={dateSearchStyles['date-search-field']}>
+            <DatePicker 
+                numberOfMonths="2"
+                mode="range"
+            />
+        </div>
     );
 }
 
