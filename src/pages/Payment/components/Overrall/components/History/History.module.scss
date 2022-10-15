@@ -39,6 +39,7 @@
         height: 100%;
         overflow-y: hidden;
         scroll-behavior: smooth;
+        font-family: global.$default-font;
         .report-element {}
     }
 }
@@ -69,6 +70,10 @@
         border: none;
         color: #fff;
     }
+}
+
+.hide-btn {
+    display: none;
 }
 
 // .header-list select {

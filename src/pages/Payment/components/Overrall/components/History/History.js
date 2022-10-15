@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import HistoryData from "./components/HistoryData";
 import MonthPicker from "./components/MonthPicker";
 import HistoryStyle from "./History.module.scss";
-import { data } from "./FakeHistoryData";
 
-function History() {
+function History({ data }) {
   const [showmore, setShowmore] = useState(false);
   useEffect(() => {
     document.getElementById("list-history").scrollTo(0, 0);
@@ -13,7 +12,6 @@ function History() {
   return (
     <div className={HistoryStyle["history-list"]}>
       <MonthPicker />
-
       <div
         className={
           showmore
@@ -22,16 +20,28 @@ function History() {
         }
         id="list-history"
       >
-        <HistoryData data={data} />
+        {data == null || data.length === 0 ? (
+          <h3>Bạn chưa thực hiện giao dịch nào</h3>
+        ) : (
+          <HistoryData data={data} />
+        )}
       </div>
-      <button
-        className={HistoryStyle["show-btn"]}
-        onClick={() => {
-          setShowmore(!showmore);
-        }}
-      >
-        {showmore ? "Ẩn đi" : "Hiển thị thêm"}
-      </button>
+      {data == null || data.length === 0 ? (
+        <div></div>
+      ) : (
+        <button
+          className={
+            data.length > 4
+              ? HistoryStyle["show-btn"]
+              : HistoryStyle["hide-btn"]
+          }
+          onClick={() => {
+            setShowmore(!showmore);
+          }}
+        >
+          {showmore ? "Ẩn đi" : "Hiển thị thêm"}
+        </button>
+      )}
     </div>
   );
 }

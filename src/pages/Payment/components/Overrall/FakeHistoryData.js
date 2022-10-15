@@ -27,7 +27,7 @@ export const data = [
     hotelName: "Dưới chân cầu",
     price: 800,
     roomType: "1 Phòng ngủ siêu to khổng lồ",
-    time: "12:00 - 21/03/2022",
+    time: "12:00 - 22/03/2022",
   },
   {
     hotelName: "Dưới cống",
@@ -39,7 +39,7 @@ export const data = [
     hotelName: "Dưới chân cầu",
     price: 800,
     roomType: "1 Phòng ngủ siêu to khổng lồ",
-    time: "12:00 - 21/03/2022",
+    time: "12:00 - 25/03/2022",
   },
   {
     hotelName: "Dưới cống",
@@ -51,7 +51,7 @@ export const data = [
     hotelName: "Dưới ruộng",
     price: 800,
     roomType: "1 Phòng ngủ siêu to khổng lồ",
-    time: "12:00 - 21/03/2022",
+    time: "12:00 - 27/03/2022",
   },
   {
     hotelName: "Lanmark 81",

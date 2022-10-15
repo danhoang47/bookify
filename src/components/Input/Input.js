@@ -8,8 +8,10 @@ function Input({
     value = '',
     onValueChange,
     width = '',
-    isValid = true
+    isValid = true,
+    style
 }) {
+
     return (  
         <>
             <input 
@@ -17,7 +19,8 @@ function Input({
                 className={[
                     inputStyles["input-bar"],
                     inputStyles[width] ?? '',
-                    isValid ? '' : inputStyles['error']
+                    isValid ? '' : inputStyles['error'],
+                    style ?? ''
                 ].join(' ')}
                 type={type}
                 value={value}

@@ -4,7 +4,8 @@ function usePopup(state = false) {
   const [isOpen, setOpen] = useState(state);
   const containerRef = useRef(); 
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation();
     setOpen(prev => !prev)
   }
 
@@ -13,8 +14,9 @@ function usePopup(state = false) {
     const container = containerRef.current;
 
     setOpen((prev) => {
-      if (prev && !container.contains(target))
+      if (prev && !container.contains(target)) {
         return !prev;
+      }
       else 
         return prev;
     })

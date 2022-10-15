@@ -38,9 +38,12 @@
 }
 
 // variables
-$default-font: "Poppins",
-sans-serif;
+$default-font: "Poppins", sans-serif;
 $main-color: #4361ee;
+$light-blue: #4cc9f0;
+$purple: #7209b7;
+$dark-blue: #3a0ca3;
+$pink: #f72585;
 $black: #000;
 $white: #fff;
 $red: #ef233c;
@@ -80,6 +83,8 @@ ul {
     padding: 0 0.5em;
     position: relative;
     min-height: 100%;
+    overflow-x: hidden;
+
     .overlay {
         position: absolute;
         top: 0;
@@ -122,3 +127,4 @@ ul {
         padding: 0 10em;
     }
 }
+
