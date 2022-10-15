@@ -31,15 +31,15 @@ function SearchBox() {
                 { isOpen && <SearchModal searchTerms={searchTerms} /> }
             </div>
             {/* overlay */}
-            {isOpen && <Box
+            { isOpen && <Box
                 sx={{
                     position: "absolute",
                     left: 0,
-                    top: "84.11px",
+                    top: "72.83px",
                     right: 0,
                     bottom: 0,
                     backgroundColor: "#000",
-                    zIndex: "1",
+                    zIndex: "2",
                     opacity: "0.5",
                 }}
             />}

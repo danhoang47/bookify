@@ -47,7 +47,7 @@
             width: 100%;
             right: -100%;
             bottom: 0;
-            top: 0;
+            top: -4px;
             background: global.$white;
         }
 
@@ -57,7 +57,7 @@
             width: 100%;
             left: -100%;
             bottom: 0;
-            top: 0;
+            top: -4px;
             background: global.$white;
         }
 
@@ -72,10 +72,9 @@
             border-radius: 1.6em;
 
             .search-button {
-                padding: 1.2em 1.3em;
+                padding: 0.6em 1em;
                 color: global.$white;
                 cursor: pointer;
-                
             }
             
             &:hover {
