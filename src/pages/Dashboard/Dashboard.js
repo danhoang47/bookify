@@ -7,11 +7,11 @@ import DashboardStyle from "./Dashboard.module.scss";
 import { useState, useMemo } from "react";
 import All from "./components/All";
 import Hotel from "./components/Hotel";
-import HotelContext from "@/utils/contexts/HistoryContext";
+import HotelContext from "@/utils/contexts/HotelContext";
 
 function Dashboard() {
   const [value, setValue] = useState("1");
-  const fakeData = useMemo(
+  const data = useMemo(
     () => [
       {
         hotelhostName: "Lê Quý Đức",
@@ -110,7 +110,7 @@ function Dashboard() {
     setValue(newValue);
   };
   return (
-    <HotelContext.Provider value={fakeData}>
+    <HotelContext.Provider value={data}>
       <div className={DashboardStyle["container"]}>
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>

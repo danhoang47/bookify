@@ -6,6 +6,7 @@ import moment from "moment";
 function Hotel() {
   const [filter, setFilter] = useState(null);
   const data = useContext(HotelContext);
+  console.log(data);
   const handleChange = useCallback(
     (event) => {
       console.log("push");
@@ -19,8 +20,6 @@ function Hotel() {
     },
     [filter, data]
   );
-
-  console.log(filter);
   return (
     <div className={TableStyle["container"]}>
       <div className={TableStyle["header"]}>
