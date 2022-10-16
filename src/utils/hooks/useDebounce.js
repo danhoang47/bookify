@@ -1,6 +1,12 @@
+function useDebounce(callback, timeout = 300) {
+    let timer;
 
-function useDebouce() {
-    console.log('use debouce')
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback(args)
+        }, timeout)
+    }
 }
 
-export default useDebouce;
+export default useDebounce;

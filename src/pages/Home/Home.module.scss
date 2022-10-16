@@ -1,0 +1,37 @@
+@use 'src/global';
+
+#home {
+    position: relative;
+
+    .filter-bar {
+        padding: 2em 0;
+        position: relative;
+
+        .category-tab {
+            @include global.center();
+            gap: 1em;
+        }
+
+        .filter-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid global.$gray-200;
+            padding: 0.6em 0.8em;
+            @include global.center();
+            gap: 0.4em;
+            border-radius: 0.6em;
+            transition: border-color 0.15s linear;
+
+            &:hover {
+                border-color: global.$black;
+            }
+        }
+    }
+
+    .hotel-cards {
+        width: 100%;
+    }
+}

@@ -96,7 +96,7 @@ function FormUpdate() {
   const onClickHandler = (e) => {};
   const formSubmit = (e) => {
     e.preventDefault();
-    dispatch(getHotelSettingModal({ isOpen: true }));
+    dispatch(getPasswordModal({ isOpen: true }));
   };
 
   return (
@@ -119,33 +119,6 @@ function FormUpdate() {
               />
             </>
           ))}
-          {/* <span className={FormUpdateStyle["text-input-field"]}>
-            <label htmlFor="username">
-              <b className={FormUpdateStyle["label"]}>username</b>
-            </label>
-            <input
-              type="text"
-              readOnly={true}
-              placeholder="Điền username"
-              name="username"
-              value={user.username}
-              className={FormUpdateStyle["input-update"]}
-            />
-          </span>
-          <span className={FormUpdateStyle["text-input-field"]}>
-            <label htmlFor="password">
-              <b className={FormUpdateStyle["label"]}>Mật khẩu</b>
-            </label>
-            <input
-              type="password"
-              placeholder="***********"
-              readOnly={true}
-              name="password"
-              value={inputs.password || ""}
-              onChange={handleChange}
-              className={FormUpdateStyle["input-update"]}
-            />
-          </span> */}
           <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="card-number">
               <b className={FormUpdateStyle["label"]}>Mã số thẻ</b>

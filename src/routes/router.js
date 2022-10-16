@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Routes,
 } from "react-router-dom";
 import {
   Home,
@@ -10,10 +9,12 @@ import {
   PersonalInfo,
   LoginandSecurity,
   BookingHistory,
-  Tabs,
   Introduction,
-  HotelManage,
+  HotelManageMain,
+  HotelManageBooking,
   HotelManageDetail,
+  Dashboard,
+  Payment,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 
@@ -26,21 +27,23 @@ const router = createBrowserRouter(
           <Route path="" element={<Profile />} />
           <Route path="info" element={<PersonalInfo />} />
           <Route path="loginandsecurity" element={<LoginandSecurity />} />
-          <Route path="history" element={<BookingHistory />}>
-            <Route path="" element={<Tabs />} />
-            <Route path="today" element={<Tabs />} />
-            <Route path="cancel" element={<Tabs />} />
-            <Route path="booked" element={<Tabs />} />
-          </Route>
-        </Route>
-
-        <Route path="hotelmanage">
-          <Route path="" element={<HotelManage />} />
-          <Route path="detail" element={<HotelManageDetail />} />
+          <Route path="history" element={<BookingHistory />} />
         </Route>
       </Route>
+      <Route path="hotelmanage" element={<DefaultLayout />}>
+        <Route path="" element={<HotelManageMain />} />
+        <Route path="detail" element={<HotelManageDetail />} />
+        <Route path="booking" element={<HotelManageBooking />} />
+      </Route>
+
       <Route path="introduction" element={<DefaultLayout />}>
         <Route path="" element={<Introduction />} />
+      </Route>
+      <Route path="dashboard" element={<DefaultLayout />}>
+        <Route path="" element={<Dashboard />} />
+      </Route>
+      <Route path="payment" element={<DefaultLayout />}>
+        <Route path="" element={<Payment />} />
       </Route>
     </Route>
   )

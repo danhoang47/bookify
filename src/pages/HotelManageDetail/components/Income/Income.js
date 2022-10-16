@@ -43,17 +43,19 @@ function Income() {
   return (
     <div className={IncomeStyle["income-wrapper"]}>
       <SelectBox onChangeMonth={onChangeMonth} />
-      <Chart
-        monthSelected={month}
-        total={total}
-        days={days}
-        dayIncome={dayIncome}
-        daysTotal={daysTotal}
-        expectIncome={expectIncome}
-        months={months}
-        incomeByMonth={incomeByMonth}
-        expected={expected}
-      />
+      <div className={IncomeStyle["chart-wrapper"]}>
+        <Chart
+          monthSelected={month}
+          total={total}
+          days={days}
+          dayIncome={dayIncome}
+          daysTotal={daysTotal}
+          expectIncome={expectIncome}
+          months={months}
+          incomeByMonth={incomeByMonth}
+          expected={expected}
+        />
+      </div>
     </div>
   );
 }
