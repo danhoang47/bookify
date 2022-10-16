@@ -11,4 +11,3 @@ export {
   HistoryCard,
   HotelSettingModal,
 };
-
