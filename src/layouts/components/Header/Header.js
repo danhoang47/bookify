@@ -12,6 +12,12 @@ function Header() {
     return (
         <Box sx={{
           padding: '1em 0',
+          position: 'fixed',
+          zIndex: '2',
+          left: '0',
+          right: '0',
+          top: '0',
+          backgroundColor: 'white'
         }}>
             <Grid container alignItems={"center"}>
                 <Grid item md={2}>

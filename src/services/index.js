@@ -1,5 +1,5 @@
-import getPlaces from "./hotel/getPlaces";
+import getExplorePlaces from "./hotel/getExplorePlaces";
 
 export {
-    getPlaces
+    getExplorePlaces
 }

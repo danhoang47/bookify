@@ -2,7 +2,7 @@ import exploreSearchStyles from './ExploreSearchField.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState, useContext } from 'react';
-import { getPlaces } from '@/services';
+import { getExplorePlaces } from '@/services';
 import { SearchContext } from '@/utils/contexts';
 import { useDebounce } from '@/utils/hooks';
 
@@ -11,7 +11,7 @@ function ExploreSearchField({ handler: fetchData }) {
     const { place } = useContext(SearchContext);
     const limitResults = 5;
     const debounceExploreSearch = useDebounce(() => {
-        getPlaces(place).then(data => {
+        getExplorePlaces(place).then(data => {
             setFoundPlaces(data.slice(0, limitResults))
         })
     });

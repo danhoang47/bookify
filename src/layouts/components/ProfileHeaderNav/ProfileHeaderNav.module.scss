@@ -2,6 +2,7 @@
 
 .profile-header-nav {
     position: relative;
+    z-index: 3;
 
     .profile-button {
         display: flex;
@@ -26,7 +27,7 @@
         .profile-user-avatar {
             display: inline-block;
             @include global.vertical-center();
-            font-size: 2em;
+            font-size: 1.6em;
             padding: .2em;
             padding-left: 0;
         }
@@ -38,8 +39,10 @@
         font-size: 0.9em;
         top: 3.4em;
         right: 0;
-        box-shadow: 0 0 10px 3px global.$gray-100;
-        border-radius: 1.2em;
+        padding: 0.4em 0;
+        border-radius: 0.7em;
+        background-color: rgb(255, 255, 255);
+        filter: drop-shadow(0 3px 8px rgb(136, 136, 136));
 
         input[type="checkbox"]:not(:checked) ~ * {
             display: none;
