@@ -1,12 +1,37 @@
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+    // For Google Chrome
+    &::-webkit-scrollbar {
+        width: $size;
+        height: $size;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+        border-radius: 15px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+        border-radius: 15px;
+    }
+    & {
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
+    }
+}
+
 .container {
     table {
+        overflow: scroll;
         margin-top: 1rem;
+        height: 10rem;
         border-collapse: collapse;
         width: 70rem;
         background-color: #E7E7E7;
         border-radius: 22px;
         text-align: left;
         thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
             th {
                 color: #6A6A6A;
                 padding: 0.5rem 2rem;
@@ -16,8 +41,15 @@
             }
         }
         tbody {
+            @include scrollbars(5px, rgba(12, 124, 223, 0.673), pink);
+            display: block;
+            max-height: 390px;
+            overflow-y: scroll;
             border: 1px solid #E7E7E7;
             tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
                 border-top: 1px solid #E7E7E7;
                 background-color: white;
                 td {
@@ -38,9 +70,6 @@
                             color: #6A6A6A;
                         }
                     }
-                }
-                &:last-child {
-                    border-radius: 22px;
                 }
             }
         }

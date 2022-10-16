@@ -30,6 +30,48 @@ function Hotel({ data }) {
       Time: "10/24/2022 12:30:06",
       status: 1,
     },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
+    {
+      hotelhostName: "Lê Quý Đức",
+      ID: 1209231202121,
+      hotelName: "Đức cạp",
+      Time: "10/24/2022 12:30:06",
+      status: 1,
+    },
   ];
   return (
     <div className={TableStyle["container"]}>
