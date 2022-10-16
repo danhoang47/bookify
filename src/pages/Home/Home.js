@@ -30,8 +30,6 @@ const trendingHotels = [
     },
 ];
 
-
-
 function Home() {
     const [type, setType] = useState({});
     const currentCoordinates = useContext(CoordinatesContext);
@@ -50,21 +48,23 @@ function Home() {
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
-                    <div className={homeStyles["filter-bar"]}>
-                        <div className={homeStyles["category-tab"]}>
-                            {categories.map(
-                                ({ filterType, filterTypeId, icon, name }) => (
-                                    <TabItem
-                                        key={name}
-                                        type={type}
-                                        filterType={filterType}
-                                        filterTypeId={filterTypeId}
-                                        icon={icon}
-                                        name={name}
-                                        handleClick={setType}
-                                    />
-                                )
-                            )}
+                    <div className={homeStyles["filter-bar-container"]}>
+                        <div className={homeStyles['filter-bar']}>
+                            <div className={homeStyles["category-tab"]}>
+                                {categories.map(
+                                    ({ filterType, filterTypeId, icon, name }) => (
+                                        <TabItem
+                                            key={name}
+                                            type={type}
+                                            filterType={filterType}
+                                            filterTypeId={filterTypeId}
+                                            icon={icon}
+                                            name={name}
+                                            handleClick={setType}
+                                        />
+                                    )
+                                )}
+                            </div>
                         </div>
                         <button className={homeStyles["filter-button"]}>
                             <FontAwesomeIcon icon={faSliders} />
