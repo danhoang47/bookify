@@ -1,84 +1,46 @@
 import TableStyle from "./Hotel.module.scss";
 import Table from "./Table";
-function Hotel({ data }) {
-  const fakeData = [
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
+import { useState, useContext, useCallback } from "react";
+import { HotelContext } from "@/utils/contexts";
+import moment from "moment";
+function Hotel() {
+  const [filter, setFilter] = useState(null);
+  const data = useContext(HotelContext);
+  const handleChange = useCallback(
+    (event) => {
+      console.log("push");
+      const value = event.target.value;
+      setFilter(value);
+      data.sort((a, b) => {
+        return filter
+          ? Number(moment(a.Time)) - Number(moment(b.Time))
+          : Number(moment(b.Time)) - Number(moment(a.Time));
+      });
     },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06 ",
-      status: 2,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      hotelName: "Đức cạp",
-      ID: 1209231202121,
-      Time: "10/24/2022 12:30:06",
-      status: 3,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-    {
-      hotelhostName: "Lê Quý Đức",
-      ID: 1209231202121,
-      hotelName: "Đức cạp",
-      Time: "10/24/2022 12:30:06",
-      status: 1,
-    },
-  ];
+    [filter, data]
+  );
+
+  console.log(filter);
   return (
     <div className={TableStyle["container"]}>
-      <h2>
-        <b>Danh sách khách sạn</b>
-      </h2>
-      <Table data={fakeData} />
+      <div className={TableStyle["header"]}>
+        <h2>
+          <b>Danh sách khách sạn</b>
+        </h2>
+        <select
+          name="category"
+          id="category"
+          onChange={handleChange}
+          className={TableStyle["select-input"]}
+        >
+          <option value="" selected disabled hidden>
+            Filter
+          </option>
+          <option value={true}>Mới nhất</option>
+          <option value={false}>Cũ nhất</option>
+        </select>
+      </div>
+      <Table data={data} filter={filter} />
     </div>
   );
 }

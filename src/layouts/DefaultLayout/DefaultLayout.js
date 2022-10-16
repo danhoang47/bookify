@@ -11,7 +11,7 @@ function DefaultLayout() {
     <div className={styles["default-layout"]}>
       <Header />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

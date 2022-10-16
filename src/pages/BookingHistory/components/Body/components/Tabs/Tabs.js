@@ -30,6 +30,9 @@ function Tabs({ category }) {
           id="category"
           className={ListStyle["select-input"]}
         >
+          <option value="" selected disabled hidden>
+            Filter
+          </option>
           <option value="">Mới nhất</option>
           <option value="">Cũ nhất</option>
         </select>

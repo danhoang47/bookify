@@ -19,6 +19,20 @@
 }
 
 .container {
+    .header {
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-between;
+        h2 {
+            width: 30rem;
+        }
+        .select-input {
+            width: 5rem;
+            border-radius: 18px;
+            padding: 5px;
+            border: 1px solid #ababab;
+        }
+    }
     table {
         overflow: scroll;
         margin-top: 1rem;

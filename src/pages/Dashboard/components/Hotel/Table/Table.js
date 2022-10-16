@@ -1,6 +1,8 @@
 import TableStyle from "../Hotel.module.scss";
 import moment from "moment";
-function Table({ data }) {
+import { useMemo } from "react";
+function Table({ data, filter }) {
+  console.log(data);
   return (
     <table>
       <thead>
