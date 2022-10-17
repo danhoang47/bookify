@@ -13,7 +13,7 @@ function Hotel() {
       const value = event.target.value;
       setFilter(value);
       data.sort((a, b) => {
-        return filter
+        return filter === "true"
           ? Number(moment(a.Time)) - Number(moment(b.Time))
           : Number(moment(b.Time)) - Number(moment(a.Time));
       });

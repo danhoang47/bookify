@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import styles from "./DefaultLayout.module.scss";
 import { memo } from "react";
 import { Outlet } from "react-router-dom";
+import { Box } from '@mui/material';
 
 function DefaultLayout() {
   console.log("layout rerender");
@@ -10,7 +11,13 @@ function DefaultLayout() {
   return (
     <div className={styles["default-layout"]}>
       <Header />
-      <Outlet />
+      <Box sx={{
+        position: 'relative',
+        top: '72.78px',
+        zIndex: 0
+      }}>
+        <Outlet />
+      </Box>
       {/* <Footer /> */}
     </div>
   );
