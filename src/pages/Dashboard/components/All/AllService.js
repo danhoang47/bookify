@@ -91,6 +91,7 @@ export const typeBookingData = (month) => {
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((data) => data.types);
+
   dataByMonth[0]?.forEach((data) => {
     typeBookingObj.type.push(data.type);
     typeBookingObj.numberBooking.push(data.numberOfBooking);
@@ -106,7 +107,7 @@ export const BookingNumberData = (month) => {
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((data) => data.details);
-  dataByMonth[0].forEach((data) => {
+  dataByMonth[0]?.forEach((data) => {
     bookingObj.day.push(data.day);
     bookingObj.numberBooking.push(data.booking);
   });
