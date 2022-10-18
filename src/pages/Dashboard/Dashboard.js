@@ -7,17 +7,18 @@ import DashboardStyle from "./Dashboard.module.scss";
 import { useState, useMemo } from "react";
 import All from "./components/All";
 import Hotel from "./components/Hotel";
+import Exchange from "./components/Exchange";
 import HotelContext from "@/utils/contexts/HotelContext";
 
 function Dashboard() {
   const [value, setValue] = useState("1");
-  const data = useMemo(
+  const hotelData = useMemo(
     () => [
       {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2012 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -26,14 +27,14 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/22/2022 12:30:06 ",
         status: 2,
         totalMoney: 260,
       },
       {
         hotelhostName: "Lê Quý Đức",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         ExchangeId: "OPD209231202123",
         ID: 1209231202121,
         Time: "09/04/2012 12:30:06",
@@ -44,7 +45,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "12/04/2002 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -53,7 +54,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/21/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -62,7 +63,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -71,7 +72,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -80,7 +81,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -89,7 +90,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -98,7 +99,7 @@ function Dashboard() {
         hotelhostName: "Lê Quý Đức",
         ID: 1209231202121,
         ExchangeId: "OPD209231202123",
-        hotelName: "Đức cạp",
+        hotelName: "Khách sạn Vinpearl Nam Hội An",
         Time: "10/24/2022 12:30:06",
         status: 1,
         totalMoney: 260,
@@ -110,7 +111,7 @@ function Dashboard() {
     setValue(newValue);
   };
   return (
-    <HotelContext.Provider value={data}>
+    <HotelContext.Provider value={hotelData}>
       <div className={DashboardStyle["container"]}>
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
@@ -144,7 +145,7 @@ function Dashboard() {
               <All />
             </TabPanel>
             <TabPanel value="2">
-              <h1>Giao dichj</h1>
+              <Exchange />
             </TabPanel>
             <TabPanel value="3">
               <Hotel />

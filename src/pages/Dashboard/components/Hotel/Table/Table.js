@@ -19,7 +19,9 @@ function Table({ data, filter }) {
               <p>{row.hotelhostName}</p>
               <p>ID:{row.ID}</p>
             </td>
-            <td>{row.hotelName}</td>
+            <td>
+              <p>{row.hotelName}</p>
+            </td>
             <td>
               <p>{moment(row.Time).format("MMMM dS, yyyy")}</p>
               <p>Lúc: {moment(row.Time).format("HH:MM")}</p>

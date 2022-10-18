@@ -1,5 +1,3 @@
 import getPlaces from "./hotel/getPlaces";
 
-export {
-    getPlaces
-}
+export { getPlaces };
