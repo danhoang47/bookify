@@ -1,6 +1,6 @@
 export const dashboarData = [
   {
-    month: "Jan",
+    month: 1,
     details: [
       {
         day: 1,
@@ -225,7 +225,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Feb",
+    month: 2,
     details: [
       {
         day: 1,
@@ -450,7 +450,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Mar",
+    month: 3,
     details: [
       {
         day: 1,
@@ -675,7 +675,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Apr",
+    month: 4,
     details: [
       {
         day: 1,
@@ -900,7 +900,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "May",
+    month: 5,
     details: [
       {
         day: 1,
@@ -1125,7 +1125,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Jun",
+    month: 6,
     details: [
       {
         day: 1,
@@ -1350,7 +1350,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Jul",
+    month: 7,
     details: [
       {
         day: 1,
@@ -1575,7 +1575,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Aug",
+    month: 8,
     details: [
       {
         day: 1,
@@ -1800,7 +1800,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Sep",
+    month: 9,
     details: [
       {
         day: 1,
@@ -2025,7 +2025,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Oct",
+    month: 10,
     details: [
       {
         day: 1,
@@ -2252,7 +2252,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Nov",
+    month: 11,
     details: [
       {
         day: 1,
@@ -2477,7 +2477,7 @@ export const dashboarData = [
     ],
   },
   {
-    month: "Dec",
+    month: 12,
     details: [
       {
         day: 1,

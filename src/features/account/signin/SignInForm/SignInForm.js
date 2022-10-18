@@ -1,12 +1,23 @@
 import { InputField } from "../../components";
 import formStyles from "./SignInForm.module.scss";
-import { useState, memo, useCallback, useEffect, useRef, useMemo } from "react";
+import {
+  useState,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+  useContext,
+} from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
+import { UserContext } from "@/utils/contexts";
 
 function SignInForm() {
+  let { user, isLogin, setLogin } = useContext(UserContext);
+
   const [account, setAccount] = useState({
     username: null,
     password: null,
@@ -26,7 +37,34 @@ function SignInForm() {
   }, [account, isAccountValid]);
   const [isRemember, setRemember] = useState(false);
   const changedKey = useRef();
-  const handleSubmit = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append("username", account.username);
+    form.append("password", account.password);
+    fetch("/rest/user_detail/login", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: form,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLogin(true);
+        user.id = data.user.user_id;
+        user.username = data.user.username;
+        user.avatar = data.user.avatar;
+        user.wallet_amount = data.user.wallet_amount;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleAccountChange = useCallback(
     (value, key) => {
       setAccount((prev) => {
@@ -59,11 +97,11 @@ function SignInForm() {
     }
   }, [account]);
 
-  console.log("re-render ", isInformationFilled);
+  // console.log("re-render ", isInformationFilled);
   return (
     <div className={formStyles["form-wrapper"]}>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         className={formStyles["form"]}
         spellCheck={false}
       >
@@ -96,6 +134,7 @@ function SignInForm() {
         </p>
         <div className={formStyles["button-wrapper"]}>
           <button
+            type="submit"
             className={[
               formStyles["sign-in-button"],
               isInformationFilled ? "" : formStyles["button-disabled"],

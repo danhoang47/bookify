@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import { ModalContext } from "@/utils/contexts";
 import { usePopup } from "@/utils/hooks";
 import { getSignInModal, getSignUpModal } from "@/utils/reducers/modalReducer";
+import { BrowserRouter } from "react-router-dom";
 
 function SignInModal({ animation }) {
   const [isModalOpen, handleClick, containerRef] = usePopup(true);
@@ -28,12 +29,16 @@ function SignInModal({ animation }) {
       ref={containerRef}
     >
       <div className={signInModalStyles["page-logo"]}>
-        <Logo />
+        <BrowserRouter>
+          <Logo />
+        </BrowserRouter>
         <h3 className={signInModalStyles["welcome-heading"]}>
           Welcome back, Mate
         </h3>
       </div>
-      <SignInForm />
+      <BrowserRouter>
+        <SignInForm />
+      </BrowserRouter>
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?

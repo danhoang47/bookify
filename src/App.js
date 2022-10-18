@@ -1,6 +1,10 @@
 import "./_global.scss";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { ModalContext, UserContext, CoordinatesContext } from "@/utils/contexts";
+import {
+  ModalContext,
+  UserContext,
+  CoordinatesContext,
+} from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
 
@@ -10,14 +14,15 @@ const initState = {
 };
 
 const user = {
-  id: 123456,
-  username: "Quoc Dat",
-  cardNumber: "1542 - 5644 - 2545 - 2871",
+  id: "",
+  username: "",
+  wallet_amount: 0,
+  avatar: "",
 };
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(reducer, initState);
-  const [isLogin, setLogin] = useState(true);
+  const [isLogin, setLogin] = useState(false);
   const [currentCoordinates, setCurrentCoordinates] = useState();
 
   const modal = useMemo(() => {
@@ -40,14 +45,14 @@ function App({ children }) {
     nav.getCurrentPosition((pos) => {
       if (pos) {
         const { latitude, longitude } = pos?.coords;
-        console.log(latitude, longitude)
+
         setCurrentCoordinates({
           latitude,
-          longitude
-        })
+          longitude,
+        });
       }
     });
-  }, [])
+  }, []);
 
   return (
     <CoordinatesContext.Provider value={currentCoordinates}>
@@ -63,7 +68,8 @@ function App({ children }) {
           </div>
         </ModalContext.Provider>
       </UserContext.Provider>
-    </CoordinatesContext.Provider>);
+    </CoordinatesContext.Provider>
+  );
 }
 
 export default App;

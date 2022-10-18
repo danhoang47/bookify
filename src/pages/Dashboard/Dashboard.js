@@ -110,6 +110,7 @@ function Dashboard() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <HotelContext.Provider value={hotelData}>
       <div className={DashboardStyle["container"]}>
