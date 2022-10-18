@@ -14,7 +14,6 @@ function DefaultLayout() {
       <Box sx={{
         position: 'relative',
         top: '72.78px',
-        zIndex: 0
       }}>
         <Outlet />
       </Box>

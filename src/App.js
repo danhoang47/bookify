@@ -3,7 +3,7 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import { ModalContext, UserContext, CoordinatesContext } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
-import { Container } from '@mui/material';
+import { Container } from '@mui/material'
 
 const initState = {
   isOpen: false,
@@ -14,11 +14,14 @@ const user = {
   id: 123456,
   username: "Quoc Dat",
   cardNumber: "1542 - 5644 - 2545 - 2871",
+  jwt: '',
+  role: '',
+  avatar: '',
 };
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(reducer, initState);
-  const [isLogin, setLogin] = useState(true);
+  const [isLogin, setLogin] = useState(false);
   const [currentCoordinates, setCurrentCoordinates] = useState();
 
   const modal = useMemo(() => {

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useMemo } from "react";
 import AllStyle from "./All.module.scss";
 import StaticCard from "./StaticCard";
 import Chart from "./Chart";
@@ -18,15 +18,12 @@ import { useState } from "react";
 export const MonthContext = createContext();
 
 function All() {
-  let date = new Date();
-  const [month, setMonth] = useState(
-    date.toLocaleString("default", { month: "short" })
-  );
-  let staticData = getStatic(month);
+  const [month, setMonth] = useState(new Date().getMonth() + 1)
   let staticTracking = getIncreasePercent(month);
   let typeBooking = typeBookingData(month);
   let bookingNumber = BookingNumberData(month);
   let reportData = ReportData(month);
+  const staticData = useMemo(() => getStatic(month), [month]);
 
   return (
     <div className={AllStyle["dashboard-all"]}>
