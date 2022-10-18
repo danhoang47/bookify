@@ -3,21 +3,6 @@ import SelectBox from "../SelectBox";
 import { useContext, useState } from "react";
 import { MonthContext } from "../All";
 
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 function MonthPicker() {
   var date = new Date();
   const [month, setMonth] = useContext(MonthContext);
@@ -26,7 +11,7 @@ function MonthPicker() {
     <div className={MonthPickerStyle["time-wrapper"]}>
       <div>
         <h2>
-          Tháng {monthsKey.indexOf(month) + 1}, năm {date.getFullYear()}
+          Tháng {month}, năm {date.getFullYear()}
         </h2>
       </div>
       <div>

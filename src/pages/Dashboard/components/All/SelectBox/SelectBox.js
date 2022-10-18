@@ -3,41 +3,24 @@ import { MonthContext } from "../All";
 import { useContext, useState } from "react";
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "Tháng 1",
+  "Tháng 2",
+  "Tháng 3",
+  "Tháng 4",
+  "Tháng 5",
+  "Tháng 6",
+  "Tháng 7",
+  "Tháng 8",
+  "Tháng 9",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12",
 ];
 
 function SelectBox() {
   let date = new Date();
   const [month, setMonth] = useContext(MonthContext);
-  let currentMonth = date.toLocaleString("default", { month: "short" });
-
-  console.log();
+  let currentMonth = date.getMonth() + 1;
 
   return (
     <div className={SelectBoxStyle["select-wrapper"]}>
@@ -46,7 +29,7 @@ function SelectBox() {
           name="months"
           id="months"
           onChange={(e) => {
-            setMonth(e.target.value);
+            setMonth(parseInt(e.target.value));
           }}
           className={SelectBoxStyle["months"]}
         >
@@ -55,7 +38,7 @@ function SelectBox() {
             return (
               <option
                 disabled={months.indexOf(data) > date.getMonth() ? true : false}
-                value={monthsKey[index]}
+                value={index + 1}
                 key={index}
               >
                 {data}

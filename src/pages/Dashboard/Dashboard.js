@@ -14,6 +14,7 @@ function Dashboard() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <div className={DashboardStyle["container"]}>
       <Box sx={{ width: "100%", typography: "body1" }}>
