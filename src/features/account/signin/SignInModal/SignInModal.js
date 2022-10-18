@@ -36,14 +36,18 @@ function SignInModal({ animation }) {
           Welcome back, Mate
         </h3>
       </div>
-      <SignInForm />
+      <BrowserRouter>
+        <SignInForm />
+      </BrowserRouter>
+
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?
           <span
             className={signInModalStyles["link"]}
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
+
               dispatch(
                 getSignUpModal({
                   isOpen: true,

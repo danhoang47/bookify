@@ -9,6 +9,7 @@ import UpdateButton from "../UpdateButton";
 import DatePicker from "../DatePicker";
 
 function FormUpdate({ account }) {
+  console.log(account);
   const [subname, setSubname] = useState(account.subname);
   const [name, setName] = useState(account.name);
   const [email, setEmail] = useState(account.email);

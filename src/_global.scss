@@ -38,7 +38,8 @@
 }
 
 // variables
-$default-font: "Poppins", sans-serif;
+$default-font: "Poppins",
+sans-serif;
 $main-color: #4361ee;
 $light-blue: #4cc9f0;
 $purple: #7209b7;
@@ -85,7 +86,6 @@ ul {
     position: relative;
     min-height: 100%;
     overflow-x: hidden;
-
     .overlay {
         position: absolute;
         top: 0;
@@ -102,6 +102,7 @@ ul {
 @media (min-width: 576px) {
     .App {
         padding: 0 1em;
+        padding-top: 80px;
     }
 }
 
@@ -114,26 +115,35 @@ ul {
 @media (min-width: 992px) {
     .App {
         padding: 0 4em;
+        padding-top: 80px;
     }
 }
 
 @media (min-width: 1200px) {
     .App {
         padding: 0 6em;
+        padding-top: 80px;
     }
 }
 
 @media (min-width: 1401px) {
     .App {
         padding: 0 10em;
+        padding-top: 80px;
     }
 }
 
-h1, h2, h3, h4, h5, h6, p, ul {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
     margin-bottom: 0;
 }
 
 h4 {
     font-size: 1em;
 }
-

@@ -58,7 +58,7 @@ function SignInForm() {
         user.username = data.user.username;
         user.avatar = data.user.avatar;
         user.wallet_amount = data.user.wallet_amount;
-        console.log(user);
+        localStorage.setItem("jwt", data.token);
       })
       .catch((err) => {
         console.log(err);

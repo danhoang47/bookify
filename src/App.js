@@ -18,6 +18,9 @@ const user = {
   username: "",
   wallet_amount: 0,
   avatar: "",
+  phone: "",
+  dob: "",
+  selfDes: "",
 };
 
 function App({ children }) {
