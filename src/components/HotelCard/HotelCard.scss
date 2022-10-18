@@ -1,5 +1,4 @@
-@use 'src/global';
-
+@use "src/global";
 @mixin ellipsis-word {
     white-space: nowrap;
     overflow: hidden;
@@ -9,17 +8,14 @@
 .hotel-card {
     position: relative;
     animation: fade-in 1s ease-out;
-
     .carousel-inner {
         width: 100%;
-
         .carousel-item {
             &::before {
                 content: "";
                 padding-bottom: 100%;
                 display: block;
             }
-
             img {
                 width: 100%;
                 height: 100%;
@@ -31,7 +27,6 @@
             }
         }
     }
-
     .carousel.slide {
         .carousel-indicators {
             button[type="button"] {
@@ -41,36 +36,29 @@
             }
         }
     }
-
     .hotel-info {
         padding-top: 1em;
-        
         .basic-info {
             padding-bottom: 0.4em;
-
             .name-and-point {
                 @include global.vertical-center();
-
                 .hotel-name {
                     flex-basis: 70%;
                     font-size: 1em;
                     font-weight: bold;
                     @include ellipsis-word();
                 }
-
                 .average-point {
                     flex-grow: 1;
                     display: flex;
                     justify-content: flex-end;
                     align-items: center;
                     gap: 0.2em;
-                    
                     .svg-inline--fa {
                         font-size: 0.8em;
                     }
                 }
             }
-    
             .hotel-address {
                 margin-top: 0.15em;
                 margin-bottom: 0.15em;
@@ -78,19 +66,17 @@
                 color: global.$gray-500;
                 @include ellipsis-word();
             }
-    
             .hotel-price-per-night {
                 font-weight: bold;
                 font-size: 1.2em;
             }
         }
     }
-
     .bookmark-icon {
         position: absolute;
         top: 1em;
         left: 1em;
-        z-index: 1;
+        z-index: 0;
         cursor: pointer;
         font-size: 1.2em;
         color: global.$black;
