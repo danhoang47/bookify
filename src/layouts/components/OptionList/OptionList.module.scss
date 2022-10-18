@@ -1,15 +1,17 @@
 @use 'src/global';
 .option-list {
-    padding: 0.7em 0;
+    padding: 0.3em 0;
     min-width: max-content;
     cursor: pointer;
     overflow-y: hidden;
-    z-index: 100;
     background-color: white;
+    z-index: 3;
+    
     li {
         padding: 0.6em 1em;
         padding-right: 2em;
         min-width: 10em;
+
         &:hover {
             background: global.$gray-100;
         }
