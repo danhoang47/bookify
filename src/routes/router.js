@@ -15,9 +15,9 @@ import {
     HotelManageDetail,
     Dashboard,
     Payment,
+    Register
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import App from "@/App";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +28,9 @@ const router = createBrowserRouter(
                 <Route path="info" element={<PersonalInfo />} />
                 <Route path="loginandsecurity" element={<LoginandSecurity />} />
                 <Route path="history" element={<BookingHistory />} />
+            </Route>
+            <Route path="hosting">
+                <Route path="register" element={<Register />} />
             </Route>
             <Route path="hotelmanage" element={<DefaultLayout />}>
                 <Route path="" element={<HotelManageMain />} />
