@@ -37,11 +37,11 @@ export const getYearExchange = (year) => {
     transc += data.exchange;
   });
 };
-export const getYearsExchange = (year) => {
+export const getYearsExchange = () => {
   let transc = 0;
 
   dashboarData?.forEach((data) => {
-    transc += data.exchange;
+    transc += data.details.exchange;
   });
 };
 
@@ -53,7 +53,7 @@ export const TransactionDataYear = (year) => {
   const dataByYear = dashboarData
     .filter((data) => data.years === year)
     .map((data) => data.details);
-  dataByMonth[0].forEach((data) => {
+  dataByYear[0].forEach((data) => {
     transObj.month.push(data.month);
     transObj.transNumber.push(data.exchange);
   });
