@@ -102,34 +102,35 @@ ul {
 @media (min-width: 576px) {
     .App {
         padding: 0 1em;
-        padding-top: 80px;
+        padding-top: 60px;
     }
 }
 
 @media (min-width: 768px) {
     .App {
-        padding: 0 2em;
+        padding: 5rem 2em;
+        padding-top: 60px;
     }
 }
 
 @media (min-width: 992px) {
     .App {
         padding: 0 4em;
-        padding-top: 80px;
+        padding-top: 60px;
     }
 }
 
 @media (min-width: 1200px) {
     .App {
         padding: 0 6em;
-        padding-top: 80px;
+        padding-top: 60px;
     }
 }
 
 @media (min-width: 1401px) {
     .App {
         padding: 0 10em;
-        padding-top: 80px;
+        padding-top: 60px;
     }
 }
 

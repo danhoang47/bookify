@@ -46,7 +46,6 @@
             .grid-container {
                 display: grid;
                 grid-template-columns: 42rem 22rem;
-                .tabs-body {}
                 .alert {
                     .alert-body {
                         padding: 0.5rem;
@@ -74,6 +73,16 @@
                     }
                 }
             }
+        }
+        @media (min-width: 768px) {
+            width: 750px;
+            // margin-bottom: 250px;
+        }
+        @media (min-width: 992px) {
+            width: 970px;
+        }
+        @media (min-width: 1200px) {
+            width: 1170px;
         }
     }
     
@@ -157,11 +166,12 @@
         width: 40rem;
         align-items: left;
         .select-input {
-            width: 6rem;
+            width: 5rem;
             margin-top: 1rem;
             border-radius: 18px;
             padding: 5px;
             margin-left: calc(100% - 6rem);
+            border: 1px solid #ababab;
         }
     }
     

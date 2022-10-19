@@ -43,6 +43,7 @@ function SignInForm() {
     const form = new FormData();
     form.append("username", account.username);
     form.append("password", account.password);
+    console.log(account.username, account.password);
     fetch("/rest/user_detail/login", {
       mode: "no-cors",
       method: "POST",
@@ -58,6 +59,7 @@ function SignInForm() {
         user.username = data.user.username;
         user.avatar = data.user.avatar;
         user.wallet_amount = data.user.wallet_amount;
+        console.log(data);
         localStorage.setItem("jwt", data.token);
       })
       .catch((err) => {

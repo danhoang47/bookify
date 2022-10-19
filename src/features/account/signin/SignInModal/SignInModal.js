@@ -39,7 +39,6 @@ function SignInModal({ animation }) {
       <BrowserRouter>
         <SignInForm />
       </BrowserRouter>
-
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?

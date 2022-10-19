@@ -26,6 +26,7 @@ function SignUpForm() {
 
   const handleValueChange = useCallback(
     (value, key) => {
+      console.log(key);
       setRegisterAccount({
         ...registerAccount,
         [key]: value,

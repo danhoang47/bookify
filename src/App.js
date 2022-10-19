@@ -57,6 +57,30 @@ function App({ children }) {
     });
   }, []);
 
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+
+    if (jwt) {
+      fetch("/rest/user_detail/verifyjwt", {
+        mode: "no-cors",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          jwt: jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("no jwt");
+    }
+  }, []);
+
   return (
     <CoordinatesContext.Provider value={currentCoordinates}>
       <UserContext.Provider value={userModifier}>
