@@ -99,7 +99,7 @@ function AdvanceFilter({ isAdvanceFilterOpen, setAdvanceFilterOpen }) {
                     marginTop: "54.11px",
                     overflowY: "scroll",
                     padding: "0 2em",
-                    height: "46.5em",
+                    height: "76vh",
                 }}
             >
                 <PriceRangePicker prices={prices} />

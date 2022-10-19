@@ -35,6 +35,7 @@
             }
             .button-disabled {
                 @include form.button-disabled();
+                cursor: no-drop;
             }
         }
         .reset-password-link {

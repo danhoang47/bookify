@@ -5,4 +5,5 @@
 .modal {
     @include form.modal();
     overflow-x: hidden;
+    z-index: 3;
 }

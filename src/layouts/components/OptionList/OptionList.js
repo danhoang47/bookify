@@ -5,9 +5,9 @@ import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
 import { useNavigate } from "react-router-dom";
 
 function OptionList() {
-  // const { dispatch } = useContext(ModalContext);
-  // const { isLogin } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const { dispatch } = useContext(ModalContext);
+  const { isLogin } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const options = useMemo(
     () => [
@@ -54,7 +54,7 @@ function OptionList() {
         isLoginRequired: false,
         onClickHandler: (e) => {
           e.stopPropagation();
-          // dispatch(getSignInModal({ isOpen: true }));
+          dispatch(getSignInModal({ isOpen: true }));
         },
       },
       {
@@ -63,7 +63,7 @@ function OptionList() {
         isLoginRequired: false,
         onClickHandler: (e) => {
           e.stopPropagation();
-          // dispatch(getSignUpModal({ isOpen: true }));
+          dispatch(getSignUpModal({ isOpen: true }));
         },
       },
     ],
@@ -75,7 +75,7 @@ function OptionList() {
       <ul className={optionListStyles["option-list"]}>
         {options.reduce(
           (prev, { title, style, isLoginRequired, onClickHandler }, index) => {
-            if (true === isLoginRequired) {
+            if (isLogin === isLoginRequired) {
               return [
                 ...prev,
                 <li

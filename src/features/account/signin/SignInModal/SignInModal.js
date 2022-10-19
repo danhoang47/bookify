@@ -34,7 +34,7 @@ function SignInModal({ animation }) {
           Welcome back, Mate
         </h3>
       </div>
-      <SignInForm />
+      <SignInForm setModalOpen={handleClick}/>
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?

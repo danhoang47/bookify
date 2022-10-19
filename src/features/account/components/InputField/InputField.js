@@ -12,7 +12,6 @@ function InputField({
     isValid = true,
     isSignIn = false
 }) {
-    console.log('input field rerender')
 
     return (
         <div className={[
