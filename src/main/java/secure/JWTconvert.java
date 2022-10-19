@@ -50,10 +50,11 @@ public class JWTconvert {
     
     public static void main(String[] args) {
         JWTconvert jwt = new JWTconvert();
-        String jwtString = jwt.encodeToJWT("00f454a8-0d04-421d-b6f0-140bb33a3e3e", 1);
-        System.out.println(jwtString);
+//        String jwtString = jwt.encodeToJWT("00f454a8-0d04-421d-b6f0-140bb33a3e3e", 1);
+//        System.out.println(jwtString);
         
-        Jws<Claims> res = jwt.decodeToJWT(jwtString, "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
-        System.out.println(res.getBody());
+        Jws<Claims> res = jwt.decodeToJWT("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWFkNjI4NmQtZDA4ZC00Mzk3LTg3MDQtYjhhMWFmZjA3MzA5Iiwicm9sZSI6MSwiaWF0IjoxNjY2MTUxMzk0LCJleHAiOjE2NjYxNTE1NzR9.U0sZ9x-sy0Lk5M9XH9Bzow2ANEb7hnH1j4F27VX51kE", "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
+        System.out.println("Userid: " +res.getBody().get("user_id"));
+//        System.out.println(res);
     }
 }

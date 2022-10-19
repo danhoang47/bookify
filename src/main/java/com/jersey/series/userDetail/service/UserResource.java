@@ -3,9 +3,13 @@ package com.jersey.series.userDetail.service;
 import com.google.gson.Gson;
 import com.service.Interface.UserDetailInterface;
 import dao.UserDetailDAO;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,7 +25,6 @@ import service.uploadImage.UploadImage;
 
 @Path("/user_detail")
 public class UserResource implements UserDetailInterface {
-
 
     @POST
     @Path("/login")
@@ -42,9 +45,10 @@ public class UserResource implements UserDetailInterface {
             UserDetail userLogin = dao.login(username, password);
 
             if (userLogin != null) {
-                String jwtCode = userJwt.encodeToJWT(username, userLogin.getRole());
+                String jwtCode = userJwt.encodeToJWT(userLogin.getUser_id(), userLogin.getRole());
                 obj.put("user", userLogin);
                 obj.put("token", jwtCode);
+
                 return Response.ok(new Gson().toJson(obj)).build();
             } else {
                 obj.put("message", "Wrong password");
@@ -53,6 +57,41 @@ public class UserResource implements UserDetailInterface {
 
         } else {
             obj.put("message", "Wrong username or username does not exist");
+            return Response.status(401).entity(new Gson().toJson(obj)).build();
+        }
+
+    }
+
+    @GET
+    @Path("/verifyjwt")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDataByJWT(@HeaderParam("jwt") String jwtString) {
+        
+        
+        System.out.println(jwtString);
+        UserDetailDAO dao = new UserDetailDAO();
+//        UserDetail user = new UserDetail(username, password);
+        JWTconvert userJwt = new JWTconvert();
+        JSONObject obj = new JSONObject();
+        Jws<Claims> res = userJwt.decodeToJWT(jwtString, "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
+        
+        String userId =(String) res.getBody().get("user_id");
+        
+        UserDetail userLogin = dao.getUser(userId);
+        userLogin.setUser_password(null);
+        userLogin.setGgid(null);
+        userLogin.setSalt(null);
+       
+
+        if (userLogin!=null) {
+            obj.put("user", userLogin);
+            return Response.ok(new Gson().toJson(obj)).build();
+            
+                
+          
+
+        } else {
+            obj.put("error", "Login again");
             return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
@@ -93,12 +132,12 @@ public class UserResource implements UserDetailInterface {
             @FormDataParam("name") String name, @FormDataParam("selfdescription") String selfDes,
             @FormDataParam("uploadFile") InputStream fileInputStream,
             @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition) {
-        
+
         UploadImage uploaduser = new UploadImage();
         JSONObject obj = new JSONObject();
         UserDetailDAO dao = new UserDetailDAO();
         // Get specific user
-        UserDetail ud = dao.get(user_id);
+        UserDetail ud = dao.getUser(user_id);
 
         // local variables
         String fileName = null;
@@ -106,7 +145,7 @@ public class UserResource implements UserDetailInterface {
 
         try {
             fileName = fileFormDataContentDisposition.getFileName();
-            uploadFilePath = uploaduser.writeToFileServer("users" ,fileInputStream, fileName);
+            uploadFilePath = uploaduser.writeToFileServer("users", fileInputStream, fileName);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {
@@ -122,7 +161,7 @@ public class UserResource implements UserDetailInterface {
 
 //        Check update status
         Boolean checkUpdate = dao.update(ud);
-        
+
         if (checkUpdate) {
             obj.put("message", "Successfully update");
             return Response.ok(new Gson().toJson(obj)).build();
@@ -132,7 +171,7 @@ public class UserResource implements UserDetailInterface {
         }
 
     }
-    
+
     @POST
     @Path("/changePassword/{user_id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -152,4 +191,5 @@ public class UserResource implements UserDetailInterface {
         }
 
     }
+
 }

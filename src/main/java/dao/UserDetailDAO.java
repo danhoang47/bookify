@@ -131,7 +131,7 @@ public class UserDetailDAO {
     }
 
 //    --------------------------------------------------------- GET USER -----------------------------------------------------
-    public static UserDetail get(String id) {
+    public static UserDetail getUser(String id) {
         try {
             String query = "select * from userDetail where user_id=?";
             conn = new DBContext().getConnection();
@@ -301,4 +301,5 @@ public class UserDetailDAO {
 
     }
 
+ 
 }
