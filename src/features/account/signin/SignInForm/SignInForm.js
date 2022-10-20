@@ -43,9 +43,8 @@ function SignInForm() {
     const form = new FormData();
     form.append("username", account.username);
     form.append("password", account.password);
-    console.log(account.username, account.password);
-    fetch("/rest/user_detail/login", {
-      mode: "no-cors",
+
+    fetch("http://localhost:8080/testUpload/rest/user_detail/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

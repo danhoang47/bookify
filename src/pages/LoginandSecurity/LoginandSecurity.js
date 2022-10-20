@@ -1,6 +1,8 @@
 import LoginandSecurityStyle from "./LoginandSecurity.module.scss";
 import HeaderInfo from "./components/HeaderInfo";
 import FormUpdate from "./components/Form";
+import { useContext } from "react";
+import { UserContext } from "@/utils/contexts";
 
 const account = {
   username: "duc123",
@@ -13,6 +15,8 @@ const account = {
     "Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi labore id. Eu dolor quis cupidatat occaecat laborum cillum culpa minim dolore. Aliqua est ullamco enim voluptate in. ",
 };
 function LoginandSecurity() {
+  let { user } = useContext(UserContext);
+
   return (
     <div className={LoginandSecurityStyle["container"]}>
       <HeaderInfo />

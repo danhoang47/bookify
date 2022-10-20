@@ -103,10 +103,9 @@ function FormUpdate() {
     <div className={FormUpdateStyle["container"]}>
       <form onSubmit={formSubmit}>
         <div className={FormUpdateStyle["form-field"]}>
-          {Object.keys(account).map((key) => (
-            <>
+          {Object.keys(account).map((key, index) => (
+            <span key={index}>
               <InputText
-                key={key}
                 value={account[key]}
                 id={key}
                 onValueChange={handleAccountChange}
@@ -117,7 +116,7 @@ function FormUpdate() {
                 type={key === "password" ? "password" : "text"}
                 icon="faWrench"
               />
-            </>
+            </span>
           ))}
           <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="card-number">

@@ -39,7 +39,7 @@ function FormUpdate({ account }) {
     if (dateOfMonth < 10) dateOfMonth = "0" + dateOfMonth;
     var year = currentDate.getFullYear();
     var formattedDate = dateOfMonth + "/" + month + "/" + year;
-    console.log(formattedDate);
+    console.log("format " + formattedDate);
     setDob(e.target.value);
   };
 
