@@ -64,6 +64,7 @@ function App({ children }) {
 
   useEffect(() => {
     const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    console.log(jwtString);
     if (jwtString) {
       fetch("http://localhost:8080/testUpload/rest/user_detail/verifyjwt", {
         method: "POST",

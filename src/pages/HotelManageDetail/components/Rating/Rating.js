@@ -1,9 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, Suspense, useState } from "react";
 import RatingStyle from "./Rating.module.scss";
 import Filter from "./components/Filter";
-import RatingCard from "./components/RatingCard";
 
 import { data } from "./RatingFakeData";
+import { lazy } from "react";
+
+const RatingCard = lazy(() => import("./components/RatingCard"));
 
 export const RatingContext = createContext();
 
@@ -13,8 +15,10 @@ function Rating() {
   return (
     <div className={RatingStyle["rating-wrapper"]}>
       <RatingContext.Provider value={[filter, setFilter]}>
-        <Filter />
-        <RatingCard data={data} />
+        <Suspense fallback={<div>Loading....</div>}>
+          <Filter />
+          <RatingCard data={data} />
+        </Suspense>
       </RatingContext.Provider>
     </div>
   );

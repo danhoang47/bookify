@@ -1,6 +1,6 @@
 export const viewsStatic = [
   {
-    month: "Jan",
+    month: 1,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 200 },
@@ -20,7 +20,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Feb",
+    month: 2,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -40,7 +40,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Mar",
+    month: 3,
     details: [
       { day: 1, views: 600, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -60,7 +60,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Apr",
+    month: 4,
     details: [
       { day: 1, views: 500, booking: 100 },
       { day: 3, views: 100, booking: 100 },
@@ -80,7 +80,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "May",
+    month: 5,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -100,7 +100,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Jun",
+    month: 6,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 1500, booking: 100 },
@@ -120,7 +120,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Jul",
+    month: 7,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -140,7 +140,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Aug",
+    month: 8,
     details: [
       { day: 1, views: 500, booking: 100 },
       { day: 3, views: 0, booking: 100 },
@@ -160,7 +160,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Sep",
+    month: 9,
     details: [
       { day: 1, views: 200, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -180,7 +180,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Oct",
+    month: 10,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 90 },
@@ -200,7 +200,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Nov",
+    month: 11,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 500, booking: 100 },
@@ -220,7 +220,7 @@ export const viewsStatic = [
     ],
   },
   {
-    month: "Dec",
+    month: 12,
     details: [
       { day: 1, views: 1000, booking: 100 },
       { day: 3, views: 1500, booking: 100 },

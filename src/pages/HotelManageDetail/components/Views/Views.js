@@ -1,16 +1,16 @@
 import { faEye, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ViewStyle from "./Views.module.scss";
-import Chart from "./components/Chart";
 import { viewsStatic } from "./FakeViewData";
-import { useState } from "react";
+import { lazy, useState, Suspense } from "react";
 import MonthPicker from "./components/MonthPicker";
+
+const Chart = lazy(() => import("./components/Chart"));
 
 function Views() {
   let date = new Date();
-  let currentMonth = date.toLocaleString("en-us", { month: "short" });
   const [staticView, setStaticView] = useState("views");
-  const [monthChanged, setMonthChanged] = useState(currentMonth.toString());
+  const [monthChanged, setMonthChanged] = useState(date.getMonth() + 1);
   const days = [];
   const views = [];
   const booking = [];
@@ -19,8 +19,11 @@ function Views() {
     setMonthChanged(data);
   };
 
-  const dayData = viewsStatic.filter((data) => data.month === monthChanged);
-  dayData[0].details.forEach((data) => {
+  const dayData = viewsStatic.filter(
+    (data) => data.month === parseInt(monthChanged)
+  );
+
+  dayData[0]?.details.forEach((data) => {
     days.push(data.day);
     views.push(data.views);
     booking.push(data.booking);
@@ -64,11 +67,13 @@ function Views() {
       <div className={ViewStyle["info-detail"]}>
         <h1>{staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}</h1>
         <div className={ViewStyle["chart-wrapper"]}>
-          <Chart
-            days={days}
-            label={staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}
-            data={staticView === "views" ? views : booking}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Chart
+              days={days}
+              label={staticView === "views" ? "Lượt xem" : "Lượt đặt phòng"}
+              data={staticView === "views" ? views : booking}
+            />
+          </Suspense>
         </div>
       </div>
       <div className={ViewStyle["month-picker"]}>

@@ -1,6 +1,6 @@
 export const income = [
   {
-    month: "Jan",
+    month: 1,
     income: 7000,
     expected: 8000,
     details: [
@@ -22,7 +22,7 @@ export const income = [
     ],
   },
   {
-    month: "Feb",
+    month: 2,
     income: 6000,
     expected: 5000,
     details: [
@@ -44,7 +44,7 @@ export const income = [
     ],
   },
   {
-    month: "Mar",
+    month: 3,
     income: 8000,
     expected: 7000,
     details: [
@@ -66,7 +66,7 @@ export const income = [
     ],
   },
   {
-    month: "Apr",
+    month: 4,
     income: 5000,
     expected: 9000,
     details: [
@@ -88,7 +88,7 @@ export const income = [
     ],
   },
   {
-    month: "May",
+    month: 5,
     income: 10000,
     expected: 6000,
     details: [
@@ -110,7 +110,7 @@ export const income = [
     ],
   },
   {
-    month: "Jun",
+    month: 6,
     income: 12000,
     expected: 10000,
     details: [
@@ -132,7 +132,7 @@ export const income = [
     ],
   },
   {
-    month: "Jul",
+    month: 7,
     income: 8000,
     expected: 6000,
     details: [
@@ -154,7 +154,7 @@ export const income = [
     ],
   },
   {
-    month: "Aug",
+    month: 8,
     income: 5000,
     expected: 5000,
     details: [
@@ -176,7 +176,7 @@ export const income = [
     ],
   },
   {
-    month: "Sep",
+    month: 9,
     income: 6000,
     expected: 7000,
     details: [
@@ -198,7 +198,7 @@ export const income = [
     ],
   },
   {
-    month: "Oct",
+    month: 10,
     income: 9000,
     expected: 8000,
     details: [
@@ -220,7 +220,7 @@ export const income = [
     ],
   },
   {
-    month: "Nov",
+    month: 11,
     income: 10000,
     expected: 12000,
     details: [
@@ -242,7 +242,7 @@ export const income = [
     ],
   },
   {
-    month: "Dec",
+    month: 12,
     income: 15000,
     expected: 13000,
     details: [

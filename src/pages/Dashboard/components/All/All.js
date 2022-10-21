@@ -1,8 +1,5 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, createContext, useState, lazy, useMemo } from "react";
 import AllStyle from "./All.module.scss";
-import StaticCard from "./StaticCard";
-import Chart from "./Chart";
-import Report from "./Report";
 import MonthPicker from "./MonthPicker";
 
 import {
@@ -12,9 +9,10 @@ import {
   ReportData,
   getIncreasePercent,
 } from "./AllService";
-import { createContext } from "react";
-import { useState } from "react";
-import { useMemo } from "react";
+
+const StaticCard = lazy(() => import("./StaticCard"));
+const Chart = lazy(() => import("./Chart"));
+const Report = lazy(() => import("./Report"));
 
 export const MonthContext = createContext();
 

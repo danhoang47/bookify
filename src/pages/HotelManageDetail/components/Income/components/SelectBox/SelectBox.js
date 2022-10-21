@@ -15,22 +15,8 @@ const months = [
   "December",
 ];
 
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 function SelectBox({ onChangeMonth }) {
+  const currentMonth = new Date().getMonth() + 1;
   const monthSelect = (e) => {
     onChangeMonth(e.target.value);
   };
@@ -50,7 +36,11 @@ function SelectBox({ onChangeMonth }) {
           <option value="">Tất cả các tháng</option>
           {months.map((data, index) => {
             return (
-              <option value={monthsKey[index]} key={index}>
+              <option
+                value={index + 1}
+                key={index}
+                disabled={index + 1 > currentMonth ? true : false}
+              >
                 {data}
               </option>
             );
