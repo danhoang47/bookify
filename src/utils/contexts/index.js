@@ -5,5 +5,15 @@ import HistoryContext from "./HistoryContext";
 import SearchContext from "./SearchContext";
 import CoordinatesContext from "./CoordinatesContext";
 import HotelContext from "./HotelContext";
+import RegisterContext from "./RegisterContext";
 
-export { HotelContext, ModalContext, OverlayContext, UserContext, HistoryContext, SearchContext, CoordinatesContext };
+export {
+    HotelContext,
+    ModalContext,
+    OverlayContext,
+    UserContext,
+    HistoryContext,
+    SearchContext,
+    CoordinatesContext,
+    RegisterContext,
+};

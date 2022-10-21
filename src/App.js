@@ -7,7 +7,7 @@ import {
 } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
-import { Container, Box } from "@mui/material";
+import { Container } from "@mui/material";
 
 const initState = {
     isOpen: false,
@@ -56,6 +56,18 @@ function App({ children }) {
             }
         });
     }, []);
+
+    // useEffect(() => {
+    //     const formData = new FormData();
+    //     formData.append('hello', 'hello');
+    //     formData.append('hi', 'hi');
+
+    //     fetch('http://localhost:8080/testUpload/api/user/login', {
+    //         method: 'POST',
+    //         body: formData
+    //     }).then(response => response.json())
+    //         .then(data => console.log(data))
+    // }, [])
 
     return (
         <CoordinatesContext.Provider value={currentCoordinates}>

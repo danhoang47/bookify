@@ -10,7 +10,8 @@ function InputField({
     label,
     type,
     isValid = true,
-    isSignIn = false
+    isSignIn = false,
+    ref = null
 }) {
 
     return (
@@ -25,6 +26,7 @@ function InputField({
                 isValid={isValid}
                 id={id}
                 type={type}
+                ref={ref}
             />
             <label htmlFor={id}>
                 {isValid ? label : getErrorMessage(id, isSignIn)}

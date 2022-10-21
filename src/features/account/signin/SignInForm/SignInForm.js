@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "./SignInForm.module.scss";
 import {
     useState,
@@ -7,14 +7,12 @@ import {
     useEffect,
     useRef,
     useMemo,
-    useContext,
 } from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 import { signIn } from "@/services/user";
-import { UserContext } from "@/utils/contexts";
 import { CircleLoading } from "@/components";
 
 function SignInForm({ setModalOpen }) {
@@ -26,7 +24,7 @@ function SignInForm({ setModalOpen }) {
         username: true,
         password: true,
     });
-    const { user, isLogin, setLogin } = useContext(UserContext);
+    // const { user, isLogin, setLogin } = useContext(UserContext);
     const [isLoading, setLoading] = useState(false);
     const [isRemember, setRemember] = useState(false);
     const changedKey = useRef();
@@ -78,8 +76,6 @@ function SignInForm({ setModalOpen }) {
         //eslint-disable-next-line
         [account]
     );
-
-    console.log(account.username, account.password);
 
     useEffect(() => {
         const changedField = changedKey.current;

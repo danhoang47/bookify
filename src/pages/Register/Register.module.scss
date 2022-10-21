@@ -1,0 +1,24 @@
+@use 'src/global';
+
+#register {
+    position: relative;
+    z-index: 0;
+
+    .left {
+        position: fixed;
+        top: 1em;
+        bottom: 1em;
+        border-radius: 1.6em;
+        overflow-x: hidden;
+    }
+
+    .right {
+        position: fixed;
+        top: 1em;
+        right: 1.5em;
+        left: calc((100% / 3) + 3em);
+        bottom: 1em;
+        overflow: hidden;
+        z-index: 1;
+    }
+}

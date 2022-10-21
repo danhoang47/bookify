@@ -15,34 +15,38 @@ import {
     HotelManageDetail,
     Dashboard,
     Payment,
+    Register,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import App from "@/App";
+import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/" element={<DefaultLayout />}>
-            <Route path="" element={<Home />} />
-            <Route path="profile">
-                <Route path="" element={<Profile />} />
-                <Route path="info" element={<PersonalInfo />} />
-                <Route path="loginandsecurity" element={<LoginandSecurity />} />
-                <Route path="history" element={<BookingHistory />} />
+        <Route>
+            <Route path="/" element={<DefaultLayout />}>
+                <Route path="" element={<Home />} />
+                <Route path="profile">
+                    <Route path="" element={<Profile />} />
+                    <Route path="info" element={<PersonalInfo />} />
+                    <Route path="loginandsecurity" element={<LoginandSecurity />} />
+                    <Route path="history" element={<BookingHistory />} />
+                </Route>
+                <Route path="hotelmanage" element={<DefaultLayout />}>
+                    <Route path="" element={<HotelManageMain />} />
+                    <Route path="detail" element={<HotelManageDetail />} />
+                    <Route path="booking" element={<HotelManageBooking />} />
+                </Route>
+                <Route path="dashboard" element={<DefaultLayout />}>
+                    <Route path="" element={<Dashboard />} />
+                </Route>
+                <Route path="payment" element={<DefaultLayout />}>
+                    <Route path="" element={<Payment />} />
+                </Route>
             </Route>
-            <Route path="hotelmanage" element={<DefaultLayout />}>
-                <Route path="" element={<HotelManageMain />} />
-                <Route path="detail" element={<HotelManageDetail />} />
-                <Route path="booking" element={<HotelManageBooking />} />
-            </Route>
-
-            <Route path="introduction" element={<DefaultLayout />}>
-                <Route path="" element={<Introduction />} />
-            </Route>
-            <Route path="dashboard" element={<DefaultLayout />}>
-                <Route path="" element={<Dashboard />} />
-            </Route>
-            <Route path="payment" element={<DefaultLayout />}>
-                <Route path="" element={<Payment />} />
+            <Route path="hosting" element={<HostingRegisterLayout />}>
+                <Route path="introduction" element={<Introduction />} />
+                <Route path="register" element={<Register />} />
             </Route>
         </Route>
     )

@@ -1,6 +1,6 @@
 
 async function signIn(username, password) {
-    const url = "https://jsonplaceholder.typicode.com/posts";
+    const url = "http://localhost:8080/testUpload/api/user/login";
     const accountForm = new FormData();
     accountForm.append('username', username);
     accountForm.append('password', password);
@@ -10,7 +10,11 @@ async function signIn(username, password) {
         body: accountForm
     }
 
-    return await fetch(url).then(response => response.json())
+    try {
+        return await fetch(url, options).then(response => response.json())
+    } catch(error) {
+        console.log(error);
+    }
 }
 
 export default signIn;
