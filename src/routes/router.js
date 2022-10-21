@@ -16,22 +16,19 @@ import {
   HotelManageDetail,
   Dashboard,
   Payment,
-  CheckOut,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import App from "@/App";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="" element={<Home />} />
-        <Route path="profile">
-          <Route path="" element={<Profile />} />
-          <Route path="info" element={<PersonalInfo />} />
-          <Route path="loginandsecurity" element={<LoginandSecurity />} />
-          <Route path="history" element={<BookingHistory />} />
-          <Route path="payment" element={<Payment />} />
-        </Route>
+    <Route path="/" element={<DefaultLayout />}>
+      <Route path="" element={<Home />} />
+      <Route path="profile">
+        <Route path="" element={<Profile />} />
+        <Route path="info" element={<PersonalInfo />} />
+        <Route path="loginandsecurity" element={<LoginandSecurity />} />
+        <Route path="history" element={<BookingHistory />} />
       </Route>
       <Route path="hotelmanage" element={<DefaultLayout />}>
         <Route path="" element={<HotelManageMain />} />
@@ -45,12 +42,9 @@ const router = createBrowserRouter(
       <Route path="dashboard" element={<DefaultLayout />}>
         <Route path="" element={<Dashboard />} />
       </Route>
-      <Route path="checkout" element={<DefaultLayout />}>
-        <Route path="" element={<CheckOut />} />
-      </Route>
-      {/* <Route path="payment" element={<DefaultLayout />}>
+      <Route path="payment" element={<DefaultLayout />}>
         <Route path="" element={<Payment />} />
-      </Route> */}
+      </Route>
     </Route>
   )
 );

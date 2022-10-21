@@ -7,6 +7,7 @@ import {
 } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
+import { Container, Box } from "@mui/material";
 
 const initState = {
   isOpen: false,
@@ -14,13 +15,17 @@ const initState = {
 };
 
 const user = {
-  id: "",
-  username: "",
-  wallet_amount: 0,
+  account_number: "",
   avatar: "",
-  phone: "",
   dob: "",
-  selfDes: "",
+  email: "",
+  name: "",
+  phone: "",
+  role: 0,
+  self_description: "",
+  subname: "",
+  user_id: "",
+  username: "",
 };
 
 function App({ children }) {
@@ -48,7 +53,7 @@ function App({ children }) {
     nav.getCurrentPosition((pos) => {
       if (pos) {
         const { latitude, longitude } = pos?.coords;
-
+        console.log(latitude, longitude);
         setCurrentCoordinates({
           latitude,
           longitude,
@@ -58,26 +63,19 @@ function App({ children }) {
   }, []);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-
-    if (jwt) {
-      fetch("/rest/user_detail/verifyjwt", {
-        mode: "no-cors",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          jwt: jwt,
-        },
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    if (jwtString) {
+      fetch("http://localhost:8080/testUpload/rest/user_detail/verifyjwt", {
+        method: "POST",
+        body: jwtString,
       })
-        .then((res) => res.json())
+        .then((res) => {
+          res.json();
+        })
         .then((data) => {
           console.log(data);
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      console.log("no jwt");
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -85,14 +83,19 @@ function App({ children }) {
     <CoordinatesContext.Provider value={currentCoordinates}>
       <UserContext.Provider value={userModifier}>
         <ModalContext.Provider value={modal}>
-          <div className="App">
+          <Container
+            maxWidth={"sx"}
+            sx={{
+              position: "relative",
+            }}
+          >
             {children}
             {modalState.isOpen && (
               <div className="overlay">
                 <Modal>{modalState.renderModal()}</Modal>
               </div>
             )}
-          </div>
+          </Container>
         </ModalContext.Provider>
       </UserContext.Provider>
     </CoordinatesContext.Provider>

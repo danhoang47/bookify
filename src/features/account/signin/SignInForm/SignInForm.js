@@ -13,11 +13,12 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
+import { signIn } from "@/services/user";
 import { UserContext } from "@/utils/contexts";
+import { CircleLoading } from "@/components";
+import { format } from "date-fns";
 
-function SignInForm() {
-  let { user, isLogin, setLogin } = useContext(UserContext);
-
+function SignInForm({ setModalOpen }) {
   const [account, setAccount] = useState({
     username: null,
     password: null,
@@ -26,6 +27,10 @@ function SignInForm() {
     username: true,
     password: true,
   });
+  const { user, isLogin, setLogin } = useContext(UserContext);
+  const [isLoading, setLoading] = useState(false);
+  const [isRemember, setRemember] = useState(false);
+  const changedKey = useRef();
   const isInformationFilled = useMemo(() => {
     const isAllFilled = Object.keys(account).every((key) => {
       return account[key] !== null;
@@ -35,37 +40,43 @@ function SignInForm() {
     });
     return isAllFilled && isAllValid;
   }, [account, isAccountValid]);
-  const [isRemember, setRemember] = useState(false);
-  const changedKey = useRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append("username", account.username);
-    form.append("password", account.password);
+  // handle event functions
+  const handleSubmit = async (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (isLoading || !isInformationFilled) {
+      return;
+    } else {
+      setLoading(true);
+      try {
+        await signIn(account.username, account.password).then((data) => {
+          if (data?.error) {
+            console.log("account not found : " + data.error);
+          } else {
+            console.log(data);
+            localStorage.setItem("jwt", data.token);
+            user.name = data.user.name;
+            user.account_number = data.user.account_number;
+            user.avatar = data.user.avatar;
+            user.dob = format(new Date(data.user.dob), "yyyy-MM-dd");
+            user.email = data.user.email;
+            user.phone = data.user.phone;
+            user.role = data.user.role;
+            user.self_description = data.user.self_description;
+            user.subname = data.user.subname;
+            user.user_id = data.user.user_id;
+            user.username = data.user.username;
 
-    fetch("http://localhost:8080/testUpload/rest/user_detail/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: form,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLogin(true);
-        user.id = data.user.user_id;
-        user.username = data.user.username;
-        user.avatar = data.user.avatar;
-        user.wallet_amount = data.user.wallet_amount;
-        console.log(data);
-        localStorage.setItem("jwt", data.token);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+            setLogin(true);
+            setModalOpen(event);
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
   };
-
   const handleAccountChange = useCallback(
     (value, key) => {
       setAccount((prev) => {
@@ -79,6 +90,8 @@ function SignInForm() {
     //eslint-disable-next-line
     [account]
   );
+
+  console.log(account.username, account.password);
 
   useEffect(() => {
     const changedField = changedKey.current;
@@ -98,11 +111,10 @@ function SignInForm() {
     }
   }, [account]);
 
-  // console.log("re-render ", isInformationFilled);
   return (
     <div className={formStyles["form-wrapper"]}>
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
         className={formStyles["form"]}
         spellCheck={false}
       >
@@ -135,13 +147,15 @@ function SignInForm() {
         </p>
         <div className={formStyles["button-wrapper"]}>
           <button
-            type="submit"
             className={[
               formStyles["sign-in-button"],
-              isInformationFilled ? "" : formStyles["button-disabled"],
+              isInformationFilled || isLoading
+                ? ""
+                : formStyles["button-disabled"],
             ].join(" ")}
+            onClick={handleSubmit}
           >
-            Sign In
+            {isLoading ? <CircleLoading /> : "Sign In"}
           </button>
           <button className={formStyles["google-sign-in-button"]}>
             <FontAwesomeIcon icon={faGoogle} />

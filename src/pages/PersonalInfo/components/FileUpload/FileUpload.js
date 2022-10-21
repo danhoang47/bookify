@@ -3,13 +3,13 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-function FileUpload({ avatar, onAvatarUpload }) {
+function FileUpload({ avatar, onAvatarUpload, readOnly }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [preview, setPreview] = useState(avatar);
 
   useEffect(() => {
-    if (preview == avatar && avatar) {
+    if (preview === avatar && avatar) {
       setIsFilePicked(true);
       return;
     }
@@ -41,12 +41,23 @@ function FileUpload({ avatar, onAvatarUpload }) {
   return (
     <div className={FileUploadStyle["upload-container"]}>
       <div className={FileUploadStyle["wrapper"]}>
-        <div className={FileUploadStyle["file-upload"]}>
+        <div
+          className={
+            !readOnly
+              ? FileUploadStyle["file-upload"]
+              : FileUploadStyle["file-upload-readOnly"]
+          }
+        >
           {isFilePicked ? (
             <img src={preview} accept="image/*" alt="" />
           ) : (
             <>
-              <input type="file" name="file" onChange={onSelectFile} />
+              <input
+                type="file"
+                name="file"
+                onChange={onSelectFile}
+                disabled={readOnly}
+              />
               <FontAwesomeIcon icon={faUser} />
             </>
           )}
@@ -61,10 +72,15 @@ function FileUpload({ avatar, onAvatarUpload }) {
               onChange={onSelectFile}
               id={"custom-file-input"}
               style={{ display: "none" }}
+              disabled={readOnly}
             />
             <label
               htmlFor="custom-file-input"
-              className={FileUploadStyle["upload-label"]}
+              className={
+                !readOnly
+                  ? FileUploadStyle["upload-label"]
+                  : FileUploadStyle["upload-label-readOnly"]
+              }
             >
               Cập nhật ảnh đại diện
             </label>

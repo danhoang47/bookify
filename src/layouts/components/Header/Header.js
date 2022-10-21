@@ -4,21 +4,14 @@ import ProfileHeaderNav from "../ProfileHeaderNav";
 import { Logo } from "@/components";
 import { faBookmark, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Grid, Box } from "@mui/material";
+import headerStyles from './Header.module.scss';
 
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
 function Header() {
     return (
-        <Box sx={{
-          padding: '1em 0',
-          position: 'fixed',
-          zIndex: '2',
-          left: '0',
-          right: '0',
-          top: '0',
-          backgroundColor: 'white'
-        }}>
+        <div className={headerStyles['header']} >
             <Grid container alignItems={"center"}>
                 <Grid item md={2}>
                     <Logo>
@@ -40,7 +33,7 @@ function Header() {
                     </Box>
                 </Grid>
             </Grid>
-        </Box>
+        </div>
     );
 }
 

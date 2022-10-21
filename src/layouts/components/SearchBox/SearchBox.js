@@ -37,9 +37,9 @@ function SearchBox() {
                     left: 0,
                     top: "72.83px",
                     right: 0,
-                    bottom: 0,
+                    height: '100vh',
                     backgroundColor: "#000",
-                    zIndex: "2",
+                    zIndex: "1",
                     opacity: "0.5",
                 }}
             />}

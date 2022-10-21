@@ -1,12 +1,8 @@
 import DatePickerStyle from "./DatePicker.module.scss";
 
-function PersonalInput({ name, value, onChange, labelContent }) {
+function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
   const newValue = value.split("/").reverse().join("-");
-  const date = new Date(newValue);
-  console.log(date);
-  // const futureDate = date.getDate() + 3;
-  // date.setDate(futureDate);
-  const defaultValue = date.toLocaleDateString("en-CA");
+
   return (
     <span className={DatePickerStyle["input-field"]}>
       {/* Subname ------------------------------- */}
@@ -16,8 +12,13 @@ function PersonalInput({ name, value, onChange, labelContent }) {
         placeholder="dd/mm/yyyy"
         name={name}
         value={newValue}
-        className={DatePickerStyle["input-update"]}
+        className={
+          !readOnly
+            ? DatePickerStyle["input-update"]
+            : DatePickerStyle["input-update-readOnly"]
+        }
         onChange={onChange}
+        readOnly={readOnly}
       />
       <label className={DatePickerStyle["input-label"]} htmlFor={name}>
         {labelContent}

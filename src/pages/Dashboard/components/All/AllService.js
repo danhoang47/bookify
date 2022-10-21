@@ -1,6 +1,7 @@
 import { dashboarData } from "./FakeDataDashBoardAll";
 
 export const getStatic = (month) => {
+  console.log(month);
   let staticObj = {
     views: 0,
     booking: 0,
@@ -92,7 +93,7 @@ export const BookingNumberData = (month) => {
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((data) => data.details);
-  dataByMonth[0].forEach((data) => {
+  dataByMonth[0]?.forEach((data) => {
     bookingObj.day.push(data.day);
     bookingObj.numberBooking.push(data.booking);
   });
