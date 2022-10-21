@@ -56,15 +56,21 @@ function SignInForm({ setModalOpen }) {
           } else {
             console.log(data);
             localStorage.setItem("jwt", data.token);
-            user.name = data.user.name;
-            user.account_number = data.user.account_number;
-            user.avatar = data.user.avatar;
-            user.dob = format(new Date(data.user.dob), "yyyy-MM-dd");
+            user.name = data.user.name ? data.user.name : null;
+            user.account_number = data.user.account_number
+              ? data.user.account_number
+              : null;
+            user.avatar = data.user.avatar ? data.user.avatar : null;
+            user.dob = data.user.dob
+              ? format(new Date(data.user.dob), "yyyy-MM-dd")
+              : null;
             user.email = data.user.email;
-            user.phone = data.user.phone;
-            user.role = data.user.role;
-            user.self_description = data.user.self_description;
-            user.subname = data.user.subname;
+            user.phone = data.user.phone ? data.user.phone : null;
+            user.role = data.user.role ? data.user.role : 0;
+            user.self_description = data.user.self_description
+              ? data.user.self_description
+              : null;
+            user.subname = data.user.subname ? data.user.subname : null;
             user.user_id = data.user.user_id;
             user.username = data.user.username;
 

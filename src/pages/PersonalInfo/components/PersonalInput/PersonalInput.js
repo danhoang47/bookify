@@ -10,6 +10,8 @@ function PersonalInput({
   labelContent,
   readOnly,
 }) {
+  const newValue = value ? value : "";
+
   return (
     <span className={PersonalInputStyle["input-field"]}>
       {/* Subname ------------------------------- */}
@@ -18,7 +20,7 @@ function PersonalInput({
         type={type}
         placeholder={placeholder}
         name={name}
-        value={value}
+        value={newValue}
         className={
           !readOnly
             ? PersonalInputStyle["input-update"]

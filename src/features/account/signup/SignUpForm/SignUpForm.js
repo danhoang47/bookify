@@ -5,6 +5,7 @@ import { accountValidation } from "@/utils/validation";
 import { useUppercase } from "@/utils/hooks";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SignUp } from "@/services/user";
 
 function SignUpForm() {
   const [registerAccount, setRegisterAccount] = useState({
@@ -19,10 +20,43 @@ function SignUpForm() {
     password: true,
     rePassword: true,
   });
+  const [isLoading, setLoading] = useState(false);
+  const isInformationFilled = useMemo(() => {
+    const isAllFilled = Object.keys(registerAccount).every((key) => {
+      return registerAccount[key] !== null;
+    });
+    const isAllValid = Object.keys(isAccountValid).every((key) => {
+      return isAccountValid[key];
+    });
+    return isAllFilled && isAllValid;
+  }, [registerAccount, isAccountValid]);
   const [isAgreed, setAggreed] = useState(false);
   const changedKey = useRef();
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (isLoading || !isInformationFilled) {
+      return;
+    } else {
+      setLoading(true);
+      try {
+        await SignUp(
+          registerAccount.username,
+          registerAccount.email,
+          registerAccount.password
+        ).then((data) => {
+          if (data?.error) {
+            console.log("account not found : " + data.error);
+          } else {
+            console.log(data);
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   const handleValueChange = useCallback(
     (value, key) => {

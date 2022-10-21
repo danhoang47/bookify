@@ -1,7 +1,7 @@
 import DatePickerStyle from "./DatePicker.module.scss";
 
 function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
-  const newValue = value.split("/").reverse().join("-");
+  const newValue = value ? value.split("/").reverse().join("-") : "";
 
   return (
     <span className={DatePickerStyle["input-field"]}>

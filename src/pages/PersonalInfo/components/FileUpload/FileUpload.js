@@ -64,30 +64,26 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
         </div>
       </div>
       <label htmlFor="" className={FileUploadStyle["upload-image"]}>
-        {isFilePicked ? (
-          <>
-            <input
-              type="file"
-              name="file"
-              onChange={onSelectFile}
-              id={"custom-file-input"}
-              style={{ display: "none" }}
-              disabled={readOnly}
-            />
-            <label
-              htmlFor="custom-file-input"
-              className={
-                !readOnly
-                  ? FileUploadStyle["upload-label"]
-                  : FileUploadStyle["upload-label-readOnly"]
-              }
-            >
-              Cập nhật ảnh đại diện
-            </label>
-          </>
-        ) : (
-          <>Cập nhật ảnh đại diện</>
-        )}
+        <>
+          <input
+            type="file"
+            name="file"
+            onChange={onSelectFile}
+            id={"custom-file-input"}
+            style={{ display: "none" }}
+            disabled={readOnly}
+          />
+          <label
+            htmlFor="custom-file-input"
+            className={
+              !readOnly
+                ? FileUploadStyle["upload-label"]
+                : FileUploadStyle["upload-label-readOnly"]
+            }
+          >
+            Cập nhật ảnh đại diện
+          </label>
+        </>
       </label>
     </div>
   );

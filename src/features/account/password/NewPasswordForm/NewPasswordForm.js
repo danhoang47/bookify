@@ -1,12 +1,23 @@
 import { InputField } from "../../components";
 import formStyles from "../PasswordForm.module.scss";
-import { useState, memo, useCallback, useMemo, useRef, useEffect } from "react";
+import {
+  useState,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+  useContext,
+} from "react";
 import { accountValidation } from "@/utils/validation";
+import { compareCurrentPassword, newPassowrdUpdate } from "@/services/user";
+import { UserContext } from "@/utils/contexts";
 function NewPasswordForm() {
   const [newPassword, setNewPassword] = useState({
     password: null,
     rePassword: null,
   });
+  const { user } = useContext(UserContext);
   const [isPasswordValid, setPasswordValid] = useState({
     password: true,
     rePassword: false,
@@ -21,7 +32,8 @@ function NewPasswordForm() {
     return isAllFullfilled && isAllValid;
   }, [newPassword, isPasswordValid]);
   const changedKey = useRef();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const checkPassword = accountValidation(
       "rePassword",
@@ -29,7 +41,21 @@ function NewPasswordForm() {
       newPassword.rePassword,
       true
     );
-    console.log(newPassword.password + newPassword.rePassword + checkPassword);
+    if (checkPassword) {
+      try {
+        await newPassowrdUpdate(user.user_id, newPassword.password).then(
+          (data) => {
+            if (data?.error) {
+              console.log(data.error);
+            } else {
+              console.log(data);
+            }
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
   const handlePasswordChange = useCallback(
     (value, key) => {

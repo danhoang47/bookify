@@ -8,11 +8,13 @@ import {
   useContext,
   useEffect,
 } from "react";
-import { ModalContext } from "@/utils/contexts";
+import { ModalContext, UserContext } from "@/utils/contexts";
 import { getNewPasswordModal } from "@/utils/reducers/modalReducer";
+import { compareCurrentPassword } from "@/services/user";
 
 function PasswordForm() {
   const { dispatch } = useContext(ModalContext);
+  const { user } = useContext(UserContext);
   //user password input
   const [password, setPassword] = useState("");
   //call api check password
@@ -22,15 +24,47 @@ function PasswordForm() {
     const isAllValid = isPasswordValid;
     return isAllFilled && isAllValid;
   }, [password, isPasswordValid]);
-  const handleSubmit = (e) => {
+  const [isLoading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    dispatch(
-      getNewPasswordModal({
-        isOpen: true,
-        animation: "slide-in-right",
-      })
-    );
-    console.log(password);
+
+    if (isLoading || !isInformationFilled) {
+      return;
+    } else {
+      setLoading(true);
+      try {
+        await compareCurrentPassword(user.user_id, password).then((data) => {
+          if (data?.error) {
+            console.log(data.error);
+          } else {
+            console.log(data);
+
+            dispatch(
+              getNewPasswordModal({
+                isOpen: true,
+                animation: "slide-in-right",
+              })
+            );
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // if (password === "leduc") {
+    //   console.log(password);
+    //   dispatch(
+    //     getNewPasswordModal({
+    //       isOpen: true,
+    //       animation: "slide-in-right",
+    //     })
+    //   );
+    // } else {
+    //   console.log("password wrong");
+    // }
   };
   const handlePasswordChange = useCallback(
     (value) => {
@@ -39,7 +73,7 @@ function PasswordForm() {
     //eslint-disable-next-line
     [password]
   );
-  console.log("re-render", isInformationFilled);
+
   return (
     <div className={formStyles["form-wrapper"]}>
       <form onSubmit={handleSubmit} className={formStyles["form"]}>
