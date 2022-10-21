@@ -8,10 +8,10 @@ export default function getHotelRegisterLabel(type) {
             return "Loại khách sạn";
         case types.COUNTRY:
             return "Đất nước";
-        case types.CITY:
-            return "Thành phố"
+        case types.PROVINCE:
+            return "Thành phố/Tỉnh"
         case types.DISTRICT:
-            return "Quận/Huyện"
+            return "Quận/Huyện/Phường"
         case types.ADDRESS:
             return "Địa chỉ";
         case types.DESCRIPTION:

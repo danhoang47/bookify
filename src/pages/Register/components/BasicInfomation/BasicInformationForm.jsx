@@ -19,6 +19,30 @@ function BasicInformationForm({ className }) {
             {
                 Object.keys(basicHotelInfor).reduce((prev, key) => {
                     const InputType = getInputFieldType(key);
+
+                    if (InputType === SelectField) {
+                        
+                    }
+
+                    if ( key === 'description' ) {
+                        return [...prev]
+                    } else {
+                        return ([...prev, (
+                            <InputType 
+                                key={key}
+                                id={key}
+                                label={getHotelRegisterLabel(key)}
+                                value={basicHotelInfor[key]}
+                                onValueChange={(value) => {
+                                    setBasicHotelInfo((prev) => ({
+                                        ...prev,
+                                        [key]: value
+                                    }))
+                                }}
+                                selectionList={[]}
+                            />
+                        )])
+                    }
                 }, [])
             }
         </div>

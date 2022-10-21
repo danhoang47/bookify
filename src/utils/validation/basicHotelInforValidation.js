@@ -2,7 +2,7 @@ const types = {
     HOTEL_NAME: "name",
     HOTEL_TYPE: "type",
     COUNTRY: "country",
-    CITY: "city",
+    PROVINCE: "province",
     DISTRICT: "district",
     ADDRESS: "address",
     DESCRIPTION: "description",
@@ -20,8 +20,8 @@ function validateCountry(countryName, countrySelectionList) {
     return true;
 }
 
-function validateCity(city, districtName) {
-    return districtName.includes(districtName);
+function validateProvince(province, provinceList) {
+    return provinceList.includes(provinceList);
 }
 
 function validateDistrict(districtName, districtSelectionList) {
@@ -44,8 +44,8 @@ export default function basicHotelInforValidation(type, value, selectionList = [
             return validateType(value, selectionList);
         case types.COUNTRY:
             return validateCountry(value, selectionList);
-        case types.CITY:
-            return validateCity(value, selectionList);
+        case types.PROVINCE:
+            return validateProvince(value, selectionList);
         case types.DISTRICT:
             return validateDistrict(value, selectionList);
         case types.ADDRESS:

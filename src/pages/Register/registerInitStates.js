@@ -2,7 +2,7 @@ const basicHotelInforInitState = {
     name: null,
     type: null,
     country: null,
-    city: null,
+    province: null,
     district: null,
     address: null,
     description: null,
