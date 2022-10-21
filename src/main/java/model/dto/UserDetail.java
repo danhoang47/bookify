@@ -11,7 +11,7 @@ import java.util.Date;
  * @author toten
  */
 public class UserDetail {
-//    13
+//    15
 
     private String user_id;
     private String username;
@@ -25,15 +25,39 @@ public class UserDetail {
     private String wishlist_id;
     private String self_description;
     private String salt;
-    private double wallet_amount;
+    private String account_number;
+    private String subname;
+    private Date dob;
+
+    public String getAccount_number() {
+        return account_number;
+    }
+
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
+    }
+
+    public String getSubname() {
+        return subname;
+    }
+
+    public void setSubname(String subname) {
+        this.subname = subname;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 
     public UserDetail() {
         super();
     }
 
-    public UserDetail(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, 
-            String ggid, String wishlist_id,
-            String self_description,  String salt, double wallet_amount) {
+    public UserDetail(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String account_number, String subname, Date dob) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -46,7 +70,29 @@ public class UserDetail {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.wallet_amount = wallet_amount;
+        this.account_number = account_number;
+        this.subname = subname;
+        this.dob = dob;
+    }
+    
+    
+
+    public UserDetail(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, 
+            String ggid, String wishlist_id,
+            String self_description,  String salt, String account_number) {
+        this.user_id = user_id;
+        this.username = username;
+        this.user_password = user_password;
+        this.email = email;
+        this.phone = phone;
+        this.name = name;
+        this.avatar = avatar;
+        this.role = role;
+        this.ggid = ggid;
+        this.wishlist_id = wishlist_id;
+        this.self_description = self_description;
+        this.salt = salt;
+        this.account_number = account_number;
     }
 
     public UserDetail(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id,
@@ -146,14 +192,6 @@ public class UserDetail {
         return email;
     }
 
-    public double getWallet_amount() {
-        return wallet_amount;
-    }
-
-    public void setWallet_amount(double wallet_amount) {
-        this.wallet_amount = wallet_amount;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -208,7 +246,9 @@ public class UserDetail {
 
     @Override
     public String toString() {
-        return "UserDetail{" + "user_id=" + user_id + ", username=" + username + ", user_password=" + user_password + ", email=" + email + ", phone=" + phone + ", name=" + name + ", avatar=" + avatar + ", role=" + role + ", ggid=" + ggid + ", wishlist_id=" + wishlist_id + ", self_description=" + self_description  +'}';
+        return "UserDetail{" + "user_id=" + user_id + ", username=" + username + ", user_password=" + user_password + ", email=" + email + ", phone=" + phone + ", name=" + name + ", avatar=" + avatar + ", role=" + role + ", ggid=" + ggid + ", wishlist_id=" + wishlist_id + ", self_description=" + self_description + ", salt=" + salt + ", account_number=" + account_number + ", subname=" + subname + ", dob=" + dob + '}';
     }
+
+
 
 }

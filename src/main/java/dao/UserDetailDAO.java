@@ -48,7 +48,7 @@ public class UserDetailDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(password, saltvalue);
 
         try {
-            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, null, null, null, null, ?, null)";
+            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, null, null, null, null, ?, null, null, null)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -83,7 +83,7 @@ public class UserDetailDAO {
 
             while (rs.next()) {
                 listUser.add(new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDouble(13)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
             }
 
             return listUser;
@@ -108,7 +108,7 @@ public class UserDetailDAO {
             UserDetail ud = null;
             while (rs.next()) {
                 ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDouble(13)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
 
                 break;
 
@@ -142,9 +142,8 @@ public class UserDetailDAO {
             UserDetail ud = null;
             while (rs.next()) {
                 ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDouble(13)));
-                
-                
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
+
                 return ud;
             }
 
@@ -178,16 +177,20 @@ public class UserDetailDAO {
     public static Boolean update(UserDetail userDetail) {
 
         try {
-            String query = "update userDetail set phone=?,  avatar=?,  ggid=?, whislist_id=?, self_description=?, name=? where user_id=?";
+            String query = "update userDetail set phone=?,  avatar=?,  self_description=?, name=?, "
+                    + "subname=?, dob=? where user_id=?";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
             ps.setString(1, userDetail.getPhone());
             ps.setString(2, userDetail.getAvatar());
-            ps.setString(3, userDetail.getGgid());
-            ps.setString(4, userDetail.getWishlist_id());
-            ps.setString(5, userDetail.getSelf_description());
-            ps.setString(6, userDetail.getName());
+            ps.setString(3, userDetail.getSelf_description());
+            ps.setString(4, userDetail.getName());
+
+            ps.setString(5, userDetail.getSubname());
+            ps.setString(6, userDetail.getDob().toString());
+
+          
             ps.setString(7, userDetail.getUser_id());
 
             int a = ps.executeUpdate();
@@ -254,7 +257,7 @@ public class UserDetailDAO {
         }
         return false;
     }
-    
+
 //    ---------------------------- Get hotel owner -------------------------------------------
     public static UserDetail getOwner(String id) {
         try {
@@ -266,10 +269,9 @@ public class UserDetailDAO {
 
             UserDetail ud = null;
             while (rs.next()) {
-                ud = (new UserDetail(rs.getString(1), rs.getString(2), null, null, null, rs.getString(6),
-                        rs.getString(7), 0, null, null, rs.getString(11), null, 0));
-                
-                
+                ud = (new UserDetail(rs.getString(1), rs.getString(2), null, rs.getString(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), rs.getInt(8), null, null, rs.getString(11), null, rs.getString(13), rs.getString(14), rs.getDate(15)));
+
                 return ud;
             }
 
@@ -280,9 +282,6 @@ public class UserDetailDAO {
         return null;
     }
 
-
-    
-
 //    public static void main(String[] args) {
 //        String data = "{deletes: [a, b, c]}";
 //        HashMap<String, Object> map = new Gson().fromJson(data, HashMap.class);
@@ -290,16 +289,16 @@ public class UserDetailDAO {
 //    }
     public static void main(String[] args) {
 
-//        UserDetail ud = new UserDetailDAO().login("duclq", "12345zxc");
+//        UserDetail ud = new UserDetailDAO().login("duc", "123"); 
+//        System.out.println(ud);
+        List<UserDetail> list = new UserDetailDAO().listAll();
+        System.out.println(list);
+//        for (int i = 1; i <= 10; i++) {
+//            UUID uuid = UUID.randomUUID();
 //
-//        System.out.println(new UserDetailDAO().getUsername("newAcc1"));
-        for (int i = 1; i <= 10; i++) {
-            UUID uuid = UUID.randomUUID();
-
-            System.out.println(uuid.toString());
-        }
+//            System.out.println(uuid.toString());
+//        }
 
     }
 
- 
 }

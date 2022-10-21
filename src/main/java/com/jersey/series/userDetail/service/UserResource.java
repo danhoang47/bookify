@@ -7,6 +7,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -33,13 +38,12 @@ public class UserResource implements UserDetailInterface {
     public Response login(@FormDataParam("username") String username, @FormDataParam("password") String password) {
 
         UserDetailDAO dao = new UserDetailDAO();
-        UserDetail user = new UserDetail(username, password);
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
-        System.out.println(user);
+        System.out.println(username + " " + password);
 
 //         Check if username is true or not
-        Boolean checkUsername = dao.getUsername(user.getUsername());
+        Boolean checkUsername = dao.getUsername(username);
 
         if (checkUsername) {
             UserDetail userLogin = dao.login(username, password);
@@ -51,44 +55,42 @@ public class UserResource implements UserDetailInterface {
 
                 return Response.ok(new Gson().toJson(obj)).build();
             } else {
-                obj.put("message", "Wrong password");
-                return Response.status(401).entity("Wrong password").build();
+                obj.put("error", "Wrong password");
+                return Response.status(401).entity(new Gson().toJson(obj)).build();
             }
 
         } else {
-            obj.put("message", "Wrong username or username does not exist");
+            obj.put("error", "Wrong username or username does not exist");
             return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
     }
 
-    @GET
+    @POST
     @Path("/verifyjwt")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDataByJWT(@HeaderParam("jwt") String jwtString) {
-        
-        
-        System.out.println(jwtString);
+    public Response getDataByJWT(String jwtString) {
+        Gson gson = new Gson();
+
+        String jwtToken = gson.fromJson(jwtString, String.class).toString();
+
         UserDetailDAO dao = new UserDetailDAO();
 //        UserDetail user = new UserDetail(username, password);
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
-        Jws<Claims> res = userJwt.decodeToJWT(jwtString, "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
-        
-        String userId =(String) res.getBody().get("user_id");
-        
+        Jws<Claims> res = userJwt.decodeToJWT(jwtToken, "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
+
+        String userId = (String) res.getBody().get("user_id");
+
         UserDetail userLogin = dao.getUser(userId);
         userLogin.setUser_password(null);
         userLogin.setGgid(null);
         userLogin.setSalt(null);
-       
 
-        if (userLogin!=null) {
+        if (userLogin != null) {
             obj.put("user", userLogin);
+           
             return Response.ok(new Gson().toJson(obj)).build();
-            
-                
-          
 
         } else {
             obj.put("error", "Login again");
@@ -128,11 +130,20 @@ public class UserResource implements UserDetailInterface {
     @Path("/update/{user_id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("user_id") String user_id, @FormDataParam("phone") String phone,
-            @FormDataParam("name") String name, @FormDataParam("selfdescription") String selfDes,
-            @FormDataParam("uploadFile") InputStream fileInputStream,
-            @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition) {
+    public Response update(@PathParam("user_id") String user_id,
+            @FormDataParam("subname") String subname,
+            @FormDataParam("name") String name,
+            @FormDataParam("phone") String phone,
+            @FormDataParam("email") String email,
+            @FormDataParam("dob") String dob,
+            @FormDataParam("selfdescription") String selfDes,
+            @FormDataParam("avatar") InputStream fileInputStream,
+            @FormDataParam("avatar") FormDataContentDisposition fileFormDataContentDisposition) throws ParseException {
 
+        LocalDate ld = LocalDate.parse(dob);
+       
+        Date userDob = java.sql.Date.valueOf(ld);
+        
         UploadImage uploaduser = new UploadImage();
         JSONObject obj = new JSONObject();
         UserDetailDAO dao = new UserDetailDAO();
@@ -152,18 +163,24 @@ public class UserResource implements UserDetailInterface {
             // release resources, if any
         }
 
+        ud.setEmail(email);
         ud.setPhone(phone);
         ud.setName(name);
+        ud.setSubname(subname);
+        ud.setDob(userDob);
         ud.setSelf_description(selfDes);
         ud.setAvatar(uploadFilePath);
 
         System.out.println(ud);
+        System.out.println(ud.getDob());
 
 //        Check update status
         Boolean checkUpdate = dao.update(ud);
-
+//        System.out.println(checkUpdate);
+//        Boolean checkUpdate = true;
         if (checkUpdate) {
             obj.put("message", "Successfully update");
+//            Response.status(200).entity(new Gson().toJson(obj)).build();
             return Response.ok(new Gson().toJson(obj)).build();
         } else {
             obj.put("message", "Failed to update");
@@ -190,6 +207,11 @@ public class UserResource implements UserDetailInterface {
             return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
+    }
+
+    @Override
+    public Response update(String user_id, String phone, String name, String selfDes, InputStream fileInputStream, FormDataContentDisposition fileFormDataContentDisposition) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
