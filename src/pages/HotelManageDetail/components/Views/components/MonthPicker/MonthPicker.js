@@ -19,21 +19,6 @@ const months = [
   "December",
 ];
 
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 function MonthPicker({ monthChanging }) {
   const date = new Date();
   const [month, setMonth] = useState(date.getMonth());

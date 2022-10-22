@@ -1,6 +1,6 @@
 export const dashboarData = [
   {
-    years: "2014",
+    years: 2014,
     details: [
       {
         month: "Jan",
@@ -53,7 +53,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2015",
+    years: 2015,
     details: [
       {
         month: "Jan",
@@ -106,7 +106,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2016",
+    years: 2016,
     details: [
       {
         month: "Jan",
@@ -159,7 +159,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2017",
+    years: 2017,
     details: [
       {
         month: "Jan",
@@ -212,7 +212,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2018",
+    years: 2018,
     details: [
       {
         month: "Jan",
@@ -265,7 +265,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2019",
+    years: 2019,
     details: [
       {
         month: "Jan",
@@ -318,7 +318,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2020",
+    years: 2020,
     details: [
       {
         month: "Jan",
@@ -371,7 +371,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2021",
+    years: 2021,
     details: [
       {
         month: "Jan",
@@ -424,7 +424,7 @@ export const dashboarData = [
     ],
   },
   {
-    years: "2022",
+    years: 2022,
     details: [
       {
         month: "Jan",
