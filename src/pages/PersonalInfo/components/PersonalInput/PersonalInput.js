@@ -13,7 +13,13 @@ function PersonalInput({
   const newValue = value ? value : "";
 
   return (
-    <span className={PersonalInputStyle["input-field"]}>
+    <span
+      className={
+        !readOnly
+          ? PersonalInputStyle["input-field"]
+          : PersonalInputStyle["input-field-readOnly"]
+      }
+    >
       {/* Subname ------------------------------- */}
       <input
         spellCheck="false"

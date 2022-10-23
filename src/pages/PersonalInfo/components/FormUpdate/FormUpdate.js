@@ -50,6 +50,13 @@ function FormUpdate({ account }) {
   const onSubmitClick = (e) => {
     e.preventDefault();
     console.log(subname, name, email, phone, dob, des, avatar);
+    account.name = name;
+    account.subname = subname;
+    account.email = email;
+    account.phone = phone;
+    account.dob = dob;
+    account.des = des;
+    account.avatar = avatar;
 
     const formData = new FormData();
     formData.append("subname", subname);
@@ -72,8 +79,9 @@ function FormUpdate({ account }) {
         data.json();
       })
       .then((result) => {
-        console.log(result?.message);
-        if (result?.message) {
+        console.log(account);
+        console.log(result.message);
+        if (result.message) {
           console.log(result.message);
         }
       })
@@ -152,7 +160,13 @@ function FormUpdate({ account }) {
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={11}>
-                  <span className={FormUpdateStyle["des-input-field"]}>
+                  <span
+                    className={
+                      !readOnly
+                        ? FormUpdateStyle["des-input-field"]
+                        : FormUpdateStyle["des-input-field-readOnly"]
+                    }
+                  >
                     {/* email ------------------------------- */}
                     <textarea
                       spellCheck="false"

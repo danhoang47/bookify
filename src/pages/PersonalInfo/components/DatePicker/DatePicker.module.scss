@@ -63,6 +63,23 @@
     }
 }
 
+.input-field-readOnly {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    margin-top: 10px;
+    width: 100%;
+    input {
+        font-family: inherit;
+    }
+    textarea:focus+label,
+    input:focus+label {
+        color: #000;
+    }
+    textarea:focus {
+        outline-color: #4361ee;
+    }
+}
+
 .button-field {
     height: 50px;
     display: flex;

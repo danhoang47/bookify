@@ -4,7 +4,13 @@ function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
   const newValue = value ? value.split("/").reverse().join("-") : "";
 
   return (
-    <span className={DatePickerStyle["input-field"]}>
+    <span
+      className={
+        !readOnly
+          ? DatePickerStyle["input-field"]
+          : DatePickerStyle["input-field-readOnly"]
+      }
+    >
       {/* Subname ------------------------------- */}
       <input
         spellCheck="false"

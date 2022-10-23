@@ -73,6 +73,22 @@
     padding-bottom: 60px;
 }
 
+.des-input-field-readOnly {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    margin-top: 10px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 60px;
+    textarea:focus+label,
+    input:focus+label {
+        color: #000;
+    }
+    textarea:focus {
+        outline: none;
+    }
+}
+
 .button-field {
     height: 50px;
     display: flex;
