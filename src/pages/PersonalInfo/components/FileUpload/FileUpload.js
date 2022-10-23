@@ -9,7 +9,7 @@ function FileUpload({ avatar, onAvatarUpload }) {
   const [preview, setPreview] = useState(avatar);
 
   useEffect(() => {
-    if (preview == avatar && avatar) {
+    if (preview === avatar && avatar) {
       setIsFilePicked(true);
       return;
     }

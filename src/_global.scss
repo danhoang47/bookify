@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+@mixin layout-padding {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
 @mixin center {
     display: flex;
     align-items: center;

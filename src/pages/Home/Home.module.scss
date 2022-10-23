@@ -1,20 +1,24 @@
 @use 'src/global';
 
 #home {
-    position: relative;
 
-    .filter-bar {
-        padding: 2em 0;
+    .filter-bar-container {
         position: relative;
+        height: 124.83px;
 
-        .category-tab {
-            @include global.center();
-            gap: 1em;
+        .filter-bar {
+            padding: 2em 0;
+            left: 0;
+            right: 0;
+    
+            .category-tab {
+                @include global.center();
+                gap: 1em;
+            }
         }
 
         .filter-button {
             position: absolute;
-            top: 0;
             right: 0;
             top: 50%;
             transform: translateY(-50%);

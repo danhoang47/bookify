@@ -1,0 +1,10 @@
+@use 'src/global';
+
+.bar {
+    width: 15px;
+    background-color: global.$gray-200;
+
+    &.active {
+        background: global.$gray-500;
+    }
+}

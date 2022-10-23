@@ -4,7 +4,9 @@ import Form from "./Form";
 import Modal from "./Modal";
 import DatePicker from "./DatePicker";
 import GuestsPicker from "./GuestsPicker";
-import HotelCard from './HotelCard'
+import HotelCard from './HotelCard';
+import CircleLoading from "./CircleLoading";
+import InputField from "./InputField";
 
 export {
     Logo,
@@ -13,5 +15,7 @@ export {
     Modal,
     DatePicker,
     GuestsPicker,
-    HotelCard
+    HotelCard,
+    CircleLoading,
+    InputField
 }

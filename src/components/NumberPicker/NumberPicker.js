@@ -1,9 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faMinus,
-    faPlus
-} from '@fortawesome/free-solid-svg-icons';
-import numberPickerStyles from './NumberPicker.module.scss';
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import numberPickerStyles from "./NumberPicker.module.scss";
 import { useEffect, useState } from "react";
 
 function NumberPicker({ title, description, limit, value, setValue }) {
@@ -16,7 +13,7 @@ function NumberPicker({ title, description, limit, value, setValue }) {
             return;
         }
         setValue(value - 1);
-    }
+    };
 
     const handleIncrease = (event) => {
         event.stopPropagation();
@@ -24,50 +21,61 @@ function NumberPicker({ title, description, limit, value, setValue }) {
             return;
         }
         setValue(value + 1);
-    }
+    };
 
     useEffect(() => {
         // if number less than zero
-        if ( value - 1 < 0 ) {
+        if (value - 1 < 0) {
             setZero(true);
         } else {
             setZero(false);
         }
         // if number exceed limit
-        if ( value === limit) {
+        if (value === limit) {
             setExceedLimit(true);
         } else {
             setExceedLimit(false);
         }
 
-    //eslint-disable-next-line
-    }, [value])
+        //eslint-disable-next-line
+    }, [value]);
 
-    return (  
-        <div className={numberPickerStyles['number-picker']}>
-            <div className={numberPickerStyles['picker-info']} >
-                <p className={numberPickerStyles['title']}>{title}</p>
-                <p className={numberPickerStyles['description']}>{description}</p>
+    return (
+        <div className={numberPickerStyles["number-picker"]}>
+            <div className={numberPickerStyles["picker-info"]}>
+                <p className={numberPickerStyles["title"]}>{title}</p>
+                <p className={numberPickerStyles["description"]}>
+                    {description}
+                </p>
             </div>
-            <div className={numberPickerStyles['picker']}>
-                <button 
+            <div className={numberPickerStyles["picker"]}>
+                <button
                     className={[
-                        numberPickerStyles['decrease-button'],
-                        isZero ? numberPickerStyles['disabled'] : ''
-                    ].join(' ')}
+                        numberPickerStyles["decrease-button"],
+                        isZero ? numberPickerStyles["disabled"] : "",
+                    ].join(" ")}
                     onClick={handleDecrease}
                 >
                     <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <div className={numberPickerStyles['value']}>
-                    {value}
-                </div>
-                <button 
+                <input
+                    className={numberPickerStyles["value"]}
+                    value={value}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value);
+                        if (value > limit) {
+                            setValue(limit)
+                        } else {
+                            setValue(value)
+                        }
+                    }}
+                ></input>
+                <button
                     className={[
-                        numberPickerStyles['increase-button'],
-                        isExceedLimit ? numberPickerStyles['disabled'] : ''
-                    ].join(' ')}
-                    onClick={handleIncrease}    
+                        numberPickerStyles["increase-button"],
+                        isExceedLimit ? numberPickerStyles["disabled"] : "",
+                    ].join(" ")}
+                    onClick={handleIncrease}
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>

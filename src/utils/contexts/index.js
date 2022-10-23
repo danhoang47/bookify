@@ -6,6 +6,7 @@ import SearchContext from "./SearchContext";
 import HotelContext from "./HotelContext";
 import ExchangeContext from "./ExchangeContext";
 import CoordinatesContext from "./CoordinatesContext";
+import RegisterContext from "./RegisterContext";
 
 export {
   ModalContext,
@@ -16,4 +17,5 @@ export {
   ExchangeContext,
   HotelContext,
   CoordinatesContext,
+  RegisterContext,
 };

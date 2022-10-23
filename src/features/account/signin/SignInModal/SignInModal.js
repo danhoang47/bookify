@@ -32,13 +32,13 @@ function SignInModal({ animation }) {
         <BrowserRouter>
           <Logo />
         </BrowserRouter>
+
         <h3 className={signInModalStyles["welcome-heading"]}>
           Welcome back, Mate
         </h3>
       </div>
-      <BrowserRouter>
-        <SignInForm />
-      </BrowserRouter>
+
+      <SignInForm setModalOpen={handleClick} />
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?

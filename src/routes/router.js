@@ -16,9 +16,11 @@ import {
   HotelManageDetail,
   Dashboard,
   Payment,
-  CheckOut,
+  Register,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import App from "@/App";
+import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,27 +32,23 @@ const router = createBrowserRouter(
           <Route path="info" element={<PersonalInfo />} />
           <Route path="loginandsecurity" element={<LoginandSecurity />} />
           <Route path="history" element={<BookingHistory />} />
-          <Route path="payment" element={<Payment />} />
+        </Route>
+        <Route path="hotelmanage" element={<DefaultLayout />}>
+          <Route path="" element={<HotelManageMain />} />
+          <Route path="detail" element={<HotelManageDetail />} />
+          <Route path="booking" element={<HotelManageBooking />} />
+        </Route>
+        <Route path="dashboard" element={<DefaultLayout />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
+        <Route path="payment" element={<DefaultLayout />}>
+          <Route path="" element={<Payment />} />
         </Route>
       </Route>
-      <Route path="hotelmanage" element={<DefaultLayout />}>
-        <Route path="" element={<HotelManageMain />} />
-        <Route path="detail" element={<HotelManageDetail />} />
-        <Route path="booking" element={<HotelManageBooking />} />
+      <Route path="hosting" element={<HostingRegisterLayout />}>
+        <Route path="introduction" element={<Introduction />} />
+        <Route path="register" element={<Register />} />
       </Route>
-
-      <Route path="introduction" element={<DefaultLayout />}>
-        <Route path="" element={<Introduction />} />
-      </Route>
-      <Route path="dashboard" element={<DefaultLayout />}>
-        <Route path="" element={<Dashboard />} />
-      </Route>
-      <Route path="checkout" element={<DefaultLayout />}>
-        <Route path="" element={<CheckOut />} />
-      </Route>
-      {/* <Route path="payment" element={<DefaultLayout />}>
-        <Route path="" element={<Payment />} />
-      </Route> */}
     </Route>
   )
 );

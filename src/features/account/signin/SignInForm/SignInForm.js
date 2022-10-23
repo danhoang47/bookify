@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "./SignInForm.module.scss";
 import {
   useState,
@@ -14,8 +14,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 import { UserContext } from "@/utils/contexts";
+import { signIn } from "@/services/user";
+import { CircleLoading } from "@/components";
 
-function SignInForm() {
+function SignInForm({ setModalOpen }) {
   let { user, isLogin, setLogin } = useContext(UserContext);
 
   const [account, setAccount] = useState({
@@ -35,36 +37,32 @@ function SignInForm() {
     });
     return isAllFilled && isAllValid;
   }, [account, isAccountValid]);
+  const [isLoading, setLoading] = useState(false);
   const [isRemember, setRemember] = useState(false);
   const changedKey = useRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append("username", account.username);
-    form.append("password", account.password);
-    fetch("/rest/user_detail/login", {
-      mode: "no-cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: form,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLogin(true);
-        user.id = data.user.user_id;
-        user.username = data.user.username;
-        user.avatar = data.user.avatar;
-        user.wallet_amount = data.user.wallet_amount;
-        console.log(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  // handle event functions
+  const handleSubmit = async (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (isLoading || !isInformationFilled) {
+      return;
+    } else {
+      setLoading(true);
+      try {
+        await signIn(account.username, account.password).then((data) => {
+          if (data?.error) {
+            console.log("account not found");
+          } else {
+            console.log(data);
+            setModalOpen(event);
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
   };
-
   const handleAccountChange = useCallback(
     (value, key) => {
       setAccount((prev) => {
@@ -81,7 +79,6 @@ function SignInForm() {
 
   useEffect(() => {
     const changedField = changedKey.current;
-
     if (changedField) {
       setAccountValid((prev) => {
         return {
@@ -97,11 +94,10 @@ function SignInForm() {
     }
   }, [account]);
 
-  // console.log("re-render ", isInformationFilled);
   return (
     <div className={formStyles["form-wrapper"]}>
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
         className={formStyles["form"]}
         spellCheck={false}
       >
@@ -134,13 +130,15 @@ function SignInForm() {
         </p>
         <div className={formStyles["button-wrapper"]}>
           <button
-            type="submit"
             className={[
               formStyles["sign-in-button"],
-              isInformationFilled ? "" : formStyles["button-disabled"],
+              isInformationFilled || isLoading
+                ? ""
+                : formStyles["button-disabled"],
             ].join(" ")}
+            onClick={handleSubmit}
           >
-            Sign In
+            {isLoading ? <CircleLoading /> : "Sign In"}
           </button>
           <button className={formStyles["google-sign-in-button"]}>
             <FontAwesomeIcon icon={faGoogle} />
