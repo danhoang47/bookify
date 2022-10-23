@@ -7,7 +7,7 @@ function BasicInformation({ setNextTabValid }) {
     return (
         <div id={basicInforStyles["basic-information"]}>
             <h3 className={basicInforStyles["basic-infor-header"]}>
-                Cung cấp một vài thông tin cở bản về khách sạn của bạn.
+                Cung cấp một vài thông tin cơ bản về khách sạn của bạn.
             </h3>
             <div className={basicInforStyles["basic-infor-body"]}>
                 <Suspense fallback={<div>Loading...</div>}>

@@ -86,11 +86,14 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
             >
                 <FontAwesomeIcon icon={faChevronDown} />
             </button>
-            <div className={useClsx("selection-list")}>
+            <div className={useClsx("selection-list", isSelectionListOpen ? 'd-block' : '')}>
                 {selectionList?.map((value) => (
                     <div
                         key={value.code}
-                        onClick={setValue(value.name)}
+                        onClick={() => {
+                            setSelectionListOpen(false);
+                            setValue(value.name, id)
+                        }}
                         className={"selection-item"}
                     >
                         {value.name}

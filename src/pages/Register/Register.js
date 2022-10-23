@@ -51,6 +51,8 @@ function Register() {
         ]
     );
 
+    console.log('basic-form re-render')
+
     return (
         <RegisterContext.Provider value={registerContextValue}>
             <div id={registerStyles["register"]}>

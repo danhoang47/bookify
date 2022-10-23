@@ -8,7 +8,7 @@ import { getHotelRegisterLabel } from "@/utils/validation";
 const getInputFieldType = (key) => {
     if (key === "name" || key === "address") {
         return InputField;
-    } else if (key === 'description') {
+    } else if (key === "description") {
         return TextAreaField;
     } else {
         return SelectField;
@@ -41,7 +41,8 @@ function BasicInformationForm({ className, setNextTabValid }) {
                 return isValid;
             }
         );
-        setNextTabValid(isAllInformationValid)
+        setNextTabValid(isAllInformationValid);
+        //eslint-disable-next-line
     }, [isInformationValid]);
 
     return (

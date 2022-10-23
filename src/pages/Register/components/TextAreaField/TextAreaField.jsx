@@ -2,6 +2,8 @@ import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { memo, useRef, useState } from 'react';
 import { basicHotelInforValidation, getHotelRegisterErrorMessage } from '@/utils/validation';
+import { useClsx } from '@/utils/hooks';
+import "./TextAreaField.scss";
 
 function TextAreaField({ id, label, value, setValue, setInformationValid }) {
     const [isFocus, setFocused] = useState(false);
@@ -34,7 +36,7 @@ function TextAreaField({ id, label, value, setValue, setInformationValid }) {
     }, [value])
 
     return (  
-        <Box>
+        <div className={useClsx('input-field', 'text-area-field')}>
             <textarea 
                 id={id} 
                 ref={inputRef}
@@ -47,11 +49,12 @@ function TextAreaField({ id, label, value, setValue, setInformationValid }) {
                         setValue(e.target.value, id);
                     }
                 }}
+                className={useClsx('text-area')}
             />
             <label htmlFor={id}>
                 {!isValid && isFocus ? getHotelRegisterErrorMessage(id) : label}
             </label>
-        </Box>
+        </div>
     );
 }
 
