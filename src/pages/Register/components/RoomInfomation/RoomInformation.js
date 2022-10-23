@@ -1,7 +1,11 @@
+import RoomPickers from "../RoomPickers";
 
 function RoomInformation() {
+
     return (  
-        <div>RoomInformation</div>
+        <div>
+            <RoomPickers />
+        </div>
     );
 }
 

@@ -1,14 +1,21 @@
-import basicInforStyles from './BasicInformation.module.scss';
-import BasicInformationForm from "./BasicInformationForm";
+import { lazy, Suspense, useState } from "react";
+import basicInforStyles from "./BasicInformation.module.scss";
+const BasicInformationForm = lazy(() => import("./BasicInformationForm"));
 
-function BasicInformation() {
-    return (  
-        <div id={basicInforStyles['basic-information']}>
-            <div className={basicInforStyles['basic-infor-header']}>
+function BasicInformation({ setNextTabValid }) {
+
+    return (
+        <div id={basicInforStyles["basic-information"]}>
+            <h3 className={basicInforStyles["basic-infor-header"]}>
                 Cung cấp một vài thông tin cở bản về khách sạn của bạn.
-            </div>
-            <div className={basicInforStyles['basic-infor-body']}>
-                <BasicInformationForm className={basicInforStyles['basic-infor-form']}/>
+            </h3>
+            <div className={basicInforStyles["basic-infor-body"]}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <BasicInformationForm
+                        className={basicInforStyles["basic-infor-form"]}
+                        setNextTabValid={setNextTabValid}
+                    />
+                </Suspense>
             </div>
         </div>
     );

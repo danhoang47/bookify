@@ -24,6 +24,8 @@ function usePopup(state = false) {
 
   useEffect(() => {
     const container = containerRef.current;
+    // auto focus element;
+    container.focus()
 
     // container.addEventListener("click", handleClick);
     container.addEventListener("blur", handleBlur, true);

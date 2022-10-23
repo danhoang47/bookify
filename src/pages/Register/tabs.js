@@ -1,5 +1,6 @@
+import { lazy } from "react";
 import {
-    BasicInfomation, // tab 0
+    BasicInfomation,
     ExtraInformation, 
     ImageSection,
     RoomInfomation,
@@ -9,32 +10,32 @@ import {
 const tabs = [
     {
         id: 0,
-        render: () => {
-            return <BasicInfomation />
+        render: (setNextTabValid) => {
+            return <BasicInfomation setNextTabValid={setNextTabValid}/>
         } 
     },
     {
         id: 1,
-        render: () => {
-            return <AmenityInformation />
+        render: (setNextTabValid) => {
+            return <AmenityInformation setNextTabValid={setNextTabValid}/>
         } 
     },
     {
         id: 2,
-        render: () => {
-            return <RoomInfomation />
+        render: (setNextTabValid) => {
+            return <RoomInfomation setNextTabValid={setNextTabValid}/>
         } 
     },
     {
         id: 3,
-        render: () => {
-            return <ImageSection />
+        render: (setNextTabValid) => {
+            return <ImageSection setNextTabValid={setNextTabValid}/>
         } 
     },
     {
         id: 4,
-        render: () => {
-            return <ExtraInformation />
+        render: (setNextTabValid) => {
+            return <ExtraInformation setNextTabValid={setNextTabValid}/>
         } 
     },
 ]

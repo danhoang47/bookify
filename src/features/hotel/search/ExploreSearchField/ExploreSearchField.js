@@ -14,11 +14,15 @@ function ExploreSearchField({ handler: fetchData }) {
         getExplorePlaces(place).then(data => {
             setFoundPlaces(data.slice(0, limitResults))
         })
-    });
+    }, 2000);
 
     useEffect(() => {
         debounceExploreSearch();
     }, [place])
+
+    useEffect(() => {
+        console.log('found places');
+    }, [foundPlaces])
 
     return (  
         <div className={exploreSearchStyles['explore-search-places']}>

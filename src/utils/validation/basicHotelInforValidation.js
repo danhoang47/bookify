@@ -13,7 +13,8 @@ function validateHotelName(name) {
 }
 
 function validateType(typeName, typeSelectionList) {
-    return typeSelectionList.includes(typeName);
+    const typeNames = typeSelectionList.map((type) => type.name);
+    return typeNames.includes(typeName);
 }
 
 function validateCountry(countryName, countrySelectionList) {
@@ -21,11 +22,12 @@ function validateCountry(countryName, countrySelectionList) {
 }
 
 function validateProvince(province, provinceList) {
-    return provinceList.includes(provinceList);
+    const provinceNames = provinceList.map((province) => province.name);
+    return provinceNames.includes(province);
 }
 
 function validateDistrict(districtName, districtSelectionList) {
-    return districtSelectionList.includes(districtName);
+    return districtName.length > 0;
 }
 
 function validateAddress(address) {

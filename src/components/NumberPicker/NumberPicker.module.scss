@@ -40,8 +40,16 @@
 
         .value {
             margin: 0 1em;
+            width: 4em;
             min-width: 10px;
             text-align: center;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid transparent;
+
+            &:focus {
+                border-bottom-color: global.$gray-200;
+            }
         }
     }
 }

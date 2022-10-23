@@ -1,50 +1,66 @@
 import { RegisterContext } from "@/utils/contexts";
-import { useContext, useId, useRef } from 'react';
-import InputField from "./InputField";
-import SelectField from "./SelectField";
+import { useContext, useCallback, useState, useEffect } from "react";
+import InputField from "../InputField/InputField";
+import SelectField from "../SelectField/SelectField";
+import TextAreaField from "../TextAreaField/TextAreaField";
 import { getHotelRegisterLabel } from "@/utils/validation";
 
 const getInputFieldType = (key) => {
-    if (key === 'name' || key === 'address') {
+    if (key === "name" || key === "address") {
         return InputField;
+    } else if (key === 'description') {
+        return TextAreaField;
+    } else {
+        return SelectField;
     }
-    else { return SelectField }
-}
+};
 
-function BasicInformationForm({ className }) {
+function BasicInformationForm({ className, setNextTabValid }) {
     const { basicHotelInfor, setBasicHotelInfo } = useContext(RegisterContext);
+    const [isInformationValid, setInformationValid] = useState({
+        name: false,
+        type: false,
+        country: true,
+        province: false,
+        district: false,
+        address: false,
+        description: true,
+    });
 
-    return (  
-        <div className={className}>
-            {
-                Object.keys(basicHotelInfor).reduce((prev, key) => {
-                    const InputType = getInputFieldType(key);
+    const handleValueChange = useCallback((value, key) => {
+        setBasicHotelInfo((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+        //eslint-disable-next-line
+    }, []);
 
-                    if (InputType === SelectField) {
-                        
-                    }
-
-                    if ( key === 'description' ) {
-                        return [...prev]
-                    } else {
-                        return ([...prev, (
-                            <InputType 
-                                key={key}
-                                id={key}
-                                label={getHotelRegisterLabel(key)}
-                                value={basicHotelInfor[key]}
-                                onValueChange={(value) => {
-                                    setBasicHotelInfo((prev) => ({
-                                        ...prev,
-                                        [key]: value
-                                    }))
-                                }}
-                                selectionList={[]}
-                            />
-                        )])
-                    }
-                }, [])
+    useEffect(() => {
+        const isAllInformationValid = Object.values(isInformationValid).every(
+            (isValid) => {
+                return isValid;
             }
+        );
+        setNextTabValid(isAllInformationValid)
+    }, [isInformationValid]);
+
+    return (
+        <div className={className}>
+            {Object.keys(basicHotelInfor).reduce((prev, key) => {
+                const InputType = getInputFieldType(key);
+
+                return [
+                    ...prev,
+                    <InputType
+                        key={key}
+                        id={key}
+                        label={getHotelRegisterLabel(key)}
+                        setValue={handleValueChange}
+                        value={basicHotelInfor[key]}
+                        setInformationValid={setInformationValid}
+                    />,
+                ];
+            }, [])}
         </div>
     );
 }

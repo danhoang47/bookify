@@ -6,9 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function BannerCarousel({ trendingHotels }) {
 
     return (
-      <Carousel style={{
-        zIndex: '1'
-      }}>
+      <Carousel 
+        defaultActiveIndex={2}
+        style={{
+          zIndex: '1'
+        }
+      }>
         {
           trendingHotels.map(({ backgroundImage, name }, index) => (
             <Carousel.Item 

@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { memo, useRef, useState } from 'react';
+import { basicHotelInforValidation, getHotelRegisterErrorMessage } from '@/utils/validation';
 
-function InputField({ id, label, value, onValueChange }) {
-    const handleChange = (e) => onValueChange(e.target.value);
+function TextAreaField({ id, label, value, setValue, setInformationValid }) {
     const [isFocus, setFocused] = useState(false);
     const inputRef = useRef();
+    const isValid = basicHotelInforValidation(id, value);
 
     const handleFocus = (e) => {
         e.stopPropagation();
@@ -25,21 +26,33 @@ function InputField({ id, label, value, onValueChange }) {
         }
     }, [inputRef, isFocus])
 
-    console.log('re-render', isFocus)
+    useEffect(() => {
+        setInformationValid(prev => ({
+            ...prev,
+            [id]: isValid
+        }));
+    }, [value])
+
     return (  
         <Box>
-            <input 
+            <textarea 
                 id={id} 
                 ref={inputRef}
                 type="text" 
-                value={value ?? ''}
-                onChange={() => {}}
+                value={value}
+                onChange={(e) => {
+                    if (e.target.value.length > 500) {
+                        return;
+                    } else {
+                        setValue(e.target.value, id);
+                    }
+                }}
             />
             <label htmlFor={id}>
-                {label}
+                {!isValid && isFocus ? getHotelRegisterErrorMessage(id) : label}
             </label>
         </Box>
     );
 }
 
-export default memo(InputField);
+export default TextAreaField;
