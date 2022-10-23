@@ -52,7 +52,6 @@ function PasswordForm() {
           label="Mật khẩu"
           type="password"
         />
-        {}
         <div className={formStyles["button-wrapper"]}>
           <button
             className={[
