@@ -16,9 +16,9 @@ import {
     Dashboard,
     Payment,
     Register,
+    Hotel
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import App from "@/App";
 import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
 
 const router = createBrowserRouter(
@@ -26,6 +26,7 @@ const router = createBrowserRouter(
         <Route>
             <Route path="/" element={<DefaultLayout />}>
                 <Route path="" element={<Home />} />
+                <Route path="hotel" element={<Hotel />} />
                 <Route path="profile">
                     <Route path="" element={<Profile />} />
                     <Route path="info" element={<PersonalInfo />} />

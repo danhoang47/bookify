@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Outlet, useHref } from "react-router-dom";
 import HostingRegisterHeader from "../components/HostingRegisterHeader";
 
