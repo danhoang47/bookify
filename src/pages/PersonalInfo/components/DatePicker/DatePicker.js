@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePickerStyle from "./DatePicker.module.scss";
 
 function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
@@ -26,6 +27,7 @@ function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
         onChange={onChange}
         readOnly={readOnly}
       />
+
       <label className={DatePickerStyle["input-label"]} htmlFor={name}>
         {labelContent}
       </label>
