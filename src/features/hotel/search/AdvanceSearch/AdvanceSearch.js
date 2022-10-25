@@ -15,7 +15,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import advanceSearchStyles from "./AdvanceSearch.module.scss";
 import { Box } from "@mui/material";
 
-const ExploreSearchField = lazy(() => import('../ExploreSearchField'))
+const ExploreSearchField = lazy(() => import("../ExploreSearchField"));
 const SearchField = ({ index, handler = null }) => {
     const tabs = [ExploreSearchField, DateSearchField, GuestsSearchField];
     const Component = tabs[index];
@@ -80,6 +80,7 @@ function AdvanceSearch({ handleChangeMode }) {
                         Tìm kiếm nâng cao
                     </div>
                 </div>
+                <div className={advanceSearchStyles["left"]}></div>
                 <div
                     className={
                         advanceSearchStyles["advance-search-header-field"]

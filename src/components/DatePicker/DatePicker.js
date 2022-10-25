@@ -1,17 +1,15 @@
 import { DayPicker } from "react-day-picker";
 import { addDays } from "date-fns";
-import { useContext } from "react";
 import './DatePickerTable.scss';
 import './Cell.scss';
-import { SearchContext } from "@/utils/contexts";
+
 
 const pastMonth = new Date();
-function DatePicker({ numberOfMonths, mode }) {
+function DatePicker({ numberOfMonths, mode, selectedDays, setSelectedDays}) {
     const disabledDays = {
         from: new Date('2000/1/1'),
         to: addDays(new Date(), -1)
     }
-    const { selectedDays, setSelectedDays } = useContext(SearchContext);
 
     return (
         <>

@@ -3,14 +3,14 @@
 $gap: 0.6em;
 
 #hotel-album {
-    border-radius: 1.2em;
-    overflow: hidden;
-
+    
     .initial-hotel-album {
+        overflow: hidden;
         height: 20em;
         display: flex;
         gap: $gap;
         position: relative;
+        border-radius: 1.2em;
 
         .preview-hotel-image {
             height: 100%;

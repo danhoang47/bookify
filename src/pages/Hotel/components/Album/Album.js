@@ -1,9 +1,8 @@
 import albumStyles from "./Album.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faCameraRetro
-} from '@fortawesome/free-solid-svg-icons'
+import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import AllImageSection from "../AllImageSection";
 
 function Album({ backgroundImage, images }) {
     const [isAllImageOpen, setAllImageOpen] = useState(false);
@@ -18,13 +17,11 @@ function Album({ backgroundImage, images }) {
                 </div>
                 <div className={albumStyles["right"]}>
                     <div className={albumStyles["top-right"]}>
-                        <div
-                            className={albumStyles["preview-hotel-image"]}
-                        >
+                        <div className={albumStyles["preview-hotel-image"]}>
                             <img src={images[0].src} alt="" />
                         </div>
                     </div>
-                    <div className={albumStyles['bottom-right']}>
+                    <div className={albumStyles["bottom-right"]}>
                         {images.reduce((prev, { id, src, type }, index) => {
                             if (index <= 2 && index >= 1) {
                                 return [
@@ -44,13 +41,20 @@ function Album({ backgroundImage, images }) {
                         }, [])}
                     </div>
                 </div>
-                <button id={albumStyles['show-all-images']}>
+                <button
+                    id={albumStyles["show-all-images"]}
+                    onClick={() => setAllImageOpen(true)}
+                >
                     <span>Xem tất cả ảnh</span>
                 </button>
             </div>
-            <div className={albumStyles['all-images-section']}>
-                    
-            </div>
+            {isAllImageOpen && (
+                <AllImageSection
+                    backgroundImage={backgroundImage}
+                    images={images}
+                    setAllImageOpen={setAllImageOpen}
+                />
+            )}
         </div>
     );
 }
