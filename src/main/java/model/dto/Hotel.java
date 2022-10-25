@@ -14,36 +14,32 @@ public class Hotel {
     private String userId;
     private String hotelTypeId;
     private String hotelName;
-    private String ratingId;
     private String backgroundImg;
     private boolean isVerified;
     private String description;
     private String country;
     private String district;
     private String city;
-    private String streetName;
-    private String streetNum;
+    private String address;
+
     
     public Hotel() {
         
     }
 
-    public Hotel(String hotelId, String userId, String hotelTypeId, String hotelName, String ratingId, String backgroundImg, boolean isVerified, String description, String country, String district, String city, String streetName, String streetNum) {
+    public Hotel(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, String description, String country, String district, String city, String address) {
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
         this.hotelName = hotelName;
-        this.ratingId = ratingId;
         this.backgroundImg = backgroundImg;
         this.isVerified = isVerified;
         this.description = description;
         this.country = country;
         this.district = district;
         this.city = city;
-        this.streetName = streetName;
-        this.streetNum = streetNum;
+        this.address = address;
     }
-    
 
     public String getHotelId() {
         return hotelId;
@@ -75,14 +71,6 @@ public class Hotel {
 
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
-    }
-
-    public String getRatingId() {
-        return ratingId;
-    }
-
-    public void setRatingId(String ratingId) {
-        this.ratingId = ratingId;
     }
 
     public String getBackgroundImg() {
@@ -133,26 +121,20 @@ public class Hotel {
         this.city = city;
     }
 
-    public String getStreetName() {
-        return streetName;
+    public String getAddress() {
+        return address;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public String getStreetNum() {
-        return streetNum;
-    }
-
-    public void setStreetNum(String streetNum) {
-        this.streetNum = streetNum;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
     public String toString() {
-        return "Hotel{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", ratingId=" + ratingId + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", streetName=" + streetName + ", streetNum=" + streetNum + '}';
+        return "Hotel{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + '}';
     }
 
+    
+    
     
 }

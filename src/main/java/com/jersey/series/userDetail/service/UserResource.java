@@ -26,7 +26,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONObject;
 import secure.JWTconvert;
-import service.uploadImage.UploadImage;
+import service.UploadImage;
 
 @Path("/user_detail")
 public class UserResource implements UserDetailInterface {
@@ -86,10 +86,12 @@ public class UserResource implements UserDetailInterface {
         userLogin.setUser_password(null);
         userLogin.setGgid(null);
         userLogin.setSalt(null);
+        
+        System.out.println(userLogin);
 
         if (userLogin != null) {
             obj.put("user", userLogin);
-           
+
             return Response.ok(new Gson().toJson(obj)).build();
 
         } else {
@@ -120,7 +122,7 @@ public class UserResource implements UserDetailInterface {
             return Response.ok(new Gson().toJson(obj)).build();
 
         } else {
-            obj.put("message", "Sign up successfully");
+            obj.put("error", "Username existed, please use another one");
             return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
@@ -141,9 +143,7 @@ public class UserResource implements UserDetailInterface {
             @FormDataParam("avatar") FormDataContentDisposition fileFormDataContentDisposition) throws ParseException {
 
         LocalDate ld = LocalDate.parse(dob);
-       
         Date userDob = java.sql.Date.valueOf(ld);
-        
         UploadImage uploaduser = new UploadImage();
         JSONObject obj = new JSONObject();
         UserDetailDAO dao = new UserDetailDAO();
@@ -205,6 +205,27 @@ public class UserResource implements UserDetailInterface {
             return Response.ok(new Gson().toJson(obj)).build();
         } else {
             return Response.status(401).entity(new Gson().toJson(obj)).build();
+        }
+
+    }
+
+    @POST
+    @Path("/compareCurrentPassword/{user_id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response compareCurrentPassword(@PathParam("user_id") String user_id, @FormDataParam("currentPassword") String currentPassword) {
+
+        UserDetailDAO dao = new UserDetailDAO();
+        JSONObject obj = new JSONObject();
+//        Check if change password success or not
+        Boolean checkChange = dao.compareCurrentPassword(user_id, currentPassword);
+
+        if (checkChange) {
+            obj.put("success", "Password matched");
+            return Response.ok(new Gson().toJson(obj)).build();
+        } else {
+              obj.put("error", "Wrong password");
+                return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
     }

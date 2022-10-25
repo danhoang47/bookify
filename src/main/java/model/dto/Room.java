@@ -12,22 +12,19 @@ public class Room {
     private String room_id;
     private String hotel_id;
     private String room_num;
-    private int roomType;
     private double roomPrice;
     private boolean avaiable;
 
-    public Room(String room_id, String hotel_id, String room_num, int roomType, double roomPrice, boolean avaiable) {
+    public Room(String room_id, String hotel_id, String room_num, double roomPrice, boolean avaiable) {
         this.room_id = room_id;
         this.hotel_id = hotel_id;
         this.room_num = room_num;
-        this.roomType = roomType;
         this.roomPrice = roomPrice;
         this.avaiable = avaiable;
     }
     
-    public Room(String room_num, int roomType, double roomPrice, boolean avaiable) {
+    public Room(String room_num, double roomPrice, boolean avaiable) {
         this.room_num = room_num;
-        this.roomType = roomType;
         this.roomPrice = roomPrice;
         this.avaiable = avaiable;
     }
@@ -60,14 +57,6 @@ public class Room {
         this.room_num = room_num;
     }
 
-    public int getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(int roomType) {
-        this.roomType = roomType;
-    }
-
     public double getRoomPrice() {
         return roomPrice;
     }
@@ -86,7 +75,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" + "room_id=" + room_id + ", hotel_id=" + hotel_id + ", room_num=" + room_num + ", roomType=" + roomType + ", roomPrice=" + roomPrice + ", avaiable=" + avaiable + '}';
+        return "Room{" + "room_id=" + room_id + ", hotel_id=" + hotel_id + ", room_num=" + room_num + ", roomPrice=" + roomPrice + ", avaiable=" + avaiable + '}';
     }
     
     

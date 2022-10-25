@@ -48,7 +48,7 @@ public class UserDetailDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(password, saltvalue);
 
         try {
-            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, null, null, null, null, ?, null, null, null)";
+            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -214,7 +214,7 @@ public class UserDetailDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(newPassword, saltvalue);
 
         try {
-            String query = "update userDetail set password=?, salt=? where user_id=?";
+            String query = "update userDetail set user_password=?, salt=? where user_id=?";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -229,6 +229,42 @@ public class UserDetailDAO {
             } else {
                 return false;
             }
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+        //    --------------------------------------------------------- Current pasword -------------------------------------------------------
+    public static Boolean compareCurrentPassword(String userId, String currPassword) {
+        PassEncrypt passEncrypt = new PassEncrypt();
+        try {
+            String query = "select * from userDetail where user_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, userId);
+            rs = ps.executeQuery();
+            
+
+            String password = null;
+            String salt = null;
+            while (rs.next()) {
+                password = rs.getString(3);
+                salt = rs.getString(12);
+
+                break;
+
+            }
+            
+            System.out.println("password: " + password);
+            System.out.println("salt: " + salt);
+            
+            Boolean status = passEncrypt.verifyUserPassword(currPassword, password, salt);
+            
+          
+            
+
+            return status;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,6 +334,9 @@ public class UserDetailDAO {
 //
 //            System.out.println(uuid.toString());
 //        }
+
+    Boolean test = new UserDetailDAO().compareCurrentPassword("b955c796-027c-4e11-92ff-1bb942a102c8", "12345678");
+        System.out.println(test);
 
     }
 

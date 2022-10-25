@@ -12,12 +12,9 @@ public class Image {
     private String imageId;
     private String hotelId;
     private String image;
+    private int type;
 
-    public Image(String imageId, String hotelId, String image) {
-        this.imageId = imageId;
-        this.hotelId = hotelId;
-        this.image = image;
-    }
+
     
     public Image(String imageId, String image) {
         this.imageId = imageId;
@@ -29,12 +26,15 @@ public class Image {
         
     }
 
-    @Override
-    public String toString() {
-        return "Image{" + "imageId=" + imageId + ", hotelId=" + hotelId + ", image=" + image + '}';
+   
+    
+
+    public Image(String imageId, String hotelId, String image, int type) {
+        this.imageId = imageId;
+        this.hotelId = hotelId;
+        this.image = image;
+        this.type = type;
     }
-    
-    
 
     public String getImageId() {
         return imageId;
@@ -59,6 +59,19 @@ public class Image {
     public void setImage(String image) {
         this.image = image;
     }
-    
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" + "imageId=" + imageId + ", hotelId=" + hotelId + ", image=" + image + ", type=" + type + '}';
+    }
+
     
 }

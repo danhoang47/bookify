@@ -58,7 +58,7 @@ public class ImageDAO {
         
         List<Integer> check = new ArrayList<>();
         try {
-            String query = "insert into Image values (?, ?, ?)";
+            String query = "insert into Image values (?, ?, ?, 1)";
             conn = new DBContext().getConnection();
 
             for (int i = 0; i < images.size(); i++) {

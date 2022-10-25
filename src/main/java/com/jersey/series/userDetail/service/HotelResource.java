@@ -37,7 +37,7 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONObject;
-import service.uploadImage.UploadImage;
+import service.UploadImage;
 
 /**
  *
@@ -145,8 +145,7 @@ public class HotelResource implements HotelInterface {
             @FormDataParam("country") String country,
             @FormDataParam("district") String district,
             @FormDataParam("city") String city,
-            @FormDataParam("streetName") String streetName,
-            @FormDataParam("streetNumber") String streetNumber,
+            @FormDataParam("address") String address,
             @FormDataParam("amenities") List<String> amenities,
             @FormDataParam("uploadFile") FormDataBodyPart body,
             @FormDataParam("userId") String userId) throws IOException {
@@ -172,7 +171,7 @@ public class HotelResource implements HotelInterface {
             backgroundImagePath = uploadhotel.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG);
         } 
 
-        Hotel hotel = new Hotel(uuid.toString(), userId, hotelTypeId, hotelName, null, backgroundImagePath, false, description, country, district, city, streetName, streetNumber);
+        Hotel hotel = new Hotel(uuid.toString(), userId, hotelTypeId, hotelName, backgroundImagePath, false, description, country, district, city, address);
 
         
         
@@ -211,55 +210,13 @@ public class HotelResource implements HotelInterface {
             @FormDataParam("country") String country,
             @FormDataParam("district") String district,
             @FormDataParam("city") String city,
-            @FormDataParam("streetName") String streetName,
-            @FormDataParam("streetNumber") String streetNumber,
+            @FormDataParam("address") String address,
             @FormDataParam("amenities") List<String> amenities,
             @FormDataParam("uploadFile") FormDataBodyPart body,
             @FormDataParam("userId") String userId) throws IOException {
 
 
-        UploadImage uploadhotel = new UploadImage();
-        HotelDAO hotelDAO = new HotelDAO();
-        ImageDAO imageDAO = new ImageDAO();
-        AmenityDAO amentyDAO = new AmenityDAO();
-
-        List<String> listHotelImagesPath = null;
-        UUID uuid = UUID.randomUUID();
-        JSONObject obj = new JSONObject();
-
-//        Upload hotel images
-        if (body != null) {
-            listHotelImagesPath = uploadhotel.uploadMultipleFile(body);
-        }
-
-//        Upload background
-        String backgroundImagePath = null;
-        if (fileInputStreamBG != null && fileFormDataContentDispositionBG != null) {
-            backgroundImagePath = uploadhotel.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG);
-        } 
-
-        Hotel hotel = new Hotel(uuid.toString(), userId, hotelTypeId, hotelName, null, backgroundImagePath, false, description, country, district, city, streetName, streetNumber);
-
-        
-        
-//        Upload hotel info
-        boolean signHotel = hotelDAO.addNewHotel(hotel);
-        System.out.println("herer " + signHotel);
-        
-        //        Upload hotel images
-        boolean addImage = imageDAO.addImage(uuid.toString(), listHotelImagesPath);
-        System.out.println("Image " + addImage);
-
-//        Upload hotel amenties
-        boolean addAmenties = amentyDAO.addHotelAmenties(amenities, uuid.toString());
-
-        if (signHotel == true && addImage == true && addAmenties == true) {
-            obj.put("message", "Sign up new hotel successfully, please wait for permission");
-            return Response.ok(new Gson().toJson(obj)).build();
-        } else {
-            obj.put("message", "Sign up new hotel failed, please try again");
-            return Response.ok(new Gson().toJson(obj)).build();
-        }
+        return Response.ok("Ok").build();
     }
 
     public static void main(String[] args) {
