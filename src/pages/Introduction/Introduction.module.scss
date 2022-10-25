@@ -2,7 +2,7 @@
     // background-image: linear-gradient(to bottom right, #4361ee, #7864ec, #7209b7);
     position: absolute;
     right: 0;
-    top: 0;
+    top: -2px;
     left: 0;
     height: 70vh;
     z-index: -1;
@@ -73,41 +73,27 @@
 }
 
 .container {
+    padding-left: 10%;
     padding-right: 15px;
-    padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    padding-top: 60px;
+    padding-top: 10em;
+    position: relative;
 }
 
-@media (max-width: 500px) {
-    .layer1 {
-        height: 100%;
-        background-image: linear-gradient( to bottom right, #4361ee, #7864ec, #7209b7);
-        .layer1-image {
-            display: none;
-        }
-    }
-    .layer2 {
-        height: 100%;
-    }
+.introduction {
+    animation: fade-in 2s ease-out;
 }
 
-@media (min-width: 768px) {
-    .container {
-        width: 750px;
-        // margin-bottom: 250px;
-    }
+.register-button {
+    transition: all 0.2s linear;
 }
 
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
+@keyframes fade-in {
+    from {
+        opacity: 0.5
     }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px;
+    to {
+        opacity: 1;
     }
 }

@@ -11,6 +11,8 @@ import HotelManageDetail from "./HotelManageDetail";
 import Dashboard from "./Dashboard";
 import Payment from "./Payment";
 import CheckOut from "./CheckOut";
+import Register from "./Register";
+import Hotel from "./Hotel";
 
 export {
   Home,
@@ -26,4 +28,6 @@ export {
   Dashboard,
   Payment,
   CheckOut,
+  Register,
+  Hotel
 };

@@ -6,14 +6,15 @@ import SearchContext from "./SearchContext";
 import HotelContext from "./HotelContext";
 import ExchangeContext from "./ExchangeContext";
 import CoordinatesContext from "./CoordinatesContext";
+import RegisterContext from "./RegisterContext";
 
 export {
+  HotelContext,
   ModalContext,
   OverlayContext,
   UserContext,
   HistoryContext,
   SearchContext,
-  ExchangeContext,
-  HotelContext,
   CoordinatesContext,
+  RegisterContext,
 };

@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "./SignUpForm.module.scss";
 import { useState, memo, useEffect, useRef, useCallback, useMemo } from "react";
 import { accountValidation } from "@/utils/validation";

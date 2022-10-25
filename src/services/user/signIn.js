@@ -8,7 +8,11 @@ async function signIn(username, password) {
     body: accountForm,
   };
 
-  return await fetch(url, options).then((response) => response.json());
+  try {
+    return await fetch(url, options).then((response) => response.json());
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export default signIn;

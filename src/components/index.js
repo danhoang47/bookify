@@ -6,6 +6,7 @@ import DatePicker from "./DatePicker";
 import GuestsPicker from "./GuestsPicker";
 import HotelCard from './HotelCard';
 import CircleLoading from "./CircleLoading";
+import InputField from "./InputField";
 
 export {
     Logo,
@@ -15,5 +16,6 @@ export {
     DatePicker,
     GuestsPicker,
     HotelCard,
-    CircleLoading
+    CircleLoading,
+    InputField
 }

@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "./SignInForm.module.scss";
 import {
   useState,
@@ -13,8 +13,8 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
-import { signIn } from "@/services/user";
 import { UserContext } from "@/utils/contexts";
+import { signIn } from "@/services/user";
 import { CircleLoading } from "@/components";
 import { format } from "date-fns";
 
@@ -96,8 +96,6 @@ function SignInForm({ setModalOpen }) {
     //eslint-disable-next-line
     [account]
   );
-
-  console.log(account.username, account.password);
 
   useEffect(() => {
     const changedField = changedKey.current;

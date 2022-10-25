@@ -7,7 +7,7 @@ import {
 } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
 import { Modal } from "./components";
-import { Container, Box } from "@mui/material";
+import { Container } from "@mui/material";
 
 const initState = {
   isOpen: false,
@@ -53,7 +53,6 @@ function App({ children }) {
     nav.getCurrentPosition((pos) => {
       if (pos) {
         const { latitude, longitude } = pos?.coords;
-        console.log(latitude, longitude);
         setCurrentCoordinates({
           latitude,
           longitude,

@@ -23,7 +23,7 @@ function HotelCards({ hotels, type = null }) {
                     sm={6}
                     md={6}
                     lg={3}
-                    xl={2}
+                    xl={3}
                     key={hotel.id}
                 >
                     <HotelCard {...hotel} />

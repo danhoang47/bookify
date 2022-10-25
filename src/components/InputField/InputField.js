@@ -11,6 +11,7 @@ function InputField({
   type,
   isValid = true,
   isSignIn = false,
+  ref = null,
 }) {
   // console.log('input field rerender')
 
@@ -24,6 +25,7 @@ function InputField({
         isValid={isValid}
         id={id}
         type={type}
+        ref={ref}
       />
       <label htmlFor={id}>
         {isValid ? label : getErrorMessage(id, isSignIn)}

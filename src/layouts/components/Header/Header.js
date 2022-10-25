@@ -9,16 +9,17 @@ import headerStyles from './Header.module.scss';
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
-function Header() {
+function Header({ location = '' }) {
+
     return (
         <div className={headerStyles['header']} >
-            <Grid container alignItems={"center"}>
+            <Grid container alignItems={"center"} justifyContent={'center'}>
                 <Grid item md={2}>
                     <Logo>
                         <h3>Bookify</h3>
                     </Logo>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item md={location.includes('/hotel') ? 6 : 8}>
                     <SearchBox/>
                 </Grid>
                 <Grid item md={2}>

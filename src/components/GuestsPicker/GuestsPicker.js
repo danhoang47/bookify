@@ -17,7 +17,7 @@ function GuestsPicker({ guests, setGuests, limit, description = null, title = nu
                             setGuests((prev) => {
                                 return {
                                     ...prev,
-                                    [type]: value
+                                    [type]: value || 0
                                 }
                             })
                         }}

@@ -4,7 +4,7 @@ function useDebounce(callback, timeout = 300) {
     return (...args) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            callback(args)
+            callback.apply(this, args)
         }, timeout)
     }
 }

@@ -9,7 +9,8 @@ function Input({
     onValueChange,
     width = '',
     isValid = true,
-    style
+    style,
+    ref
 }) {
 
     return (  
@@ -26,6 +27,7 @@ function Input({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onValueChange(e.target.value)}
+                ref={ref}
             />
         </>
     );
