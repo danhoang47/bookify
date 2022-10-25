@@ -8,20 +8,32 @@ function PersonalInput({
   value,
   onChange,
   labelContent,
-  readOnly = true,
+  readOnly,
 }) {
+  const newValue = value ? value : "";
+
   return (
-    <span className={PersonalInputStyle["input-field"]}>
+    <span
+      className={
+        !readOnly
+          ? PersonalInputStyle["input-field"]
+          : PersonalInputStyle["input-field-readOnly"]
+      }
+    >
       {/* Subname ------------------------------- */}
       <input
         spellCheck="false"
         type={type}
         placeholder={placeholder}
         name={name}
-        value={value}
-        className={PersonalInputStyle["input-update"]}
+        value={newValue}
+        className={
+          !readOnly
+            ? PersonalInputStyle["input-update"]
+            : PersonalInputStyle["input-update-readOnly"]
+        }
         onChange={onChange}
-        readOnly
+        readOnly={readOnly}
       />
       <label className={PersonalInputStyle["input-label"]} htmlFor={name}>
         {labelContent}

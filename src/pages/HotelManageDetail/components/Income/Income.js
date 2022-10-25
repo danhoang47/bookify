@@ -1,11 +1,12 @@
 import IncomeStyle from "./Income.module.scss";
 import SelectBox from "./components/SelectBox";
-import Chart from "./components/Chart";
 import { income } from "./fakeIncomeData";
-import { useState } from "react";
+import { lazy, useState, Suspense } from "react";
+
+const Chart = lazy(() => import("./components/Chart"));
 
 function Income() {
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const months = [];
   const days = [];
   const dayIncome = [];
@@ -30,31 +31,33 @@ function Income() {
   };
 
   if (month) {
-    const dayData = income.filter((data) => data.month === month);
-    dayData[0].details.forEach((data) => {
+    const dayData = income.filter((data) => data.month === parseInt(month));
+    dayData[0]?.details.forEach((data) => {
       days.push(data.day);
       dayIncome.push(data.dayIncome);
     });
     daysTotal = dayIncome.reduce((prev, cur) => {
       return cur + prev;
-    });
+    }, 0);
   }
 
   return (
     <div className={IncomeStyle["income-wrapper"]}>
       <SelectBox onChangeMonth={onChangeMonth} />
       <div className={IncomeStyle["chart-wrapper"]}>
-        <Chart
-          monthSelected={month}
-          total={total}
-          days={days}
-          dayIncome={dayIncome}
-          daysTotal={daysTotal}
-          expectIncome={expectIncome}
-          months={months}
-          incomeByMonth={incomeByMonth}
-          expected={expected}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Chart
+            monthSelected={month}
+            total={total}
+            days={days}
+            dayIncome={dayIncome}
+            daysTotal={daysTotal}
+            expectIncome={expectIncome}
+            months={months}
+            incomeByMonth={incomeByMonth}
+            expected={expected}
+          />
+        </Suspense>
       </div>
     </div>
   );

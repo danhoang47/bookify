@@ -5,7 +5,7 @@ import router from "./routes";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-    <App>
-        <RouterProvider router={router} />
-    </App>
+  <App>
+    <RouterProvider router={router} />
+  </App>
 );

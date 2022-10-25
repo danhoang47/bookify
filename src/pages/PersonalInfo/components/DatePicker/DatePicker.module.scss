@@ -9,6 +9,22 @@
     outline: none;
     padding: 7px 0;
     font-size: 16px;
+    transition: all 0.3s;
+}
+
+.input-update-readOnly {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: solid;
+    border-bottom-color: #c9c9c9;
+    border-bottom-width: 1px;
+    background-color: transparent;
+    outline: none;
+    padding: 7px 0;
+    font-size: 16px;
+    color: #c9c9c9;
+    transition: all 0.3s;
 }
 
 .textarea-update {
@@ -41,6 +57,23 @@
     }
     input:focus {
         border-bottom-color: #4361ee;
+    }
+    textarea:focus {
+        outline-color: #4361ee;
+    }
+}
+
+.input-field-readOnly {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    margin-top: 10px;
+    width: 100%;
+    input {
+        font-family: inherit;
+    }
+    textarea:focus+label,
+    input:focus+label {
+        color: #000;
     }
     textarea:focus {
         outline-color: #4361ee;

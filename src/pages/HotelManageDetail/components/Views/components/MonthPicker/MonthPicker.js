@@ -5,49 +5,35 @@ import { useState } from "react";
 import MonthPickerStyle from "./MonthPicker.module.scss";
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "",
+  "Tháng 1",
+  "Tháng 2",
+  "Tháng 3",
+  "Tháng 4",
+  "Tháng 5",
+  "Tháng 6",
+  "Tháng 7",
+  "Tháng 8",
+  "Tháng 9",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12",
 ];
 
 function MonthPicker({ monthChanging }) {
   const date = new Date();
-  const [month, setMonth] = useState(date.getMonth());
+  const [month, setMonth] = useState(date.getMonth() + 1);
   const [monthName, setMonthName] = useState(months[month]);
   const refLeft = useRef();
   const refRight = useRef();
 
   useEffect(() => {
-    if (month <= 0) {
-      setMonth(0);
+    if (month <= 1) {
+      setMonth(1);
       refLeft.current.style.display = "none";
       setMonthName(months[month]);
-    } else if (month >= date.getMonth()) {
-      setMonth(date.getMonth());
+    } else if (month >= date.getMonth() + 1) {
+      setMonth(date.getMonth() + 1);
       refRight.current.style.display = "none";
       setMonthName(months[month]);
     } else {
@@ -58,15 +44,7 @@ function MonthPicker({ monthChanging }) {
   }, [month]);
 
   const monthChangingHandle = (data) => {
-    // console.log(data);
-    const date2 = new Date();
-    date2.setMonth(data);
-
-    monthChanging(
-      date2.toLocaleString("en-US", {
-        month: "short",
-      })
-    );
+    monthChanging(data);
   };
 
   return (

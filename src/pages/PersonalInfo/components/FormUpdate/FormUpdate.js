@@ -14,8 +14,9 @@ function FormUpdate({ account }) {
   const [email, setEmail] = useState(account.email);
   const [phone, setPhone] = useState(account.phone);
   const [dob, setDob] = useState(account.dob);
-  const [des, setDes] = useState(account.selfDes);
+  const [des, setDes] = useState(account.self_description);
   const [avatar, setAvatar] = useState(account.avatar);
+  const [readOnly, setReadOnly] = useState(true);
 
   const onChangeSubname = (e) => {
     setSubname(e.target.value);
@@ -38,7 +39,7 @@ function FormUpdate({ account }) {
     if (dateOfMonth < 10) dateOfMonth = "0" + dateOfMonth;
     var year = currentDate.getFullYear();
     var formattedDate = dateOfMonth + "/" + month + "/" + year;
-    console.log(formattedDate);
+    console.log("format " + formattedDate);
     setDob(e.target.value);
   };
 
@@ -49,29 +50,44 @@ function FormUpdate({ account }) {
   const onSubmitClick = (e) => {
     e.preventDefault();
     console.log(subname, name, email, phone, dob, des, avatar);
+    account.name = name;
+    account.subname = subname;
+    account.email = email;
+    account.phone = phone;
+    account.dob = dob;
+    account.des = des;
+    account.avatar = avatar;
 
-    // const formData = new FormData();
-    // formData.append("subname", subname);
-    // formData.append("name", name);
-    // formData.append("email", email);
-    // formData.append("phone", phone);
-    // formData.append("dob", dob);
-    // formData.append("des", des);
-    // formData.append("avatar", avatar);
+    const formData = new FormData();
+    formData.append("subname", subname);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("dob", dob);
+    formData.append("selfdescription", des);
+    formData.append("avatar", avatar);
 
-    // fetch("<link>", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((data) => {
-    //     data.json();
-    //   })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    fetch(
+      "http://localhost:8080/testUpload/rest/user_detail/update/" +
+        account.user_id,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((data) => {
+        data.json();
+      })
+      .then((result) => {
+        console.log(account);
+        console.log(result.message);
+        if (result.message) {
+          console.log(result.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -89,6 +105,7 @@ function FormUpdate({ account }) {
                     value={subname}
                     onChange={onChangeSubname}
                     labelContent={"Họ và tên đệm"}
+                    readOnly={readOnly}
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -99,6 +116,7 @@ function FormUpdate({ account }) {
                     value={name}
                     onChange={onChangeName}
                     labelContent={"Tên"}
+                    readOnly={readOnly}
                   />
                 </Grid>
               </Grid>
@@ -111,6 +129,7 @@ function FormUpdate({ account }) {
                     value={email}
                     onChange={onChangeEmail}
                     labelContent={"Email"}
+                    readOnly={readOnly}
                   />
                 </Grid>
               </Grid>
@@ -123,6 +142,7 @@ function FormUpdate({ account }) {
                     value={phone}
                     onChange={onChangePhone}
                     labelContent={"Số điện thoại"}
+                    readOnly={readOnly}
                   />
                 </Grid>
               </Grid>
@@ -134,23 +154,35 @@ function FormUpdate({ account }) {
                     value={dob}
                     onChange={onChangeDob}
                     labelContent={"Ngày sinh"}
+                    readOnly={readOnly}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={11}>
-                  <span className={FormUpdateStyle["des-input-field"]}>
+                  <span
+                    className={
+                      !readOnly
+                        ? FormUpdateStyle["des-input-field"]
+                        : FormUpdateStyle["des-input-field-readOnly"]
+                    }
+                  >
                     {/* email ------------------------------- */}
                     <textarea
                       spellCheck="false"
                       rows="5"
                       placeholder="Mô tả bản thân"
                       name="des"
-                      className={FormUpdateStyle["textarea-update"]}
+                      className={
+                        !readOnly
+                          ? FormUpdateStyle["textarea-update"]
+                          : FormUpdateStyle["textarea-update-readOnly"]
+                      }
                       onChange={(e) => {
                         setDes(e.target.value);
                       }}
                       defaultValue={des}
+                      readOnly={readOnly}
                     ></textarea>
                     <label
                       className={FormUpdateStyle["input-label"]}
@@ -168,6 +200,7 @@ function FormUpdate({ account }) {
                   <FileUpload
                     avatar={account.avatar}
                     onAvatarUpload={onAvatarUpload}
+                    readOnly={readOnly}
                   />
                 </Grid>
               </Grid>
@@ -175,8 +208,34 @@ function FormUpdate({ account }) {
           </Grid>
         </Box>
         <span className={FormUpdateStyle["button-field"]}>
-          <UpdateButton content={"Lưu"} type={"save"} onClick={onSubmitClick} />
-          <UpdateButton content={"Hủy"} type={"cancel"} />
+          {readOnly ? (
+            <>
+              <UpdateButton
+                content={"Chỉnh sửa"}
+                type={"save"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setReadOnly(false);
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <UpdateButton
+                content={"Lưu"}
+                type={"save"}
+                onClick={onSubmitClick}
+              />
+              <UpdateButton
+                content={"Hủy"}
+                type={"cancel"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setReadOnly(true);
+                }}
+              />
+            </>
+          )}
         </span>
       </form>
     </div>

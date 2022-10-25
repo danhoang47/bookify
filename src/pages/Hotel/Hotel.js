@@ -3,9 +3,11 @@ import hotelStyles from './Hotel.module.scss';
 import { Album } from './components';
 import { images, room } from './datas';
 import Booking from './components/Booking';
+import HotelInfo from "./components/HotelInfo";
 
 function Hotel() {
-    const backgroundImage = 'photo/so-dien-thoai-le-tan-dat-phong-vinpearl-nam-hoi-an-1.jpg';
+  const backgroundImage =
+    "photo/so-dien-thoai-le-tan-dat-phong-vinpearl-nam-hoi-an-1.jpg";
 
     return (  
         <div id={hotelStyles['hotel']}>
@@ -19,6 +21,7 @@ function Hotel() {
                         gap: '0.6em'
                     }}>
                         <div className={hotelStyles['left']}>
+                        <HotelInfo />
                             {/* Hotel Information */}
                         </div>
                         <div className={hotelStyles['right']}>
@@ -33,4 +36,3 @@ function Hotel() {
 }
 
 export default Hotel;
-

@@ -1,5 +1,6 @@
 .breadcrumb {
     // padding: 10px 16px;
+    padding-left: 0;
     list-style: none;
     background-color: none;
     li {
@@ -31,7 +32,7 @@
 .sub-title {
     font-size: 12px;
     display: none;
-    @media(min-width: 501px) {
+    @media (min-width: 501px) {
         display: block;
     }
 }

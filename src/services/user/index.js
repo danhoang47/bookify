@@ -1,5 +1,6 @@
-import signIn from './signIn';
+import signIn from "./signIn";
+import SignUp from "./signUp";
+import compareCurrentPassword from "./passwordConfirm";
+import newPassowrdUpdate from "./newPassword";
 
-export {
-    signIn
-}
+export { signIn, SignUp, compareCurrentPassword, newPassowrdUpdate };

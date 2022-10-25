@@ -3,7 +3,7 @@ import { useState, useMemo, useLayoutEffect, useEffect } from "react";
 import { GuestsPicker, DatePicker } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { differenceInDays, isDate } from "date-fns";
+import { differenceInDays } from "date-fns";
 
 const description = {
     adult: "Từ 13 tuổi trở lên",

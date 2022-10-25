@@ -35,7 +35,7 @@ function OptionList() {
         isLoginRequired: true,
         onClickHandler: (event) => {
           event.stopPropagation();
-          // navigate("/profile");
+          navigate("/profile");
         },
       },
       {

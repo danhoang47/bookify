@@ -62,7 +62,7 @@ function Payment() {
                   <Overall />
                 </TabPanel>
                 <TabPanel value="2">
-                  <h1>Giao dichj</h1>
+                  <h1>Hiện chưa có</h1>
                 </TabPanel>
               </TabContext>
             </Box>

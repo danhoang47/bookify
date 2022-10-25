@@ -29,19 +29,22 @@ function SignInModal({ animation }) {
       ref={containerRef}
     >
       <div className={signInModalStyles["page-logo"]}>
-        <BrowserRouter><Logo /></BrowserRouter>
+        <BrowserRouter>
+          <Logo />
+        </BrowserRouter>
         <h3 className={signInModalStyles["welcome-heading"]}>
           Welcome back, Mate
         </h3>
       </div>
-      <SignInForm setModalOpen={handleClick}/>
+      <SignInForm setModalOpen={handleClick} />
       <div className={signInModalStyles["sign-up-link"]}>
         <p>
           Don't have account yet?
           <span
             className={signInModalStyles["link"]}
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
+
               dispatch(
                 getSignUpModal({
                   isOpen: true,

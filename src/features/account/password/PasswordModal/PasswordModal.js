@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import { ModalContext } from "@/utils/contexts";
 import { usePopup } from "@/utils/hooks";
 import { getPasswordModal } from "@/utils/reducers/modalReducer";
+import { BrowserRouter } from "react-router-dom";
 
 function PasswordModal({ animation }) {
   const [isModalOpen, handleClick, containerRef] = usePopup(true);
@@ -26,7 +27,9 @@ function PasswordModal({ animation }) {
       ref={containerRef}
     >
       <div className={ModalStyles["page-logo"]}>
-        <Logo />
+        <BrowserRouter>
+          <Logo />
+        </BrowserRouter>
       </div>
       <p className={ModalStyles["label"]}>
         <b>Nhập mật khẩu</b> của bạn để thực hiện

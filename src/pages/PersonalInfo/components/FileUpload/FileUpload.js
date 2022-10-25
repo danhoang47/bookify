@@ -3,7 +3,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-function FileUpload({ avatar, onAvatarUpload }) {
+function FileUpload({ avatar, onAvatarUpload, readOnly }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [preview, setPreview] = useState(avatar);
@@ -41,37 +41,49 @@ function FileUpload({ avatar, onAvatarUpload }) {
   return (
     <div className={FileUploadStyle["upload-container"]}>
       <div className={FileUploadStyle["wrapper"]}>
-        <div className={FileUploadStyle["file-upload"]}>
+        <div
+          className={
+            !readOnly
+              ? FileUploadStyle["file-upload"]
+              : FileUploadStyle["file-upload-readOnly"]
+          }
+        >
           {isFilePicked ? (
             <img src={preview} accept="image/*" alt="" />
           ) : (
             <>
-              <input type="file" name="file" onChange={onSelectFile} />
+              <input
+                type="file"
+                name="file"
+                onChange={onSelectFile}
+                disabled={readOnly}
+              />
               <FontAwesomeIcon icon={faUser} />
             </>
           )}
         </div>
       </div>
       <label htmlFor="" className={FileUploadStyle["upload-image"]}>
-        {isFilePicked ? (
-          <>
-            <input
-              type="file"
-              name="file"
-              onChange={onSelectFile}
-              id={"custom-file-input"}
-              style={{ display: "none" }}
-            />
-            <label
-              htmlFor="custom-file-input"
-              className={FileUploadStyle["upload-label"]}
-            >
-              Cập nhật ảnh đại diện
-            </label>
-          </>
-        ) : (
-          <>Cập nhật ảnh đại diện</>
-        )}
+        <>
+          <input
+            type="file"
+            name="file"
+            onChange={onSelectFile}
+            id={"custom-file-input"}
+            style={{ display: "none" }}
+            disabled={readOnly}
+          />
+          <label
+            htmlFor="custom-file-input"
+            className={
+              !readOnly
+                ? FileUploadStyle["upload-label"]
+                : FileUploadStyle["upload-label-readOnly"]
+            }
+          >
+            Cập nhật ảnh đại diện
+          </label>
+        </>
       </label>
     </div>
   );

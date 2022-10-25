@@ -1,20 +1,5 @@
 import { dashboarData } from "./FakeDataDashBoardAll";
 
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 export const getStatic = (month) => {
   console.log(month);
   let staticObj = {
@@ -50,12 +35,12 @@ export const getIncreasePercent = (month) => {
     register: 0,
   };
 
-  if (month === "Jan") {
+  if (month === 1) {
     return increasePercent;
   }
   // monthsKey[monthsKey.indexOf(month) - 1]
-  const prevMonth = getStatic(monthsKey[monthsKey.indexOf(month) - 1]);
-  const curMonth = getStatic(monthsKey[monthsKey.indexOf(month)]);
+  const prevMonth = getStatic(month - 1);
+  const curMonth = getStatic(month);
   increasePercent.views =
     Math.round(
       ((curMonth.views - prevMonth.views) / prevMonth.views) * 100 * 100
@@ -92,6 +77,7 @@ export const typeBookingData = (month) => {
   const dataByMonth = dashboarData
     .filter((data) => data.month === month)
     .map((data) => data.types);
+
   dataByMonth[0]?.forEach((data) => {
     typeBookingObj.type.push(data.type);
     typeBookingObj.numberBooking.push(data.numberOfBooking);

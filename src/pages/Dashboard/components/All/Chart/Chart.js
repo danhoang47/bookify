@@ -4,16 +4,6 @@ import BarChart from "@/components/Chart/BarChartWithoutYScale";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-const barChartLabel = [
-  "Bãi biển",
-  "Nhà gỗ",
-  "Homestay",
-  "Nhà nhỏ",
-  "Thiên hiên",
-];
-
-const days = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21];
-
 function Chart({ typeBooking, bookingNumber }) {
   return (
     <Box sx={{ flexGrow: 1 }}>

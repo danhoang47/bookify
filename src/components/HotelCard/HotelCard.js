@@ -42,7 +42,7 @@ function HotelCard({
         </div>
       </div>
       <div className={"bookmark-icon"}>
-        <FontAwesomeIcon icon={faHeart} />
+        <FontAwesomeIcon icon={faHeart} style={{ zIndex: 0 }} />
       </div>
     </div>
   );

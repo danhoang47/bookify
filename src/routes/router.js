@@ -1,56 +1,57 @@
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  BrowserRouter,
 } from "react-router-dom";
 import {
-    Home,
-    Profile,
-    PersonalInfo,
-    LoginandSecurity,
-    BookingHistory,
-    Introduction,
-    HotelManageMain,
-    HotelManageBooking,
-    HotelManageDetail,
-    Dashboard,
-    Payment,
-    Register,
-    Hotel
+  Home,
+  Profile,
+  PersonalInfo,
+  LoginandSecurity,
+  BookingHistory,
+  Introduction,
+  HotelManageMain,
+  HotelManageBooking,
+  HotelManageDetail,
+  Dashboard,
+  Payment,
+  Register,
+  Hotel,
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route>
-            <Route path="/" element={<DefaultLayout />}>
-                <Route path="" element={<Home />} />
-                <Route path="hotel" element={<Hotel />} />
-                <Route path="profile">
-                    <Route path="" element={<Profile />} />
-                    <Route path="info" element={<PersonalInfo />} />
-                    <Route path="loginandsecurity" element={<LoginandSecurity />} />
-                    <Route path="history" element={<BookingHistory />} />
-                </Route>
-                <Route path="hotelmanage" element={<DefaultLayout />}>
-                    <Route path="" element={<HotelManageMain />} />
-                    <Route path="detail" element={<HotelManageDetail />} />
-                    <Route path="booking" element={<HotelManageBooking />} />
-                </Route>
-                <Route path="dashboard" element={<DefaultLayout />}>
-                    <Route path="" element={<Dashboard />} />
-                </Route>
-                <Route path="payment" element={<DefaultLayout />}>
-                    <Route path="" element={<Payment />} />
-                </Route>
-            </Route>
-            <Route path="hosting" element={<HostingRegisterLayout />}>
-                <Route path="introduction" element={<Introduction />} />
-                <Route path="register" element={<Register />} />
-            </Route>
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route path="" element={<Home />} />
+        <Route path="hotel" element={<Hotel />} />
+        <Route path="profile">
+          <Route path="" element={<Profile />} />
+          <Route path="info" element={<PersonalInfo />} />
+          <Route path="loginandsecurity" element={<LoginandSecurity />} />
+          <Route path="history" element={<BookingHistory />} />
         </Route>
-    )
+        <Route path="hotelmanage" element={<DefaultLayout />}>
+          <Route path="" element={<HotelManageMain />} />
+          <Route path="detail" element={<HotelManageDetail />} />
+          <Route path="booking" element={<HotelManageBooking />} />
+        </Route>
+        <Route path="dashboard" element={<DefaultLayout />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
+        <Route path="payment" element={<DefaultLayout />}>
+          <Route path="" element={<Payment />} />
+        </Route>
+      </Route>
+      <Route path="hosting" element={<HostingRegisterLayout />}>
+        <Route path="introduction" element={<Introduction />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+    </Route>
+  )
 );
 
 export default router;
