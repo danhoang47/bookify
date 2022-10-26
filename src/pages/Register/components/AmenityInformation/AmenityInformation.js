@@ -34,9 +34,11 @@ function AmenityInformation() {
   }, []);
 
   return (
-    <div id={amenityInforStyles["basic-information"]}>
+    <div className={amenityInforStyles["basic-information"]}>
       <div className={amenityInforStyles["basic-infor-header"]}>
+        <h3>
         Hãy cho khách hàng biết về những tiện nghi của khách sạn
+        </h3>
       </div>
       <div className={amenityInforStyles["basic-infor-body"]}>
         {displayAmenities.map((amenity) => (

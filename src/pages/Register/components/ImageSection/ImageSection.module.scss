@@ -1,0 +1,56 @@
+@use 'src/global';
+.body-container {
+    .header {
+        h3 {
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    .body {
+        margin-top: 2rem;
+        .image-background {
+            margin: 1rem 0;
+            p {
+                font-weight: bold;
+            }
+            //display input-filed
+            .image-container {
+                display: none;
+            }
+            .image-show {
+                opacity: 0.6;
+                padding: 0.5rem 2%;
+                width: 30rem;
+                height: 15rem;
+                border: 2px dashed #ABABAB;
+                border-radius: 12px;
+                transition: all 0.2s;
+                .image-placeholder {
+                    width: 7rem;
+                    height: 7rem;
+                    text-align: center;
+                    z-index: -1;
+                    position: absolute;
+                    color: #ABABAB;
+                    font-size: 1.25rem;
+                    margin-top: calc((15rem - 7rem) / 2);
+                    margin-left: calc((30rem - 9rem) / 2);
+                    p {
+                        font-weight: bold;
+                    }
+                    svg {
+                        font-size: 2rem;
+                    }
+                }
+                img {
+                    z-index: 1;
+                    width: 99%;
+                    height: 14rem;
+                }
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

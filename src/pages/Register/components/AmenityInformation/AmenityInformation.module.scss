@@ -1,4 +1,14 @@
+@use 'src/global';
 .basic-information {
-    .basic-infor-header {}
-    .basic-infor-body {}
+    .basic-infor-header {
+        h3 {
+            font-size: 1.6em;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 2em;
+        }
+    }
+    .basic-infor-body {
+        margin-top: 1em;
+    }
 }
