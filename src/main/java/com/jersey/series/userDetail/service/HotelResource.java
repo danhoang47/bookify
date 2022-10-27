@@ -7,6 +7,8 @@ package com.jersey.series.userDetail.service;
 import com.google.gson.Gson;
 import com.service.Interface.HotelInterface;
 import dao.AmenityDAO;
+import dao.AmenityTypeDAO;
+import dao.AvaiableAmenityDAO;
 import dao.HotelDAO;
 import dao.HotelTypeDAO;
 import dao.ImageDAO;
@@ -27,6 +29,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dto.Amenity;
+import model.dto.AmenityType;
+import model.dto.AvaiableAmenity;
 import model.dto.Hotel;
 import model.dto.HotelType;
 import model.dto.Image;
@@ -120,14 +124,22 @@ public class HotelResource implements HotelInterface {
     public Response signNewHotelFormData() {
         JSONObject obj = new JSONObject();
 
-        AmenityDAO amd = new AmenityDAO();
+        AvaiableAmenityDAO amd = new AvaiableAmenityDAO();
         HotelTypeDAO htd = new HotelTypeDAO();
+        AmenityTypeDAO atd = new AmenityTypeDAO();
 
-        List<Amenity> listAmenity = amd.listAllAmenties();
+        List<AvaiableAmenity> listAmenity = amd.listAll();
+        List<AmenityType> listAmenityType = atd.listAll();
         List<HotelType> listHotelType = htd.hotelTypes();
+        
+        System.out.println(listAmenity);
+        System.out.println(listHotelType);        
+//        System.out.println(listAmenityType);
+
 
         obj.put("amenities", listAmenity);
-        obj.put("types", listHotelType);
+        obj.put("amenitiesType", listAmenityType);
+        obj.put("hotelTypes", listHotelType);
 
         return Response.ok(new Gson().toJson(obj)).build();
     }
@@ -218,6 +230,8 @@ public class HotelResource implements HotelInterface {
 
         return Response.ok("Ok").build();
     }
+
+
 
     public static void main(String[] args) {
 

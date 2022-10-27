@@ -9,59 +9,50 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.dto.AmenityType;
 import model.dto.AvaiableAmenity;
-import model.dto.HotelType;
 
 /**
  *
  * @author toten
  */
-public class RoomDAO {
-    
+public class AmenityTypeDAO {
     static Connection conn;
     static PreparedStatement ps;
     static ResultSet rs;
     
-     public static double averagePrice(String hotel_id) {
-
+    public static List<AmenityType> listAll() {
         try {
-            String query = "select avg(room_price) from room where hotel_id=?";
+            String query = "select * from Amenity_type";
 
             conn = new DBContext().getConnection();
 
             ps = conn.prepareStatement(query);
-            ps.setString(1, hotel_id);
 
             rs = ps.executeQuery();
 
-            double result=0;
+            List<AmenityType> listAmenityType = new ArrayList<>();
 
             while (rs.next()) {
 
-                result = rs.getDouble(1);
-
+                listAmenityType.add(new AmenityType(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                
+                
             }
 
-            return result;
+            return listAmenityType;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;
+        return null;
     }
     
-     public static void main(String[] args) {
-        AvaiableAmenityDAO amd = new AvaiableAmenityDAO();
-        HotelTypeDAO htd = new HotelTypeDAO();
-
-        List<AvaiableAmenity> listAmenity = amd.listAll();
-        List<HotelType> listHotelType = htd.hotelTypes();
-        
-         System.out.println(listAmenity);         
-         System.out.println(listHotelType);
-
+    public static void main(String[] args) {
+        List<AmenityType> listAmenityType = new AmenityTypeDAO().listAll();
+        System.out.println(listAmenityType);
     }
-            
 }

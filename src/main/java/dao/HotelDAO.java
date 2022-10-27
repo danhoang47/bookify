@@ -118,7 +118,7 @@ public class HotelDAO {
         
         List<Hotel> listHotel = htd.listAll();
         
-        for(int i=0; i<3; i++) {
+        for(int i=0; i<10; i++) {
             UUID uuid = UUID.randomUUID();
             System.out.println(uuid);
         }
