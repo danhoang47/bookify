@@ -79,18 +79,21 @@ function TimeInput({ label, time, setTime, id }) {
   return (
     <div className={TimeInputStyle["input-time"]}>
       <label>{label}</label>
-      <input
-        type="text"
-        value={time.hour}
-        onChange={handleHourChange}
-        ref={hourInputRef}
-      />
-      <input
-        type="text"
-        value={time.minutes}
-        onChange={handleMinutesChange}
-        ref={minutesInputRef}
-      />
+      <div className={TimeInputStyle["input-grid"]}>
+        <input
+          type="text"
+          value={time.hour}
+          onChange={handleHourChange}
+          ref={hourInputRef}
+        />
+        <span>:</span>
+        <input
+          type="text"
+          value={time.minutes}
+          onChange={handleMinutesChange}
+          ref={minutesInputRef}
+        />
+      </div>
     </div>
   );
 }

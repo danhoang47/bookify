@@ -40,6 +40,8 @@ function ExtraInformation() {
                   ...prev,
                   <Checkbox
                     key={key}
+                    id={key}
+                    name="radio"
                     isChecked={extraInfor[key]}
                     label={getExtraInforLabel(key)}
                     setChecked={(state) => {

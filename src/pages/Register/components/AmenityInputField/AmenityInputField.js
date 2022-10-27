@@ -38,19 +38,21 @@ function AmenityInputField({ handleClick, addNewAmenity }) {
   return (
     <div className={amenityStyle["add-amenity"]}>
       <div className={amenityStyle["amenity-list"]}>
-        {amenityTypes.map(({ id, type }, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              setAmenity((prev) => ({
-                ...prev,
-                type: id,
-              }));
-            }}
-          >
-            {type}
-          </div>
-        ))}
+        <select name="" id="">
+          {amenityTypes.map(({ id, type }, index) => (
+            <option
+              key={index}
+              onClick={() => {
+                setAmenity((prev) => ({
+                  ...prev,
+                  type: id,
+                }));
+              }}
+            >
+              {type}
+            </option>
+          ))}
+        </select>
       </div>
       <div className={amenityStyle["amenity-input"]}>
         <input
@@ -62,10 +64,10 @@ function AmenityInputField({ handleClick, addNewAmenity }) {
             }));
           }}
         />
+        <button>
+          <FontAwesomeIcon icon={faPlus} onClick={handleAmenityAdded} />
+        </button>
       </div>
-      <button>
-        <FontAwesomeIcon icon={faPlus} onClick={handleAmenityAdded} />
-      </button>
     </div>
   );
 }

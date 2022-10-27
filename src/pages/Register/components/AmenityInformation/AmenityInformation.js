@@ -24,7 +24,7 @@ const AmenityCard = ({ amenity, setAmenities }) => {
       onClick={handleOnClick}
     >
       <FontAwesomeIcon icon={amenity.icon} />
-      {amenity.title}
+      <p>{amenity.title}</p>
     </div>
   );
 };

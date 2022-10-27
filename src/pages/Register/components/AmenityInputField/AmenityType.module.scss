@@ -1,14 +1,39 @@
 @use 'src/global';
 .add-amenity {
-    .amenity-list {}
+    margin-top: 2rem;
+    display: inline-flex;
+    .amenity-list {
+        select {
+            width: 7rem;
+            height: 50px;
+            text-align: center;
+            outline: none;
+            padding-left: 10px;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-color: #ABABAB;
+            option {
+                text-align: left;
+            }
+        }
+    }
     .amenity-input {
-        margin-top: 1rem;
+        width: 20rem;
+        height: 50px;
         display: inline-flex;
+        justify-content: space-between;
+        border: 1px solid;
+        border-left: none;
+        border-color: #ABABAB;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
         input {
-            margin-right: 1rem;
+            border: none;
+            outline: none;
             padding-left: 0.5rem;
-            border-radius: 18px;
-            border: 1px solid;
+        }
+        button {
+            padding-right: 0.5rem;
         }
     }
 }
