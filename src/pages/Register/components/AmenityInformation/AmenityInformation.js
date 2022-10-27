@@ -18,7 +18,11 @@ const AmenityCard = ({ amenity, setAmenities }) => {
   };
 
   return (
-    <div key={amenity.id} onClick={handleOnClick}>
+    <div
+      key={amenity.id}
+      className={amenityInforStyles["amenity-card"]}
+      onClick={handleOnClick}
+    >
       <FontAwesomeIcon icon={amenity.icon} />
       {amenity.title}
     </div>
@@ -36,15 +40,16 @@ function AmenityInformation() {
   return (
     <div className={amenityInforStyles["basic-information"]}>
       <div className={amenityInforStyles["basic-infor-header"]}>
-        <h3>
-        Hãy cho khách hàng biết về những tiện nghi của khách sạn
-        </h3>
+        <h3>Hãy cho khách hàng biết về những tiện nghi của khách sạn</h3>
       </div>
       <div className={amenityInforStyles["basic-infor-body"]}>
-        {displayAmenities.map((amenity) => (
-          <AmenityCard amenity={amenity} setAmenities={setAmenities} />
-        ))}
+        <div className={amenityInforStyles["card-holder"]}>
+          {displayAmenities.map((amenity) => (
+            <AmenityCard amenity={amenity} setAmenities={setAmenities} />
+          ))}
+        </div>
         <div className={amenityInforStyles["input-field"]}>
+          <h4>Không tìm thấy thứ bạn muốn ? Thêm vào ở bên dưới</h4>
           <AmenityInputField
             handleClick={setAmenities}
             addNewAmenity={setDisplayAmenities}

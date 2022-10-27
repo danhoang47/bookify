@@ -1,4 +1,24 @@
 @use 'src/global';
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+    // For Google Chrome
+    &::-webkit-scrollbar {
+        width: $size;
+        height: $size;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+        border-radius: 15px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+        border-radius: 15px;
+    }
+    & {
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
+    }
+}
+
 .image-add {
     margin: 1rem 0;
     p {
@@ -33,6 +53,7 @@
             }
         }
         .image-scroll {
+            @include scrollbars(5px, rgba(12, 124, 223, 0.673), white);
             width: 500px;
             overflow-x: scroll;
         }
