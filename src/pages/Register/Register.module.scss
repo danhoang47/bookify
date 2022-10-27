@@ -1,9 +1,7 @@
-@use 'src/global';
-
+@use "src/global";
 #register {
     position: relative;
     z-index: 0;
-
     .left {
         position: fixed;
         top: 1em;
@@ -11,7 +9,6 @@
         border-radius: 1.6em;
         overflow-x: hidden;
     }
-
     .right {
         position: fixed;
         top: 1em;
@@ -21,4 +18,17 @@
         overflow: hidden;
         z-index: 1;
     }
+}
+
+.btn-submit {
+    background-color: global.$main-color;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
 }
