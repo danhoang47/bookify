@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.dto.Image;
+import model.dto.ImageDTO;
+
 
 /**
  *
@@ -27,7 +28,7 @@ public class ImageDAO {
     static PreparedStatement ps;
     static ResultSet rs;
 
-    public static List<Image> listAll(String hotel_id) {
+    public static List<ImageDTO> listAll(String hotel_id) {
 
         try {
             String query = "select * from image where hotel_id=?";
@@ -39,11 +40,11 @@ public class ImageDAO {
 
             rs = ps.executeQuery();
 
-            List<Image> listImageHotel = new ArrayList<>();
+            List<ImageDTO> listImageHotel = new ArrayList<>();
 
             while (rs.next()) {
 
-                listImageHotel.add(new Image(rs.getString(1), rs.getString(3)));
+                listImageHotel.add(new ImageDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
 
             }
 
@@ -54,11 +55,11 @@ public class ImageDAO {
         return null;
     }
 
-    public static boolean addImage(String hotel_id, List<String> images) {
+    public static boolean addImage(String hotel_id, List<String> images, int type) {
         
         List<Integer> check = new ArrayList<>();
         try {
-            String query = "insert into Image values (?, ?, ?, 1)";
+            String query = "insert into Image values (?, ?, ?, ?)";
             conn = new DBContext().getConnection();
 
             for (int i = 0; i < images.size(); i++) {
@@ -66,7 +67,9 @@ public class ImageDAO {
                 ps = conn.prepareStatement(query);
                 ps.setString(1, uuid.toString());
                 ps.setString(2, hotel_id);
-                ps.setString(3, images.get(i));
+                ps.setString(3, images.get(i));                
+                ps.setInt(4, type);
+
                 
                 int x = ps.executeUpdate();
                 if(x!=0) {
@@ -94,7 +97,7 @@ public class ImageDAO {
         images.add("image2");
         images.add("image3");
         
-        boolean x = img.addImage("043a69b8-738f-4205-9a12-f96e1486f1e6", images);
+        boolean x = img.addImage("043a69b8-738f-4205-9a12-f96e1486f1e6", images, 1);
 
         System.out.println(x);
     }

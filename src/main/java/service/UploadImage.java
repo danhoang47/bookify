@@ -37,6 +37,7 @@ public class UploadImage {
                 outputStream.write(bytes, 0, read);
             }
             outputStream.flush();
+            outputStream.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {
@@ -47,7 +48,7 @@ public class UploadImage {
     }
 
     public static List<String> uploadMultipleFile(FormDataBodyPart body) throws IOException {
-
+        
         List<String> listPath = new ArrayList<>();
 
         for (BodyPart part : body.getParent().getBodyParts()) {
