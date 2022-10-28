@@ -25,12 +25,38 @@ public class HotelDTO {
     private String district;
     private String city;
     private String address;
+    private String closing;
+    private String opening;
+    private String checkin;
+    private String checkout;
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
 
     
     public HotelDTO() {
         
+    }
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
     }
 
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
@@ -79,6 +105,38 @@ public class HotelDTO {
         this.district = district;
         this.city = city;
         this.address = address;
+    }
+
+    public String getClosing() {
+        return closing;
+    }
+
+    public String getOpening() {
+        return opening;
+    }
+
+    public String getCheckin() {
+        return checkin;
+    }
+
+    public String getCheckout() {
+        return checkout;
+    }
+
+    public void setClosing(String closing) {
+        this.closing = closing;
+    }
+
+    public void setOpening(String opening) {
+        this.opening = opening;
+    }
+
+    public void setCheckin(String checkin) {
+        this.checkin = checkin;
+    }
+
+    public void setCheckout(String checkout) {
+        this.checkout = checkout;
     }
 
     public void setImages(List<ImageDTO> images) {

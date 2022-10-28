@@ -4,9 +4,12 @@
  */
 package app.services;
 
+import app.dao.AmenityDAO;
+import app.dto.AmenityDTO;
 import app.dto.HotelDTO;
 import app.repository.HotelRepository;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *

@@ -14,6 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.BodyPart;
@@ -22,19 +23,15 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
-/**
- *
- * @author ADMIN
- */
+
 @Path("/hotel")
 public class HotelController {
+    private final static HotelService service = new HotelService();
+    private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
     @GET
-    @Path("/{hotelId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHotel(@PathParam("hotelId") String hotelId) throws SQLException, ClassNotFoundException {
-        HotelService service = new HotelService();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public Response getHotel(@QueryParam("id") String hotelId) throws SQLException, ClassNotFoundException {
         
         return Response.ok(gson.toJson(service.get(hotelId))).build();
     }

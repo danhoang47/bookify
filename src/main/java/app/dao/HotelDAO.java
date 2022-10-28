@@ -43,10 +43,15 @@ public class HotelDAO {
                 String address = rs.getString("address");
                 boolean isAllowPet = rs.getBoolean("isAllowPet");
                 boolean isHasCamera = rs.getBoolean("isHasCamera");
+                String checkin = rs.getString("checkin");
+                String checkout = rs.getString("checkout");
+                String closing = rs.getString("closing");
+                String opening = rs.getString("opening");
                 hotel = new HotelDTO(id, ownerId, 
-                        hotelTypeId, name, backgroundImage,
-                        false, isAllowPet, isHasCamera, 
-                        description, country, district, city, address);
+                        hotelTypeId, name, backgroundImage, 
+                        isAllowPet, isAllowPet, isHasCamera, 
+                        description, country, district, city, 
+                        address, closing, opening, checkin, checkout, null, null);
                 
                 System.out.println(hotel.getHotelName());
             }
