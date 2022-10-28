@@ -41,7 +41,8 @@ public class HotelDAO {
             while (rs.next()) {
 
                 listHotel.add(new Hotel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),  rs.getString(5), rs.getInt(6)==0 ? false : true, rs.getString(7), 
-                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11)));
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getInt(12) == 0 ? false : true, rs.getInt(13) == 0 ? false : true, rs.getString(14), 
+                        rs.getString(15), rs.getString(16), rs.getString(17)));
                 
                 
             }
@@ -68,7 +69,8 @@ public class HotelDAO {
             while (rs.next()) {
 
                 Hotel hotel = new Hotel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),  rs.getString(5), rs.getInt(6)==0 ? false : true, rs.getString(7), 
-                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getInt(12) == 0 ? false : true, rs.getInt(13) == 0 ? false : true, rs.getString(14), 
+                        rs.getString(15), rs.getString(16), rs.getString(17)) ;
                 return hotel;
             }
             
@@ -80,9 +82,10 @@ public class HotelDAO {
         
     }
     
+
     public static boolean addNewHotel(Hotel hotel) {
         try {
-            String query = "INSERT INTO Hotel VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+            String query = "INSERT INTO Hotel VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ?,  ? , ? , ? , ? )";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             
@@ -97,7 +100,13 @@ public class HotelDAO {
             ps.setString(9, hotel.getDistrict());
             ps.setString(10, hotel.getCity());
             ps.setString(11, hotel.getAddress());
-            
+            ps.setInt(12, hotel.isIsHasCamera()==false?0:1);
+            ps.setInt(13, hotel.isIsAllowPet()==false?0:1);
+            ps.setString(14, hotel.getCheckin());
+            ps.setString(15, hotel.getCheckout());
+            ps.setString(16, hotel.getClosing());
+            ps.setString(17, hotel.getOpening());
+         
             
             int a = ps.executeUpdate();
             
