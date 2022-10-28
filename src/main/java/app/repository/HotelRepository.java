@@ -37,6 +37,7 @@ public class HotelRepository {
         List<HotelAmenityDTO> hotelAmenityDtos = hotelAmenityDao.get(hotelDto.getHotelId());
         
         hotelDto.setImages(imageDtos);
+        hotelDto.setHotelAmenities(hotelAmenityDtos);
         
         return hotelDto;
     }

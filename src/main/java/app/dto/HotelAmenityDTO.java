@@ -4,12 +4,6 @@
  */
 package app.dto;
 
-import java.util.List;
-
-/**
- *
- * @author ADMIN
- */
 public class HotelAmenityDTO {
     private String id;
     private String amenityId;
@@ -64,10 +58,6 @@ public class HotelAmenityDTO {
     public String getAmenityName() {
         return amenityName;
     }
-
-    public String getAmenityType() {
-        return amenityType;
-    }
     
     public String getIcon() {
         return icon;
@@ -91,9 +81,5 @@ public class HotelAmenityDTO {
 
     public void setAmenityName(String amenityName) {
         this.amenityName = amenityName;
-    }
-
-    public void setAmenityType(String amenityType) {
-        this.amenityType = amenityType;
     }
 }

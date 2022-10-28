@@ -205,8 +205,4 @@ public class HotelDTO {
     public String toString() {
         return "Hotel{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + '}';
     }
-
-    
-    
-    
 }

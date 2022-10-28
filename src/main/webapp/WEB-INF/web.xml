@@ -16,7 +16,7 @@
         <!-- Register resources and providers -->
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.jersey.series.userDetail.service</param-value>
+            <param-value>app.controller.servlet</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>

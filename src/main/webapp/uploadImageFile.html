@@ -14,23 +14,23 @@
             <div style="width: 400px; border: 1px solid blue; padding: 20px; text-align: center;">
 
 
-                <form method="post" action="rest/user_detail/upload/images" enctype="multipart/form-data">
 
+                
                     <table align="center" border="1" bordercolor="black" cellpadding="0" cellspacing="0">
 
                         <tr>
 
-                            <td>Select File 1 :</td>
+                            <td>Select Files :</td>
 
 
-                            <td><input type="file" name="uploadFile" size="100" multiple="multiple"/></td>
+                            <td><input id="uploads" type="file" name="viewImages" size="100" multiple="multiple"/></td>
 
                         </tr>
 
 
                         <tr>
 
-                            <td><input type="submit" value="Upload File" /></td>
+                            <td><input type="submit" value="Upload File" id="submit-btn"/></td>
 
 
                             <td><input type="reset" value="Reset" /></td>
@@ -39,10 +39,31 @@
 
                     </table>
 
-                </form>
 
             </div>
 
         </center>
     </body>
+    <script>
+        const uploads = document.getElementById("uploads");
+        const submitBtn = document.getElementById("submit-btn");
+        
+        submitBtn.onclick = (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const files =uploads.files;
+            formData.append("viewImages", files);
+         
+            fetch(
+            "http://localhost:8080/bookify/api/hotel/dasdasd",
+            {
+                method: "POST",
+                contentType: 'multipart/form-data',
+                body: formData
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => console.log(data));
+        }
+    </script>
 </html>

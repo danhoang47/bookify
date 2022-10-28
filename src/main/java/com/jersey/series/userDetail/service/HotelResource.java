@@ -47,7 +47,6 @@ import service.UploadImage;
  *
  * @author toten
  */
-@Path("/hotel")
 public class HotelResource implements HotelInterface {
 
     //   ------------------------------------------------------ List all hotels ( View all hotels) -------------------------------------------------------------------------
