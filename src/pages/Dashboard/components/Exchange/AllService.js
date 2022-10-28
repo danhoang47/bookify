@@ -1,6 +1,5 @@
 import { dashboarData } from "./FakeDataDashBoardExchange";
 
-
 export const getYearExchange = (year) => {
   let transc = 0;
   const dataByYear = dashboarData
@@ -51,18 +50,4 @@ const sumByYear = (yearDetail) => {
     return prev + curr.exchange;
   }, 0);
   return res;
-};
-export const getTransYearNumber = (year) => {
-  let transObj = {
-    year: "",
-    transNumber: "",
-  };
-  const dataByYear = dashboarData
-    .filter((data) => data.years === year)
-    .map((data) => {
-      transObj.year = data.years;
-      return data.details;
-    });
-  transObj.transNumber = sumByYear(dataByYear[0]);
-  return transObj;
 };

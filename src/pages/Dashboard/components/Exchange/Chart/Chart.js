@@ -2,7 +2,7 @@ import SingleLineChart from "@/components/Chart/SingleLineChart";
 import {
   TransactionDataYear,
   TransactionDataYears,
-  getTransYearNumber,
+  getYearExchange,
 } from "../AllService";
 import YearPicker from "./YearPicker";
 import { useState, useMemo } from "react";
@@ -12,7 +12,7 @@ function Chart() {
   const [select, setSelect] = useState("months");
   let transYearNumber = useMemo(() => TransactionDataYear(year), [year]);
   let transYearsNumber = useMemo(() => TransactionDataYears(), []);
-  let transYear = useMemo(() => getTransYearNumber(year), [year]);
+  let transYear = useMemo(() => getYearExchange(year), [year]);
 
   const handleChange = (e) => {
     setSelect(e.target.value);

@@ -26,12 +26,6 @@ const user = {
     subname: "",
     user_id: "",
     username: "",
-    id: 123456,
-    username: "Quoc Dat",
-    cardNumber: "1542 - 5644 - 2545 - 2871",
-    jwt: "",
-    role: "",
-    avatar: "",
 };
 
 function App({ children }) {
@@ -45,14 +39,6 @@ function App({ children }) {
             dispatch,
         };
     }, [modalState]);
-
-    const userModifier = useMemo(() => {
-        return {
-            user,
-            isLogin,
-            setLogin,
-        };
-    }, [isLogin]);
 
     useEffect(() => {
         const nav = navigator.geolocation;
@@ -70,18 +56,27 @@ function App({ children }) {
     useEffect(() => {
         const jwtString = JSON.stringify(localStorage.getItem("jwt"));
         console.log(jwtString);
-        fetch("http://localhost:8080/bookify/api/hotel", {
-            method: "get",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            });
+        if (jwtString) {
+            fetch(
+                "http://localhost:8080/testUpload/rest/user_detail/verifyjwt",
+                {
+                    method: "POST",
+                    body: jwtString,
+                }
+            )
+                .then((res) => {
+                    res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((err) => console.log(err));
+        }
     }, []);
 
     return (
         <CoordinatesContext.Provider value={currentCoordinates}>
-            <UserContext.Provider value={userModifier}>
+            <UserContext.Provider value={user}>
                 <ModalContext.Provider value={modal}>
                     <Container
                         maxWidth={"sx"}

@@ -5,14 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuid } from "uuid";
 
-function AmenityInputField({ handleClick, addNewAmenity }) {
+function AmenityInputField({ handleClick, addNewAmenity, amenityTypes2 }) {
+  console.log(amenityTypes2);
   const [amenity, setAmenity] = useState({
-    title: "",
+    amenity_name: "",
     type: 1,
   });
 
   const handleAmenityAdded = (e) => {
-    if (amenity.title.length === 0) {
+    if (amenity.amenity_name.length === 0) {
       return;
     } else {
       const id = uuid();
@@ -20,16 +21,16 @@ function AmenityInputField({ handleClick, addNewAmenity }) {
         ...prev,
         {
           ...amenity,
-          id: id,
-          icon: faPencil,
+          amenity_id: id,
+          icon: "faPencil",
         },
       ]);
       addNewAmenity((prev) => [
         ...prev,
         {
           ...amenity,
-          id: id,
-          icon: faPencil,
+          amenity_id: id,
+          icon: "faPencil",
         },
       ]);
     }
@@ -38,29 +39,27 @@ function AmenityInputField({ handleClick, addNewAmenity }) {
   return (
     <div className={amenityStyle["add-amenity"]}>
       <div className={amenityStyle["amenity-list"]}>
-        <select name="" id="">
-          {amenityTypes.map(({ id, type }, index) => (
-            <option
-              key={index}
-              onClick={() => {
-                setAmenity((prev) => ({
-                  ...prev,
-                  type: id,
-                }));
-              }}
-            >
-              {type}
-            </option>
-          ))}
-        </select>
+        {amenityTypes2.map(({ amenityTypeId, amenityName }, index) => (
+          <div
+            key={index}
+            onClick={() => {
+              setAmenity((prev) => ({
+                ...prev,
+                type: amenityTypeId,
+              }));
+            }}
+          >
+            {amenityName}
+          </div>
+        ))}
       </div>
       <div className={amenityStyle["amenity-input"]}>
         <input
-          value={amenity.title}
+          value={amenity.amenity_name}
           onChange={(e) => {
             setAmenity((prev) => ({
               ...prev,
-              title: e.target.value,
+              amenity_name: e.target.value,
             }));
           }}
         />
