@@ -13,8 +13,6 @@ function InputField({
   isSignIn = false,
   ref = null,
 }) {
-  // console.log('input field rerender')
-
   return (
     <div className={[inputFieldStyles["input-field"]].join(" ")}>
       <Input

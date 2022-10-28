@@ -11,6 +11,7 @@
     }
     .right {
         position: fixed;
+        overflow-y: scroll;
         top: 1em;
         right: 1.5em;
         left: calc((100% / 3) + 3em);

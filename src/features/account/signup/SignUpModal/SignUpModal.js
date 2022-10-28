@@ -52,7 +52,6 @@ function SignUpModal({ animation }) {
               );
             }}
           >
-            {" "}
             Sign In
           </span>
         </p>
