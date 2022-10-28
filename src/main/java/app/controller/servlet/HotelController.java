@@ -4,11 +4,15 @@
  */
 package app.controller.servlet;
 
+import app.dto.HotelDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.List;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
@@ -17,10 +21,11 @@ import javax.ws.rs.core.Response;
 @Path("/hotel")
 public class HotelController {
     
-    @GET
-    public Response get() {
+    @POST
+    public Response get(@FormDataParam("amenityId") String amenityId) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println("Get from hotel");
+        Object response = gson.fromJson(amenityId, Object.class);
+        System.out.println(response == null);
         
         return Response.accepted(gson.toJson("OK")).build();
     }
