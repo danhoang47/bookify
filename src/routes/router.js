@@ -18,6 +18,7 @@ import {
   Payment,
   Register,
   Hotel,
+  Update
 } from "@/pages";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
@@ -49,6 +50,9 @@ const router = createBrowserRouter(
       <Route path="hosting" element={<HostingRegisterLayout />}>
         <Route path="introduction" element={<Introduction />} />
         <Route path="register" element={<Register />} />
+        <Route path="update">
+          <Route path=":hotelId" element={<Update />} />
+        </Route>
       </Route>
     </Route>
   )

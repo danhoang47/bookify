@@ -1,34 +1,19 @@
 import amenityInforStyles from "./AmenityInformation.module.scss";
 import AmenityInputField from "../AmenityInputField";
-import defaultAmenities from "./defaultAmenities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RegisterContext } from "@/utils/contexts";
 import { useContext, useEffect, useState } from "react";
-import * as icons from "@fortawesome/free-solid-svg-icons";
-import {
-  faDumbbell,
-  faSwimmingPool,
-  faWifi,
-  faGrill,
-  faCampground,
-  faFireBurner,
-  faHotTub,
-  faChair,
-  faAirFreshener,
-  faTable,
-  faCouch,
-  faPooBolt,
-} from "@fortawesome/free-solid-svg-icons";
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 const AmenityCard = ({ amenity, setAmenities }) => {
   const handleOnClick = (e) => {
     setAmenities((prev) => {
       const isIncluded = prev.some(
-        ({ amenity_id }) => amenity_id === amenity.amenity_id
+        ({ id }) => id === amenity.id
       );
       if (isIncluded) {
         return prev.filter(
-          ({ amenity_id }) => amenity_id !== amenity.amenity_id
+          ({ id }) => id !== amenity.id
         );
       } else {
         return [...prev, amenity];
@@ -38,12 +23,12 @@ const AmenityCard = ({ amenity, setAmenities }) => {
 
   return (
     <div
-      key={amenity.amenity_id}
+      key={amenity.id}
       className={amenityInforStyles["amenity-card"]}
       onClick={handleOnClick}
     >
-      <FontAwesomeIcon icon={icons[amenity.icon]} />
-      {amenity.amenity_name}
+      <FontAwesomeIcon icon={Icons[amenity.icon]} />
+      {amenity.name}
     </div>
   );
 };
@@ -54,20 +39,23 @@ function AmenityInformation() {
   const [displayAmenitiesType, setDisplayAmenitiesType] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/testUpload/rest/hotel/signhotel", {
-      method: "GET",
-    })
+    fetch("http://localhost:8080/bookify/api/amenity")
       .then((res) => res.json())
-      .then((result) => {
-        setAmenities(result.amenities);
-        setDisplayAmenities(result.amenities);
-        setDisplayAmenitiesType(result.amenitiesType);
+      .then((amenities) => {
+        setAmenities(amenities);
+        setDisplayAmenities(amenities);
       });
+  //eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   setAmenities(defaultAmenities);
-  // }, []);
+  useEffect(() => {
+    fetch("http://localhost:8080/bookify/api/amenity/type")
+      .then((res) => res.json())
+      .then((result) => {
+        setDisplayAmenitiesType(result);
+      });
+  }, [])
+
 
   return (
     <div className={amenityInforStyles["basic-information"]}>
@@ -85,7 +73,7 @@ function AmenityInformation() {
           <AmenityInputField
             handleClick={setAmenities}
             addNewAmenity={setDisplayAmenities}
-            amenityTypes2={displayAmenitiesType}
+            amenityTypes={displayAmenitiesType}
           />
         </div>
       </div>

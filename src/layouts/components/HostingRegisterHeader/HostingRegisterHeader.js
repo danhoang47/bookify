@@ -6,11 +6,12 @@ import './HostingRegisterHeader.scss';
 function HostingRegisterHeader({ location }) {
     const introductionHref = '/hosting/introduction';
     const registerHref = '/hosting/register';
+    const updateHref = '/hosting/update';
 
     const getHeaderClassName = () => {
         if (location === introductionHref)
             return 'introduction';
-        else if (location === registerHref)
+        else if (location === registerHref || location === updateHref)
             return 'register';
         else return ''
     }

@@ -7,7 +7,7 @@
         height: 18px;
         margin-right: 1rem;
     }
-    input[type='radio']:checked {
+    input[type='checkbox']:checked {
         +label {
             color: black;
         }

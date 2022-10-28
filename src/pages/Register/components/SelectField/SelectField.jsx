@@ -80,7 +80,9 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
       </label>
       <button
         className="drop-down-button"
-        onClick={() => setSelectionListOpen(true)}
+        onClick={() => {
+          setSelectionListOpen(prev => !prev)
+        }}
       >
         <FontAwesomeIcon icon={faChevronDown} />
       </button>
@@ -95,7 +97,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
             key={value.code}
             onClick={() => {
               setSelectionListOpen(false);
-              setValue(value.code, id);
+              setValue(value.name, id);
             }}
             className={"selection-item"}
           >

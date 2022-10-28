@@ -5,20 +5,6 @@ import { useState } from "react";
 import MonthPickerStyle from "./MonthPicker.module.scss";
 
 const months = [
-<<<<<<< HEAD
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-=======
   "",
   "Tháng 1",
   "Tháng 2",
@@ -32,7 +18,6 @@ const months = [
   "Tháng 10",
   "Tháng 11",
   "Tháng 12",
->>>>>>> 50757597be6de62a5de98142fc483cfb68dc64bf
 ];
 
 function MonthPicker({ monthChanging }) {
@@ -56,6 +41,7 @@ function MonthPicker({ monthChanging }) {
       refRight.current.style.display = "block";
       refLeft.current.style.display = "block";
     }
+  //eslint-disable-next-line
   }, [month]);
 
   const monthChangingHandle = (data) => {

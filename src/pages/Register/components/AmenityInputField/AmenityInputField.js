@@ -1,12 +1,11 @@
 import { useState } from "react";
 import amenityStyle from "./AmenityType.module.scss";
-import amenityTypes from "./amenityTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuid } from "uuid";
 
-function AmenityInputField({ handleClick, addNewAmenity, amenityTypes2 }) {
-  console.log(amenityTypes2);
+function AmenityInputField({ handleClick, addNewAmenity, amenityTypes }) {
+  console.log(amenityTypes);
   const [amenity, setAmenity] = useState({
     amenity_name: "",
     type: 1,
@@ -39,7 +38,7 @@ function AmenityInputField({ handleClick, addNewAmenity, amenityTypes2 }) {
   return (
     <div className={amenityStyle["add-amenity"]}>
       <div className={amenityStyle["amenity-list"]}>
-        {amenityTypes2.map(({ amenityTypeId, amenityName }, index) => (
+        {amenityTypes.map(({ amenityTypeId, amenityTypeName }, index) => (
           <div
             key={index}
             onClick={() => {
@@ -49,17 +48,17 @@ function AmenityInputField({ handleClick, addNewAmenity, amenityTypes2 }) {
               }));
             }}
           >
-            {amenityName}
+            {amenityTypeName}
           </div>
         ))}
       </div>
       <div className={amenityStyle["amenity-input"]}>
         <input
-          value={amenity.amenity_name}
+          value={amenity.name}
           onChange={(e) => {
             setAmenity((prev) => ({
               ...prev,
-              amenity_name: e.target.value,
+              name: e.target.value,
             }));
           }}
         />
