@@ -14,6 +14,7 @@ const roomInfoInitState = {
   beds: 6,
   bathrooms: 1,
   price: 100,
+  numberOfRooms: 10,
   isPrivateBathRoom: false,
 };
 

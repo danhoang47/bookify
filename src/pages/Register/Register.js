@@ -2,7 +2,7 @@ import { Jumbotron, TabBar } from "./components";
 import { Grid, Box } from "@mui/material";
 import { RegisterContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
-import { useState, useMemo, Suspense, useEffect } from "react";
+import { useState, useMemo, Suspense } from "react";
 import tabs from "./tabs";
 import {
     basicHotelInforInitState,
@@ -54,9 +54,7 @@ function Register() {
     // testing purpose only
     const handleSubmit = (e) => {
         const formData = new FormData();
-        formData.append("viewImages", viewImages);
-        formData.append("roomImages", roomImages);
-        formData.append("backgroundImage", backgroundImage);
+        
         
         fetch(
             "http://localhost:8080/bookify/api/hotel/fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9",
