@@ -1,6 +1,6 @@
 import HotelInfoStyle from "./HotelInfo.module.scss";
-import InfoHeader from "./components/InfoHeader";
-import Details from "./components/Details";
+import InfoHeader from "../InfoHeader";
+import Details from "../Details";
 
 function HotelInfo() {
   return (

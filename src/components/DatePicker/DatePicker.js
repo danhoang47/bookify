@@ -1,15 +1,20 @@
 import { DayPicker } from "react-day-picker";
 import { addDays } from "date-fns";
-import './DatePickerTable.scss';
-import './Cell.scss';
-
+import "./DatePickerTable.scss";
+import "./Cell.scss";
 
 const pastMonth = new Date();
-function DatePicker({ numberOfMonths, mode, selectedDays, setSelectedDays}) {
-    const disabledDays = {
-        from: new Date('2000/1/1'),
-        to: addDays(new Date(), -1)
-    }
+function DatePicker({ numberOfMonths, mode, selectedDays, setSelectedDays }) {
+    const disabledDays = [
+        {
+            from: new Date("2000/1/1"),
+            to: addDays(new Date(), -1),
+        },
+        {
+            from: new Date(2022, 10, 27),
+            to: addDays(new Date(2022, 10, 27), + 1)
+        }
+    ];
 
     return (
         <>
@@ -20,11 +25,11 @@ function DatePicker({ numberOfMonths, mode, selectedDays, setSelectedDays}) {
                 // footer={footer}
                 selected={selectedDays}
                 modifiersClassNames={{
-                    selected: 'selected_day',
-                    range_end: 'range_end_day',
-                    range_start: 'range_start_day',
-                    range_middle: 'range_middle',
-                    disabled: 'disabled_day'
+                    selected: "selected_day",
+                    range_end: "range_end_day",
+                    range_start: "range_start_day",
+                    range_middle: "range_middle",
+                    disabled: "disabled_day",
                 }}
                 numberOfMonths={numberOfMonths}
                 onSelect={setSelectedDays}

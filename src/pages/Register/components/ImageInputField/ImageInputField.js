@@ -9,7 +9,6 @@ function ViewImageInputField({ images, setImages, title }) {
         const { files } = e.target;
         const viewImagesArray = Array.from(images || []);
 
-        console.log(files);
         if (viewImagesArray.length === 0) {
             setImages(files);
         } else {
