@@ -19,7 +19,7 @@ function Table() {
     [filter, data]
   );
   return (
-    <div>
+    <div className={TableStyle["table"]}>
       <div className={TableStyle["header"]}>
         <h2>
           <b>Lịch sử giao dịch</b>
@@ -46,12 +46,12 @@ function Table() {
           <th>Chi tiết</th>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index}>
+          {data.map((row, key) => (
+            <tr key={key}>
               <td>
                 <p>{row.hotelhostName}</p>
                 <p>ID:{row.ID}</p>
-              </td>{" "}
+              </td>
               <td>
                 <p>{moment(row.Time).format("MMMM dS, yyyy")}</p>
                 <p>Lúc: {moment(row.Time).format("HH:MM")}</p>

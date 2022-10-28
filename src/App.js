@@ -26,6 +26,12 @@ const user = {
     subname: "",
     user_id: "",
     username: "",
+    id: 123456,
+    username: "Quoc Dat",
+    cardNumber: "1542 - 5644 - 2545 - 2871",
+    jwt: "",
+    role: "",
+    avatar: "",
 };
 
 function App({ children }) {

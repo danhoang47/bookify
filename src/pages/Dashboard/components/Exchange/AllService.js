@@ -1,30 +1,5 @@
 import { dashboarData } from "./FakeDataDashBoardExchange";
 
-const monthsKey = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-const yearsKey = [
-  "2014",
-  "2015",
-  "2016",
-  "2017",
-  "2018",
-  "2019",
-  "2020",
-  "2021",
-  "2022",
-];
 
 export const getYearExchange = (year) => {
   let transc = 0;
@@ -64,7 +39,6 @@ export const TransactionDataYears = () => {
     year: [],
     transNumber: [],
   };
-  const dataByYears = dashboarData.map((data) => data.details);
   dashboarData.forEach((data) => {
     transObj.year.push(data.years);
     transObj.transNumber.push(sumByYear(data.details));
@@ -77,4 +51,18 @@ const sumByYear = (yearDetail) => {
     return prev + curr.exchange;
   }, 0);
   return res;
+};
+export const getTransYearNumber = (year) => {
+  let transObj = {
+    year: "",
+    transNumber: "",
+  };
+  const dataByYear = dashboarData
+    .filter((data) => data.years === year)
+    .map((data) => {
+      transObj.year = data.years;
+      return data.details;
+    });
+  transObj.transNumber = sumByYear(dataByYear[0]);
+  return transObj;
 };
