@@ -34,40 +34,42 @@ function ImageSection() {
   }, [backgroundImage]);
 
   return (
-    <div className={ImageStyle["body-container"]}>
+    <>
       <div className={ImageStyle["header"]}>
         <h3>Cập nhật ảnh về khách sạn của bạn</h3>
       </div>
-      <div className={ImageStyle["body"]}>
-        <div className={ImageStyle["image-background"]}>
-          <p>Chọn ảnh bìa cho khách sạn của bạn</p>
-          <div className={ImageStyle["image-container"]}>
-            <input type="file" id="upfile" onChange={handleChange} />
-          </div>
-          <label className={ImageStyle["image-show"]} for="upfile">
-            <div className={ImageStyle["image-placeholder"]}>
-              <FontAwesomeIcon icon={faUpload} />
-              <p>Tải ảnh lên</p>
+      <div className={ImageStyle["body-container"]}>
+        <div className={ImageStyle["body"]}>
+          <div className={ImageStyle["image-background"]}>
+            <p>Chọn ảnh bìa cho khách sạn của bạn</p>
+            <div className={ImageStyle["image-container"]}>
+              <input type="file" id="upfile" onChange={handleChange} />
             </div>
-            {previewBackgroundImage && (
-              <img src={previewBackgroundImage} alt="" />
-            )}
-          </label>
+            <label className={ImageStyle["image-show"]} for="upfile">
+              <div className={ImageStyle["image-placeholder"]}>
+                <FontAwesomeIcon icon={faUpload} />
+                <p>Tải ảnh lên</p>
+              </div>
+              {previewBackgroundImage && (
+                <img src={previewBackgroundImage} alt="" />
+              )}
+            </label>
+          </div>
+          <ImageInputField
+            id={"around"}
+            images={viewImages}
+            setImages={setViewImages}
+            title={"Cung cấp ảnh về không gian xung quanh khách sạn"}
+          />
+          <ImageInputField
+            id={"room"}
+            images={roomImages}
+            setImages={setRoomImages}
+            title={"Cung cấp ảnh về phòng ngủ của khách sạn"}
+          />
         </div>
-        <ImageInputField
-          id={"around"}
-          images={viewImages}
-          setImages={setViewImages}
-          title={"Cung cấp ảnh về không gian xung quanh khách sạn"}
-        />
-        <ImageInputField
-          id={"room"}
-          images={roomImages}
-          setImages={setRoomImages}
-          title={"Cung cấp ảnh về phòng ngủ của khách sạn"}
-        />
       </div>
-    </div>
+    </>
   );
 }
 
