@@ -101,9 +101,10 @@ function Register() {
     );
     hotelForm.append("roomPrice", roomInfor.price);
     hotelForm.append("maxGuest", roomInfor.guests);
-    hotelForm.append("roomNum", roomInfor.bedrooms);
+    hotelForm.append("bedroom", roomInfor.bedrooms);
     hotelForm.append("bathNum", roomInfor.bathrooms);
     hotelForm.append("bedNum", roomInfor.beds);
+    hotelForm.append("roomNumber", roomInfor.roomNumber);
     hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
     hotelForm.append("userId", "f96e5e7e-7542-48be-8829-5ae701431d29");
 
@@ -119,14 +120,14 @@ function Register() {
     // extraInfor.checkout.hour + ":" + extraInfor.checkout.minutes
     // );
 
-    // console.log(viewImages, roomImages);
+    console.log(roomInfor);
 
-    fetch("http://localhost:8080/testUpload/rest/hotel/signhotel", {
-      method: "POST",
-      body: hotelForm,
-    })
-      .then((res) => res.json())
-      .then((result) => console.log(result));
+    // fetch("http://localhost:8080/testUpload/rest/hotel/signhotel", {
+    //   method: "POST",
+    //   body: hotelForm,
+    // })
+    //   .then((res) => res.json())
+    //   .then((result) => console.log(result));
   };
 
   return (

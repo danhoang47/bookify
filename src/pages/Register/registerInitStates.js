@@ -15,6 +15,7 @@ const roomInfoInitState = {
   bathrooms: 1,
   price: 100,
   isPrivateBathRoom: false,
+  roomNumber: 1,
 };
 
 const extraInforInitState = {
