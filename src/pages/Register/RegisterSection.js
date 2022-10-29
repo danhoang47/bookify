@@ -2,9 +2,10 @@ import { Jumbotron, TabBar } from "./components";
 import { Grid, Box } from "@mui/material";
 import { RegisterContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useEffect } from "react";
 import registerHotel from "@/services/hotel/registerHotel";
 import tabs from "./tabs";
+import { useClsx } from "@/utils/hooks";
 
 function RegisterSection({ 
   basicHotelInforInitState,
@@ -27,6 +28,26 @@ function RegisterSection({
   const [roomImages, setRoomImages] = useState(roomImagesInitState);
   const [backgroundImage, setBackgroundImage] = useState(backgroundImageInitState);
   const [extraInfor, setExtraInfor] = useState(extraInforInitState);
+  const [displayAmenities, setDisplayAmenities] = useState([]);
+  const [displayAmenitiesType, setDisplayAmenitiesType] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/bookify/api/amenity")
+      .then((res) => res.json())
+      .then((amenities) => {
+        setDisplayAmenities(amenities);
+      });
+  //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/bookify/api/amenity/type")
+      .then((res) => res.json())
+      .then((result) => {
+        setDisplayAmenitiesType(result);
+      });
+  }, [])
+
   const registerContextValue = useMemo(
     () => ({
       basicHotelInfor,
@@ -43,6 +64,10 @@ function RegisterSection({
       setBackgroundImage,
       extraInfor,
       setExtraInfor,
+      displayAmenities,
+      setDisplayAmenities,
+      displayAmenitiesType,
+      setDisplayAmenitiesType
     }),
     [
       basicHotelInfor,
@@ -52,6 +77,8 @@ function RegisterSection({
       roomImages,
       backgroundImage,
       extraInfor,
+      displayAmenities,
+      displayAmenitiesType
     ]
   );
 
@@ -63,6 +90,22 @@ function RegisterSection({
     console.log(data);
   };
 
+  const toNextTab = (e) => {
+    if (inputTabIndex + 1 === tabs.length) {
+      registerSubmit(e);
+    } else {
+      setInputTabIndex(prev => prev + 1);
+    }
+  }
+
+  const toPreviousTab = () => {
+    if (inputTabIndex === 0) {
+      return;
+    } else {
+      setInputTabIndex(prev => prev - 1);
+    }
+  }
+
   return (
     <RegisterContext.Provider value={registerContextValue}>
       <div id={registerStyles["register"]}>
@@ -73,14 +116,25 @@ function RegisterSection({
           <Grid item xs={8} className={registerStyles["right"]}>
             <Box
               sx={{
-                width: "50%",
+                width: '60%',
                 margin: "0 auto",
+                overflowY: "scroll",
+                overflowX: 'hidden',
                 paddingTop: "10em",
               }}
+              className={registerStyles['form']}
             >
               <Suspense fallback={<div>Loading...</div>}>
                 {tabs[inputTabIndex].render(setNextTabValid)}
               </Suspense>
+              <div className={registerStyles['nav-buttons']}>
+                <button className={useClsx()} onClick={toNextTab}>
+                    { inputTabIndex + 1 === tabs.length ? 'Đăng ký' : 'Tiếp theo'}
+                </button>
+                <button className={useClsx(registerStyles['back'])} onClick={toPreviousTab}>
+                    Quay lại
+                </button>
+              </div>
             </Box>
             <TabBar
               inputTabIndex={inputTabIndex}
@@ -88,14 +142,6 @@ function RegisterSection({
               tabIdList={tabs.map(({ id }) => id)}
               isNextTabValid={isNextTabValid}
             />
-            <button
-              className={registerStyles["btn-submit"]}
-              onClick={(e) => {
-                registerSubmit(e);
-              }}
-            >
-              Submit
-            </button>
           </Grid>
         </Grid>
       </div>

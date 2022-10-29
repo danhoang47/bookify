@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { memo, useState, useRef, useEffect, useCallback } from "react";
