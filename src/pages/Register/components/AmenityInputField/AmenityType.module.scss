@@ -1,9 +1,10 @@
 @use "src/global";
 
 .add-amenity {
-    margin-top: 2rem;
+    margin-top: 1rem;
     border: 1px solid global.$gray-200;
     border-radius: 1.2em;
+    margin-bottom: 4em;
 
     .amenity-input {
         display: flex;
@@ -25,7 +26,8 @@
             .amenity-type-list {
                 position: absolute;
                 top: 100%;
-                right: 0;
+                left: 0;
+                width: 100%;
                 display: none;
                 background: global.$white;
                 border: 1px solid global.$gray-200;
@@ -36,13 +38,18 @@
                 }
 
                 .type-item {
+                    width: 100%;
                     padding: 0.4em 0.6em;
                     padding-right: 2em;
                     cursor: pointer;
                     font-weight: bold;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
 
                     &:hover {
-                        opacity: 0.7;
+                        background: global.$gray-500;
+                        color: global.$white;
                     }
                 }
             }

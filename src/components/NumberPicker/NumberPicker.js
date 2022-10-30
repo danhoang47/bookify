@@ -9,9 +9,9 @@ function NumberPicker({
     limit,
     value,
     setValue,
-    disabled,
+    disabled = false,
     total,
-    isAllowPet,
+    isAllowPet = true,
 }) {
     const [isExceedLimit, setExceedLimit] = useState(false);
     const [isZero, setZero] = useState(value === 0);
@@ -50,7 +50,10 @@ function NumberPicker({
     }, [value]);
 
     return (
-        <div className={numberPickerStyles["number-picker"]}>
+        <div 
+            key={title}
+            className={numberPickerStyles["number-picker"]}
+        >
             <div className={numberPickerStyles["picker-info"]}>
                 <p className={numberPickerStyles["title"]}>{title}</p>
                 <p className={numberPickerStyles["description"]}>

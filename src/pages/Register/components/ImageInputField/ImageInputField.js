@@ -5,14 +5,13 @@ import ImageStyle from "./ImageInputField.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
-function ViewImageInputField({ id, images, setImages, title }) {
+function ImageInputField({ id, images, setImages, title }) {
   const [previewViewImages, setPreviewViewImages] = useState();
 
   const handleChange = (e) => {
     const { files } = e.target;
     const viewImagesArray = Array.from(images || []);
 
-    console.log(files);
     if (viewImagesArray.length === 0) {
       setImages(files);
     } else {
@@ -91,4 +90,16 @@ function ViewImageInputField({ id, images, setImages, title }) {
   );
 }
 
-export default ViewImageInputField;
+export default ImageInputField;
+
+/**
+ *  Anh chia thanh 2 loai:
+ *    - Anh tu server
+ *    - Anh update them
+ *  Neu remove di: 
+ *    - Voi anh tu server:
+ *    - Voi anh tu update:
+ *  Neu them vo:
+ *    - Voi anh tu update
+ *  => Phai gom duoc 1 array named deletedImages
+ */

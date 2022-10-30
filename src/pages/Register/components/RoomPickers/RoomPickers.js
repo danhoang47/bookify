@@ -47,6 +47,7 @@ function RoomPickers() {
                   [key]: value || 0,
                 }));
               }}
+              disabled={false}
             />,
           ];
         }

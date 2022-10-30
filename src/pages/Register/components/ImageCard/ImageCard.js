@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import ImageCardStyle from "./ImageCard.module.scss";
 
-const ImageCard = ({ objectUrl, handleRemove }) => {
+const ImageCard = ({ objectUrl, handleRemove, type }) => {
   return (
     <Box
       sx={{
@@ -9,8 +9,8 @@ const ImageCard = ({ objectUrl, handleRemove }) => {
         height: "10em",
       }}
       className={ImageCardStyle["card"]}
-      onClick={(e) => {
-        handleRemove(objectUrl);
+      onClick={() => {
+        handleRemove(objectUrl)
       }}
     >
       <img
