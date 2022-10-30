@@ -1,8 +1,17 @@
 import guestsPickerStyles from './GuestsPicker.module.scss';
 import NumberPicker from '../NumberPicker';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
-function GuestsPicker({ guests, setGuests, limit, description = null, title = null }) {
+function GuestsPicker({ guests, setGuests, limit, description = null, title = null, totalLimit = 100, isAllowPet = true }) {
+    const total = useMemo(() => {
+        return Object.keys(guests).reduce((prev, key) => {
+            if (key !== 'pet') {
+                return prev + guests[key];
+            } else {
+                return prev
+            }
+        }, 0)
+    }, [guests]);
 
     return (  
         <div id={guestsPickerStyles['guest-picker-field']}>
@@ -21,6 +30,9 @@ function GuestsPicker({ guests, setGuests, limit, description = null, title = nu
                                 }
                             })
                         }}
+                        total={total}
+                        isAllowPet={type === 'pet' ? isAllowPet : true}
+                        disabled={type !== 'pet' ? total >= totalLimit : false}
                     />
                 ))
             }

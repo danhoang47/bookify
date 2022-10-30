@@ -1,0 +1,76 @@
+@use 'src/global';
+@use 'src/static/styles/animations';
+
+#all-image-section {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    background: global.$white;
+    overflow-y: scroll;
+    padding: 2em 10em;
+    animation: slide-in-bottom 0.2s ease-out;
+
+    .close-album-button {
+        position: absolute;
+        top: 1.5em;
+        left: 3em;
+        padding: 1em;
+        
+        .fa-xmark {
+            color: global.$black;
+        }
+    }
+
+    &.no-scroll {
+        overflow-y: hidden !important;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .image-section {
+        padding-top: 3em;
+
+        .heading {
+            font-size: 1.4em;
+            margin-bottom: 1em;
+        }
+
+        .image-item {
+            position: relative;
+            cursor: pointer;
+
+            &::before {
+                position: absolute;
+                content: "";
+                display: none;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.4);
+                transition: all 0.2s linear;
+            }
+
+            &:hover::before {
+                display: block;
+            }
+        }
+    }
+}
+
+@keyframes slide-in-bottom {
+    from {
+        transform: translateY(50%);
+    } 
+    to {
+        transform: translateY(0%)
+    }
+}

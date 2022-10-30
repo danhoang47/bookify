@@ -41,6 +41,7 @@ function MonthPicker({ monthChanging }) {
       refRight.current.style.display = "block";
       refLeft.current.style.display = "block";
     }
+  //eslint-disable-next-line
   }, [month]);
 
   const monthChangingHandle = (data) => {

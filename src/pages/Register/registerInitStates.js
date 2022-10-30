@@ -9,13 +9,13 @@ const basicHotelInforInitState = {
 };
 
 const roomInfoInitState = {
-  bedrooms: 1,
   guests: 1,
+  bedrooms: 1,
   beds: 6,
   bathrooms: 1,
   price: 100,
+  numberOfRooms: 10,
   isPrivateBathRoom: false,
-  roomNumber: 1,
 };
 
 const extraInforInitState = {
@@ -39,4 +39,17 @@ const extraInforInitState = {
   },
 };
 
-export { basicHotelInforInitState, roomInfoInitState, extraInforInitState };
+const viewImagesInitState = [];
+const backgroundImageInitState = null;
+const roomImagesInitState = [];
+const amenitiesInitState = [];
+
+export {
+  basicHotelInforInitState,
+  roomInfoInitState,
+  extraInforInitState,
+  viewImagesInitState,
+  backgroundImageInitState,
+  roomImagesInitState,
+  amenitiesInitState,
+};

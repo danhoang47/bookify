@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { memo, useState, useRef, useEffect, useCallback } from "react";
@@ -80,7 +79,9 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
       </label>
       <button
         className="drop-down-button"
-        onClick={() => setSelectionListOpen(true)}
+        onClick={() => {
+          setSelectionListOpen(prev => !prev)
+        }}
       >
         <FontAwesomeIcon icon={faChevronDown} />
       </button>
@@ -95,7 +96,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
             key={value.code}
             onClick={() => {
               setSelectionListOpen(false);
-              setValue(value.code, id);
+              setValue(value.name, id);
             }}
             className={"selection-item"}
           >

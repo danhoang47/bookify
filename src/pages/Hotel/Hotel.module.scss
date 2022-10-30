@@ -1,8 +1,14 @@
 @use "src/global";
 #hotel {
-    position: relative;
-}
 
-.left {
-    width: 65%;
+    
+    .left {
+        flex-basis: 65%;
+        height: 70vh;
+    }
+
+    .right {
+        flex-basis: 35%;
+        
+    }
 }

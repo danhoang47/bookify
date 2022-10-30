@@ -3,7 +3,16 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import numberPickerStyles from "./NumberPicker.module.scss";
 import { useEffect, useState } from "react";
 
-function NumberPicker({ title, description, limit, value, setValue }) {
+function NumberPicker({
+    title,
+    description,
+    limit,
+    value,
+    setValue,
+    disabled,
+    total,
+    isAllowPet,
+}) {
     const [isExceedLimit, setExceedLimit] = useState(false);
     const [isZero, setZero] = useState(value === 0);
 
@@ -17,7 +26,7 @@ function NumberPicker({ title, description, limit, value, setValue }) {
 
     const handleIncrease = (event) => {
         event.stopPropagation();
-        if (value === limit) {
+        if (value === limit || disabled || !isAllowPet) {
             return;
         }
         setValue(value + 1);
@@ -31,7 +40,7 @@ function NumberPicker({ title, description, limit, value, setValue }) {
             setZero(false);
         }
         // if number exceed limit
-        if (value === limit) {
+        if (value === limit || disabled || !isAllowPet) {
             setExceedLimit(true);
         } else {
             setExceedLimit(false);
@@ -52,7 +61,7 @@ function NumberPicker({ title, description, limit, value, setValue }) {
                 <button
                     className={[
                         numberPickerStyles["decrease-button"],
-                        isZero ? numberPickerStyles["disabled"] : "",
+                        isZero ? numberPickerStyles["disabled"] : "",1
                     ].join(" ")}
                     onClick={handleDecrease}
                 >
@@ -63,10 +72,10 @@ function NumberPicker({ title, description, limit, value, setValue }) {
                     value={value}
                     onChange={(e) => {
                         const value = parseInt(e.target.value);
-                        if (value > limit) {
-                            setValue(limit)
+                        if (value > limit - total || value > limit) {
+                            setValue(limit - total);
                         } else {
-                            setValue(value)
+                            setValue(value);
                         }
                     }}
                 ></input>
@@ -74,6 +83,7 @@ function NumberPicker({ title, description, limit, value, setValue }) {
                     className={[
                         numberPickerStyles["increase-button"],
                         isExceedLimit ? numberPickerStyles["disabled"] : "",
+                        disabled ? numberPickerStyles["disabled"] : "",
                     ].join(" ")}
                     onClick={handleIncrease}
                 >

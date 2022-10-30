@@ -1,74 +1,105 @@
 import { useState } from "react";
 import amenityStyle from "./AmenityType.module.scss";
-import amenityTypes from "./amenityTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuid } from "uuid";
+import { useClsx } from "@/utils/hooks";
 
-function AmenityInputField({ handleClick, addNewAmenity, amenityTypes2 }) {
-  console.log(amenityTypes2);
-  const [amenity, setAmenity] = useState({
-    amenity_name: "",
-    type: 1,
-  });
+const amenityInitState = {
+    id: ``,
+    name: "",
+    icon: "faPencil",
+};
 
-  const handleAmenityAdded = (e) => {
-    if (amenity.amenity_name.length === 0) {
-      return;
-    } else {
-      const id = uuid();
-      handleClick((prev) => [
-        ...prev,
-        {
-          ...amenity,
-          amenity_id: id,
-          icon: "faPencil",
-        },
-      ]);
-      addNewAmenity((prev) => [
-        ...prev,
-        {
-          ...amenity,
-          amenity_id: id,
-          icon: "faPencil",
-        },
-      ]);
-    }
-  };
+function AmenityInputField({ handleClick, addNewAmenity, amenityTypes }) {
+    const [amenity, setAmenity] = useState({
+        ...amenityInitState,
+        type: amenityTypes[0].amenityTypeId,
+    });
+    const [isTypeListOpen, setTypeListOpen] = useState(false);
 
-  return (
-    <div className={amenityStyle["add-amenity"]}>
-      <div className={amenityStyle["amenity-list"]}>
-        {amenityTypes2.map(({ amenityTypeId, amenityName }, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              setAmenity((prev) => ({
+    const handleAmenityAdded = (e) => {
+        if (amenity.name.length === 0) {
+            return;
+        } else {
+            const id = uuid();
+            handleClick((prev) => [
                 ...prev,
-                type: amenityTypeId,
-              }));
-            }}
-          >
-            {amenityName}
-          </div>
-        ))}
-      </div>
-      <div className={amenityStyle["amenity-input"]}>
-        <input
-          value={amenity.amenity_name}
-          onChange={(e) => {
-            setAmenity((prev) => ({
-              ...prev,
-              amenity_name: e.target.value,
-            }));
-          }}
-        />
-      </div>
-      <button>
-        <FontAwesomeIcon icon={faPlus} onClick={handleAmenityAdded} />
-      </button>
-    </div>
-  );
+                {
+                    ...amenity,
+                    id: `new-${id}`,
+                },
+            ]);
+            addNewAmenity((prev) => [
+                ...prev,
+                {
+                    ...amenity,
+                    id: `new-${id}`,
+                },
+            ]);
+            setAmenity({
+                ...amenityInitState,
+                type: amenityTypes[0].amenityTypeId,
+            });
+        }
+    };
+
+    return (
+        <div className={amenityStyle["add-amenity"]}>
+            <div className={amenityStyle["amenity-input"]}>
+                <div className={amenityStyle["amenity-type-select"]}>
+                    <p>
+                        {
+                            amenityTypes.find(
+                                ({ amenityTypeId }) =>
+                                    amenityTypeId === amenity.type
+                            )["amenityTypeName"]
+                        }
+                    </p>
+                    <button onClick={() => setTypeListOpen(prev => !prev)}>
+                        <FontAwesomeIcon icon={faChevronDown} />
+                    </button>
+                    <div className={useClsx(
+                        amenityStyle["amenity-type-list"],
+                        isTypeListOpen ? amenityStyle['d-block'] : ''
+                    )}>
+                        {amenityTypes.map(
+                            ({ amenityTypeId, amenityTypeName }, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        setAmenity((prev) => ({
+                                            ...prev,
+                                            type: amenityTypeId,
+                                        }));
+                                        setTypeListOpen(prev => !prev)
+                                    }}
+                                    className={amenityStyle['type-item']}
+                                >
+                                    {amenityTypeName}
+                                </div>
+                            )
+                        )}
+                    </div>
+                </div>
+                <input
+                    value={amenity.name}
+                    onChange={(e) => {
+                        setAmenity((prev) => ({
+                            ...prev,
+                            name: e.target.value,
+                        }));
+                    }}
+                />
+                <button>
+                    <FontAwesomeIcon
+                        icon={faPlus}
+                        onClick={handleAmenityAdded}
+                    />
+                </button>
+            </div>
+        </div>
+    );
 }
 
 export default AmenityInputField;

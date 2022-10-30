@@ -1,5 +1,21 @@
 @use 'src/global';
-
 .checkbox {
-    
+    color: #6A6a6a;
+    input[type='radio'] {
+        margin-top: 1rem;
+        width: 18px;
+        height: 18px;
+        margin-right: 1rem;
+    }
+    input[type='checkbox']:checked {
+        +label {
+            color: black;
+        }
+    }
+    label {
+        font-size: 20px;
+        font-weight: bold;
+        transform: translateY(-3px);
+        transition: all 0.2s;
+    }
 }
