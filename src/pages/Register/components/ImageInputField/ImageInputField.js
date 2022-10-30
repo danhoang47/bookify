@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import ImageCard from "../ImageCard";
 import ImageStyle from "./ImageInputField.module.scss";
@@ -62,30 +62,28 @@ function ViewImageInputField({ id, images, setImages, title }) {
     <div className={ImageStyle["image-add"]}>
       <p>{title}</p>
       <div className={ImageStyle["image-container"]}>
-        <div className={ImageStyle["image-input"]}>
-          <input type="file" id={id} multiple onChange={handleChange} />
-          <label className={ImageStyle["image-show"]} for={id}>
-            <FontAwesomeIcon icon={faUpload} />
-          </label>
-        </div>
-        <div className={ImageStyle["image-scroll"]}>
-          <Box
-            sx={{
-              display: "flex",
-              gap: "0.4em",
-              m: "1rem",
-              width: "400px",
-            }}
-          >
-            {previewViewImages?.map((objectUrl, index) => (
+        <Grid
+          container
+          spacing={2}
+          columns={{ xs: 2, sm: 8, md: 12 }}
+          className={ImageStyle["image-grid"]}
+        >
+          <Grid item xs="auto" className={ImageStyle["image-input"]}>
+            <input type="file" id={id} multiple onChange={handleChange} />
+            <label className={ImageStyle["image-show"]} for={id}>
+              <FontAwesomeIcon icon={faUpload} />
+            </label>
+          </Grid>
+          {previewViewImages?.map((objectUrl, index) => (
+            <Grid item xs="auto">
               <ImageCard
                 objectUrl={objectUrl}
                 key={index}
                 handleRemove={handleRemove}
               />
-            ))}
-          </Box>
-        </div>
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </div>
   );

@@ -26,36 +26,31 @@
     }
     //display input-filed
     .image-container {
-        display: grid;
-        grid-template-columns: 10rem 1fr;
-        .image-input {
-            .image-show {
-                opacity: 0.6;
-                margin-top: 1rem;
-                padding: 0.5rem 2%;
-                width: 10rem;
-                height: 10rem;
-                border: 2px dashed #ABABAB;
-                border-radius: 12px;
-                color: #ABABAB;
-                transition: all 0.2s;
-                svg {
-                    margin-top: calc((100% - 2rem) / 2);
-                    margin-left: calc((100% - 2rem) / 2);
-                    font-size: 2rem;
+        .image-grid {
+            .image-input {
+                .image-show {
+                    opacity: 0.6;
+                    margin-top: 1rem;
+                    padding: 0.5rem 2%;
+                    width: 10rem;
+                    height: 10rem;
+                    border: 2px dashed #ABABAB;
+                    border-radius: 12px;
+                    color: #ABABAB;
+                    transition: all 0.2s;
+                    svg {
+                        margin-top: calc((100% - 2rem) / 2);
+                        margin-left: calc((100% - 2rem) / 2);
+                        font-size: 2rem;
+                    }
+                    &:hover {
+                        opacity: 1;
+                    }
                 }
-                &:hover {
-                    opacity: 1;
+                input {
+                    display: none;
                 }
             }
-            input {
-                display: none;
-            }
-        }
-        .image-scroll {
-            @include scrollbars(5px, rgba(12, 124, 223, 0.673), white);
-            width: 500px;
-            overflow-x: scroll;
         }
     }
 }
