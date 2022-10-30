@@ -3,6 +3,7 @@ import {
   TransactionDataYear,
   TransactionDataYears,
   getYearExchange,
+  getYearsExchange,
 } from "../AllService";
 import YearPicker from "./YearPicker";
 import { useState, useMemo } from "react";
@@ -13,6 +14,7 @@ function Chart() {
   let transYearNumber = useMemo(() => TransactionDataYear(year), [year]);
   let transYearsNumber = useMemo(() => TransactionDataYears(), []);
   let transYear = useMemo(() => getYearExchange(year), [year]);
+  let transYears = useMemo(() => getYearsExchange(), []);
 
   const handleChange = (e) => {
     setSelect(e.target.value);
@@ -42,8 +44,17 @@ function Chart() {
           value="years"
         />
         <label htmlFor="years">Theo năm</label>
-        <h2>${transYear.transNumber}.00</h2>
-        {select === "months" ? <b>Thu được trong năm {year}</b> : <></>}
+
+        {select === "months" ? (
+          <h2>${transYear}.00</h2>
+        ) : (
+          <h2>${transYears}.00</h2>
+        )}
+        {select === "months" ? (
+          <b>Thu được trong năm {year}</b>
+        ) : (
+          <b>Tổng thu nhập</b>
+        )}
       </div>
       <div className={ChartStyle["chart-body"]}>
         {select === "months" ? (
