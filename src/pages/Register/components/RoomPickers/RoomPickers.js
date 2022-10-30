@@ -19,6 +19,8 @@ const getTitle = (key) => {
       return "Số lượng phòng";
     case "isPrivateBathRoom":
       return "Phòng tắm là chung hay riêng";
+    case "roomNumber":
+      return "Số lượng phòng";
     default:
       throw new Error("Invalid key");
   }
@@ -31,7 +33,11 @@ function RoomPickers() {
   return (
     <div className={PickerStyle["picker"]}>
       {Object.keys(roomInfor).reduce((prev, key) => {
-        if (key === "price" || key === "isPrivateBathRoom") {
+        if (
+          key === "price" ||
+          key === "isPrivateBathRoom" ||
+          key === "roomNumber"
+        ) {
           return prev;
         } else {
           return [
@@ -96,6 +102,22 @@ function RoomPickers() {
               setRoomInfor((prevState) => ({
                 ...prevState,
                 price: value || 0,
+              }));
+            }}
+          />
+        </div>
+      </div>
+      <div className={PickerStyle["price-picker"]}>
+        <p>Số lượng phòng</p>
+        <div>
+          <NumberPicker
+            description={""}
+            limit={limitPrice}
+            value={roomInfor["roomNumber"]}
+            setValue={(value) => {
+              setRoomInfor((prevState) => ({
+                ...prevState,
+                roomNumber: value || 0,
               }));
             }}
           />
