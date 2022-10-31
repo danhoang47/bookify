@@ -15,7 +15,7 @@ const getTitle = (key) => {
       return "Số phòng tắm";
     case "price":
       return "Giá tiền mỗi đêm";
-    case "numberOfRooms": 
+    case "numberOfRooms":
       return "Số lượng phòng";
     case "isPrivateBathRoom":
       return "Phòng tắm là chung hay riêng";
@@ -101,22 +101,6 @@ function RoomPickers() {
               setRoomInfor((prevState) => ({
                 ...prevState,
                 price: value || 0,
-              }));
-            }}
-          />
-        </div>
-      </div>
-      <div className={PickerStyle["price-picker"]}>
-        <p>Số lượng phòng</p>
-        <div>
-          <NumberPicker
-            description={""}
-            limit={limitPrice}
-            value={roomInfor["roomNumber"]}
-            setValue={(value) => {
-              setRoomInfor((prevState) => ({
-                ...prevState,
-                roomNumber: value || 0,
               }));
             }}
           />

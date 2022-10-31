@@ -7,14 +7,14 @@ import registerHotel from "@/services/hotel/registerHotel";
 import tabs from "./tabs";
 import { useClsx } from "@/utils/hooks";
 
-function RegisterSection({ 
+function RegisterSection({
   basicHotelInforInitState,
   roomInfoInitState,
   extraInforInitState,
   viewImagesInitState,
   backgroundImageInitState,
   roomImagesInitState,
-  amenitiesInitState
+  amenitiesInitState,
 }) {
   // show BasicInformation first
   const [inputTabIndex, setInputTabIndex] = useState(0);
@@ -26,7 +26,9 @@ function RegisterSection({
   const [roomInfor, setRoomInfor] = useState(roomInfoInitState);
   const [viewImages, setViewImages] = useState(viewImagesInitState);
   const [roomImages, setRoomImages] = useState(roomImagesInitState);
-  const [backgroundImage, setBackgroundImage] = useState(backgroundImageInitState);
+  const [backgroundImage, setBackgroundImage] = useState(
+    backgroundImageInitState
+  );
   const [extraInfor, setExtraInfor] = useState(extraInforInitState);
   const [displayAmenities, setDisplayAmenities] = useState([]);
   const [displayAmenitiesType, setDisplayAmenitiesType] = useState([]);
@@ -37,7 +39,7 @@ function RegisterSection({
       .then((amenities) => {
         setDisplayAmenities(amenities);
       });
-  //eslint-disable-next-line
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -46,7 +48,7 @@ function RegisterSection({
       .then((result) => {
         setDisplayAmenitiesType(result);
       });
-  }, [])
+  }, []);
 
   const registerContextValue = useMemo(
     () => ({
@@ -67,7 +69,7 @@ function RegisterSection({
       displayAmenities,
       setDisplayAmenities,
       displayAmenitiesType,
-      setDisplayAmenitiesType
+      setDisplayAmenitiesType,
     }),
     [
       basicHotelInfor,
@@ -78,7 +80,7 @@ function RegisterSection({
       backgroundImage,
       extraInfor,
       displayAmenities,
-      displayAmenitiesType
+      displayAmenitiesType,
     ]
   );
 
@@ -86,25 +88,34 @@ function RegisterSection({
 
   const registerSubmit = async (e) => {
     e.preventDefault();
-    const data = await registerHotel(amenities, basicHotelInfor, backgroundImage, roomImages, viewImages, extraInfor, roomInfor);
+    const data = await registerHotel(
+      amenities,
+      basicHotelInfor,
+      backgroundImage,
+      roomImages,
+      viewImages,
+      extraInfor,
+      roomInfor
+    );
     console.log(data);
   };
 
   const toNextTab = (e) => {
+    e.preventDefault();
     if (inputTabIndex + 1 === tabs.length) {
       registerSubmit(e);
     } else {
-      setInputTabIndex(prev => prev + 1);
+      setInputTabIndex((prev) => prev + 1);
     }
-  }
+  };
 
   const toPreviousTab = () => {
     if (inputTabIndex === 0) {
       return;
     } else {
-      setInputTabIndex(prev => prev - 1);
+      setInputTabIndex((prev) => prev - 1);
     }
-  }
+  };
 
   return (
     <RegisterContext.Provider value={registerContextValue}>
@@ -116,23 +127,26 @@ function RegisterSection({
           <Grid item xs={8} className={registerStyles["right"]}>
             <Box
               sx={{
-                width: '60%',
+                width: "60%",
                 margin: "0 auto",
                 overflowY: "scroll",
-                overflowX: 'hidden',
+                overflowX: "hidden",
                 paddingTop: "10em",
               }}
-              className={registerStyles['form']}
+              className={registerStyles["form"]}
             >
               <Suspense fallback={<div>Loading...</div>}>
                 {tabs[inputTabIndex].render(setNextTabValid)}
               </Suspense>
-              <div className={registerStyles['nav-buttons']}>
+              <div className={registerStyles["nav-buttons"]}>
                 <button className={useClsx()} onClick={toNextTab}>
-                    { inputTabIndex + 1 === tabs.length ? 'Đăng ký' : 'Tiếp theo'}
+                  {inputTabIndex + 1 === tabs.length ? "Đăng ký" : "Tiếp theo"}
                 </button>
-                <button className={useClsx(registerStyles['back'])} onClick={toPreviousTab}>
-                    Quay lại
+                <button
+                  className={useClsx(registerStyles["back"])}
+                  onClick={toPreviousTab}
+                >
+                  Quay lại
                 </button>
               </div>
             </Box>
