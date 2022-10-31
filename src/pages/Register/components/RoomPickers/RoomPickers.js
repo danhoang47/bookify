@@ -5,22 +5,20 @@ import PickerStyle from "./RoomPickers.module.scss";
 
 const getTitle = (key) => {
   switch (key) {
-    case "guests":
+    case "numberOfGuests":
       return "Số khách";
-    case "bedrooms":
+    case "numberOfRoom":
       return "Số phòng ngủ";
-    case "beds":
+    case "numberOfBed":
       return "Số giường";
-    case "bathrooms":
+    case "numberOfBathroom":
       return "Số phòng tắm";
     case "price":
       return "Giá tiền mỗi đêm";
-    case "numberOfRooms": 
+    case "rooms": 
       return "Số lượng phòng";
     case "isPrivateBathRoom":
       return "Phòng tắm là chung hay riêng";
-    case "roomNumber":
-      return "Số lượng phòng";
     default:
       throw new Error("Invalid key");
   }
@@ -35,8 +33,7 @@ function RoomPickers() {
       {Object.keys(roomInfor).reduce((prev, key) => {
         if (
           key === "price" ||
-          key === "isPrivateBathRoom" ||
-          key === "roomNumber"
+          key === "isPrivateBathRoom"
         ) {
           return prev;
         } else {
@@ -102,22 +99,6 @@ function RoomPickers() {
               setRoomInfor((prevState) => ({
                 ...prevState,
                 price: value || 0,
-              }));
-            }}
-          />
-        </div>
-      </div>
-      <div className={PickerStyle["price-picker"]}>
-        <p>Số lượng phòng</p>
-        <div>
-          <NumberPicker
-            description={""}
-            limit={limitPrice}
-            value={roomInfor["roomNumber"]}
-            setValue={(value) => {
-              setRoomInfor((prevState) => ({
-                ...prevState,
-                roomNumber: value || 0,
               }));
             }}
           />

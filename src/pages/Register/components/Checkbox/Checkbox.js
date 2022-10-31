@@ -10,6 +10,9 @@ function Checkbox({ isChecked, setChecked, label ,id,name}) {
           checkboxStyles["check-icon"],
           isChecked ? checkboxStyles["checked"] : ""
         )}
+        onChange={() => {
+          setChecked(!isChecked)
+        }}
         name={name} id={id}
       />
       <label className={checkboxStyles["checkbox-label"]} for={id}>{label}</label>

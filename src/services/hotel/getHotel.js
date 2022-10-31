@@ -1,3 +1,4 @@
+import { types } from '@/services/hotel/searchHotelTypes'
 
 const timeFormat = (time) => {
     const timeSplitted = time.split(":");
@@ -19,7 +20,7 @@ export default async function getHotel(id) {
             userId,
             hotelTypeId,
             hotelName,
-            backgroundImage,
+            backgroundImg,
             isVerified,
             isAllowPet,
             isHasCamera,
@@ -39,20 +40,20 @@ export default async function getHotel(id) {
         const basicHotelInfor = {
             name: hotelName,
             // id: hotelId,
-            type: hotelTypeId,
+            type: types.find(({ code }) => code === hotelTypeId).name,
             country: country,
-            district: district,
             province: city,
+            district: district,
             address: address,
             description: description
         }
         const roomInfor = {
-            guests: roomType.numberOfGuests,
-            bedrooms: roomType.numberOfRoom,
-            beds: roomType.numberOfBed,
-            bathrooms: roomType.numberOfBathroom,
+            numberOfGuests: roomType.numberOfGuests,
+            numberOfRoom: roomType.numberOfRoom,
+            numberOfBed: roomType.numberOfBed,
+            numberOfBathroom: roomType.numberOfBathroom,
             price: roomType.price,
-            numberOfRooms: roomType.rooms,
+            rooms: roomType.rooms,
             isPrivateBathRoom: roomType.isPrivateBathroom,
         }
         const extraInfor = {
@@ -71,7 +72,7 @@ export default async function getHotel(id) {
             roomInfor,
             extraInfor,
             viewImages,
-            backgroundImage,
+            backgroundImg,
             roomImages,
             hotelAmenities
         };

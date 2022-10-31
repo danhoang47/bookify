@@ -1,13 +1,18 @@
-import { Jumbotron, TabBar } from "./components";
+// libraries
 import { Grid, Box } from "@mui/material";
+import { useState, useMemo, Suspense, useEffect } from "react";
+import { useHref } from 'react-router-dom';
+
+// app defined
+import { Jumbotron, TabBar } from "./components";
 import { RegisterContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
-import { useState, useMemo, Suspense, useEffect } from "react";
-import registerHotel from "@/services/hotel/registerHotel";
-import tabs from "./tabs";
+import { registerHotel, getDefaultAmenities, getDefaultAmenityTypes, updateHotel } from "@/services/hotel";
 import { useClsx } from "@/utils/hooks";
+import tabs from "./tabs";
 
 function RegisterSection({
+    hotelId,
     basicHotelInforInitState,
     roomInfoInitState,
     extraInforInitState,
@@ -16,8 +21,6 @@ function RegisterSection({
     roomImagesInitState,
     amenitiesInitState,
     displayAmenitiesInitState = null,
-    updatedImagesState,
-    deletedImagesState,
 }) {
     // show BasicInformation first
     const [inputTabIndex, setInputTabIndex] = useState(0);
@@ -36,32 +39,29 @@ function RegisterSection({
     const [displayAmenities, setDisplayAmenities] = useState(
         displayAmenitiesInitState || []
     );
-    const [displayAmenitiesType, setDisplayAmenitiesType] = useState([]);
+    const [displayAmenitiesType, setDisplayAmenitiesType] = useState();
     const [updatedViewImages, setUpdatedViewImages] = useState([]);
     const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
     const [deletedImages, setDeletedImages] = useState([]);
+    const href = useHref();
+    
 
     useEffect(() => {
+        getDefaultAmenityTypes().then(defaultAmenityTypes => {
+            setDisplayAmenitiesType(defaultAmenityTypes);
+        });
+
         if (!displayAmenitiesInitState) {
-            fetch("http://localhost:8080/bookify/api/amenity")
-                .then((res) => res.json())
-                .then((defautlAmenities) => {
-                    setDisplayAmenities(defautlAmenities);
-                });
+            getDefaultAmenities().then(defaultAmenties => {
+                setDisplayAmenities(defaultAmenties)
+            });
         }
         //eslint-disable-next-line
     }, []);
 
-    useEffect(() => {
-        fetch("http://localhost:8080/bookify/api/amenity/type")
-            .then((res) => res.json())
-            .then((result) => {
-                setDisplayAmenitiesType(result);
-            });
-    }, []);
-
     const registerContextValue = useMemo(
         () => ({
+            hotelId,
             basicHotelInfor,
             setBasicHotelInfo,
             amenities,
@@ -88,6 +88,7 @@ function RegisterSection({
             setDeletedImages,
         }),
         [
+            hotelId,
             basicHotelInfor,
             amenities,
             roomInfor,
@@ -105,16 +106,30 @@ function RegisterSection({
 
     const registerSubmit = async (e) => {
         e.preventDefault();
-        const data = await registerHotel(
-            amenities,
-            basicHotelInfor,
-            backgroundImage,
-            roomImages,
-            viewImages,
-            extraInfor,
-            roomInfor
-        );
-        console.log(data);
+        if ( href.includes('/update') ) {
+            const response = await updateHotel(
+                hotelId,
+                amenities,
+                basicHotelInfor,
+                backgroundImage,
+                extraInfor,
+                roomInfor,
+                updatedViewImages,
+                updatedRoomImages,
+                deletedImages
+            ) 
+        }
+        else {
+            const data = await registerHotel(
+                amenities,
+                basicHotelInfor,
+                backgroundImage,
+                roomImages,
+                viewImages,
+                extraInfor,
+                roomInfor
+            );
+        }
     };
 
     const toNextTab = (e) => {

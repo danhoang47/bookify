@@ -73,6 +73,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
           setValue(e.target.value, id);
         }}
         ref={inputRef}
+        placeholder={selectionList[0]?.name}
       />
       <label htmlFor={id} className={useClsx("input-label")}>
         {!isValid && isFocus ? getHotelRegisterErrorMessage(id) : label}
@@ -109,18 +110,3 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
 }
 
 export default memo(SelectField);
-
-/**
- * "name": "Thành phố Hà Nội",
-    "code": 1,
-    "matches": {
-      "hà": [
-        10,
-        12
-      ],
-      "nội": [
-        13,
-        16
-      ]
-    }
-*/

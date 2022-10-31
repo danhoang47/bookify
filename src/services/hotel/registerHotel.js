@@ -1,13 +1,12 @@
-
 export default async function registerHotel(amenities, basicHotelInfor, backgroundImage, roomImages, viewImages, extraInfor, roomInfor) {
     const hotelForm = new FormData();
     const amenitiesId = [];
     const amenitiesNames = [];
     const amenitiesTypes = [];
 
-    amenities.forEach((item, index) => {
-      amenitiesId.push(item.amenity_id);
-      amenitiesNames.push(item.amenity_name);
+    amenities.forEach((item) => {
+      amenitiesId.push(item.id);
+      amenitiesNames.push(item.name);
       amenitiesTypes.push(item.type);
     });
 

@@ -1,8 +1,8 @@
-import RegisterSection from "../Register/RegisterSection";
 import getHotel from "@/services/hotel/getHotel";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 
+const RegisterSection = lazy(() => import("../Register/RegisterSection"));
 function Update() {
     const { hotelId } = useParams();
     const [hotelInfor, setHotelInfor] = useState(null);
@@ -16,17 +16,21 @@ function Update() {
 
     return (
         <div>
-            {   hotelInfor && (
-                <RegisterSection 
-                    basicHotelInforInitState={hotelInfor.basicHotelInfor}
-                    roomInfoInitState={hotelInfor.roomInfor}
-                    extraInforInitState={hotelInfor.extraInfor}
-                    viewImagesInitState={hotelInfor.viewImages}
-                    backgroundImageInitState={hotelInfor.backgroundImage}
-                    roomImagesInitState={hotelInfor.roomImages}
-                    amenitiesInitState={hotelInfor.hotelAmenities}
-                    displayAmenitiesInitState={hotelInfor.hotelAmenities}
-                />)}
+            {hotelInfor && (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <RegisterSection
+                        hotelId={hotelId}
+                        basicHotelInforInitState={hotelInfor.basicHotelInfor}
+                        roomInfoInitState={hotelInfor.roomInfor}
+                        extraInforInitState={hotelInfor.extraInfor}
+                        viewImagesInitState={hotelInfor.viewImages}
+                        backgroundImageInitState={hotelInfor.backgroundImg}
+                        roomImagesInitState={hotelInfor.roomImages}
+                        amenitiesInitState={hotelInfor.hotelAmenities}
+                        displayAmenitiesInitState={hotelInfor.hotelAmenities}
+                    />
+                </Suspense>
+            )}
         </div>
     );
 }

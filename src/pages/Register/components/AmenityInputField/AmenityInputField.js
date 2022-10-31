@@ -11,10 +11,11 @@ const amenityInitState = {
     icon: "faPencil",
 };
 
-function AmenityInputField({ handleClick, addNewAmenity, amenityTypes }) {
+function AmenityInputField({ hotelId, handleClick, addNewAmenity, amenityTypes }) {
     const [amenity, setAmenity] = useState({
         ...amenityInitState,
-        type: amenityTypes[0].amenityTypeId,
+        hotelId: hotelId,
+        type: amenityTypes[0]?.amenityTypeId,
     });
     const [isTypeListOpen, setTypeListOpen] = useState(false);
 
@@ -22,23 +23,21 @@ function AmenityInputField({ handleClick, addNewAmenity, amenityTypes }) {
         if (amenity.name.length === 0) {
             return;
         } else {
-            const id = uuid();
+            const newAmenity = {
+                ...amenity,
+                id: `new-${uuid()}`,
+            }
             handleClick((prev) => [
                 ...prev,
-                {
-                    ...amenity,
-                    id: `new-${id}`,
-                },
+                newAmenity
             ]);
             addNewAmenity((prev) => [
                 ...prev,
-                {
-                    ...amenity,
-                    id: `new-${id}`,
-                },
+                newAmenity
             ]);
             setAmenity({
                 ...amenityInitState,
+                hotelId: hotelId,
                 type: amenityTypes[0].amenityTypeId,
             });
         }

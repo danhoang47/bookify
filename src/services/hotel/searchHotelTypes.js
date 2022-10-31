@@ -1,6 +1,4 @@
-import { type } from "@testing-library/user-event/dist/type";
-
-const types = [
+export const types = [
   {
     code: "314ec1bd-204b-4e8e-8b3a-098b4cc110fa",
     name: "Nhà nhỏ",

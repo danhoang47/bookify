@@ -11,7 +11,7 @@ function HostingRegisterHeader({ location }) {
     const getHeaderClassName = () => {
         if (location === introductionHref)
             return 'introduction';
-        else if (location === registerHref || location === updateHref)
+        else if (location === registerHref || location.includes(updateHref))
             return 'register';
         else return ''
     }

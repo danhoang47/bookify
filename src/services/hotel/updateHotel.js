@@ -1,65 +1,68 @@
-
-
-export default async function updateHotel(amenities, basicHotelInfor, backgroundImage, roomImages, viewImages, extraInfor, roomInfor) {
-    const hotelForm = new FormData();
-    const amenitiesId = [];
-    const amenitiesNames = [];
-    const amenitiesTypes = [];
-
-    amenities.forEach((item, index) => {
-      amenitiesId.push(item.amenity_id);
-      amenitiesNames.push(item.amenity_name);
-      amenitiesTypes.push(item.type);
-    });
-
-    hotelForm.append("hotelType", basicHotelInfor.type);
-    hotelForm.append("hotelName", basicHotelInfor.name);
-    hotelForm.append("backgroundImage", backgroundImage);
-    hotelForm.append("description", basicHotelInfor.description);
-    hotelForm.append("country", basicHotelInfor.country);
-    hotelForm.append("district", basicHotelInfor.province);
-    hotelForm.append("city", basicHotelInfor.district);
-    hotelForm.append("address", basicHotelInfor.address);
-    hotelForm.append("amenitiesId", amenitiesId);
-    hotelForm.append("amenitiesName", amenitiesNames);
-    hotelForm.append("amenitiesTypes", amenitiesTypes);
-    for (const file of roomImages) {
-      hotelForm.append("hotelImage", file);
-    }
-
-    for (const file of viewImages) {
-      hotelForm.append("viewImage", file);
-    }
-    hotelForm.append(
-      "checkin",
-      extraInfor.checkin.hour + ":" + extraInfor.checkin.minutes
-    );
-    hotelForm.append(
-      "checkout",
-      extraInfor.checkout.hour + ":" + extraInfor.checkout.minutes
-    );
-    hotelForm.append(
-      "closing",
-      extraInfor.closing.hour + ":" + extraInfor.closing.minutes
-    );
-    hotelForm.append(
-      "opening",
-      extraInfor.opening.hour + ":" + extraInfor.opening.minutes
-    );
-    hotelForm.append("roomPrice", roomInfor.price);
-    hotelForm.append("maxGuest", roomInfor.guests);
-    hotelForm.append("roomNum", roomInfor.bedrooms);
-    hotelForm.append("bathNum", roomInfor.bathrooms);
-    hotelForm.append("bedNum", roomInfor.beds);
-    hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
-    hotelForm.append("userId", "f96e5e7e-7542-48be-8829-5ae701431d29");
-
-    const data = await fetch("http://localhost:8080/bookify/api/hotel/update/dasdas", {
-      method: "POST",
-      body: hotelForm,
+const varToString = (varObj) => Object.keys(varObj)[0];
+const mergeTime = (timeObj) => {
+    const { hour, minutes } = timeObj;
+    return `${hour}:${minutes}`;
+};
+const pushFilesToFormData = (formData, fileList, name) => {
+  if ( fileList !== null ) {
+    Array.from(fileList).forEach((file, index) => {
+      console.log(index);
+      formData.append(name, file);
     })
-      .then((res) => res.json())
-      .then((result) => result);
+  }
+}
 
-    return data;
+export default async function updateHotel(
+    hotelId,
+    amenities,
+    basicHotelInfor,
+    backgroundImage,
+    extraInfor,
+    roomInfor,
+    updatedViewImages,
+    updatedRoomImages,
+    deletedImages
+) {
+    const url = `http://localhost:8080/bookify/api/hotel/update/${hotelId}`;
+    const extraInforModified = Object.keys(extraInfor).reduce((prev, key) => {
+        if (typeof extraInfor[key] === "object") {
+            return {
+                ...prev,
+                [key]: mergeTime(extraInfor[key]),
+            };
+        } else {
+            return {
+                ...prev,
+                [key]: extraInfor[key],
+            };
+        }
+    }, {});
+    console.log(extraInforModified);
+    const hotelUpdateForm = new FormData();
+    hotelUpdateForm.append(
+        varToString({ amenities }),
+        JSON.stringify(amenities)
+    );
+    hotelUpdateForm.append(
+        varToString({ basicHotelInfor }),
+        JSON.stringify(basicHotelInfor)
+    );
+    hotelUpdateForm.append(
+        varToString({ extraInfor }),
+        JSON.stringify(extraInforModified)
+    );
+    hotelUpdateForm.append(varToString({ backgroundImage }), backgroundImage);
+    hotelUpdateForm.append(
+      varToString({ roomInfor }), JSON.stringify(roomInfor)
+    );
+    hotelUpdateForm.append(
+      varToString({ deletedImages }), JSON.stringify(deletedImages)
+    );
+    pushFilesToFormData(hotelUpdateForm, updatedViewImages, varToString({ updatedViewImages }))
+    // pushFilesToFormData(hotelUpdateForm, updatedRoomImages, varToString({ updatedRoomImages }))
+
+    const data = await fetch(url, {
+        method: "PUT",
+        body: hotelUpdateForm,
+    });
 }

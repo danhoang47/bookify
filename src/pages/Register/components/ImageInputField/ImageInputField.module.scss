@@ -1,33 +1,18 @@
 @use 'src/global';
-@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
-    // For Google Chrome
-    &::-webkit-scrollbar {
-        width: $size;
-        height: $size;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: $foreground-color;
-        border-radius: 15px;
-    }
-    &::-webkit-scrollbar-track {
-        background: $background-color;
-        border-radius: 15px;
-    }
-    & {
-        scrollbar-face-color: $foreground-color;
-        scrollbar-track-color: $background-color;
-    }
-}
 
 .image-add {
     margin: 1rem 0;
+
     p {
         font-weight: bold;
     }
-    //display input-filed
+
     .image-container {
+
         .image-grid {
+
             .image-input {
+
                 .image-show {
                     opacity: 0.6;
                     margin-top: 1rem;
@@ -36,13 +21,15 @@
                     height: 10rem;
                     border: 2px dashed #ABABAB;
                     border-radius: 12px;
-                    color: #ABABAB;
+                    color: global.$black;
                     transition: all 0.2s;
+
                     svg {
                         margin-top: calc((100% - 2rem) / 2);
                         margin-left: calc((100% - 2rem) / 2);
                         font-size: 2rem;
                     }
+
                     &:hover {
                         opacity: 1;
                     }

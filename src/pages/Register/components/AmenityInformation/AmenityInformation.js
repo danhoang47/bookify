@@ -34,6 +34,7 @@ const AmenityCard = ({ amenity, setAmenities, isChecked }) => {
 
 function AmenityInformation() {
     const {
+        hotelId,
         amenities,
         setAmenities,
         displayAmenities,
@@ -63,6 +64,7 @@ function AmenityInformation() {
                 <div className={amenityInforStyles["input-field"]}>
                     <h4>Không tìm thấy thứ bạn muốn ? Thêm vào ở bên dưới</h4>
                     <AmenityInputField
+                        hotelId={hotelId}
                         handleClick={setAmenities}
                         addNewAmenity={setDisplayAmenities}
                         amenityTypes={displayAmenitiesType}
