@@ -1,63 +1,102 @@
-export default async function registerHotel(amenities, basicHotelInfor, backgroundImage, roomImages, viewImages, extraInfor, roomInfor) {
-    const hotelForm = new FormData();
-    const amenitiesId = [];
-    const amenitiesNames = [];
-    const amenitiesTypes = [];
+import { types } from "./searchHotelTypes";
 
-    amenities.forEach((item) => {
-      amenitiesId.push(item.id);
-      amenitiesNames.push(item.name);
-      amenitiesTypes.push(item.type);
-    });
+export default async function registerHotel(
+  amenities,
+  basicHotelInfor,
+  backgroundImage,
+  roomImages,
+  viewImages,
+  extraInfor,
+  roomInfor
+) {
+  const hotelForm = new FormData();
+  const amenitiesId = [];
+  const amenitiesNames = [];
+  const amenitiesTypes = [];
 
-    hotelForm.append("hotelType", basicHotelInfor.type);
-    hotelForm.append("hotelName", basicHotelInfor.name);
-    hotelForm.append("backgroundImage", backgroundImage);
-    hotelForm.append("description", basicHotelInfor.description);
-    hotelForm.append("country", basicHotelInfor.country);
-    hotelForm.append("district", basicHotelInfor.province);
-    hotelForm.append("city", basicHotelInfor.district);
-    hotelForm.append("address", basicHotelInfor.address);
-    hotelForm.append("amenitiesId", amenitiesId);
-    hotelForm.append("amenitiesName", amenitiesNames);
-    hotelForm.append("amenitiesTypes", amenitiesTypes);
+  amenities.forEach((item) => {
+    amenitiesId.push(item.id);
+    amenitiesNames.push(item.name);
+    amenitiesTypes.push(item.type);
+  });
+
+  const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0]
+    .code;
+
+  hotelForm.append("hotelType", typeId);
+  hotelForm.append("hotelName", basicHotelInfor.name);
+  hotelForm.append("backgroundImage", backgroundImage);
+  hotelForm.append("description", basicHotelInfor.description);
+  hotelForm.append("country", basicHotelInfor.country);
+  hotelForm.append("district", basicHotelInfor.province);
+  hotelForm.append("city", basicHotelInfor.district);
+  hotelForm.append("address", basicHotelInfor.address);
+  hotelForm.append("amenitiesId", amenitiesId);
+  hotelForm.append("amenitiesName", amenitiesNames);
+  hotelForm.append("amenitiesTypes", amenitiesTypes);
+  if (roomImages) {
     for (const file of roomImages) {
+      console.log(file);
       hotelForm.append("hotelImage", file);
     }
+  } else {
+    hotelForm.append("hotelImage", null);
+  }
 
-    for (const file of viewImages) {
-      hotelForm.append("viewImage", file);
+  if (viewImages) {
+    for (const filetest of viewImages) {
+      console.log(filetest);
+      hotelForm.append("viewImage", filetest);
     }
-    hotelForm.append(
-      "checkin",
-      extraInfor.checkin.hour + ":" + extraInfor.checkin.minutes
-    );
-    hotelForm.append(
-      "checkout",
-      extraInfor.checkout.hour + ":" + extraInfor.checkout.minutes
-    );
-    hotelForm.append(
-      "closing",
-      extraInfor.closing.hour + ":" + extraInfor.closing.minutes
-    );
-    hotelForm.append(
-      "opening",
-      extraInfor.opening.hour + ":" + extraInfor.opening.minutes
-    );
-    hotelForm.append("roomPrice", roomInfor.price);
-    hotelForm.append("maxGuest", roomInfor.guests);
-    hotelForm.append("roomNum", roomInfor.bedrooms);
-    hotelForm.append("bathNum", roomInfor.bathrooms);
-    hotelForm.append("bedNum", roomInfor.beds);
-    hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
-    hotelForm.append("userId", "f96e5e7e-7542-48be-8829-5ae701431d29");
+  } else {
+    hotelForm.append("viewImage", null);
+  }
+  hotelForm.append(
+    "checkin",
+    extraInfor.checkin.hour + ":" + extraInfor.checkin.minutes
+  );
+  hotelForm.append(
+    "checkout",
+    extraInfor.checkout.hour + ":" + extraInfor.checkout.minutes
+  );
+  hotelForm.append(
+    "closing",
+    extraInfor.closing.hour + ":" + extraInfor.closing.minutes
+  );
+  hotelForm.append(
+    "opening",
+    extraInfor.opening.hour + ":" + extraInfor.opening.minutes
+  );
+  hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
+  hotelForm.append("bathNum", roomInfor.numberOfBathroom);
+  hotelForm.append("bedNum", roomInfor.numberOfBed);
+  hotelForm.append("roomPrice", roomInfor.price);
+  hotelForm.append("maxGuest", roomInfor.numberOfGuests);
+  hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
+  hotelForm.append("roomNum", roomInfor.rooms);
+  hotelForm.append("userId", "b955c796-027c-4e11-92ff-1bb942a102c8");
 
-    const data = await fetch("http://localhost:8080/testUpload/rest/hotel/signhotel", {
+  const data = await fetch(
+    "http://localhost:8080/bookify/api/hotel/signhotel",
+    {
       method: "POST",
       body: hotelForm,
-    })
-      .then((res) => res.json())
-      .then((result) => result);
+    }
+  )
+    .then((res) => res.json())
+    .then((result) => result);
 
-    return data;
+  // const data = {
+  //   amenities,
+  //   basicHotelInfor,
+  //   backgroundImage,
+  //   roomImages,
+  //   viewImages,
+  //   extraInfor,
+  //   roomInfor,
+  // };
+
+  // console.log(data);
+
+  return data;
 }

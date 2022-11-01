@@ -15,7 +15,7 @@ const getTitle = (key) => {
       return "Số phòng tắm";
     case "price":
       return "Giá tiền mỗi đêm";
-    case "rooms": 
+    case "rooms":
       return "Số lượng phòng";
     case "isPrivateBathRoom":
       return "Phòng tắm là chung hay riêng";

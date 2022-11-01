@@ -73,7 +73,6 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
           setValue(e.target.value, id);
         }}
         ref={inputRef}
-        placeholder={selectionList[0]?.name}
       />
       <label htmlFor={id} className={useClsx("input-label")}>
         {!isValid && isFocus ? getHotelRegisterErrorMessage(id) : label}
@@ -81,7 +80,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
       <button
         className="drop-down-button"
         onClick={() => {
-          setSelectionListOpen(prev => !prev)
+          setSelectionListOpen((prev) => !prev);
         }}
       >
         <FontAwesomeIcon icon={faChevronDown} />

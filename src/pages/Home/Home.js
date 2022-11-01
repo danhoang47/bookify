@@ -2,7 +2,7 @@ import { Grid, Box } from "@mui/material";
 import { BannerCarousel, TabItem } from "./components";
 import homeStyles from "./Home.module.scss";
 import categories from "./categories";
-import { useState, useContext, lazy, Suspense } from "react";
+import { useState, useContext, lazy, Suspense, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import { CoordinatesContext } from "@/utils/contexts";
@@ -35,6 +35,32 @@ function Home() {
   const [type, setType] = useState({});
   const currentCoordinates = useContext(CoordinatesContext);
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useState(false);
+  const [hotelsList, setHotelsList] = useState([]);
+
+  useEffect(() => {
+    if (type.filterType || type.filterTypeId) {
+      fetch(
+        "http://localhost:8080/bookify/api/hotel/filter?type=" +
+          type.filterType +
+          "&id=" +
+          type.filterTypeId,
+        {
+          method: "GET",
+        }
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          console.log(result);
+          setHotelsList(result);
+        });
+    } else {
+      fetch("http://localhost:8080/bookify/api/hotel/all", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((result) => setHotelsList(result));
+    }
+  }, [type]);
 
   return (
     <div id={homeStyles["home"]} className={[].join(" ")}>
@@ -81,7 +107,7 @@ function Home() {
           <Grid container spacing={1.5} overflow={"hidden"}>
             <Suspense fallback={<div>Loading...</div>}>
               {" "}
-              <HotelCards hotels={hotels} type={type} />
+              <HotelCards hotels={hotelsList} type={type} />
             </Suspense>
           </Grid>
         </div>
@@ -91,6 +117,7 @@ function Home() {
               <AdvanceFilter
                 isAdvanceFilterOpen={isAdvanceFilterOpen}
                 setAdvanceFilterOpen={setAdvanceFilterOpen}
+                setHotelsList={setHotelsList}
               />
             )}
           </Suspense>

@@ -40,11 +40,14 @@ function App({ children }) {
         };
     }, [modalState]);
 
-    const userContextValue = useMemo(() => ({
-        user,
-        isLogin,
-        setLogin
-    }), [user])
+    const userContextValue = useMemo(
+        () => ({
+            user,
+            isLogin,
+            setLogin,
+        }),
+        [user]
+    );
 
     useEffect(() => {
         const nav = navigator.geolocation;
@@ -59,26 +62,26 @@ function App({ children }) {
         });
     }, []);
 
-    useEffect(() => {
-        const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-        console.log(jwtString);
-        if (jwtString) {
-            fetch(
-                "http://localhost:8080/testUpload/rest/user_detail/verifyjwt",
-                {
-                    method: "POST",
-                    body: jwtString,
-                }
-            )
-                .then((res) => {
-                    res.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((err) => console.log(err));
-        }
-    }, []);
+    // useEffect(() => {
+    //     const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    //     console.log(jwtString);
+    //     if (jwtString) {
+    //         fetch(
+    //             "http://localhost:8080/testUpload/rest/user_detail/verifyjwt",
+    //             {
+    //                 method: "POST",
+    //                 body: jwtString,
+    //             }
+    //         )
+    //             .then((res) => {
+    //                 res.json();
+    //             })
+    //             .then((data) => {
+    //                 console.log(data);
+    //             })
+    //             .catch((err) => console.log(err));
+    //     }
+    // }, []);
 
     return (
         <CoordinatesContext.Provider value={currentCoordinates}>

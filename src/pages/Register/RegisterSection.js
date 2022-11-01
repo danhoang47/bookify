@@ -1,13 +1,18 @@
 // libraries
 import { Grid, Box } from "@mui/material";
 import { useState, useMemo, Suspense, useEffect } from "react";
-import { useHref } from 'react-router-dom';
+import { useHref } from "react-router-dom";
 
 // app defined
 import { Jumbotron, TabBar } from "./components";
 import { RegisterContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
-import { registerHotel, getDefaultAmenities, getDefaultAmenityTypes, updateHotel } from "@/services/hotel";
+import {
+    registerHotel,
+    getDefaultAmenities,
+    getDefaultAmenityTypes,
+    updateHotel,
+} from "@/services/hotel";
 import { useClsx } from "@/utils/hooks";
 import tabs from "./tabs";
 
@@ -44,15 +49,14 @@ function RegisterSection({
     const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
     const [deletedImages, setDeletedImages] = useState([]);
     const href = useHref();
-    
 
     useEffect(() => {
-        getDefaultAmenityTypes().then(defaultAmenityTypes => {
+        getDefaultAmenityTypes().then((defaultAmenityTypes) => {
             setDisplayAmenitiesType(defaultAmenityTypes);
         });
 
-        getDefaultAmenities().then(defaultAmenties => {
-            setDisplayAmenities(prev => {
+        getDefaultAmenities().then((defaultAmenties) => {
+            setDisplayAmenities((prev) => {
                 const mergedAmenities = [...prev];
                 Array.from(defaultAmenties).forEach((defaultAmenity) => {
                     let isIncluded = false;
@@ -60,16 +64,16 @@ function RegisterSection({
                         if (name === defaultAmenity.name) {
                             isIncluded = true;
                         }
-                    })
+                    });
                     if (!isIncluded) {
                         mergedAmenities.push(defaultAmenity);
                     }
-                })
+                });
 
                 return mergedAmenities;
-            })
+            });
         });
-        
+
         //eslint-disable-next-line
     }, []);
 
@@ -120,7 +124,7 @@ function RegisterSection({
 
     const registerSubmit = async (e) => {
         e.preventDefault();
-        if ( href.includes('/update') ) {
+        if (href.includes("/update")) {
             const response = await updateHotel(
                 hotelId,
                 amenities,
@@ -131,9 +135,8 @@ function RegisterSection({
                 updatedViewImages,
                 updatedRoomImages,
                 deletedImages
-            ) 
-        }
-        else {
+            );
+        } else {
             const data = await registerHotel(
                 amenities,
                 basicHotelInfor,
