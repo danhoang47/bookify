@@ -1,7 +1,10 @@
-package com.jersey.series.userDetail.service;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package app.controller.servlet;
 
 import com.google.gson.Gson;
-import com.service.Interface.UserDetailInterface;
 import dao.UserDetailDAO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -25,9 +28,12 @@ import org.json.simple.JSONObject;
 import secure.JWTconvert;
 import service.UploadImage;
 
-@Path("/user_detail")
-public class UserResource implements UserDetailInterface {
-
+/**
+ *
+ * @author toten
+ */
+@Path("/user")
+public class UserController {
     @POST
     @Path("/login")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -227,10 +233,4 @@ public class UserResource implements UserDetailInterface {
         }
 
     }
-
-    @Override
-    public Response update(String user_id, String phone, String name, String selfDes, InputStream fileInputStream, FormDataContentDisposition fileFormDataContentDisposition) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

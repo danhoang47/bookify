@@ -151,3 +151,25 @@ select * from Image
 alter table Image
 alter column image varchar(300)
 proc_getHotelAmenities @hotelId = 'fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9'
+
+--Advance filter
+create view AdvancedFilter as
+select ht.hotel_id, ht.hotel_name, ht.hoteltype_id, ht.background_image, ht.country, ht.city, ht.district, ht.address, AVG(rt.price) as average_price,
+(select isnull((select AVG(rv.communication_point + rv.accuracy_point + rv.location_point + rv.value_point)/4 
+from review as rv where rv.hotel_id=ht.hotel_id), 0)) as rating,
+AVG(rt.number_of_room) as number_of_room,
+AVG(rt.bed_number) as bed_number,
+AVG(rt.bathroom_number) as bath_number
+from Hotel as ht, Room as rm, RoomType as rt
+where ht.hotel_id=rm.hotel_id and rm.room_type_id=rt.id 
+group by ht.hotel_id, ht.hotel_name, ht.city, ht.district, ht.address, ht.country, ht.hoteltype_id, ht.background_image
+
+-- basicHotelInfor
+
+create view getAllHotelBasicInfo as
+select ht.hotel_id, ht.hotel_name, ht.hoteltype_id, ht.background_image, ht.country, ht.city, ht.district, ht.address, AVG(rt.price) as average_price,
+(select isnull((select AVG(rv.communication_point + rv.accuracy_point + rv.location_point + rv.value_point)/4 
+from review as rv where rv.hotel_id=ht.hotel_id), 0)) as rating
+from Hotel as ht, Room as rm, RoomType as rt
+where ht.hotel_id=rm.hotel_id and rm.room_type_id=rt.id 
+group by ht.hotel_id, ht.hotel_name, ht.city, ht.district, ht.address, ht.country, ht.hoteltype_id, ht.background_image

@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package app.dto;
+
 import java.util.List;
 import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
@@ -13,6 +11,7 @@ import app.dto.RoomTypeDTO;
  */
 public class HotelDTO {
 //    13
+
     private String hotelId;
     private String userId;
     private String hotelTypeId;
@@ -30,16 +29,19 @@ public class HotelDTO {
     private String opening;
     private String checkin;
     private String checkout;
+    private int averagePirce;
+    private int rating;
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
     private RoomTypeDTO roomType;
 
-    
     public HotelDTO() {
-        
+
     }
 
-    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
+            boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district,
+            String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -61,7 +63,9 @@ public class HotelDTO {
         this.images = images;
     }
 
-    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
+            boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country,
+            String district, String city, String address, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -93,7 +97,8 @@ public class HotelDTO {
         this.address = address;
     }
 
-    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address) {
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
+            boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address) {
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -109,7 +114,31 @@ public class HotelDTO {
         this.address = address;
     }
 
-    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, RoomTypeDTO roomType) {
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, String description, String country,
+            String district, String city, String address, boolean isHasCamera, boolean isAllowPet, String checkin, String checkout, String closing, String opening) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+    }
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
+            boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country,
+            String district, String city, String address, String closing, String opening, String checkin, String checkout,
+            List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, RoomTypeDTO roomType) {
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -138,6 +167,19 @@ public class HotelDTO {
 
     public RoomTypeDTO getRoomType() {
         return roomType;
+    }
+
+    public HotelDTO(String hotelId, String hotelName, String hotelTypeId, String backgroundImg, String country, String district, String city, String address, int averagePirce, int rating) {
+        this.hotelId = hotelId;
+        this.hotelName = hotelName;
+        this.hotelTypeId = hotelTypeId;
+        this.backgroundImg = backgroundImg;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.averagePirce = averagePirce;
+        this.rating = rating;
     }
 
     public String getClosing() {
@@ -292,16 +334,31 @@ public class HotelDTO {
         return hotelAmenities;
     }
 
-    @Override
-    public String toString() {
-        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + 
-                userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + 
-                hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + 
-                isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera +
-                ", description=" + description + ", country=" + country + ", district=" + district + 
-                ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening=" +
-                opening + ", checkin=" + checkin + ", checkout=" + checkout + ", hotelAmenities=" + 
-                hotelAmenities + ", images=" + images + ", roomType=" + roomType + '}';
+    public int getAveragePirce() {
+        return averagePirce;
     }
 
+    public void setAveragePirce(int averagePirce) {
+        this.averagePirce = averagePirce;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "HotelDTO{" + "hotelId=" + hotelId + ", userId="
+                + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName="
+                + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified="
+                + isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera
+                + ", description=" + description + ", country=" + country + ", district=" + district
+                + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening="
+                + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", hotelAmenities="
+                + hotelAmenities + ", images=" + images + ", roomType=" + roomType + '}';
+    }    
 }

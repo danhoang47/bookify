@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package app.dao;
 
-import model.dto.UserDetail;
 import Context.DBContext;
+import app.dto.UserDTO;
+import dao.UserDetailDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,22 +23,11 @@ import static secure.PassEncrypt.getSaltvalue;
  *
  * @author toten
  */
-public class UserDetailDAO {
-
-    private static UserDetailDAO instance;
-
-    public static UserDetailDAO getInstance() {
-        if (instance == null) {
-            instance = new UserDetailDAO();
-        }
-        return instance;
-    }
-
-    static Connection conn;
-    static PreparedStatement ps;
-    static ResultSet rs;
-
-//    ---------------------------------------------------------Sign up ---------------------------------------------------------
+public class UserDAO {
+    private Connection conn;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    //    ---------------------------------------------------------Sign up ---------------------------------------------------------
     public String signUp(String username, String password, String email) {
         UUID uuid = UUID.randomUUID();
 //         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
@@ -69,7 +59,7 @@ public class UserDetailDAO {
     }
 
     //    ---------------------------------------------------------Users ---------------------------------------------------------
-    public static List<UserDetail> listAll() {
+    public List<UserDTO> listAll() {
         try {
             String query = "select * from userDetail";
 
@@ -79,10 +69,10 @@ public class UserDetailDAO {
 
             rs = ps.executeQuery();
 
-            List<UserDetail> listUser = new ArrayList<>();
+            List<UserDTO> listUser = new ArrayList<>();
 
             while (rs.next()) {
-                listUser.add(new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
+                listUser.add(new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
             }
 
@@ -94,7 +84,7 @@ public class UserDetailDAO {
     }
 
     //    ---------------------------------------------------------Log in ---------------------------------------------------------
-    public static UserDetail login(String username, String password) {
+    public UserDTO login(String username, String password) {
         PassEncrypt passEncrypt = new PassEncrypt();
 //        String saltvalue = getSaltvalue(30);
         try {
@@ -105,9 +95,9 @@ public class UserDetailDAO {
 
             rs = ps.executeQuery();
 
-            UserDetail ud = null;
+            UserDTO ud = null;
             while (rs.next()) {
-                ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
+                ud = (new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
 
                 break;
@@ -131,7 +121,7 @@ public class UserDetailDAO {
     }
 
 //    --------------------------------------------------------- GET USER -----------------------------------------------------
-    public static UserDetail getUser(String id) {
+    public UserDTO getUser(String id) {
         try {
             String query = "select * from userDetail where user_id=?";
             conn = new DBContext().getConnection();
@@ -139,9 +129,9 @@ public class UserDetailDAO {
             ps.setString(1, id);
             rs = ps.executeQuery();
 
-            UserDetail ud = null;
+            UserDTO ud = null;
             while (rs.next()) {
-                ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
+                ud = (new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
 
                 return ud;
@@ -154,7 +144,7 @@ public class UserDetailDAO {
         return null;
     }
 
-    public static Boolean getUsername(String username) {
+    public Boolean getUsername(String username) {
         try {
             String query = "select * from userDetail where username=?";
             conn = new DBContext().getConnection();
@@ -174,7 +164,7 @@ public class UserDetailDAO {
     }
 
 //    --------------------------------------------------------- Update -------------------------------------------------------
-    public static Boolean update(UserDetail userDetail) {
+    public Boolean update(UserDTO userDetail) {
 
         try {
             String query = "update userDetail set phone=?,  avatar=?,  self_description=?, name=?, "
@@ -207,7 +197,7 @@ public class UserDetailDAO {
     }
 
     //    --------------------------------------------------------- Change pasword -------------------------------------------------------
-    public static Boolean changePassword(String newPassword, String user_id) {
+    public Boolean changePassword(String newPassword, String user_id) {
         PassEncrypt passEncrypt = new PassEncrypt();
         String saltvalue = getSaltvalue(30);
 
@@ -236,7 +226,7 @@ public class UserDetailDAO {
     }
     
         //    --------------------------------------------------------- Current pasword -------------------------------------------------------
-    public static Boolean compareCurrentPassword(String userId, String currPassword) {
+    public Boolean compareCurrentPassword(String userId, String currPassword) {
         PassEncrypt passEncrypt = new PassEncrypt();
         try {
             String query = "select * from userDetail where user_id=?";
@@ -272,7 +262,7 @@ public class UserDetailDAO {
     }
 
 //    ----------------------------------------------------- DELETE USER -----------------------------------------------
-    public static Boolean delete(String id) {
+    public Boolean delete(String id) {
 
         try {
             String query = "delete from userDetail where user_id=?";
@@ -295,7 +285,7 @@ public class UserDetailDAO {
     }
 
 //    ---------------------------- Get hotel owner -------------------------------------------
-    public static UserDetail getOwner(String id) {
+    public UserDTO getOwner(String id) {
         try {
             String query = "select * from userDetail where user_id=?";
             conn = new DBContext().getConnection();
@@ -303,9 +293,9 @@ public class UserDetailDAO {
             ps.setString(1, id);
             rs = ps.executeQuery();
 
-            UserDetail ud = null;
+            UserDTO ud = null;
             while (rs.next()) {
-                ud = (new UserDetail(rs.getString(1), rs.getString(2), null, rs.getString(4), rs.getString(5), rs.getString(6),
+                ud = (new UserDTO(rs.getString(1), rs.getString(2), null, rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), null, null, rs.getString(11), null, rs.getString(13), rs.getString(14), rs.getDate(15)));
 
                 return ud;
@@ -317,15 +307,10 @@ public class UserDetailDAO {
         }
         return null;
     }
-
-//    public static void main(String[] args) {
-//        String data = "{deletes: [a, b, c]}";
-//        HashMap<String, Object> map = new Gson().fromJson(data, HashMap.class);
-//        System.out.println(map.get("deletes").getClass().getName());
-//    }
+    
     public static void main(String[] args) {
 
-        UserDetail ud = new UserDetailDAO().login("duc", "123"); 
+        UserDTO ud = new UserDAO().login("duc", "123"); 
         System.out.println(ud);
 //        List<UserDetail> list = new UserDetailDAO().listAll();
 //        System.out.println(list);

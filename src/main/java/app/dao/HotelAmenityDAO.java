@@ -23,16 +23,18 @@ import java.util.logging.Logger;
  * @author ADMIN
  */
 public class HotelAmenityDAO {
-
-    public List<HotelAmenityDTO> get(String hotelId) throws SQLException {
-        Connection conn = null;
-        CallableStatement cs = null;
-        ResultSet rs = null;
+    
+     private Connection conn;
+     private PreparedStatement ps;
+     private CallableStatement cs;
+     private ResultSet rs;
+    
+     public List<HotelAmenityDTO> get(String hotelId) throws SQLException {
         String sql = "proc_getHotelAmenities @hotelId = ?";
         List<HotelAmenityDTO> hotelAmenityDtos = null;
 
         try {
-            conn = DBContext.getConnection();
+            conn = new DBContext().getConnection();
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
@@ -157,6 +159,41 @@ public class HotelAmenityDAO {
         }
     }
 
+     
+     
+    public boolean addHotelAmenties(List<String> amenties, String hotel_id) {
+        List<Integer> check = new ArrayList<>();
+
+        try {
+            String query = "insert into HotelAmenities values (?, ?,  ?)";
+            conn = new DBContext().getConnection();
+
+            for (int i = 0; i < amenties.size(); i++) {
+                UUID uuid = UUID.randomUUID();
+                ps = conn.prepareStatement(query);
+                
+                ps.setString(1, uuid.toString());
+                ps.setString(2, amenties.get(i));
+                ps.setString(3, hotel_id);
+                int x = ps.executeUpdate();
+
+                if (x != 0) {
+                    check.add(x);
+                }
+            }
+
+            if (check.size() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(dao.HotelAmenityDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public static void main(String[] args) throws SQLException {
         HotelAmenityDAO dao = new HotelAmenityDAO();
         System.out.println(dao.get("fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9").size());

@@ -4,10 +4,6 @@
  */
 package app.dto;
 
-/**
- *
- * @author ADMIN
- */
 public class RoomTypeDTO {
     private String id;
     private int price;
@@ -20,6 +16,7 @@ public class RoomTypeDTO {
     private boolean isPrivateBathroom;
     private String hotelId;
     private int rooms;
+
 
     public RoomTypeDTO() {
     }
@@ -53,6 +50,14 @@ public class RoomTypeDTO {
         return rooms;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public void setRooms(int rooms) {
         this.rooms = rooms;
     }
@@ -81,10 +86,6 @@ public class RoomTypeDTO {
         this.numberOfBathroom = numberOfBathroom;
     }
     
-    public String getId() {
-        return id;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -107,10 +108,6 @@ public class RoomTypeDTO {
 
     public String getHotelId() {
         return hotelId;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setPrice(int price) {
@@ -136,9 +133,13 @@ public class RoomTypeDTO {
     public void setHotelId(String hotelId) {
         this.hotelId = hotelId;
     }
-
+    
     @Override
     public String toString() {
-        return "RoomTypeDTO{" + "id=" + id + ", price=" + price + ", bedType=" + bedType + ", numberOfBed=" + numberOfBed + ", bathroomType=" + bathroomType + ", numberOfBathroom=" + numberOfBathroom + ", numberOfRoom=" + numberOfRoom + ", numberOfGuests=" + numberOfGuests + ", isPrivateBathroom=" + isPrivateBathroom + ", hotelId=" + hotelId + '}';
+        return "RoomTypeDTO{" + "id=" + id + ", price=" + price + ", bedType=" 
+                + bedType + ", numberOfBed=" + numberOfBed + ", bathroomType=" 
+                + bathroomType + ", numberOfBathroom=" + numberOfBathroom 
+                + ", numberOfRoom=" + numberOfRoom + ", numberOfGuests=" 
+                + numberOfGuests + ", isPrivateBathroom=" + isPrivateBathroom + ", hotelId=" + hotelId + '}';
     }
 }
