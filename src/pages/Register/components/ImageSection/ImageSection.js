@@ -22,7 +22,6 @@ function ImageSection() {
         setDeletedImages,
     } = useContext(RegisterContext);
     const [previewBackgroundImage, setPreviewBackgroundImage] = useState();
-    const [isMounted, setMounted] = useState(true);
     const href = useHref();
 
     const handleChange = (e) => {
@@ -35,17 +34,14 @@ function ImageSection() {
             setPreviewBackgroundImage(null);
             return;
         }
-        if (isMounted && href.includes('/update')) {
-            setMounted(false);
-            setPreviewBackgroundImage(backgroundImage);
-            return;
-        } 
-        
-        const url = URL.createObjectURL(backgroundImage);
-        setPreviewBackgroundImage(url);
+        if (typeof backgroundImage === 'string') {
+            setPreviewBackgroundImage(`${backgroundImage}`);
+        } else {
+            const url = URL.createObjectURL(backgroundImage);
+            setPreviewBackgroundImage(url);  
+        }
 
-        return () => URL.revokeObjectURL(url);
-    //eslint-disable-next-line
+        //eslint-disable-next-line
     }, [backgroundImage]);
 
     const renderFunction = () => {
@@ -106,7 +102,9 @@ function ImageSection() {
             <div className={ImageStyle["body-container"]}>
                 <div className={ImageStyle["body"]}>
                     <div className={ImageStyle["image-background"]}>
-                        <p className={ImageStyle['background-image-heading']}>Chọn ảnh bìa cho khách sạn của bạn</p>
+                        <p className={ImageStyle["background-image-heading"]}>
+                            Chọn ảnh bìa cho khách sạn của bạn
+                        </p>
                         <div className={ImageStyle["image-container"]}>
                             <input
                                 type="file"
@@ -123,11 +121,15 @@ function ImageSection() {
                                 <p>Tải ảnh lên</p>
                             </div>
                             {previewBackgroundImage && (
-                                <div className={ImageStyle['preview']}>
-                                    <img 
-                                        className={ImageStyle['preview-background-image']}
-                                        src={previewBackgroundImage} 
-                                        alt="" 
+                                <div className={ImageStyle["preview"]}>
+                                    <img
+                                        className={
+                                            ImageStyle[
+                                                "preview-background-image"
+                                            ]
+                                        }
+                                        src={previewBackgroundImage}
+                                        alt=""
                                     />
                                 </div>
                             )}

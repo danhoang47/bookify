@@ -1,3 +1,5 @@
+import { types } from '@/services/hotel/searchHotelTypes'
+
 const varToString = (varObj) => Object.keys(varObj)[0];
 const mergeTime = (timeObj) => {
     const { hour, minutes } = timeObj;
@@ -37,29 +39,31 @@ export default async function updateHotel(
             };
         }
     }, {});
-    console.log(extraInforModified);
+    const updatedBasicHotelInfor = {
+        hotelName: basicHotelInfor.name,
+        hotelTypeId: types.find(({ name }) => name === basicHotelInfor.type).code,
+        country: basicHotelInfor.country,
+        city: basicHotelInfor.province,
+        district: basicHotelInfor.district,
+        address: basicHotelInfor.address,
+        description: basicHotelInfor.description
+    }
+
     const hotelUpdateForm = new FormData();
-    hotelUpdateForm.append(
-        varToString({ amenities }),
-        JSON.stringify(amenities)
-    );
-    hotelUpdateForm.append(
-        varToString({ basicHotelInfor }),
-        JSON.stringify(basicHotelInfor)
-    );
-    hotelUpdateForm.append(
-        varToString({ extraInfor }),
-        JSON.stringify(extraInforModified)
-    );
+    const rawObject = {
+        amenities,
+        updatedBasicHotelInfor,
+        extraInforModified,
+        roomInfor,
+        deletedImages
+    }
+    Object.keys(rawObject).forEach((key) => {
+        hotelUpdateForm.append(key, JSON.stringify(rawObject[key]))
+    })
+
     hotelUpdateForm.append(varToString({ backgroundImage }), backgroundImage);
-    hotelUpdateForm.append(
-      varToString({ roomInfor }), JSON.stringify(roomInfor)
-    );
-    hotelUpdateForm.append(
-      varToString({ deletedImages }), JSON.stringify(deletedImages)
-    );
     pushFilesToFormData(hotelUpdateForm, updatedViewImages, varToString({ updatedViewImages }))
-    // pushFilesToFormData(hotelUpdateForm, updatedRoomImages, varToString({ updatedRoomImages }))
+    pushFilesToFormData(hotelUpdateForm, updatedRoomImages, varToString({ updatedRoomImages }))
 
     const data = await fetch(url, {
         method: "PUT",

@@ -42,7 +42,8 @@ function App({ children }) {
 
     const userContextValue = useMemo(() => ({
         user,
-        isLogin
+        isLogin,
+        setLogin
     }), [user])
 
     useEffect(() => {

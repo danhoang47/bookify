@@ -51,11 +51,25 @@ function RegisterSection({
             setDisplayAmenitiesType(defaultAmenityTypes);
         });
 
-        if (!displayAmenitiesInitState) {
-            getDefaultAmenities().then(defaultAmenties => {
-                setDisplayAmenities(defaultAmenties)
-            });
-        }
+        getDefaultAmenities().then(defaultAmenties => {
+            setDisplayAmenities(prev => {
+                const mergedAmenities = [...prev];
+                Array.from(defaultAmenties).forEach((defaultAmenity) => {
+                    let isIncluded = false;
+                    prev.forEach(({ name }) => {
+                        if (name === defaultAmenity.name) {
+                            isIncluded = true;
+                        }
+                    })
+                    if (!isIncluded) {
+                        mergedAmenities.push(defaultAmenity);
+                    }
+                })
+
+                return mergedAmenities;
+            })
+        });
+        
         //eslint-disable-next-line
     }, []);
 
@@ -168,6 +182,7 @@ function RegisterSection({
                             <Suspense fallback={<div>Loading...</div>}>
                                 {tabs[inputTabIndex].render(setNextTabValid)}
                             </Suspense>
+                            {/* Buttons */}
                             <div className={registerStyles["nav-buttons"]}>
                                 <button
                                     className={useClsx()}

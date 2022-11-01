@@ -33,7 +33,7 @@ function RoomPickers() {
       {Object.keys(roomInfor).reduce((prev, key) => {
         if (
           key === "price" ||
-          key === "isPrivateBathRoom"
+          key === "isPrivateBathRoom" || key === 'id'
         ) {
           return prev;
         } else {

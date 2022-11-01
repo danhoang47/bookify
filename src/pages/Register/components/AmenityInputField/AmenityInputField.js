@@ -15,7 +15,7 @@ function AmenityInputField({ hotelId, handleClick, addNewAmenity, amenityTypes }
     const [amenity, setAmenity] = useState({
         ...amenityInitState,
         hotelId: hotelId,
-        type: amenityTypes[0]?.amenityTypeId,
+        amenityTypeId: amenityTypes[0]?.amenityTypeId,
     });
     const [isTypeListOpen, setTypeListOpen] = useState(false);
 
@@ -38,7 +38,7 @@ function AmenityInputField({ hotelId, handleClick, addNewAmenity, amenityTypes }
             setAmenity({
                 ...amenityInitState,
                 hotelId: hotelId,
-                type: amenityTypes[0].amenityTypeId,
+                amenityTypeId: amenityTypes[0].amenityTypeId,
             });
         }
     };
@@ -51,7 +51,7 @@ function AmenityInputField({ hotelId, handleClick, addNewAmenity, amenityTypes }
                         {
                             amenityTypes.find(
                                 ({ amenityTypeId }) =>
-                                    amenityTypeId === amenity.type
+                                    amenityTypeId === amenity.amenityTypeId
                             )["amenityTypeName"]
                         }
                     </p>
@@ -69,7 +69,7 @@ function AmenityInputField({ hotelId, handleClick, addNewAmenity, amenityTypes }
                                     onClick={() => {
                                         setAmenity((prev) => ({
                                             ...prev,
-                                            type: amenityTypeId,
+                                            amenityTypeId: amenityTypeId,
                                         }));
                                         setTypeListOpen(prev => !prev)
                                     }}
