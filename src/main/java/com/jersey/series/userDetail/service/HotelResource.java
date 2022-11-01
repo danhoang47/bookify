@@ -192,21 +192,13 @@ public class HotelResource implements HotelInterface {
         UUID uuid = UUID.randomUUID();
         JSONObject obj = new JSONObject();
 
-//        Upload hotel images
-        if (hotelImage != null) {
-            
-            listHotelImagesPath = uploadhotel.uploadMultipleFile(hotelImage);
-        }
 
-        //        Upload view images
-        if (viewImage != null) {
-            listViewImagePath = uploadhotel.uploadMultipleFile(viewImage);
-        }
+
 
 //        Upload background
         String backgroundImagePath = null;
         if (fileInputStreamBG != null && fileFormDataContentDispositionBG != null) {
-            backgroundImagePath = uploadhotel.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG);
+            backgroundImagePath = uploadhotel.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG, "hotels");
         }
 
         Hotel hotel = new Hotel(uuid.toString(), userId, hotelTypeId, hotelName, backgroundImagePath, false,
@@ -231,6 +223,10 @@ public class HotelResource implements HotelInterface {
         System.out.println("listImageHotel: " + listHotelImagesPath);
         System.out.println("listimageview: " + listViewImagePath);
         //        Upload hotel images
+        if (hotelImage != null) {
+            
+            listHotelImagesPath = uploadhotel.uploadMultipleFile(hotelImage);
+        }
         boolean addImageHotel = imageDAO.addImage(uuid.toString(), listHotelImagesPath, 1);
         System.out.println("Image " + addImageHotel);
         if (addImageHotel == false) {
@@ -238,7 +234,11 @@ public class HotelResource implements HotelInterface {
             return Response.ok(new Gson().toJson(obj)).build();
         }
 
-        //        Upload hotel images
+        
+        //        Upload view images
+        if (viewImage != null) {
+            listViewImagePath = uploadhotel.uploadMultipleFile(viewImage);
+        }
         boolean addImageView = imageDAO.addImage(uuid.toString(), listViewImagePath, 2);
         System.out.println("Image " + addImageView);
         if (addImageView == false) {

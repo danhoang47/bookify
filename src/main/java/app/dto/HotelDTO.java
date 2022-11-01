@@ -29,6 +29,8 @@ public class HotelDTO {
     private String opening;
     private String checkin;
     private String checkout;
+    private int averagePirce;
+    private int rating;
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
 
@@ -106,6 +108,42 @@ public class HotelDTO {
         this.city = city;
         this.address = address;
     }
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, String description, String country, 
+            String district, String city, String address, boolean isHasCamera, boolean isAllowPet, String checkin, String checkout, String closing, String opening) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.isHasCamera = isHasCamera;
+        this.isAllowPet = isAllowPet;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.closing = closing;
+        this.opening = opening;
+    }
+
+    public HotelDTO(String hotelId, String hotelName, String hotelTypeId, String backgroundImg, String country, String district, String city, String address, int averagePirce, int rating) {
+        this.hotelId = hotelId;
+        this.hotelName = hotelName;
+        this.hotelTypeId = hotelTypeId;
+        this.backgroundImg = backgroundImg;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.averagePirce = averagePirce;
+        this.rating = rating;
+    }
+    
+    
 
     public String getClosing() {
         return closing;
@@ -259,8 +297,28 @@ public class HotelDTO {
         return hotelAmenities;
     }
 
+    public int getAveragePirce() {
+        return averagePirce;
+    }
+
+    public void setAveragePirce(int averagePirce) {
+        this.averagePirce = averagePirce;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
-        return "Hotel{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + '}';
+        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening=" + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", averagePirce=" + averagePirce + ", rating=" + rating + ", hotelAmenities=" + hotelAmenities + ", images=" + images + '}';
     }
+    
+    
+
+    
 }

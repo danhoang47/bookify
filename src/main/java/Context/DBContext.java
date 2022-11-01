@@ -19,24 +19,20 @@ import java.util.logging.Logger;
 //    private final String portNumber = "1433";
 //    private final String userID = "sa";
 //    private final String password = "13072002";
-
 public class DBContext {
 
-    
-    
-    
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:sqlserver://" + serverName + ":" + portNumber +";databaseName=" + dbName;
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		
 	return DriverManager.getConnection(url, userID, password); 
     }
     
-    private final static String serverName = "DESKTOP-A5IQJBR\\SQLEXPRESS";
+    private final static String serverName = "LEDUC\\MAYAO";
     private final static String dbName = "bookify";
     private final static String portNumber = "1433";
     private final static String userID = "sa";
-    private final static String password = "0000";
+    private final static String password = "13072002";
     
     
     public static void main(String[] args) {
@@ -54,5 +50,5 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

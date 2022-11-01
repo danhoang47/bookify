@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.glassfish.jersey.media.multipart.BodyPart;
+import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -22,7 +24,8 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
  */
 public class UploadImage {
 
-    public static final String UPLOAD_FILE_SERVER = "D:/netbeanJavaWeb/testUpload/src/main/webapp/images/";
+    public static final String UPLOAD_FILE_SERVER = "D:/Project/Bookify/src/main/webapp/images/";
+//    public static final String UPLOAD_FILE_SERVER = "D:/Project/bookify-login-feature/public/photo/";
 
     public static String writeToFileServer(String typeUpload, InputStream inputStream, String fileName) throws IOException {
 
@@ -48,7 +51,7 @@ public class UploadImage {
     }
 
     public static List<String> uploadMultipleFile(FormDataBodyPart body) throws IOException {
-        
+
         List<String> listPath = new ArrayList<>();
 
         for (BodyPart part : body.getParent().getBodyParts()) {
@@ -57,15 +60,37 @@ public class UploadImage {
 
             if (meta.getFileName() != null) {
                 String path = writeToFileServer("hotels", is, meta.getFileName());
-                if(!listPath.contains(path)) {
+                System.out.println("Path: " + path);
+                if (!listPath.contains(path)) {
                     listPath.add(path);
                 }
-                
+
             }
 
         }
+
+
+        return listPath;
+    }
+    
+     public static List<String> uploadMultipleFile2(List<FormDataBodyPart> body) throws IOException {
+
+        List<String> listPath = new ArrayList<>();
         
-        System.out.println(listPath);
+        if(body!=null) {
+            for(int i =0; i<body.size(); i++) {
+                BodyPartEntity bodyPartEntity = (BodyPartEntity) body.get(i).getEntity();
+                String fileName = body.get(i).getContentDisposition().getFileName();
+                if(fileName!=null) {
+                    String path = writeToFileServer("hotels", bodyPartEntity.getInputStream(), fileName);
+                    System.out.println(path);
+                    listPath.add(path);
+                }
+            }
+        }
+
+        
+
 
         return listPath;
     }
@@ -81,9 +106,8 @@ public class UploadImage {
 //        }
 //        return path;
 //    }
-
     public static String uploadSingleFile(InputStream fileInputStream,
-            FormDataContentDisposition fileFormDataContentDisposition) {
+            FormDataContentDisposition fileFormDataContentDisposition, String role) {
 
         if (fileInputStream == null || fileFormDataContentDisposition == null) {
             return null;
@@ -94,8 +118,10 @@ public class UploadImage {
         String uploadFilePath = null;
 
         try {
+            UUID uuid = UUID.randomUUID();
             fileName = fileFormDataContentDisposition.getFileName();
-            uploadFilePath = writeToFileServer("users", fileInputStream, fileName);
+//            users
+            uploadFilePath = writeToFileServer(role, fileInputStream, fileName);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {

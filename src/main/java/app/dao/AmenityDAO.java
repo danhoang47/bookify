@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,6 +24,11 @@ import java.util.logging.Logger;
  * @author ADMIN
  */
 public class AmenityDAO {
+    
+//    static Connection conn;
+//    static PreparedStatement ps;
+//    static CallableStatement cs;
+//    static ResultSet rs;
 
     public List<AmenityDTO> getAll() throws SQLException {
         Connection conn = null;
@@ -93,9 +99,60 @@ public class AmenityDAO {
 
         return amenityTypes;
     }
+    
+    public static void addAmenity(String amenityId, String amenityName, String amenityType) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String query = "insert into amenity values (?, ?, ?, ?)";
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+            ps.setString(1, amenityId);
+            ps.setString(2, amenityName);
+            ps.setString(3, "faPencil");
+            ps.setString(4, amenityType);
+
+            ps.executeUpdate();
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(AmenityDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static List<String> listAllAmenityId() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "select amenity_id from amenity";
+
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            List<String> listAmentiesId = new ArrayList<>();
+
+            while (rs.next()) {
+
+                listAmentiesId.add(rs.getString(1));
+
+            }
+
+            return listAmentiesId;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(AmenityDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) throws SQLException {
-        AmenityDAO dao = new AmenityDAO();
-        System.out.println(dao.getTypes());
+        List<AmenityDTO> listAmen = new AmenityDAO().getAll();
+        
+        System.out.println(listAmen);
     }
 }
