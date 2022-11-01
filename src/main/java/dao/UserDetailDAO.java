@@ -325,18 +325,18 @@ public class UserDetailDAO {
 //    }
     public static void main(String[] args) {
 
-//        UserDetail ud = new UserDetailDAO().login("duc", "123"); 
-//        System.out.println(ud);
-        List<UserDetail> list = new UserDetailDAO().listAll();
-        System.out.println(list);
+        UserDetail ud = new UserDetailDAO().login("duc", "123"); 
+        System.out.println(ud);
+//        List<UserDetail> list = new UserDetailDAO().listAll();
+//        System.out.println(list);
 //        for (int i = 1; i <= 10; i++) {
 //            UUID uuid = UUID.randomUUID();
 //
 //            System.out.println(uuid.toString());
 //        }
 
-    Boolean test = new UserDetailDAO().compareCurrentPassword("b955c796-027c-4e11-92ff-1bb942a102c8", "12345678");
-        System.out.println(test);
+//    Boolean test = new UserDetailDAO().compareCurrentPassword("b955c796-027c-4e11-92ff-1bb942a102c8", "12345678");
+//        System.out.println(test);
 
     }
 
