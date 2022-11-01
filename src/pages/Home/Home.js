@@ -117,6 +117,7 @@ function Home() {
               <AdvanceFilter
                 isAdvanceFilterOpen={isAdvanceFilterOpen}
                 setAdvanceFilterOpen={setAdvanceFilterOpen}
+                setHotelsList={setHotelsList}
               />
             )}
           </Suspense>

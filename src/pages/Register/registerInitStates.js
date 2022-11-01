@@ -9,12 +9,12 @@ const basicHotelInforInitState = {
 };
 
 const roomInfoInitState = {
-  guests: 1,
-  bedrooms: 1,
-  beds: 6,
-  bathrooms: 1,
+  numberOfGuests: 1,
+  numberOfRoom: 1,
+  numberOfBed: 6,
+  numberOfBathroom: 1,
   price: 100,
-  numberOfRooms: 10,
+  rooms: 10,
   isPrivateBathRoom: false,
 };
 

@@ -1,4 +1,4 @@
-import { types } from "@/services/hotel/searchHotelTypes";
+import { types } from "./searchHotelTypes";
 
 export default async function registerHotel(
   amenities,
@@ -14,7 +14,7 @@ export default async function registerHotel(
   const amenitiesNames = [];
   const amenitiesTypes = [];
 
-  amenities.forEach((item, index) => {
+  amenities.forEach((item) => {
     amenitiesId.push(item.id);
     amenitiesNames.push(item.name);
     amenitiesTypes.push(item.type);
@@ -36,6 +36,7 @@ export default async function registerHotel(
   hotelForm.append("amenitiesTypes", amenitiesTypes);
   if (roomImages) {
     for (const file of roomImages) {
+      console.log(file);
       hotelForm.append("hotelImage", file);
     }
   } else {
@@ -43,8 +44,9 @@ export default async function registerHotel(
   }
 
   if (viewImages) {
-    for (const file of viewImages) {
-      hotelForm.append("viewImage", file);
+    for (const filetest of viewImages) {
+      console.log(filetest);
+      hotelForm.append("viewImage", filetest);
     }
   } else {
     hotelForm.append("viewImage", null);
@@ -65,13 +67,13 @@ export default async function registerHotel(
     "opening",
     extraInfor.opening.hour + ":" + extraInfor.opening.minutes
   );
-  hotelForm.append("roomPrice", roomInfor.price);
-  hotelForm.append("maxGuest", roomInfor.guests);
-  hotelForm.append("bedroomNum", roomInfor.bedrooms);
-  hotelForm.append("bathNum", roomInfor.bathrooms);
-  hotelForm.append("bedNum", roomInfor.beds);
   hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
-  hotelForm.append("roomNum", roomInfor.numberOfRooms);
+  hotelForm.append("bathNum", roomInfor.numberOfBathroom);
+  hotelForm.append("bedNum", roomInfor.numberOfBed);
+  hotelForm.append("roomPrice", roomInfor.price);
+  hotelForm.append("maxGuest", roomInfor.numberOfGuests);
+  hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
+  hotelForm.append("roomNum", roomInfor.rooms);
   hotelForm.append("userId", "b955c796-027c-4e11-92ff-1bb942a102c8");
 
   const data = await fetch(
@@ -93,6 +95,8 @@ export default async function registerHotel(
   //   extraInfor,
   //   roomInfor,
   // };
+
+  // console.log(data);
 
   return data;
 }

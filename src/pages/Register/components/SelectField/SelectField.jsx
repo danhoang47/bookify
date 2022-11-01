@@ -80,7 +80,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
       <button
         className="drop-down-button"
         onClick={() => {
-          setSelectionListOpen(prev => !prev)
+          setSelectionListOpen((prev) => !prev);
         }}
       >
         <FontAwesomeIcon icon={faChevronDown} />
@@ -109,18 +109,3 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
 }
 
 export default memo(SelectField);
-
-/**
- * "name": "Thành phố Hà Nội",
-    "code": 1,
-    "matches": {
-      "hà": [
-        10,
-        12
-      ],
-      "nội": [
-        13,
-        16
-      ]
-    }
-*/

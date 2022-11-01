@@ -1,13 +1,23 @@
-import { Jumbotron, TabBar } from "./components";
+// libraries
 import { Grid, Box } from "@mui/material";
+import { useState, useMemo, Suspense, useEffect } from "react";
+import { useHref } from "react-router-dom";
+
+// app defined
+import { Jumbotron, TabBar } from "./components";
 import { RegisterContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
-import { useState, useMemo, Suspense, useEffect } from "react";
-import registerHotel from "@/services/hotel/registerHotel";
-import tabs from "./tabs";
+import {
+  registerHotel,
+  getDefaultAmenities,
+  getDefaultAmenityTypes,
+  updateHotel,
+} from "@/services/hotel";
 import { useClsx } from "@/utils/hooks";
+import tabs from "./tabs";
 
 function RegisterSection({
+  hotelId,
   basicHotelInforInitState,
   roomInfoInitState,
   extraInforInitState,
@@ -15,6 +25,7 @@ function RegisterSection({
   backgroundImageInitState,
   roomImagesInitState,
   amenitiesInitState,
+  displayAmenitiesInitState = null,
 }) {
   // show BasicInformation first
   const [inputTabIndex, setInputTabIndex] = useState(0);
@@ -30,28 +41,31 @@ function RegisterSection({
     backgroundImageInitState
   );
   const [extraInfor, setExtraInfor] = useState(extraInforInitState);
-  const [displayAmenities, setDisplayAmenities] = useState([]);
-  const [displayAmenitiesType, setDisplayAmenitiesType] = useState([]);
+  const [displayAmenities, setDisplayAmenities] = useState(
+    displayAmenitiesInitState || []
+  );
+  const [displayAmenitiesType, setDisplayAmenitiesType] = useState();
+  const [updatedViewImages, setUpdatedViewImages] = useState([]);
+  const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const href = useHref();
 
   useEffect(() => {
-    fetch("http://localhost:8080/bookify/api/amenity")
-      .then((res) => res.json())
-      .then((amenities) => {
-        setDisplayAmenities(amenities);
+    getDefaultAmenityTypes().then((defaultAmenityTypes) => {
+      setDisplayAmenitiesType(defaultAmenityTypes);
+    });
+
+    if (!displayAmenitiesInitState) {
+      getDefaultAmenities().then((defaultAmenties) => {
+        setDisplayAmenities(defaultAmenties);
       });
+    }
     //eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/bookify/api/amenity/type")
-      .then((res) => res.json())
-      .then((result) => {
-        setDisplayAmenitiesType(result);
-      });
   }, []);
 
   const registerContextValue = useMemo(
     () => ({
+      hotelId,
       basicHotelInfor,
       setBasicHotelInfo,
       amenities,
@@ -70,8 +84,15 @@ function RegisterSection({
       setDisplayAmenities,
       displayAmenitiesType,
       setDisplayAmenitiesType,
+      updatedViewImages,
+      setUpdatedViewImages,
+      updatedRoomImages,
+      setUpdatedRoomImages,
+      deletedImages,
+      setDeletedImages,
     }),
     [
+      hotelId,
       basicHotelInfor,
       amenities,
       roomInfor,
@@ -81,27 +102,40 @@ function RegisterSection({
       extraInfor,
       displayAmenities,
       displayAmenitiesType,
+      updatedViewImages,
+      updatedRoomImages,
+      deletedImages,
     ]
   );
 
-  //   console.log("basic-form re-render");
-
   const registerSubmit = async (e) => {
     e.preventDefault();
-    const data = await registerHotel(
-      amenities,
-      basicHotelInfor,
-      backgroundImage,
-      roomImages,
-      viewImages,
-      extraInfor,
-      roomInfor
-    );
-    console.log(data);
+    if (href.includes("/update")) {
+      const response = await updateHotel(
+        hotelId,
+        amenities,
+        basicHotelInfor,
+        backgroundImage,
+        extraInfor,
+        roomInfor,
+        updatedViewImages,
+        updatedRoomImages,
+        deletedImages
+      );
+    } else {
+      const data = await registerHotel(
+        amenities,
+        basicHotelInfor,
+        backgroundImage,
+        roomImages,
+        viewImages,
+        extraInfor,
+        roomInfor
+      );
+    }
   };
 
   const toNextTab = (e) => {
-    e.preventDefault();
     if (inputTabIndex + 1 === tabs.length) {
       registerSubmit(e);
     } else {
@@ -129,9 +163,8 @@ function RegisterSection({
               sx={{
                 width: "60%",
                 margin: "0 auto",
-                overflowY: "scroll",
                 overflowX: "hidden",
-                paddingTop: "10em",
+                paddingTop: "6em",
               }}
               className={registerStyles["form"]}
             >

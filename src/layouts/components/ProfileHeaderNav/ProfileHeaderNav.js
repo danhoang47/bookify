@@ -19,14 +19,9 @@ function ProfileHeaderNav() {
           </div>
         </button>
         <div className={profileNav["profile-nav"]} tabIndex="-1">
-          <input
-            type="checkbox"
-            id="button-toggle"
-            onChange={() => {}}
-            hidden
-            checked={isNavOpen}
-          />
-          <OptionList />
+          {
+            isNavOpen && <OptionList />
+          }
         </div>
       </label>
     </div>

@@ -2,6 +2,7 @@
 #register {
     position: relative;
     z-index: 0;
+    
     .left {
         position: fixed;
         top: 1em;
@@ -9,18 +10,17 @@
         border-radius: 1.6em;
         overflow-x: hidden;
     }
+
     .right {
         position: fixed;
-        overflow-y: scroll;
         top: 1em;
         right: 1.5em;
         left: calc((100% / 3) + 3em);
         bottom: 1em;
-        overflow: hidden;
         z-index: 1;
 
         .form::-webkit-scrollbar {
-            // display: none;
+            display: none;
         }
 
         .nav-buttons {
@@ -34,11 +34,9 @@
                 padding: 0.4em;
                 border-radius: 1em;
                 transition: all 0.2s linear;
-
                 &.back {
                     background: global.$gray-500;
                 }
-
                 &:hover {
                     opacity: 0.8;
                 }

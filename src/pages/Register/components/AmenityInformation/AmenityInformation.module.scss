@@ -1,6 +1,4 @@
 @use 'src/global';
-
-
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
     // For Google Chrome
     &::-webkit-scrollbar {
@@ -21,10 +19,8 @@
 }
 
 .basic-information {
-    padding-bottom: 4em;
-
+    
     .basic-infor-header {
-
         h3 {
             font-size: 1.6em;
             text-align: center;
@@ -32,15 +28,19 @@
             margin-bottom: 2em;
         }
     }
-    
     .basic-infor-body {
+        padding-top: 1em;
+        overflow-Y: scroll;
+        overflow-X: hidden;
+        height: 60vh;
+        &::-webkit-scrollbar {
+            display: none;
+        }
         margin-top: 1em;
-
         .card-holder {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1em;
-
             .amenity-card {
                 width: 16rem;
                 overflow-x: scroll;
@@ -54,7 +54,6 @@
                 @include scrollbars(0, rgba(12, 124, 223, 0.673), white);
                 transition: all 0.2s linear;
                 cursor: pointer;
-
                 svg {
                     padding-left: 1rem;
                     padding-right: 1rem;
@@ -63,11 +62,9 @@
                 p {
                     font-size: 14px;
                 }
-
                 &.checked {
                     border-color: global.$black
                 }
-
                 &:hover {
                     border-color: global.$black;
                 }

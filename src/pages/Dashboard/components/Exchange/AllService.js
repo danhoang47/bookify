@@ -10,6 +10,7 @@ export const getYearExchange = (year) => {
   dataByYear[0]?.forEach((data) => {
     transc += data.exchange;
   });
+  return transc;
 };
 export const getYearsExchange = () => {
   let transc = 0;
@@ -17,6 +18,7 @@ export const getYearsExchange = () => {
   dashboarData?.forEach((data) => {
     transc += data.details.exchange;
   });
+  return transc;
 };
 
 export const TransactionDataYear = (year) => {

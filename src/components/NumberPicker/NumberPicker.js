@@ -50,7 +50,7 @@ function NumberPicker({
   }, [value]);
 
   return (
-    <div className={numberPickerStyles["number-picker"]}>
+    <div key={title} className={numberPickerStyles["number-picker"]}>
       <div className={numberPickerStyles["picker-info"]}>
         <p className={numberPickerStyles["title"]}>{title}</p>
         <p className={numberPickerStyles["description"]}>{description}</p>
