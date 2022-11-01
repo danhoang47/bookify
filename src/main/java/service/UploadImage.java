@@ -106,6 +106,6 @@ public class UploadImage {
     }
 
     public static void main(String[] args) {
-
+        
     }
 }

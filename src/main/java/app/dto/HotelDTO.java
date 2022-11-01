@@ -5,6 +5,7 @@
 package app.dto;
 import java.util.List;
 import app.dto.HotelAmenityDTO;
+import app.dto.RoomTypeDTO;
 
 /**
  *
@@ -31,6 +32,7 @@ public class HotelDTO {
     private String checkout;
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
+    private RoomTypeDTO roomType;
 
     
     public HotelDTO() {
@@ -105,6 +107,37 @@ public class HotelDTO {
         this.district = district;
         this.city = city;
         this.address = address;
+    }
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, RoomTypeDTO roomType) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
+        this.roomType = roomType;
+    }
+
+    public void setRoomType(RoomTypeDTO roomType) {
+        this.roomType = roomType;
+    }
+
+    public RoomTypeDTO getRoomType() {
+        return roomType;
     }
 
     public String getClosing() {
@@ -261,6 +294,14 @@ public class HotelDTO {
 
     @Override
     public String toString() {
-        return "Hotel{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + '}';
+        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + 
+                userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + 
+                hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + 
+                isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera +
+                ", description=" + description + ", country=" + country + ", district=" + district + 
+                ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening=" +
+                opening + ", checkin=" + checkin + ", checkout=" + checkout + ", hotelAmenities=" + 
+                hotelAmenities + ", images=" + images + ", roomType=" + roomType + '}';
     }
+
 }

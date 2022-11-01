@@ -31,7 +31,18 @@
             <artifactId>jersey-container-servlet-core</artifactId>
             <version>2.12</version>
         </dependency>
-
+        <!-- BeanUtil -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
  
         <!-- Jersey Multipart entity providers support module -->
         <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart -->

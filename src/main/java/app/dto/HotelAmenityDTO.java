@@ -9,20 +9,20 @@ public class HotelAmenityDTO {
     private String amenityId;
     private String hotelId;
     private String icon;
-    private String amenityName;
     private String amenityTypeName;
     private String amenityTypeId;
+    private String name;
     
     public HotelAmenityDTO() {
         
     }
 
-    public HotelAmenityDTO(String id, String amenityId, String hotelId, String icon, String amenityName, String amenityTypeName, String amenityTypeId) {
+    public HotelAmenityDTO(String id, String amenityId, String hotelId, String icon, String name, String amenityTypeName, String amenityTypeId) {
         this.id = id;
         this.amenityId = amenityId;
         this.hotelId = hotelId;
         this.icon = icon;
-        this.amenityName = amenityName;
+        this.name = name;
         this.amenityTypeName = amenityTypeName;
         this.amenityTypeId = amenityTypeId;
     }
@@ -55,8 +55,8 @@ public class HotelAmenityDTO {
         return hotelId;
     }
 
-    public String getAmenityName() {
-        return amenityName;
+    public String getName() {
+        return name;
     }
     
     public String getIcon() {
@@ -79,7 +79,7 @@ public class HotelAmenityDTO {
         this.icon = icon;
     }
 
-    public void setAmenityName(String amenityName) {
-        this.amenityName = amenityName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

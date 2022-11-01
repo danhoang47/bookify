@@ -25,12 +25,6 @@ public class AmenityController {
         return Response.ok(gson.toJson(service.getDefaultAmenities())).build();
     }
     
-    @POST
-    @Path("/test")
-    public Response test() {
-        return Response.accepted("Hello").build();
-    }
-
     @GET
     @Path("/type")
     @Produces(MediaType.APPLICATION_JSON)

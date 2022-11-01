@@ -93,6 +93,29 @@ public class AmenityDAO {
 
         return amenityTypes;
     }
+    
+    public void add(AmenityDTO amenity) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into Amenity values(?, ?, ?, ?)";
+        
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, amenity.getId());
+            ps.setString(2, amenity.getName());
+            ps.setString(3, amenity.getIcon());
+            ps.setString(4, amenity.getType());
+            ps.executeUpdate();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
 
     public static void main(String[] args) throws SQLException {
         AmenityDAO dao = new AmenityDAO();

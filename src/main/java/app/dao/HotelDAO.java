@@ -5,6 +5,7 @@
 package app.dao;
 import app.dto.HotelDTO;
 import Context.DBContext;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,6 +69,44 @@ public class HotelDAO {
         }
         
         return hotel;
+    }
+    
+    public void update(HotelDTO hotel) throws SQLException {
+        Connection conn = null;
+        CallableStatement cs = null;
+        String sql = "proc_updateHotel @hotelId = ?, "
+                + "@hotelTypeId = ?, @hotelName = ?, @backgroundImage = ?, "
+                + "@description = ?, @country = ?, @district = ?, @city = ?, "
+                + "@address = ?, @isAllowPet = ?, @isHasCamera = ?, "
+                + "@closing = ?, @opening = ?, @checkin = ?, @checkout = ?" ;
+        
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, hotel.getHotelId());
+            cs.setString(2, hotel.getHotelTypeId());
+            cs.setString(3, hotel.getHotelName());
+            cs.setString(4, hotel.getBackgroundImg());
+            cs.setString(5, hotel.getDescription());
+            cs.setString(6, hotel.getCountry());
+            cs.setString(7, hotel.getDistrict());
+            cs.setString(8, hotel.getCity());
+            cs.setString(9, hotel.getAddress());
+            cs.setBoolean(10, hotel.isIsAllowPet());
+            cs.setBoolean(11, hotel.isIsHasCamera());
+            cs.setString(12, hotel.getClosing());
+            cs.setString(13, hotel.getOpening());
+            cs.setString(14, hotel.getCheckin());
+            cs.setString(15, hotel.getCheckout());
+            cs.executeUpdate();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
     }
     
     public static void main(String[] args) throws SQLException, ClassNotFoundException {

@@ -6,10 +6,18 @@ package app.services;
 
 import app.dao.AmenityDAO;
 import app.dto.AmenityDTO;
+import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
+import app.dto.RoomTypeDTO;
 import app.repository.HotelRepository;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import app.utils.UploadImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -24,5 +32,40 @@ public class HotelService {
     
     public HotelDTO get(String hotelId) throws SQLException, ClassNotFoundException {
         return hotelRepo.get(hotelId);
+    }
+    
+    public void update(
+        HotelDTO hotel, 
+        HotelDTO extraInforDto, 
+        List<HotelAmenityDTO> amenities,
+        RoomTypeDTO roomTypeDto,
+        InputStream fileInputStreamBG,
+        FormDataContentDisposition fileFormDataContentDispositionBG,
+        FormDataBodyPart viewImages,
+        FormDataBodyPart roomImages,
+        List<String> deletedImageIdList,
+        String realPath
+    ) throws IOException, SQLException {
+        String typeUpload = "hotels";
+        // merge hotel and extraInfor
+        hotel.setIsHasCamera(extraInforDto.isIsHasCamera());
+        hotel.setIsAllowPet(extraInforDto.isIsAllowPet());
+        hotel.setClosing(extraInforDto.getClosing());
+        hotel.setOpening(extraInforDto.getOpening());
+        hotel.setCheckout(extraInforDto.getCheckout());
+        hotel.setCheckin(extraInforDto.getCheckin());
+
+        // get images src
+        if (fileFormDataContentDispositionBG.getFileName() != null) {
+            String backgroundImageSrc = UploadImage.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG, typeUpload, realPath);
+            hotel.setBackgroundImg(backgroundImageSrc);
+        }
+        List<String> viewImageList = UploadImage.uploadMultipleFile(viewImages, typeUpload, realPath);
+        for (String src : viewImageList) {
+            System.out.println(src);
+        }
+        List<String> roomImageList = UploadImage.uploadMultipleFile(roomImages, typeUpload, realPath);
+        
+        hotelRepo.update(hotel, amenities, roomTypeDto, viewImageList, roomImageList, deletedImageIdList);
     }
 }

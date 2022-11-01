@@ -4,7 +4,6 @@
  */
 package app.dao;
 import Context.DBContext;
-import app.dto.HotelDTO;
 import app.dto.ImageDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,6 +55,50 @@ public class ImageDAO {
         }
         
         return imageDtos;
+    }
+    
+    public void add(ImageDTO image) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into Image values(?, ?, ?, ?)";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, image.getId());
+            ps.setString(2, image.getHotelId());
+            ps.setString(3, image.getSrc());
+            ps.setInt(4, image.getType());
+
+            ps.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+    
+    public void delete(String id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from Image where image_id = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
     }
     
     public static void main(String[] args) throws SQLException {

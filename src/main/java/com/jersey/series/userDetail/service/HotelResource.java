@@ -32,16 +32,11 @@ import model.dto.AvaiableAmenity;
 import model.dto.Hotel;
 import model.dto.HotelAmenityDTO;
 import model.dto.HotelType;
-import model.dto.ImageDTO;
-import model.dto.Rating;
-import model.dto.Review;
-import model.dto.UserDetail;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONObject;
 import service.UploadImage;
-import service.UploadImageMultiple;
 
 /**
  *
