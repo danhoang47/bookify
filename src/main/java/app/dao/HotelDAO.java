@@ -21,22 +21,20 @@ import java.util.logging.Logger;
  * @author ADMIN
  */
 public class HotelDAO {
-    
-    private Connection conn;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    
+
     public HotelDTO get(String id) throws SQLException, ClassNotFoundException {
-        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         String sql = "select * from Hotel where hotel_id = ?";
         HotelDTO hotel = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareCall(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 String ownerId = rs.getString("user_id");
                 String hotelTypeId = rs.getString("hoteltype_id");
@@ -58,10 +56,10 @@ public class HotelDAO {
                         isAllowPet, isAllowPet, isHasCamera,
                         description, country, district, city,
                         address, closing, opening, checkin, checkout, null, null);
-                
+
                 System.out.println(hotel.getHotelName());
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -72,10 +70,10 @@ public class HotelDAO {
                 ps.close();
             }
         }
-        
+
         return hotel;
     }
-    
+
     public void update(HotelDTO hotel) throws SQLException {
         Connection conn = null;
         CallableStatement cs = null;
@@ -83,8 +81,8 @@ public class HotelDAO {
                 + "@hotelTypeId = ?, @hotelName = ?, @backgroundImage = ?, "
                 + "@description = ?, @country = ?, @district = ?, @city = ?, "
                 + "@address = ?, @isAllowPet = ?, @isHasCamera = ?, "
-                + "@closing = ?, @opening = ?, @checkin = ?, @checkout = ?" ;
-        
+                + "@closing = ?, @opening = ?, @checkin = ?, @checkout = ?";
+
         try {
             conn = DBContext.getConnection();
             cs = conn.prepareCall(sql);
@@ -104,7 +102,7 @@ public class HotelDAO {
             cs.setString(14, hotel.getCheckin());
             cs.setString(15, hotel.getCheckout());
             cs.executeUpdate();
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -115,11 +113,14 @@ public class HotelDAO {
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             String query = "INSERT INTO Hotel VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ?,  ? , ? , ? , ? )";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            
+
             ps.setString(1, hotel.getHotelId());
             ps.setString(2, hotel.getUserId());
             ps.setString(3, hotel.getHotelTypeId());
@@ -137,30 +138,33 @@ public class HotelDAO {
             ps.setString(15, hotel.getCheckout());
             ps.setString(16, hotel.getClosing());
             ps.setString(17, hotel.getOpening());
-            
+
             int a = ps.executeUpdate();
-            
+
             if (a == 1) {
                 return true;
             } else {
                 return false;
             }
-            
+
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(dao.HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
+
     public List<HotelDTO> getAllHotelBasicInfo() throws SQLException {
         String query = "select * from getAllHotelBasicInfo";
-        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         List<HotelDTO> listHotel = new ArrayList<>();
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 String hotelId = rs.getString("hotel_id");
                 String hotelName = rs.getString("hotel_name");
@@ -173,12 +177,12 @@ public class HotelDAO {
                 int averagePrice = rs.getInt("average_price");
                 int rating = rs.getInt("rating");
                 HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating);
-                
+
                 listHotel.add(hotel);
             }
-            
+
             return listHotel;
-            
+
         } catch (Exception ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -189,29 +193,32 @@ public class HotelDAO {
                 ps.close();
             }
         }
-        
+
         return null;
     }
-    
+
     public List<HotelDTO> getFilterHotel(String type, String id) throws SQLException {
         String query = "";
-        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         if (type.equals("hotel")) {
             query = "select * from getAllHotelBasicInfo where hoteltype_id=?";
         } else if (type.equals("amenity")) {
             query = "select * from getAllHotelBasicInfo where hotel_id in (select hotel_id from HotelAmenities where amenity_id=?)";
         }
-        
+
         System.out.println(query);
-        
+
         List<HotelDTO> listHotel = new ArrayList<>();
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            
+
             ps.setString(1, id);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 String hotelId = rs.getString("hotel_id");
                 String hotelName = rs.getString("hotel_name");
@@ -224,12 +231,12 @@ public class HotelDAO {
                 int averagePrice = rs.getInt("average_price");
                 int rating = rs.getInt("rating");
                 HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating);
-                
+
                 listHotel.add(hotel);
             }
-            
+
             return listHotel;
-            
+
         } catch (Exception ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -240,16 +247,17 @@ public class HotelDAO {
                 ps.close();
             }
         }
-        
+
         return null;
     }
-    
+
     public List<HotelDTO> getFilterAdvancedHotel(String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
-        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         String query = "select * from AdvancedFilter where number_of_room>=? and bed_number>=? and bath_number>=? and average_price between ? and ?";
-        
-        
-        if (houseType.length()>0) {
+
+        if (houseType.length() > 0) {
             query += " and hoteltype_id=?";
         }
         if (amenitiesPicked.size() > 0 && !amenitiesPicked.get(0).equals("")) {
@@ -258,35 +266,35 @@ public class HotelDAO {
             for (int i = 1; i < amenitiesPicked.size(); i++) {
                 listAmenities += ",?";
             }
-            query += " and hotel_id in (select hotel_id from HotelAmenities where amenity_id in (" + listAmenities + ") group by hotel_id having COUNT(*)="+ amenitiesPicked.size() +")";
+            query += " and hotel_id in (select hotel_id from HotelAmenities where amenity_id in (" + listAmenities + ") group by hotel_id having COUNT(*)=" + amenitiesPicked.size() + ")";
         }
-        
+
         List<HotelDTO> listHotel = new ArrayList<>();
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            
+
             ps.setInt(1, rooms);
             ps.setInt(2, numberOfBed);
             ps.setInt(3, numberOfBathroom);
             ps.setInt(4, min);
-            ps.setInt(5, max==0 ? 100000 : max);
+            ps.setInt(5, max == 0 ? 100000 : max);
             int nextIndex = 5;
-            if (houseType.length()>0) {
+            if (houseType.length() > 0) {
                 nextIndex++;
                 ps.setString(nextIndex, houseType);
             }
-            
+
             if (amenitiesPicked.size() > 0 && !amenitiesPicked.get(0).equals("")) {
                 nextIndex++;
                 for (int i = 0; i < amenitiesPicked.size(); i++) {
                     ps.setString(nextIndex + i, amenitiesPicked.get(i));
                 }
-                
+
             }
-            
+
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 String hotelId = rs.getString("hotel_id");
                 String hotelName = rs.getString("hotel_name");
@@ -299,12 +307,12 @@ public class HotelDAO {
                 int averagePrice = rs.getInt("average_price");
                 int rating = rs.getInt("rating");
                 HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating);
-                
+
                 listHotel.add(hotel);
             }
-            
+
             return listHotel;
-            
+
         } catch (Exception ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -315,10 +323,10 @@ public class HotelDAO {
                 ps.close();
             }
         }
-        
+
         return null;
     }
-    
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         HotelDAO dao = new HotelDAO();
         System.out.println(dao.getAllHotelBasicInfo());

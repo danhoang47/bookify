@@ -21,26 +21,25 @@ import java.util.logging.Logger;
 //    private final String password = "13072002";
 public class DBContext {
 
-     public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber +";databaseName=" + dbName;
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		
-	return DriverManager.getConnection(url, userID, password); 
-    }
-    
     private final static String serverName = "DESKTOP-A5IQJBR\\SQLEXPRESS";
     private final static String dbName = "bookify";
     private final static String portNumber = "1433";
     private final static String userID = "sa";
     private final static String password = "0000";
-    
-    
+
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+        return DriverManager.getConnection(url, userID, password);
+    }
+
     public static void main(String[] args) {
         try {
             Connection connection = new DBContext().getConnection();
-            
-            if(connection!=null) {
-                   System.out.println("Connect successfully to dtb " + connection.getClientInfo());
+
+            if (connection != null) {
+                System.out.println("Connect successfully to dtb " + connection.getClientInfo());
             } else {
                 System.out.println("Connect failed");
             }
