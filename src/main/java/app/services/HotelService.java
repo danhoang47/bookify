@@ -4,9 +4,6 @@
  */
 package app.services;
 
-import app.dao.AmenityDAO;
-import app.dao.HotelDAO;
-import app.dto.AmenityDTO;
 import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
 import app.dto.RoomTypeDTO;
@@ -17,7 +14,6 @@ import java.util.List;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import app.utils.UploadImage;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -74,15 +70,15 @@ public class HotelService {
         return hotelRepo.addNewHotel(hotel);
     }
     
-    public List<HotelDTO> getAllHotelBasicInfo() throws SQLException, ClassNotFoundException {
-        return hotelRepo.getAllHotel();
+    public List<HotelDTO> getAllHotelBasicInfo(String userId) throws SQLException, ClassNotFoundException {
+        return hotelRepo.getAllHotel(userId);
     }
 
-    public List<HotelDTO> getFilterHotel(String type, String id) throws SQLException, ClassNotFoundException {
-        return hotelRepo.getFilterHotels(type, id);
+    public List<HotelDTO> getFilterHotel(String type, String userId, String id) throws SQLException, ClassNotFoundException {
+        return hotelRepo.getFilterHotels(type, userId, id);
     }
 
-    public List<HotelDTO> getFilterHotelAdvance(String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
-        return hotelRepo.getFilterHotelsAdvance(houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
+    public List<HotelDTO> getFilterHotelAdvance(String userId, String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
+        return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
     }
 }

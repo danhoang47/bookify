@@ -43,7 +43,6 @@ public class UserController {
         UserDetailDAO dao = new UserDetailDAO();
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
-        System.out.println(username + " " + password);
 
 //         Check if username is true or not
         Boolean checkUsername = dao.getUsername(username);

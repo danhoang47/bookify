@@ -117,18 +117,20 @@ public class HotelController {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHotel() throws SQLException, ClassNotFoundException {
+    public Response getHotelAll(@QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
 //        JSONObject obj = new JSONObject();
-
-        return Response.ok(gson.toJson(service.getAllHotelBasicInfo())).build();
+        System.out.println(userId);
+        return Response.ok(gson.toJson(service.getAllHotelBasicInfo(userId))).build();
     }
 
     @GET
     @Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id) throws SQLException, ClassNotFoundException {
+    public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id, @QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
 //        JSONObject obj = new JSONObject();
-        return Response.ok(gson.toJson(service.getFilterHotel(type, id))).build();
+        System.out.println("userid: " + userId);
+        String newUserId = userId == null ? "" : userId;
+        return Response.ok(gson.toJson(service.getFilterHotel(type,newUserId, id))).build();
     }
 
     @POST
@@ -136,6 +138,7 @@ public class HotelController {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFilterAdvanced(
+            @QueryParam("userid") String userId,
             @FormDataParam("houseType") String houseType,
             @FormDataParam("amenitiesPicked") List<String> amenitiesPicked,
             @FormDataParam("rooms") int rooms,
@@ -145,14 +148,9 @@ public class HotelController {
             @FormDataParam("max") int max
     ) throws SQLException, ClassNotFoundException {
 
-//        System.out.println(amenitiesPicked);
-//        System.out.println(rooms);
-//        System.out.println(numberOfBed);
-//        System.out.println(numberOfBathroom);
-//        System.out.println(min);
-//        System.out.println(max);
         List<String> newAmenity =  Arrays.asList(amenitiesPicked.get(0).trim().split(","));
-        List<HotelDTO> listHotel = service.getFilterHotelAdvance(houseType, newAmenity, rooms, numberOfBed, numberOfBathroom, min, max);
+        String newUserId = userId == null ? "" : userId;
+        List<HotelDTO> listHotel = service.getFilterHotelAdvance(newUserId, houseType, newAmenity, rooms, numberOfBed, numberOfBathroom, min, max);
 
         return Response.ok(gson.toJson(listHotel)).build();
     }

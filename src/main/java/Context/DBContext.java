@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 //    private final String password = "13072002";
 public class DBContext {
 
+
      public static  Connection getConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:sqlserver://" + serverName + ":" + portNumber +";databaseName=" + dbName;
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -35,12 +36,13 @@ public class DBContext {
     private static final String password = "13072002";
     
     
+
     public static void main(String[] args) {
         try {
             Connection connection = new DBContext().getConnection();
-            
-            if(connection!=null) {
-                   System.out.println("Connect successfully to dtb " + connection.getClientInfo());
+
+            if (connection != null) {
+                System.out.println("Connect successfully to dtb " + connection.getClientInfo());
             } else {
                 System.out.println("Connect failed");
             }

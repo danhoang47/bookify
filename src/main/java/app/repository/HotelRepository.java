@@ -85,8 +85,8 @@ public class HotelRepository {
         }
     }
     
-    public List<HotelDTO> getAllHotel() throws SQLException, ClassNotFoundException {
-        List<HotelDTO> listHotelBasic = hotelDao.getAllHotelBasicInfo();
+    public List<HotelDTO> getAllHotel(String userId) throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelBasic = hotelDao.getAllHotelBasicInfo(userId);
         for(int i =0; i<listHotelBasic.size(); i++) {
             List<ImageDTO> listImage = imageDao.getRandomImage(listHotelBasic.get(i).getHotelId());
             listHotelBasic.get(i).setImages(listImage);
@@ -94,8 +94,8 @@ public class HotelRepository {
         return listHotelBasic;
     }
     
-    public List<HotelDTO> getFilterHotels(String type, String id) throws SQLException, ClassNotFoundException {
-        List<HotelDTO> listHotelFilter = hotelDao.getFilterHotel(type, id);
+    public List<HotelDTO> getFilterHotels(String type, String userid, String id) throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelFilter = hotelDao.getFilterHotel(type, userid, id);
         for(int i =0; i<listHotelFilter.size(); i++) {
             List<ImageDTO> listImage = imageDao.getRandomImage(listHotelFilter.get(i).getHotelId());
             listHotelFilter.get(i).setImages(listImage);
@@ -103,8 +103,8 @@ public class HotelRepository {
         return listHotelFilter;
     }
 
-    public List<HotelDTO> getFilterHotelsAdvance(String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
-        List<HotelDTO> listHotel = hotelDao.getFilterAdvancedHotel(houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
+    public List<HotelDTO> getFilterHotelsAdvance(String userId, String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
+        List<HotelDTO> listHotel = hotelDao.getFilterAdvancedHotel(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
         for(int i =0; i<listHotel.size(); i++) {
             List<ImageDTO> listImage = imageDao.getRandomImage(listHotel.get(i).getHotelId());
             listHotel.get(i).setImages(listImage);

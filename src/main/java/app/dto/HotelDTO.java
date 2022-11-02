@@ -34,6 +34,7 @@ public class HotelDTO {
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
     private RoomTypeDTO roomType;
+    private boolean isBookmarked;
 
     public HotelDTO() {
 
@@ -169,7 +170,10 @@ public class HotelDTO {
         return roomType;
     }
 
-    public HotelDTO(String hotelId, String hotelName, String hotelTypeId, String backgroundImg, String country, String district, String city, String address, int averagePirce, int rating) {
+   
+    
+
+    public HotelDTO(String hotelId, String hotelName, String hotelTypeId, String backgroundImg, String country, String district, String city, String address, int averagePirce, int rating, boolean isBookmarked) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.hotelTypeId = hotelTypeId;
@@ -180,7 +184,19 @@ public class HotelDTO {
         this.address = address;
         this.averagePirce = averagePirce;
         this.rating = rating;
+        this.isBookmarked = isBookmarked;
     }
+
+    public boolean isIsBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setIsBookmarked(boolean isBookmarked) {
+        this.isBookmarked = isBookmarked;
+    }
+    
+     
+    
 
     public String getClosing() {
         return closing;
