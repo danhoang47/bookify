@@ -27,7 +27,7 @@ function HotelCard({
   });
 
   return (
-    <Link to={`hotel/${hotelId}`} >
+    <Link to={`hotel/${hotelId}`}>
       <div className={"hotel-card"}>
         <div className={"carousel"}>
           <Carousel controls={true} interval={null}>
