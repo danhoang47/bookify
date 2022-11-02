@@ -31,7 +31,10 @@ function RoomPickers() {
   return (
     <div className={PickerStyle["picker"]}>
       {Object.keys(roomInfor).reduce((prev, key) => {
-        if (key === "price" || key === "isPrivateBathRoom") {
+        if (
+          key === "price" ||
+          key === "isPrivateBathRoom" || key === 'id'
+        ) {
           return prev;
         } else {
           return [

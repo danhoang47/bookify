@@ -10,13 +10,13 @@ const tabs = [
     {
         id: 0,
         render: (setNextTabValid) => {
-            return <BasicInfomation setNextTabValid={setNextTabValid}/>
+            return <BasicInfomation setNextTabValid={setNextTabValid} />
         } 
     },
     {
         id: 1,
         render: (setNextTabValid) => {
-            return <AmenityInformation setNextTabValid={setNextTabValid}/>
+            return <AmenityInformation setNextTabValid={setNextTabValid} />
         } 
     },
     {

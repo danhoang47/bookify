@@ -1,6 +1,6 @@
 import { HotelCard } from "@/components";
 import { Grid } from "@mui/material";
-import { useMemo, memo, useEffect, useState } from "react";
+import { memo } from "react";
 
 function HotelCards({ hotels, type = null }) {
   return (

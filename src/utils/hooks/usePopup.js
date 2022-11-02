@@ -13,12 +13,17 @@ function usePopup(state = false) {
     const target = event.relatedTarget;
     const container = containerRef.current;
 
+    if (event.target?.innerText === 'Tìm kiếm khách sạn') {
+      return true;
+    }
+
     setOpen((prev) => {
       if (prev && !container.contains(target)) {
         return !prev;
       }
-      else 
+      else {
         return prev;
+      }
     })
   };
 

@@ -7,6 +7,8 @@ import HotelContext from "./HotelContext";
 import ExchangeContext from "./ExchangeContext";
 import CoordinatesContext from "./CoordinatesContext";
 import RegisterContext from "./RegisterContext";
+import AdvanceSearchContext from "./AdvanceSearchContext";
+import AdvanceFilterContext from "./AdvanceFilterContext";
 
 export {
   HotelContext,
@@ -17,4 +19,6 @@ export {
   SearchContext,
   CoordinatesContext,
   RegisterContext,
+  AdvanceSearchContext,
+  AdvanceFilterContext
 };

@@ -43,7 +43,6 @@ function ImageInputField({
     };
 
     const handleRemove = ({ url, index, id, type }) => {
-        console.log(type, url);
         if (type === "old") {
             const imagesArray = Array.from(images || []);
             imagesArray.splice(index, 1);

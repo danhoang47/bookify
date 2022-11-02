@@ -16,12 +16,9 @@ export default async function getHotel(id) {
             .then((res) => res.json())
             .then((data) => data);
         const {
-            hotelId,
-            userId,
             hotelTypeId,
             hotelName,
             backgroundImg,
-            isVerified,
             isAllowPet,
             isHasCamera,
             description,
@@ -39,7 +36,6 @@ export default async function getHotel(id) {
         } = data;
         const basicHotelInfor = {
             name: hotelName,
-            // id: hotelId,
             type: types.find(({ code }) => code === hotelTypeId).name,
             country: country,
             province: city,
@@ -48,6 +44,7 @@ export default async function getHotel(id) {
             description: description
         }
         const roomInfor = {
+            id: roomType.id,
             numberOfGuests: roomType.numberOfGuests,
             numberOfRoom: roomType.numberOfRoom,
             numberOfBed: roomType.numberOfBed,
