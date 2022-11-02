@@ -44,6 +44,7 @@ function App({ children }) {
     () => ({
       user,
       isLogin,
+      setLogin,
     }),
     [user]
   );
