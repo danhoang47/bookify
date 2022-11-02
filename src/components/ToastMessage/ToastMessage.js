@@ -26,7 +26,7 @@ function ToastMessage({ type, message }) {
             )}
         >
             <FontAwesomeIcon icon={getToastType(type)} />
-            {message}
+            <p className={toastMessageStyles['message']}>{message}</p>
         </div>
     );
 }

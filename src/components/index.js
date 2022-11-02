@@ -7,6 +7,7 @@ import GuestsPicker from "./GuestsPicker";
 import HotelCard from './HotelCard';
 import CircleLoading from "./CircleLoading";
 import InputField from "./InputField";
+import ToastMessage from "./ToastMessage";
 
 export {
     Logo,
@@ -17,5 +18,6 @@ export {
     GuestsPicker,
     HotelCard,
     CircleLoading,
-    InputField
+    InputField,
+    ToastMessage
 }

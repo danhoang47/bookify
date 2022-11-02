@@ -7,8 +7,8 @@ import {
     ToastMessageContext
 } from "@/utils/contexts";
 import { reducer } from "./utils/reducers/modalReducer";
-import { Modal } from "./components";
-import { Container } from "@mui/material";
+import { Modal, ToastMessage } from "./components";
+import { Container, Box } from "@mui/material";
 
 const initState = {
     isOpen: false,
@@ -33,6 +33,7 @@ function App({ children }) {
     const [modalState, dispatch] = useReducer(reducer, initState);
     const [isLogin, setLogin] = useState(false);
     const [currentCoordinates, setCurrentCoordinates] = useState();
+    const [toastMessages, setToastMessages] = useState([]);
 
     const modal = useMemo(() => {
         return {
@@ -81,14 +82,14 @@ function App({ children }) {
     //                 console.log(data);
     //             })
     //             .catch((err) => console.log(err));
-    //     }
+    //     }Í
     // }, []);
 
     return (
         <CoordinatesContext.Provider value={currentCoordinates}>
             <UserContext.Provider value={userContextValue}>
                 <ModalContext.Provider value={modal}>
-                    <ToastMessageContext.Provider>
+                    <ToastMessageContext.Provider value={null}>
                         <Container
                             maxWidth={"sx"}
                             sx={{
@@ -101,6 +102,19 @@ function App({ children }) {
                                     <Modal>{modalState.renderModal()}</Modal>
                                 </div>
                             )} 
+                            <Box sx={{
+                                position: 'fixed',
+                                bottom: '1em',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                display: 'flex',
+                                flexDirection: 'column-reverse',
+                                gap: '0.4em',
+                                alignItems: 'center'
+                            }}>
+                                <ToastMessage type={"success"} message="This is a success message" /> 
+                                <ToastMessage type={"failure"} message="This is a failure message" /> 
+                            </Box>
                         </Container>
                     </ToastMessageContext.Provider>
                 </ModalContext.Provider>
