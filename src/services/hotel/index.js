@@ -9,6 +9,8 @@ import toGoogleApiUrl from "./toGoogleApiUrl";
 import updateHotel from "./updateHotel";
 import getDefaultAmenities from "./getDefaultAmenities";
 import getDefaultAmenityTypes from "./getDefaultAmenityTypes";
+import searchAdvanceHotel from "./searchAdvanceHotel";
+import filterHotel from "./filterHotel";
 
 export {
     getDistanceFromUser,
@@ -21,5 +23,7 @@ export {
     toGoogleApiUrl,
     updateHotel,
     getDefaultAmenities,
-    getDefaultAmenityTypes
+    getDefaultAmenityTypes,
+    searchAdvanceHotel,
+    filterHotel
 }

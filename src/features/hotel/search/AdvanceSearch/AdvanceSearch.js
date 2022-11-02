@@ -6,10 +6,12 @@ import DateSearchHeader from "../DateSearchHeader";
 import GuestsSearchHeader from "../GuestsSearchHeader";
 
 // Util Import
-import { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useMemo, lazy, Suspense, useContext } from "react";
+import { useClsx } from "@/utils/hooks";
 import { SearchContext } from "@/utils/contexts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { AdvanceSearchContext } from "@/utils/contexts";
 
 // styles import
 import advanceSearchStyles from "./AdvanceSearch.module.scss";
@@ -38,6 +40,8 @@ function AdvanceSearch({ handleChangeMode }) {
     const [place, setPlace] = useState("Hà Nội");
     const [selectedDays, setSelectedDays] = useState({});
     const [guests, setGuests] = useState(guestsInitial);
+    const [isSearched, setSearched] = useState(false);
+    const {setAdvanceSearchOpen, handleOpenSearchBar} = useContext(AdvanceSearchContext);
 
     const searchContextValue = useMemo(() => {
         return {
@@ -50,24 +54,56 @@ function AdvanceSearch({ handleChangeMode }) {
         };
     }, [place, guests, selectedDays]);
 
-    const handleTabChange = useCallback((event) => {
+    const handleTabChange = (event) => {
         event.stopPropagation();
         const tabIndex = event.currentTarget.getAttribute("index");
         setCurrentTab(parseInt(tabIndex));
-    }, []);
+
+        if (isSearched) {
+            setSearched(prev => !prev);
+            handleOpenSearchBar(event);
+            setAdvanceSearchOpen(prev => !prev);
+        }
+    }
 
     const changeSearchMode = (event) => {
         event.stopPropagation();
         handleChangeMode(false);
     };
 
+    const handleAdvanceSearch = (e) => {
+        e.stopPropagation();
+        setSearched(!isSearched);
+        setAdvanceSearchOpen(prev => !prev);
+
+        if (!isSearched) {
+            setCurrentTab("3");
+            handleOpenSearchBar(e);
+        } else {
+            handleOpenSearchBar(e);
+            setCurrentTab(0);
+        }
+    };
+
     return (
         <SearchContext.Provider value={searchContextValue}>
-            <div id={advanceSearchStyles["advance-search"]}>
-                <div className={advanceSearchStyles["advance-search-header"]}>
+            <div
+                id={advanceSearchStyles["advance-search"]}
+                className={useClsx(
+                    isSearched ? advanceSearchStyles["to-header"] : ""
+                )}
+                tabIndex={-1}
+            >
+                <div
+                    className={useClsx(
+                        advanceSearchStyles["advance-search-header"],
+                        isSearched ? advanceSearchStyles["d-none"] : ""
+                    )}
+                >
                     <div
                         className={advanceSearchStyles["search-field-nav"]}
                         onClick={changeSearchMode}
+                        tabIndex={-1}
                     >
                         Tìm kiếm khách sạn
                     </div>
@@ -80,11 +116,17 @@ function AdvanceSearch({ handleChangeMode }) {
                         Tìm kiếm nâng cao
                     </div>
                 </div>
-                <div className={advanceSearchStyles["left"]}></div>
                 <div
-                    className={
-                        advanceSearchStyles["advance-search-header-field"]
-                    }
+                    className={useClsx(
+                        advanceSearchStyles["left"],
+                        isSearched ? advanceSearchStyles["d-none"] : ""
+                    )}
+                ></div>
+                <div
+                    className={useClsx(
+                        advanceSearchStyles["advance-search-header-field"],
+                        isSearched ? advanceSearchStyles["searched"] : ""
+                    )}
                 >
                     <Box
                         sx={{
@@ -110,6 +152,8 @@ function AdvanceSearch({ handleChangeMode }) {
                             className={
                                 advanceSearchStyles["advance-search-button"]
                             }
+                            tabIndex="-1"
+                            onClick={handleAdvanceSearch}
                         >
                             <button
                                 className={advanceSearchStyles["search-button"]}
@@ -120,13 +164,21 @@ function AdvanceSearch({ handleChangeMode }) {
                                         marginRight: "0.2em",
                                     }}
                                 />
-                                Tìm kiếm
+                                <span
+                                    className={useClsx(
+                                        isSearched
+                                            ? advanceSearchStyles["d-none"]
+                                            : ""
+                                    )}
+                                >
+                                    Tìm kiếm
+                                </span>
                             </button>
                         </div>
                     </Box>
                 </div>
                 <Suspense>
-                    <SearchField index={currentTab} />
+                    {isSearched || <SearchField index={currentTab} />}
                 </Suspense>
             </div>
         </SearchContext.Provider>

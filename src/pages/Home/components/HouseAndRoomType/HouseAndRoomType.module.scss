@@ -12,12 +12,9 @@
     }
 
     .house-room-picker {
-        display: flex;
-        gap: 0.8em;
 
         .type-item {
-            flex: 1 0 0;
-            border: 1px solid global.$gray-200;
+            border: 2px solid global.$gray-200;
             border-radius: 1em;
             padding: 1em;
             font-size: 1.2em;
@@ -25,7 +22,7 @@
             cursor: pointer;
             
             &.active {
-                border: 1px solid global.$black;
+                border-color: global.$black;
             }
     
             .type-title {
@@ -33,7 +30,7 @@
             }
     
             &:hover:not(.active) {
-                border: 1px solid global.$black;
+                border-color: global.$black;
             }
         }
     }

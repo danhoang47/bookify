@@ -27,7 +27,9 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="" element={<Home />} />
-        <Route path="hotel" element={<Hotel />} />
+        <Route path="hotel">
+          <Route path=":id" element={<Hotel />}/>
+        </Route>
         <Route path="profile">
           <Route path="" element={<Profile />} />
           <Route path="info" element={<PersonalInfo />} />

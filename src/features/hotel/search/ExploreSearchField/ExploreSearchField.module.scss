@@ -1,10 +1,9 @@
 @use 'src/global';
 
 .explore-search-places {
-    margin-top: 1em;
     display: inline-block;
     position: absolute;
-    top: 125.58px;
+    top: 100%;
     left: 3em;
     background: global.$white;
     padding: 2em;

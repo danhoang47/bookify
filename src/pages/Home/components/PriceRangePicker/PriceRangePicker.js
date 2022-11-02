@@ -1,16 +1,9 @@
-import Bar from "../Bar";
 import priceRangePickerStyles from "./PriceRangePicker.module.scss";
-import { useState, useId, useEffect } from "react";
-import priceFrequencies from "./priceFrequencies";
+import { useId } from "react";
 
-function PriceRangePicker({ prices, setPrice }) {
-  const [priceRange, setPriceRange] = useState({});
+function PriceRangePicker({ price, setPrice }) {
   const minInputPriceId = useId();
   const maxInputPriceId = useId();
-
-  useEffect(() => {
-    setPrice(priceRange);
-  }, [priceRange]);
 
   return (
     <div id={priceRangePickerStyles["price-range-picker"]}>
@@ -28,13 +21,11 @@ function PriceRangePicker({ prices, setPrice }) {
         >
           <input
             id={minInputPriceId}
-            value={priceRange?.min}
-            onChange={(event) => {
-              setPriceRange({
-                ...priceRange,
-                min: event.target.value,
-              });
-            }}
+            value={price?.min || 0}
+            onChange={(event) => setPrice(prev => ({
+              ...prev,
+              min: event.target.value
+            }))}
           />
           <label
             htmlFor={minInputPriceId}
@@ -53,19 +44,17 @@ function PriceRangePicker({ prices, setPrice }) {
         >
           <input
             id={maxInputPriceId}
-            value={priceRange?.max}
-            onChange={(event) => {
-              setPriceRange({
-                ...priceRange,
-                max: event.target.value,
-              });
-            }}
+            value={price?.max || 1000}
+            onChange={(event) => setPrice(prev => ({
+              ...prev,
+              max: event.target.value
+            }))}
           />
           <label
             htmlFor={maxInputPriceId}
             className={priceRangePickerStyles["label-input"]}
           >
-            Giá thấp nhất
+            Giá cao nhất
           </label>
         </div>
       </div>

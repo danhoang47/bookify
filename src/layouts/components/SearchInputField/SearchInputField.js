@@ -43,9 +43,12 @@ function SearchInputField({
                 </label>
             )}
             {isOpen && (
-                <label className={searchInputStyles["search-close-icon"]}>
+                <button 
+                    className={searchInputStyles["search-close-icon"]} 
+                    onClick={(event) => handleOpenSearchBar(event)}
+                >
                     <FontAwesomeIcon icon={faXmark} />
-                </label>
+                </button>
             )}
         </>
     );

@@ -10,10 +10,6 @@ function DatePicker({ numberOfMonths, mode, selectedDays, setSelectedDays }) {
             from: new Date("2000/1/1"),
             to: addDays(new Date(), -1),
         },
-        {
-            from: new Date(2022, 10, 27),
-            to: addDays(new Date(2022, 10, 27), + 1)
-        }
     ];
 
     return (

@@ -29,8 +29,33 @@
             border-radius: 0.6em;
             transition: border-color 0.15s linear;
 
-            &:hover {
+            &:not(.active):hover {
                 border-color: global.$black;
+            }
+
+            &.active {
+                border-color: global.$black;
+
+                &:hover {
+                    border-color: global.$gray-200;
+
+                    .filter-active {
+                        background: global.$gray-200;
+                    }
+                }
+            }
+
+            .filter-active {
+                position: absolute;
+                top: -9.5px;
+                right: -9.5px;
+                width: 19px;
+                font-size: 0.8em;
+                border-radius: 50%;
+                display: block;
+                background: global.$black;
+                color: global.$white;
+                transition: all 0.2s linear;
             }
         }
     }
