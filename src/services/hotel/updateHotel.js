@@ -65,6 +65,7 @@ export default async function updateHotel(
     pushFilesToFormData(hotelUpdateForm, updatedViewImages, varToString({ updatedViewImages }))
     pushFilesToFormData(hotelUpdateForm, updatedRoomImages, varToString({ updatedRoomImages }))
 
+    console.log(backgroundImage, updatedViewImages, updatedRoomImages, deletedImages);
     const data = await fetch(url, {
         method: "PUT",
         body: hotelUpdateForm,

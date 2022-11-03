@@ -21,6 +21,7 @@ const ImageItem = ({ src, index, setActiveImageIndex }) => {
 function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
     const [activeImageIndex, setActiveImageIndex] = useState(null);
 
+    console.log(backgroundImage, images);
     return (
         <div
             id={"all-image-section"}
@@ -44,7 +45,7 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
                     </h3>
                     <ImageList variant="mansonry" cols={3} gap={8}>
                         {images.reduce((prev, { id, src, type }, index) => {
-                            if (type !== "0") {
+                            if (type === 0) {
                                 return [
                                     ...prev,
                                     <ImageItem
@@ -69,7 +70,7 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
                     </h3>
                     <ImageList>
                         {images.reduce((prev, { id, src, type }, index) => {
-                            if (type === "2") {
+                            if (type === 1) {
                                 return [
                                     ...prev,
                                     <ImageItem
@@ -97,7 +98,7 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
                             {
                                 id: uuid(),
                                 src: backgroundImage,
-                                type: "0",
+                                type: 2,
                             },
                             ...images,
                         ]}

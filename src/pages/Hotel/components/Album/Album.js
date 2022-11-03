@@ -22,7 +22,7 @@ function Album({ backgroundImage, images }) {
                         </div>
                     </div>
                     <div className={albumStyles["bottom-right"]}>
-                        {images.reduce((prev, { id, src, type }, index) => {
+                        {images.reduce((prev, { id, src }, index) => {
                             if (index <= 2 && index >= 1) {
                                 return [
                                     ...prev,
