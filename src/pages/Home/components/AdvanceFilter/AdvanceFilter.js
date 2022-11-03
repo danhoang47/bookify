@@ -110,7 +110,10 @@ function AdvanceFilter({
             </div>
             <button
                 className={advanceFilterStyles["close-button"]}
-                onClick={handleClick}
+                onClick={(e) => {
+                    removeAllSelected(e);
+                    handleClick(e);
+                }}
             >
                 <FontAwesomeIcon icon={faXmark} />
             </button>

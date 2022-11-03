@@ -25,6 +25,9 @@ function HotelCard({
     let imgName = image.src.split("/");
     allImages.push(imgName[imgName.length - 1]);
   });
+  const handleBookmark = (event) => {
+    event.preventDefault();
+  }
 
   return (
     <Link to={`hotel/${hotelId}`}>
@@ -57,7 +60,7 @@ function HotelCard({
             <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
           </div>
         </div>
-        <div className={"bookmark-icon"}>
+        <div className={"bookmark-icon"} onClick={handleBookmark}>
           <FontAwesomeIcon icon={faHeart} style={{ zIndex: 0 }} />
         </div>
       </div>

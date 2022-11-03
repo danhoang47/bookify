@@ -9,6 +9,7 @@ import CoordinatesContext from "./CoordinatesContext";
 import RegisterContext from "./RegisterContext";
 import AdvanceSearchContext from "./AdvanceSearchContext";
 import AdvanceFilterContext from "./AdvanceFilterContext";
+import ToastMessageContext from "./ToastMessageContext";
 
 export {
   HotelContext,
@@ -20,5 +21,6 @@ export {
   CoordinatesContext,
   RegisterContext,
   AdvanceSearchContext,
-  AdvanceFilterContext
+  AdvanceFilterContext,
+  ToastMessageContext
 };

@@ -1,6 +1,6 @@
 import profileNav from "./ProfileHeaderNav.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars,faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import OptionList from "../OptionList";
 import { usePopup } from "@/utils/hooks";
 

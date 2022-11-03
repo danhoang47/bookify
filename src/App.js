@@ -4,9 +4,10 @@ import {
   ModalContext,
   UserContext,
   CoordinatesContext,
+  ToastMessageContext,
 } from "@/utils/contexts";
-import { reducer } from "./utils/reducers/modalReducer";
-import { Modal } from "./components";
+import { modalReducer, toastMessageReducer } from "./utils/reducers";
+import { Modal, ToastMessage, ToastMessageBox } from "./components";
 import { Container } from "@mui/material";
 
 const initState = {
@@ -29,9 +30,10 @@ const user = {
 };
 
 function App({ children }) {
-  const [modalState, dispatch] = useReducer(reducer, initState);
+  const [modalState, dispatch] = useReducer(modalReducer, initState);
   const [isLogin, setLogin] = useState(false);
   const [currentCoordinates, setCurrentCoordinates] = useState();
+  const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
 
   const modal = useMemo(() => {
     return {
@@ -46,7 +48,14 @@ function App({ children }) {
       isLogin,
       setLogin,
     }),
-    [user]
+    [isLogin]
+  );
+
+  const toastMessageContextValue = useMemo(
+    () => ({
+      setToastMessages,
+    }),
+    []
   );
 
   useEffect(() => {
@@ -80,26 +89,33 @@ function App({ children }) {
   //                 console.log(data);
   //             })
   //             .catch((err) => console.log(err));
-  //     }
+  //     }Í
   // }, []);
 
   return (
     <CoordinatesContext.Provider value={currentCoordinates}>
       <UserContext.Provider value={userContextValue}>
         <ModalContext.Provider value={modal}>
-          <Container
-            maxWidth={"sx"}
-            sx={{
-              position: "relative",
-            }}
-          >
-            {children}
-            {modalState.isOpen && (
-              <div className="overlay">
-                <Modal>{modalState.renderModal()}</Modal>
-              </div>
-            )}
-          </Container>
+          <ToastMessageContext.Provider value={toastMessageContextValue}>
+            <Container
+              maxWidth={"sx"}
+              sx={{
+                position: "relative",
+              }}
+            >
+              {children}
+              {modalState.isOpen && (
+                <div className="overlay">
+                  <Modal>{modalState.renderModal()}</Modal>
+                </div>
+              )}
+              <ToastMessageBox>
+                {toastMessages.map(({ type, message }) => (
+                  <ToastMessage type={type} message={message} />
+                ))}
+              </ToastMessageBox>
+            </Container>
+          </ToastMessageContext.Provider>
         </ModalContext.Provider>
       </UserContext.Provider>
     </CoordinatesContext.Provider>
