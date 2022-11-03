@@ -154,16 +154,16 @@ public class HotelDAO {
     }
 
     public List<HotelDTO> getAllHotelBasicInfo() throws SQLException {
-        String query = "select * from getAllHotelBasicInfo";
+        String query = "proc_getAllHotelBasicInfor @userId = '123'";
         Connection conn = null;
-        PreparedStatement ps = null;
+        CallableStatement cs = null;
         ResultSet rs = null;
 
         List<HotelDTO> listHotel = new ArrayList<>();
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+            cs = conn.prepareCall(query);
+            rs = cs.executeQuery();
 
             while (rs.next()) {
                 String hotelId = rs.getString("hotel_id");
@@ -189,8 +189,8 @@ public class HotelDAO {
             if (rs != null) {
                 rs.close();
             }
-            if (ps != null) {
-                ps.close();
+            if (cs != null) {
+                cs.close();
             }
         }
 

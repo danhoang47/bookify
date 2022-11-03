@@ -113,6 +113,14 @@ public class HotelController {
 
         return Response.ok(new Gson().toJson("hello")).build();
     }
+    
+    @POST
+    @Path("/search/advance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchAdvanceHotel(@FormDataParam("searchData") String searchData) {
+        
+        return Response.ok().build();
+    }
 
     @GET
     @Path("/all")

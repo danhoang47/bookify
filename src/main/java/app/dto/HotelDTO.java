@@ -1,4 +1,3 @@
-
 package app.dto;
 
 import java.util.List;
@@ -34,6 +33,7 @@ public class HotelDTO {
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
     private RoomTypeDTO roomType;
+    private boolean isBookmarked;
 
     public HotelDTO() {
 
@@ -360,5 +360,5 @@ public class HotelDTO {
                 + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening="
                 + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", hotelAmenities="
                 + hotelAmenities + ", images=" + images + ", roomType=" + roomType + '}';
-    }    
+    }
 }
