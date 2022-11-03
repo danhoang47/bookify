@@ -7,6 +7,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function Comments({ reviews }) {
   console.log(reviews);
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>

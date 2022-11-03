@@ -31,7 +31,10 @@ function Hotel() {
     <div id={hotelStyles["hotel"]}>
       <Grid container justifyContent={"center"}>
         <Grid item xs={10}>
-          <Album backgroundImage={backgroundImage} images={images} />
+          <Album
+            backgroundImage={hotelInfo.backgroundImg}
+            images={hotelInfo.images}
+          />
           <Box
             sx={{
               marginTop: "2em",
