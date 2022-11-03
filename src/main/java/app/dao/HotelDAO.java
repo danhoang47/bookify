@@ -26,7 +26,7 @@ public class HotelDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from Hotel where hotel_id = ?";
+        String sql = "select * from getHotel where hotel_id=?";
         HotelDTO hotel = null;
 
         try {
@@ -51,11 +51,12 @@ public class HotelDAO {
                 String checkout = rs.getString("checkout");
                 String closing = rs.getString("closing");
                 String opening = rs.getString("opening");
+                int rating = rs.getInt("rating");
                 hotel = new HotelDTO(id, ownerId,
                         hotelTypeId, name, backgroundImage,
                         isAllowPet, isAllowPet, isHasCamera,
                         description, country, district, city,
-                        address, closing, opening, checkin, checkout, null, null);
+                        address, closing, opening, checkin, checkout, null, null, rating);
 
                 System.out.println(hotel.getHotelName());
             }
@@ -142,6 +143,38 @@ public class HotelDAO {
             int a = ps.executeUpdate();
 
             if (a == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(dao.HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean isHotelBookmarked(String hotelId, String userId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int a = 0;
+        try {
+            String query = "select * from Bookmark where hotel_id=? and user_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, hotelId);
+            ps.setString(2, userId);
+ 
+
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                a++;
+            }
+
+            if (a > 0) {
                 return true;
             } else {
                 return false;
@@ -339,5 +372,6 @@ public class HotelDAO {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         HotelDAO dao = new HotelDAO();
 //        System.out.println(dao.getAllHotelBasicInfo());
+        System.out.println(dao.isHotelBookmarked("4765fdf0-3f70-41e4-a901-7d838c610614", null));
     }
 }

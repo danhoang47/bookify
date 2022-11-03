@@ -53,9 +53,11 @@ public class HotelController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHotel(@QueryParam("id") String hotelId) throws SQLException, ClassNotFoundException {
+    public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
+        System.out.println(hotelId);
+        String newUserId = userid == null ? "" : userid;
 
-        return Response.ok(gson.toJson(service.get(hotelId))).build();
+        return Response.ok(gson.toJson(service.get(hotelId, newUserId))).build();
     }
     
     @PUT

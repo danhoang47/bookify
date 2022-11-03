@@ -47,7 +47,7 @@ public class UploadImage {
             //release resource, if any
             outputStream.close();
         }
-        return qualifiedUploadFilePath;
+        return "http://localhost:8080/bookify/images/"+typeUpload + "/" + fileName;
     }
 
     public static List<String> uploadMultipleFile(FormDataBodyPart body) throws IOException {

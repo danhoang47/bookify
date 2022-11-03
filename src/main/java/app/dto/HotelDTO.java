@@ -33,8 +33,10 @@ public class HotelDTO {
     private int rating;
     private List<HotelAmenityDTO> hotelAmenities;
     private List<ImageDTO> images;
+    private List<ReviewDTO> reviews;
     private RoomTypeDTO roomType;
     private boolean isBookmarked;
+    private UserDTO hotelOwner;
 
     public HotelDTO() {
 
@@ -62,6 +64,32 @@ public class HotelDTO {
         this.checkout = checkout;
         this.hotelAmenities = hotelAmenities;
         this.images = images;
+    }
+    
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
+            boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district,
+            String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, 
+            List<ImageDTO> images, int rating) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
+        this.rating = rating;
     }
 
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
@@ -162,12 +190,60 @@ public class HotelDTO {
         this.roomType = roomType;
     }
 
-    public void setRoomType(RoomTypeDTO roomType) {
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, int averagePirce, int rating, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, List<ReviewDTO> reviews, RoomTypeDTO roomType, boolean isBookmarked) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.averagePirce = averagePirce;
+        this.rating = rating;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
+        this.reviews = reviews;
         this.roomType = roomType;
+        this.isBookmarked = isBookmarked;
     }
 
-    public RoomTypeDTO getRoomType() {
-        return roomType;
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, int averagePirce, int rating, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, List<ReviewDTO> reviews, RoomTypeDTO roomType, boolean isBookmarked, UserDTO hotelOwner) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.averagePirce = averagePirce;
+        this.rating = rating;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
+        this.reviews = reviews;
+        this.roomType = roomType;
+        this.isBookmarked = isBookmarked;
+        this.hotelOwner = hotelOwner;
     }
 
    
@@ -187,6 +263,16 @@ public class HotelDTO {
         this.isBookmarked = isBookmarked;
     }
 
+    public List<ReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
+    }
+    
+    
+
     public boolean isIsBookmarked() {
         return isBookmarked;
     }
@@ -195,8 +281,13 @@ public class HotelDTO {
         this.isBookmarked = isBookmarked;
     }
     
-     
-    
+    public void setRoomType(RoomTypeDTO roomType) {
+        this.roomType = roomType;
+    }
+
+    public RoomTypeDTO getRoomType() {
+        return roomType;
+    }
 
     public String getClosing() {
         return closing;
@@ -366,15 +457,20 @@ public class HotelDTO {
         this.rating = rating;
     }
 
+    public UserDTO getHotelOwner() {
+        return hotelOwner;
+    }
+
+    public void setHotelOwner(UserDTO hotelOwner) {
+        this.hotelOwner = hotelOwner;
+    }
+
     @Override
     public String toString() {
-        return "HotelDTO{" + "hotelId=" + hotelId + ", userId="
-                + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName="
-                + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified="
-                + isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera
-                + ", description=" + description + ", country=" + country + ", district=" + district
-                + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening="
-                + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", hotelAmenities="
-                + hotelAmenities + ", images=" + images + ", roomType=" + roomType + '}';
-    }    
+        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening=" + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", averagePirce=" + averagePirce + ", rating=" + rating + ", hotelAmenities=" + hotelAmenities + ", images=" + images + ", reviews=" + reviews + ", roomType=" + roomType + ", isBookmarked=" + isBookmarked + ", hotelOwner=" + hotelOwner + '}';
+    }
+
+    
+
+
 }

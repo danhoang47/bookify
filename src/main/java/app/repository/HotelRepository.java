@@ -10,8 +10,13 @@ import app.dto.HotelAmenityDTO;
 import app.dao.HotelDAO;
 import app.dao.ImageDAO;
 import app.dao.HotelAmenityDAO;
+import app.dao.ReviewDAO;
 import app.dao.RoomTypeDAO;
+import app.dao.UserDAO;
+import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
+import app.dto.UserDTO;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +30,9 @@ public class HotelRepository {
     private ImageDAO imageDao;
     private HotelAmenityDAO hotelAmenityDao;
     private RoomTypeDAO roomTypeDao;
+    private ReviewDAO reviewDao;
+    private UserDAO userDAO;
+    
 
     
     public HotelRepository() {
@@ -32,22 +40,29 @@ public class HotelRepository {
         imageDao = new ImageDAO();
         hotelAmenityDao = new HotelAmenityDAO();
         roomTypeDao = new RoomTypeDAO();
+        reviewDao = new ReviewDAO();
+        userDAO = new UserDAO();
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
         return hotelDao.addNewHotel(hotel);
     }
 
-    public HotelDTO get(String id) throws SQLException, ClassNotFoundException {
+    public HotelDTO get(String id, String userId) throws SQLException, ClassNotFoundException {
        
         HotelDTO hotelDto = hotelDao.get(id);
         List<ImageDTO> imageDtos = imageDao.get(hotelDto.getHotelId());
         List<HotelAmenityDTO> hotelAmenityDtos = hotelAmenityDao.get(hotelDto.getHotelId());
+        List<ReviewDTO> listReviews = reviewDao.listReview(id);
         RoomTypeDTO roomType = roomTypeDao.get(hotelDto.getHotelId());
+        UserDTO owner = userDAO.getOwner(hotelDto.getUserId());
 
+        hotelDto.setIsBookmarked(hotelDao.isHotelBookmarked(id, userId));
         hotelDto.setImages(imageDtos);
         hotelDto.setHotelAmenities(hotelAmenityDtos);
         hotelDto.setRoomType(roomType);
+        hotelDto.setReviews(listReviews);
+        hotelDto.setHotelOwner(owner);
 
         return hotelDto;
     }

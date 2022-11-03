@@ -27,8 +27,8 @@ public class HotelService {
         hotelRepo = new HotelRepository();
     }
     
-    public HotelDTO get(String hotelId) throws SQLException, ClassNotFoundException {
-        return hotelRepo.get(hotelId);
+    public HotelDTO get(String hotelId, String userId) throws SQLException, ClassNotFoundException {
+        return hotelRepo.get(hotelId, userId);
     }
     
     public void update(
