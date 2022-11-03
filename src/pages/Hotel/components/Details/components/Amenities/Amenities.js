@@ -2,49 +2,9 @@ import AmenitiesStyle from "./Amenities.module.scss";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBed,
-  faBowlRice,
-  faParking,
-  faPersonSwimming,
-} from "@fortawesome/free-solid-svg-icons";
-import { useMemo } from "react";
+import * as icon from "@fortawesome/free-solid-svg-icons";
 
-function Amenities() {
-  const amenitiesItem = useMemo(
-    () => [
-      {
-        name: "Có chỗ đậu xe rộng rãi",
-        icon: faParking,
-      },
-      {
-        name: "Có hồ bơi rộng lớn",
-        icon: faPersonSwimming,
-      },
-      {
-        name: "Có bếp riêng trong phòng",
-        icon: faBowlRice,
-      },
-      {
-        name: "Có chỗ đậu xe rộng rãi",
-        icon: faParking,
-      },
-      {
-        name: "Có hồ bơi rộng lớn",
-        icon: faPersonSwimming,
-      },
-      {
-        name: "Có bếp riêng trong phòng",
-        icon: faBowlRice,
-      },
-      {
-        name: "Có chỗ đậu xe rộng rãi",
-        icon: faParking,
-      },
-    ],
-    []
-  );
-
+function Amenities({ hotelAmenities, roomType }) {
   return (
     <div>
       <h3 className={AmenitiesStyle["title"]}>
@@ -53,12 +13,12 @@ function Amenities() {
       <div className={AmenitiesStyle["Amenities"]}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
-            {amenitiesItem?.map((item, index) => {
+            {hotelAmenities?.map((item, index) => {
               return (
                 <Grid item xs={12} md={4} key={index}>
                   <div className={AmenitiesStyle["item"]}>
                     <div className={AmenitiesStyle["icon"]}>
-                      <FontAwesomeIcon icon={item.icon} />
+                      <FontAwesomeIcon icon={icon[item.icon]} />
                     </div>
                     <h6 className={AmenitiesStyle["name"]}>{item.name}</h6>
                   </div>
@@ -76,10 +36,23 @@ function Amenities() {
             <Grid item xs={12} md={4}>
               <div className={AmenitiesStyle["sub-item"]}>
                 <div className={AmenitiesStyle["sub-icon"]}>
-                  <FontAwesomeIcon icon={faBed} />
+                  <FontAwesomeIcon icon={icon["faBed"]} />
                 </div>
                 <h6 className={AmenitiesStyle["sub-name"]}>Phòng ngủ</h6>
-                <p className={AmenitiesStyle["sub-des"]}>1 giường đôi</p>
+                <p className={AmenitiesStyle["sub-des"]}>
+                  {roomType.numberOfBed + " " + roomType.bedType}
+                </p>
+              </div>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <div className={AmenitiesStyle["sub-item"]}>
+                <div className={AmenitiesStyle["sub-icon"]}>
+                  <FontAwesomeIcon icon={icon["faShower"]} />
+                </div>
+                <h6 className={AmenitiesStyle["sub-name"]}>Phòng tắm</h6>
+                <p className={AmenitiesStyle["sub-des"]}>
+                  {roomType.numberOfBathroom + " " + roomType.bathroomType}
+                </p>
               </div>
             </Grid>
           </Grid>

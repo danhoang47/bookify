@@ -116,8 +116,6 @@ function Home() {
     }
   }, [type]);
 
-  console.log(hotelsList);
-
   const advanceFilterContextValue = useMemo(
     () => ({
       roomAndBedRoom,

@@ -5,18 +5,20 @@ import Box from "@mui/material/Box";
 import RatingStyle from "./Rating.module.scss";
 import Point from "./Point";
 import Comments from "./Comments";
+import { getPoints } from "./RatingService";
 
-function Rating() {
+function Rating({ reviews, rating }) {
+  const pointsData = getPoints(reviews);
   return (
     <div>
       <h4 className={RatingStyle["title"]}>
-        5 <FontAwesomeIcon icon={faStar} /> - 144 đánh giá
+        {rating} <FontAwesomeIcon icon={faStar} /> - {reviews?.length} đánh giá
       </h4>
       <div className={RatingStyle["Rating"]}>
-        <Point />
+        <Point pointsData={pointsData} />
       </div>
       <div className={RatingStyle["comment-container"]}>
-        <Comments />
+        <Comments reviews={reviews} />
       </div>
     </div>
   );

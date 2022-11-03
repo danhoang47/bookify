@@ -9,7 +9,14 @@ import Description from "./components/Description";
 import Amenities from "./components/Amenities";
 import Rating from "./components/Rating";
 
-function Details() {
+function Details({
+  reviews,
+  description,
+  hotelAmenities,
+  hotelOwner,
+  roomType,
+  rating,
+}) {
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
@@ -52,13 +59,13 @@ function Details() {
               </TabList>
             </Box>
             <TabPanel value="1" className={DetailStyle["panel"]}>
-              <Description />
+              <Description description={description} hotelOwner={hotelOwner} />
             </TabPanel>
             <TabPanel value="2" className={DetailStyle["panel"]}>
-              <Amenities />
+              <Amenities hotelAmenities={hotelAmenities} roomType={roomType} />
             </TabPanel>
             <TabPanel value="3" className={DetailStyle["panel"]}>
-              <Rating />
+              <Rating reviews={reviews} rating={rating} />
             </TabPanel>
           </TabContext>
         </Box>

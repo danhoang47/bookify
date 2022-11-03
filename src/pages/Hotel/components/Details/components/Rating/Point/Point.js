@@ -5,24 +5,24 @@ import Box from "@mui/material/Box";
 import PointStyle from "./Point.module.scss";
 import { useMemo } from "react";
 
-function Point() {
+function Point({ pointsData }) {
   const points = useMemo(
     () => [
       {
         point_name: "Mức độ chính xác",
-        point: 3,
+        point: pointsData.accuracyPoint,
       },
       {
         point_name: "Giá trị",
-        point: 4,
+        point: pointsData.locationPoint,
       },
       {
         point_name: "Mức độ sạch sẽ",
-        point: 5,
+        point: pointsData.valuePoint,
       },
       {
         point_name: "Phục vụ",
-        point: 5,
+        point: pointsData.communicationPoint,
       },
     ],
     []
