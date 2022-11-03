@@ -8,6 +8,10 @@ import HotelCard from './HotelCard';
 import CircleLoading from "./CircleLoading";
 import InputField from "./InputField";
 import ToastMessage from "./ToastMessage";
+import ToastMessageBox from "./ToastMessageBox";
+import BookmarkBox from "./BookmarkBox";
+import BookmarkItem from "./BookmarkItem";
+import DropdownBox from "./DropdownBox";
 
 export {
     Logo,
@@ -19,5 +23,9 @@ export {
     HotelCard,
     CircleLoading,
     InputField,
-    ToastMessage
+    ToastMessage,
+    ToastMessageBox,
+    BookmarkBox,
+    BookmarkItem,
+    DropdownBox
 }

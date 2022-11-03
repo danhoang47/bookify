@@ -1,0 +1,37 @@
+@use 'src/global';
+
+.drop-down-box {
+    position: absolute;
+    top: 3em;
+    right: -2em;
+    background: global.$white;
+    border-radius: 0.7em;
+    filter: drop-shadow(0 3px 8px rgb(136, 136, 136));
+
+    .drop-down-header {
+        display: flex;
+        padding: 1em;
+        align-items: flex-end;
+        
+        .heading {
+            font-size: 1.2em;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        .extra-button {
+            margin-left: auto;
+            transition: all 0.2s linear;
+
+            &:hover {
+                opacity: 0.6;
+            }
+
+            .extra-button-title {
+                font-size: 0.85em;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 async function signIn(username, password) {
-  const url = "http://localhost:8080/bookify/api/user_detail/login";
+  const url = "http://localhost:8080/bookify/api/user/login";
   const accountForm = new FormData();
   accountForm.append("username", username);
   accountForm.append("password", password);

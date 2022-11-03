@@ -1,15 +1,19 @@
 import IconButton from "../IconButton";
 import SearchBox from "../SearchBox";
 import ProfileHeaderNav from "../ProfileHeaderNav";
-import { Logo } from "@/components";
-import { faBookmark, faBell } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "@/utils/contexts";
+import { BookmarkBox, Logo } from "@/components";
+import { faBookmark, faBell } from "@fortawesome/free-regular-svg-icons";
 import { Grid, Box } from "@mui/material";
 import headerStyles from './Header.module.scss';
+import { useContext } from "react";
 
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
 function Header({ location = '' }) {
+    const { user } = useContext(UserContext);
+
 
     return (
         <div className={headerStyles['header']} >
@@ -28,7 +32,9 @@ function Header({ location = '' }) {
                       justifyContent: "flex-end",
                       alignItems: "center"
                     }}>
-                      <BookmarkIconButton icon={faBookmark} />
+                      <BookmarkIconButton icon={faBookmark} >
+                        <BookmarkBox />
+                      </BookmarkIconButton>
                       <NotificationIconButton icon={faBell} />
                       <ProfileHeaderNav />
                     </Box>

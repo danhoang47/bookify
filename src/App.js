@@ -4,11 +4,11 @@ import {
     ModalContext,
     UserContext,
     CoordinatesContext,
-    ToastMessageContext
+    ToastMessageContext,
 } from "@/utils/contexts";
-import { reducer } from "./utils/reducers/modalReducer";
-import { Modal, ToastMessage } from "./components";
-import { Container, Box } from "@mui/material";
+import { modalReducer, toastMessageReducer } from "./utils/reducers";
+import { Modal, ToastMessage, ToastMessageBox } from "./components";
+import { Container } from "@mui/material";
 
 const initState = {
     isOpen: false,
@@ -30,10 +30,10 @@ const user = {
 };
 
 function App({ children }) {
-    const [modalState, dispatch] = useReducer(reducer, initState);
+    const [modalState, dispatch] = useReducer(modalReducer, initState);
     const [isLogin, setLogin] = useState(false);
     const [currentCoordinates, setCurrentCoordinates] = useState();
-    const [toastMessages, setToastMessages] = useState([]);
+    const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
 
     const modal = useMemo(() => {
         return {
@@ -48,7 +48,14 @@ function App({ children }) {
             isLogin,
             setLogin,
         }),
-        [user]
+        [isLogin]
+    );
+
+    const toastMessageContextValue = useMemo(
+        () => ({
+            setToastMessages,
+        }),
+        []
     );
 
     useEffect(() => {
@@ -89,7 +96,9 @@ function App({ children }) {
         <CoordinatesContext.Provider value={currentCoordinates}>
             <UserContext.Provider value={userContextValue}>
                 <ModalContext.Provider value={modal}>
-                    <ToastMessageContext.Provider value={null}>
+                    <ToastMessageContext.Provider
+                        value={toastMessageContextValue}
+                    >
                         <Container
                             maxWidth={"sx"}
                             sx={{
@@ -101,20 +110,14 @@ function App({ children }) {
                                 <div className="overlay">
                                     <Modal>{modalState.renderModal()}</Modal>
                                 </div>
-                            )} 
-                            <Box sx={{
-                                position: 'fixed',
-                                bottom: '1em',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                display: 'flex',
-                                flexDirection: 'column-reverse',
-                                gap: '0.4em',
-                                alignItems: 'center'
-                            }}>
-                                <ToastMessage type={"success"} message="This is a success message" /> 
-                                <ToastMessage type={"failure"} message="This is a failure message" /> 
-                            </Box>
+                            )}
+                            <ToastMessageBox>
+                                {
+                                    toastMessages.map(({ type, message }) => (
+                                        <ToastMessage type={type} message={message} />
+                                    ))
+                                }
+                            </ToastMessageBox>
                         </Container>
                     </ToastMessageContext.Provider>
                 </ModalContext.Provider>
