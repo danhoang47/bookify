@@ -48,6 +48,10 @@ public class AmenityService {
         
         for (int i = 0; i < newAmenitiesId.size(); i++) {
             if (!currentAmenities.contains(newAmenitiesId.get(i))) {
+                System.out.println("Hello " + newAmenitiesId.get(i));
+                System.out.println("Name: " + newAmenitiesName.get(i));
+                System.out.println("Type: " + newAmenitiesTypes.get(i));
+                System.out.println("Amenities: " + newAmenitiesId.get(i) + " "  +newAmenitiesName.get(i) + " " + newAmenitiesTypes.get(i));
                 dao.addAmenity(newAmenitiesId.get(i), newAmenitiesName.get(i), newAmenitiesTypes.get(i));
             }
         }

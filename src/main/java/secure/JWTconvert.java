@@ -27,7 +27,7 @@ public class JWTconvert {
                     .claim("user_id", user_id)
                     .claim("role", role)
                     .setIssuedAt(Date.from(now))
-                    .setExpiration(Date.from(now.plus(3, ChronoUnit.MINUTES)))
+                    .setExpiration(Date.from(now.plus(20, ChronoUnit.MINUTES)))
                     .signWith(Keys.hmacShaKeyFor(secret))
                     .compact();
 
@@ -53,7 +53,8 @@ public class JWTconvert {
 //        String jwtString = jwt.encodeToJWT("00f454a8-0d04-421d-b6f0-140bb33a3e3e", 1);
 //        System.out.println(jwtString);
         
-        Jws<Claims> res = jwt.decodeToJWT("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWFkNjI4NmQtZDA4ZC00Mzk3LTg3MDQtYjhhMWFmZjA3MzA5Iiwicm9sZSI6MSwiaWF0IjoxNjY2MjU3MTg4LCJleHAiOjE2NjYyNTczNjh9.xSj-YgF6_r5S2CDHR2P9jiMf3y7HEBEmf-6hqRAk8V8", "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
+        Jws<Claims> res = jwt.decodeToJWT("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWFkNjI4NmQtZDA4ZC00Mzk3LTg3MDQtYjhhMWFmZjA3MzA5Iiwicm9sZSI6MSwiaWF0IjoxNjY3NTM0NDIxLCJleHAiOjE2Njc1MzU2MjF9.afm1V--EigAWup_jt23XOdN1cnfvqEe-2Qh_qOL8CMk", 
+                                        "ZGF5bGFwYXNzd29yZHNpZXVkYWlzaWV1dG9zaWV1a2hvbmdsbw0K");
         System.out.println("Userid: " +res.getBody().get("user_id"));
 //        System.out.println(res);
     }

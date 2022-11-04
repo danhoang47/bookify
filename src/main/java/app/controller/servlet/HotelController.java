@@ -8,9 +8,11 @@ import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.HotelDTO;
 import app.services.AmenityService;
+import app.services.DateRangeService;
 import app.services.HotelService;
 import app.services.ImageService;
 import app.services.RoomService;
+import app.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +22,7 @@ import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -47,6 +50,8 @@ import service.UploadImage;
 public class HotelController {
 
     private final static HotelService service = new HotelService();
+    private final static UserService userService = new UserService();
+    private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Context ServletContext context;
 
@@ -54,9 +59,8 @@ public class HotelController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
-        System.out.println(hotelId);
+        
         String newUserId = userid == null ? "" : userid;
-
         return Response.ok(gson.toJson(service.get(hotelId, newUserId))).build();
     }
     
@@ -134,6 +138,15 @@ public class HotelController {
         String newUserId = userId == null ? "" : userId;
         return Response.ok(gson.toJson(service.getFilterHotel(type,newUserId, id))).build();
     }
+    
+    @GET
+    @Path("/checkrange")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkDateRange(@QueryParam("checkin") String checkin, @QueryParam("checkout") String checkout, @QueryParam("hotelId") String hotelId) throws SQLException, ClassNotFoundException, ParseException {
+//        JSONObject obj = new JSONObject();
+        
+        return Response.ok(gson.toJson(dateRangeService.checkDateRange(checkin, checkout, hotelId))).build();
+    }
 
     @POST
     @Path("/filteradvanced")
@@ -190,7 +203,8 @@ public class HotelController {
             @FormDataParam("bedroomNum") int bedroomNum,
             @FormDataParam("isbathPrivate") boolean isbathPrivate,
             @FormDataParam("userId") String userId) throws IOException {
-
+        System.out.println(isCamera);
+        System.out.println(isAnimalAccept);
         UploadImage uploadhotel = new UploadImage();
         HotelService hotelService = new HotelService();
         ImageService imgService = new ImageService();
@@ -245,7 +259,7 @@ public class HotelController {
         if (viewImage != null) {
             listViewImagePath = uploadhotel.uploadMultipleFile2(viewImage);
         }
-        boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 2);
+        boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 0);
         System.out.println("Image " + addImageView);
         if (addImageView == false) {
             obj.put("message", "Sign up new image view failed, please try again");
@@ -256,6 +270,13 @@ public class HotelController {
         boolean addAmenties = amenityService.addHotelAmenitiesAll(amenitiesId, amenities, amenitiyType, hotel.getHotelId());
         if (addAmenties == false) {
             obj.put("message", "Sign up new hotel amenities failed, please try again");
+            return Response.ok(new Gson().toJson(obj)).build();
+        }
+        
+//        Update userRole
+        boolean updateUser = userService.makeHosting(userId);
+        if(updateUser==false) {
+            obj.put("message", "Update user failed, please try again");
             return Response.ok(new Gson().toJson(obj)).build();
         }
 

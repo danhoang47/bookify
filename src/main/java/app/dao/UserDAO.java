@@ -308,6 +308,29 @@ public class UserDAO {
         return null;
     }
     
+    
+ //    ---------------------------- make host-------------------------------------------
+    public boolean makeHosting(String id) {
+        try {
+            String query = "update userDetail set role=2 where user_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            int a = ps.executeUpdate();
+
+            if(a==1) {
+                return true;
+            } else {
+                return false;
+            }
+            
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public static void main(String[] args) {
 
         UserDTO ud = new UserDAO().login("duc", "123"); 

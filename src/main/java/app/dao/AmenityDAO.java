@@ -174,6 +174,7 @@ public class AmenityDAO {
     public static void main(String[] args) throws SQLException {
         List<AmenityDTO> listAmen = new AmenityDAO().getAll();
         
-        System.out.println(listAmen);
+        AmenityDAO amd = new AmenityDAO();
+        amd.addAmenity("new-3d18e756-ae0c-4bfb-a624-awjdaw8dy9", "Boi Loi", "230198c8-317c-4f60-8a60-78e6ab002963");
     }
 }

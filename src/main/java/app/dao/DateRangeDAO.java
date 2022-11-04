@@ -1,0 +1,70 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package app.dao;
+
+import Context.DBContext;
+import app.dto.DateRangeDTO;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author toten
+ */
+public class DateRangeDAO {
+
+     
+     public List<DateRangeDTO> getAll(String checkin, String checkout, String hotelId) throws SQLException {
+         Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs;
+        String sql = "proc_getAllMergedDayBooking @check_in=?, @check_out=?, @hotelId=?";
+        List<DateRangeDTO> listHotel = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, checkin);
+            cs.setString(2, checkout);
+            cs.setString(3, hotelId);
+            
+            cs.executeQuery();
+            rs = cs.getResultSet();
+            
+            while (rs.next()) {
+                String room_id = rs.getString("room_id");
+                Date check_in = rs.getDate("check_in");
+                Date check_out = rs.getDate("check_out");
+                
+                DateRangeDTO hotel = new DateRangeDTO(room_id, check_in, check_out);
+
+                listHotel.add(hotel);
+            }
+            
+            return listHotel;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DateRangeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+             return null;
+
+     }
+     
+     public static void main(String[] args) throws SQLException {
+        List<DateRangeDTO> list = new DateRangeDAO().getAll("2022-11-04", "2022-11-12", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
+         System.out.println(list);
+    }
+}
