@@ -12,6 +12,7 @@ import ToastMessageBox from "./ToastMessageBox";
 import BookmarkBox from "./BookmarkBox";
 import BookmarkItem from "./BookmarkItem";
 import DropdownBox from "./DropdownBox";
+import NotifyBox from "./NotifyBox";
 
 export {
     Logo,
@@ -27,5 +28,6 @@ export {
     ToastMessageBox,
     BookmarkBox,
     BookmarkItem,
-    DropdownBox
+    DropdownBox,
+    NotifyBox
 }

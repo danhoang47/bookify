@@ -12,7 +12,6 @@ function BookmarkBox({ bookmarkedHotels, setBookmarkedHotels }) {
         <DropdownBox
             heading={"Yêu thích"}
             extraButtonTittle={""}
-            handleClick={handleDeleted}
             isScrollable={bookmarkedHotels.length > 8}
         >
             {bookmarkedHotels?.map((hotel) => (
