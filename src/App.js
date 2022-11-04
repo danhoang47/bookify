@@ -9,6 +9,8 @@ import {
 import { modalReducer, toastMessageReducer } from "./utils/reducers";
 import { Modal, ToastMessage, ToastMessageBox } from "./components";
 import { Container } from "@mui/material";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const initState = {
   isOpen: false,
@@ -71,26 +73,41 @@ function App({ children }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //     const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-  //     console.log(jwtString);
-  //     if (jwtString) {
-  //         fetch(
-  //             "http://localhost:8080/testUpload/rest/user_detail/verifyjwt",
-  //             {
-  //                 method: "POST",
-  //                 body: jwtString,
-  //             }
-  //         )
-  //             .then((res) => {
-  //                 res.json();
-  //             })
-  //             .then((data) => {
-  //                 console.log(data);
-  //             })
-  //             .catch((err) => console.log(err));
-  //     }Í
-  // }, []);
+  useEffect(() => {
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    console.log(jwtString);
+    const userForm = new FormData();
+    userForm.append("jwt", jwtString);
+    if (jwtString) {
+      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+        method: "POST",
+        body: userForm,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLogin(true);
+          user.name = data.name ? data.name : null;
+          user.account_number = data.account_number
+            ? data.account_number
+            : null;
+          user.avatar = data.avatar ? data.avatar : null;
+          user.dob = data.dob ? format(new Date(data.dob), "yyyy-MM-dd") : null;
+          user.email = data.email;
+          user.phone = data.phone ? data.phone : null;
+          user.role = data.role ? data.role : 0;
+          user.self_description = data.self_description
+            ? data.self_description
+            : null;
+          user.subname = data.subname ? data.subname : null;
+          user.user_id = data.user_id;
+          user.username = data.username;
+        })
+        .catch((err) => {
+          console.log("Login again: " + err);
+          setLogin(false);
+        });
+    }
+  });
 
   return (
     <CoordinatesContext.Provider value={currentCoordinates}>

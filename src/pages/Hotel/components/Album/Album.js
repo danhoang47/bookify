@@ -6,28 +6,13 @@ import AllImageSection from "../AllImageSection";
 
 function Album({ backgroundImage = "", images = [] }) {
   const [isAllImageOpen, setAllImageOpen] = useState(false);
-  console.log(backgroundImage);
-  console.log(images);
-  const allImages = [];
-  const bg = backgroundImage.split("/");
-
-  images.forEach((image) => {
-    let imgName = image.src.split("/");
-    allImages.push(imgName[imgName.length - 1]);
-  });
 
   return (
     <div id={albumStyles["hotel-album"]}>
       <div className={albumStyles["initial-hotel-album"]}>
         <div className={albumStyles["left"]}>
           <div className={albumStyles["preview-hotel-image"]}>
-            <img
-              src={
-                "http://localhost:8080/bookify/images/hotels/" +
-                bg[bg.length - 1]
-              }
-              alt=""
-            />
+            <img src={backgroundImage} alt="" />
           </div>
         </div>
         <div className={albumStyles["right"]}>
@@ -37,7 +22,7 @@ function Album({ backgroundImage = "", images = [] }) {
             </div>
           </div>
           <div className={albumStyles["bottom-right"]}>
-            {images.reduce((prev, { id, src, type }, index) => {
+            {images.reduce((prev, { id, src }, index) => {
               if (index <= 2 && index >= 1) {
                 return [
                   ...prev,
@@ -60,9 +45,7 @@ function Album({ backgroundImage = "", images = [] }) {
       </div>
       {isAllImageOpen && (
         <AllImageSection
-          backgroundImage={
-            "http://localhost:8080/bookify/images/hotels/" + bg[bg.length - 1]
-          }
+          backgroundImage={backgroundImage}
           images={images}
           setAllImageOpen={setAllImageOpen}
         />

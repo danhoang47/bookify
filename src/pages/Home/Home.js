@@ -56,8 +56,6 @@ function Home() {
   const [price, setPrice] = useState(priceInitState);
   const [amenitiesPicked, setAmenitiesPicked] = useState([]);
 
-  console.log(user);
-
   const getNumberOfFilterItemPicked = () => {
     const numberOfAmenitiesPicked = amenitiesPicked.length;
     const numberOfRoomAndBedRoomPicked = Object.keys(roomAndBedRoom).reduce(

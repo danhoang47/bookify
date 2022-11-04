@@ -9,7 +9,11 @@ import {
   faHistory,
 } from "@fortawesome/free-solid-svg-icons";
 import profileStyle from "./Profile.module.scss";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import VerifyAuth from "@/utils/hooks/verifyAuth";
+import { ToastMessageContext } from "@/utils/contexts";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 const account = {
   name: "Le Duc",
@@ -17,8 +21,23 @@ const account = {
 };
 
 function Profile() {
+  const { setToastMessages } = useContext(ToastMessageContext);
   useEffect(() => {
     document.title = "Profile";
+  }, []);
+  const { isLogin } = VerifyAuth();
+  const navigate = useNavigate();
+  console.log("isLogin: " + isLogin);
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/");
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để truy cập",
+        })
+      );
+    }
   }, []);
 
   const options = useMemo(
@@ -62,10 +81,7 @@ function Profile() {
     <div className={profileStyle["container"]}>
       <h1 className={profileStyle["account"]}>Tài Khoản</h1>
       <h4 className={profileStyle["commonInfo"]}>
-        {account.name}, {account.email}{" "}
-        <a href="https://www.nettruyenme.com/truyen-tranh/tro-choi-cua-chua-thuong/chap-1/902267">
-          Thay đổi hồ sơ
-        </a>
+        {account.name}, {account.email} <Link to={`info`}>Thay đổi hồ sơ</Link>
       </h4>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={4}>

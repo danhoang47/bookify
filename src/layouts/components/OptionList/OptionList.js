@@ -1,12 +1,18 @@
 import optionListStyles from "./OptionList.module.scss";
-import { ModalContext, UserContext } from "@/utils/contexts";
+import {
+  ModalContext,
+  UserContext,
+  ToastMessageContext,
+} from "@/utils/contexts";
 import { useContext, useMemo } from "react";
 import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
 import { useNavigate } from "react-router-dom";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function OptionList() {
   const { dispatch } = useContext(ModalContext);
-  const { isLogin } = useContext(UserContext);
+  const { isLogin, setLogin } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
 
   const options = useMemo(
@@ -47,6 +53,16 @@ function OptionList() {
         title: "Đăng xuất",
         style: "secondary",
         isLoginRequired: true,
+        onClickHandler: (e) => {
+          localStorage.removeItem("jwt");
+          setLogin(false);
+          navigate("/");
+          setToastMessages(
+            getFailureToastMessage({
+              message: "Đã đăng xuất",
+            })
+          );
+        },
       },
       {
         title: "Đăng nhập",

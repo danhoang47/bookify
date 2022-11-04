@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 const ImageItem = ({ src, index, setActiveImageIndex }) => {
+  console.log(src);
   return (
     <ImageListItem
       className={"image-item"}
@@ -21,6 +22,7 @@ const ImageItem = ({ src, index, setActiveImageIndex }) => {
 function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
   const [activeImageIndex, setActiveImageIndex] = useState(null);
 
+  console.log(backgroundImage, images);
   return (
     <div
       id={"all-image-section"}
@@ -89,7 +91,7 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
               {
                 id: uuid(),
                 src: backgroundImage,
-                type: 0,
+                type: 2,
               },
               ...images,
             ]}

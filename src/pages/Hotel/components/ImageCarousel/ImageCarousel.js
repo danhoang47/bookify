@@ -7,12 +7,12 @@ import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const getCaption = (type) => {
     switch (type) {
-        case "0":
-            return "Ảnh bìa";
-        case "1":
+        case 0:
             return "Ảnh không gian xung quanh";
-        case "2":
+        case 1:
             return "Ảnh không gian phòng ngủ";
+        case 2:
+            return "Ảnh bìa";
         default:
             throw new Error("Invalid Type");
     }
@@ -25,6 +25,7 @@ function ImageCarousel({ defaultActiveIndex, images, setActiveImageIndex }) {
         setIndex(selectedIndex);
     };
 
+    console.log(images);
     return (
         <Box
             sx={{

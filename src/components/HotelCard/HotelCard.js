@@ -19,15 +19,13 @@ function HotelCard({
   rating,
   isBookmarked,
 }) {
-  const backgroundImg2 = backgroundImg.split("/");
-  const allImages = [backgroundImg2[backgroundImg2.length - 1]];
+  const allImages = [backgroundImg];
   images.forEach((image) => {
-    let imgName = image.src.split("/");
-    allImages.push(imgName[imgName.length - 1]);
+    allImages.push(image.src);
   });
   const handleBookmark = (event) => {
     event.preventDefault();
-  }
+  };
 
   return (
     <Link to={`hotel/${hotelId}`}>
@@ -36,11 +34,7 @@ function HotelCard({
           <Carousel controls={true} interval={null}>
             {allImages.map((src, index) => (
               <Carousel.Item key={index}>
-                <img
-                  className={"carousel-image"}
-                  src={"http://localhost:8080/bookify/images/hotels/" + src}
-                  alt={hotelName}
-                />
+                <img className={"carousel-image"} src={src} alt={hotelName} />
               </Carousel.Item>
             ))}
           </Carousel>

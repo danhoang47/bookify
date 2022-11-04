@@ -114,7 +114,7 @@ function ImageSection() {
                         </div>
                         <label
                             className={ImageStyle["image-show"]}
-                            for="upfile"
+                            htmlFor="upfile"
                         >
                             <div className={ImageStyle["image-placeholder"]}>
                                 <FontAwesomeIcon icon={faUpload} />

@@ -22,10 +22,11 @@ function Hotel() {
     )
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
         setHotelInfo(result);
       });
   }, []);
+
+  console.log(hotelInfo);
 
   return (
     <div id={hotelStyles["hotel"]}>
@@ -49,7 +50,11 @@ function Hotel() {
             </div>
             <div className={hotelStyles["right"]}>
               {/* Booking Form */}
-              <Booking room={room} />
+              <Booking
+                room={room}
+                data={hotelInfo.roomType}
+                isAllowPet={hotelInfo.isAllowPet}
+              />
             </div>
           </Box>
         </Grid>

@@ -1,4 +1,11 @@
-import React, { Suspense, createContext, useState, lazy, useMemo } from "react";
+import React, {
+  Suspense,
+  createContext,
+  useState,
+  lazy,
+  useMemo,
+  useEffect,
+} from "react";
 import AllStyle from "./All.module.scss";
 import MonthPicker from "./MonthPicker";
 
@@ -24,6 +31,8 @@ function All() {
   let typeBooking = useMemo(() => typeBookingData(month), [month]);
   let bookingNumber = useMemo(() => BookingNumberData(month), [month]);
   let reportData = useMemo(() => ReportData(month), [month]);
+
+  useEffect(() => {});
 
   return (
     <div className={AllStyle["dashboard-all"]}>
