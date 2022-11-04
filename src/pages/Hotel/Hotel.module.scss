@@ -1,7 +1,11 @@
 @use "src/global";
-#hotel {
 
-    
+#hotel {
+    &.no-scroll {
+        height: 0vh;
+        overflow-y: hidden;
+    }
+
     .left {
         flex-basis: 65%;
         height: 70vh;

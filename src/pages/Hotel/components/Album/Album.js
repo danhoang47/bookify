@@ -1,11 +1,8 @@
 import albumStyles from "./Album.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import AllImageSection from "../AllImageSection";
 
-function Album({ backgroundImage, images }) {
-    const [isAllImageOpen, setAllImageOpen] = useState(false);
+function Album({ backgroundImage, images, isAllImageOpen, setAllImageOpen }) {
+
 
     return (
         <div id={albumStyles["hotel-album"]}>
@@ -18,11 +15,11 @@ function Album({ backgroundImage, images }) {
                 <div className={albumStyles["right"]}>
                     <div className={albumStyles["top-right"]}>
                         <div className={albumStyles["preview-hotel-image"]}>
-                            <img src={images[0].src} alt="" />
+                            <img src={images[0]?.src} alt="" />
                         </div>
                     </div>
                     <div className={albumStyles["bottom-right"]}>
-                        {images.reduce((prev, { id, src }, index) => {
+                        {images?.reduce((prev, { id, src }, index) => {
                             if (index <= 2 && index >= 1) {
                                 return [
                                     ...prev,

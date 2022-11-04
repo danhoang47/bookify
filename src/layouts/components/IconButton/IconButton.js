@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import iconButtonStyles from "./IconButton.module.scss";
 import { usePopup as useDropdown } from "@/utils/hooks";
 
-function IconButton({ icon, children }) {
+function IconButton({ icon, renderChild }) {
     const [isOpen, handleClick, containerRef] = useDropdown();
 
     return (
@@ -16,7 +16,7 @@ function IconButton({ icon, children }) {
             >
                 <FontAwesomeIcon icon={icon} />
             </button>
-            {isOpen && children}
+            {isOpen && renderChild(handleClick)}
         </div>
     );
 }

@@ -20,7 +20,7 @@ function ProfileHeaderNav() {
         </button>
         <div className={profileNav["profile-nav"]} tabIndex="-1">
           {
-            isNavOpen && <OptionList />
+            isNavOpen && <OptionList handleClick={handleClick}/>
           }
         </div>
       </label>

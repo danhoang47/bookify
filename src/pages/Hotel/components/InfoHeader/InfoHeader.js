@@ -9,7 +9,7 @@ function InfoHeader({
   rating = 0,
   isBookmarked = false,
 }) {
-  console.log(hotelName);
+
   return (
     <div className={InfoHeaderStyle["hotel_header"]}>
       <div className={InfoHeaderStyle["hotel_banner"]}>

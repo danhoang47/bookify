@@ -10,12 +10,12 @@ import { modalReducer, toastMessageReducer } from "./utils/reducers";
 import { Modal, ToastMessage, ToastMessageBox } from "./components";
 import { Container } from "@mui/material";
 
-const initState = {
+const appInitState = {
   isOpen: false,
   isOverlay: false,
 };
 
-const user = {
+const userInitState = {
   account_number: "",
   avatar: "",
   dob: "",
@@ -25,12 +25,13 @@ const user = {
   role: 0,
   self_description: "",
   subname: "",
-  user_id: "",
+  user_id: null,
   username: "",
 };
 
 function App({ children }) {
-  const [modalState, dispatch] = useReducer(modalReducer, initState);
+  const [modalState, dispatch] = useReducer(modalReducer, appInitState);
+  const [user, setUser] = useState(userInitState);
   const [isLogin, setLogin] = useState(false);
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
@@ -45,10 +46,11 @@ function App({ children }) {
   const userContextValue = useMemo(
     () => ({
       user,
+      setUser,
       isLogin,
       setLogin,
     }),
-    [isLogin]
+    [isLogin, user]
   );
 
   const toastMessageContextValue = useMemo(

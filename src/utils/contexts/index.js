@@ -10,6 +10,7 @@ import RegisterContext from "./RegisterContext";
 import AdvanceSearchContext from "./AdvanceSearchContext";
 import AdvanceFilterContext from "./AdvanceFilterContext";
 import ToastMessageContext from "./ToastMessageContext";
+import BookmarkContext from './BookmarkContext';
 
 export {
   HotelContext,
@@ -22,5 +23,6 @@ export {
   RegisterContext,
   AdvanceSearchContext,
   AdvanceFilterContext,
-  ToastMessageContext
+  ToastMessageContext,
+  BookmarkContext
 };
