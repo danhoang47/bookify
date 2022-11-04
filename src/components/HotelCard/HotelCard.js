@@ -108,7 +108,7 @@ function HotelCard({
 
     return (
         <Link to={`hotel/${hotelId}`}>
-            <div className={"hotel-card"} onClick={(e) => e.preventDefault()}>
+            <div className={"hotel-card"}>
                 <div className={"carousel"}>
                     <Carousel controls={true} interval={null}>
                         {allImages.map((src, index) => (

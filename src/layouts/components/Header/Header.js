@@ -11,7 +11,7 @@ import { useContext } from "react";
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
-function Header({ location = "", bookmarkedHotels }) {
+function Header({ location = "", bookmarkedHotels, setBookmarkedHotels }) {
     return (
         <div className={headerStyles["header"]}>
             <Grid container alignItems={"center"} justifyContent={"center"}>
@@ -36,7 +36,7 @@ function Header({ location = "", bookmarkedHotels }) {
                             renderChild={(handleClick) => (
                                 <BookmarkBox
                                     bookmarkedHotels={bookmarkedHotels}
-                                    handleClick={handleClick}
+                                    setBookmarkedHotels={setBookmarkedHotels}
                                 />
                             )}
                         />

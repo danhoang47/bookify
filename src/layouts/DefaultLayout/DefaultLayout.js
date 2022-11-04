@@ -17,17 +17,21 @@ function DefaultLayout() {
         getAllBookmarkedHotel(user.user_id).then((data) => {
             setBookmarkedHotels(data);
         });
-    }
+    };
 
     useEffect(() => {
         getBookmarkedHotel();
-    //eslint-disable-next-line
+        //eslint-disable-next-line
     }, [user]);
 
     return (
         <BookmarkContext.Provider value={setBookmarkedHotels}>
             <div className={styles["default-layout"]}>
-                <Header location={href} bookmarkedHotels={bookmarkedHotels} />
+                <Header
+                    location={href}
+                    bookmarkedHotels={bookmarkedHotels}
+                    setBookmarkedHotels={setBookmarkedHotels}
+                />
                 <Box
                     sx={{
                         position: "relative",
