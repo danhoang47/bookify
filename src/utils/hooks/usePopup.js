@@ -13,9 +13,13 @@ function usePopup(state = false) {
     const target = event.relatedTarget;
     const container = containerRef.current;
 
-    if (event.target?.innerText === 'Tìm kiếm khách sạn') {
+    if (
+      event.target?.innerText === 'Tìm kiếm khách sạn' ||
+      event.target.classList.item(0).includes('BookmarkItem_unbookmark-button')
+    ) {
+      container.focus();
       return true;
-    }
+    } 
 
     setOpen((prev) => {
       if (prev && !container.contains(target)) {

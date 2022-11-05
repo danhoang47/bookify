@@ -91,11 +91,7 @@ function Home() {
   useEffect(() => {
     if (type.filterType || type.filterTypeId) {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user.user_id}`,
-
-        {
-          method: "GET",
-        }
+        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user.user_id}`
       )
         .then((res) => res.json())
         .then((result) => {
@@ -104,10 +100,7 @@ function Home() {
         });
     } else {
       fetch(
-        "http://localhost:8080/bookify/api/hotel/all?userid=" + user.user_id,
-        {
-          method: "GET",
-        }
+        "http://localhost:8080/bookify/api/hotel/all?userid=" + user.user_id
       )
         .then((res) => res.json())
         .then((result) => setHotelsList(result));
@@ -130,7 +123,10 @@ function Home() {
 
   return (
     <AdvanceFilterContext.Provider value={advanceFilterContextValue}>
-      <div id={homeStyles["home"]}>
+      <div 
+        id={homeStyles["home"]} 
+        className={useClsx(isAdvanceFilterOpen ? homeStyles['no-scroll'] : '')}
+      >
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <Box

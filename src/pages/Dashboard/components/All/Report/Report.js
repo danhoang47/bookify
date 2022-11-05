@@ -1,10 +1,9 @@
 import ReportStyle from "./Report.module.scss";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Report({ reportData = [] }) {
-  const navigate = useNavigate();
   return (
     <div className={ReportStyle["wrap-report"]}>
       <h3 className={ReportStyle["header-title"]}>Báo cáo gần đây</h3>
@@ -26,8 +25,10 @@ function Report({ reportData = [] }) {
                   </div>
                   <div className={ReportStyle["card-body"]}>
                     <div className={ReportStyle["card-title"]}>
-                      <h4>{data.reportOwner}</h4>
-                      <h6>{data.hotel}</h6>
+                      <h4>{data.username}</h4>
+                      <Link to={`/hotel/${data.hotelId}`}>
+                        <h6>{data.hotelName}</h6>
+                      </Link>
 
                       {/* Onclick navigate in later --------------------------------------------------------- */}
                       {/* <h6 onClick={() => navigate(data.hotelId)}>
@@ -38,7 +39,7 @@ function Report({ reportData = [] }) {
                       <p>{data.content}</p>
                     </div>
                     <div className={ReportStyle["card-time"]}>
-                      <p>{data.reportTime}</p>
+                      <p>{data.reportDate}</p>
                     </div>
                   </div>
                 </div>

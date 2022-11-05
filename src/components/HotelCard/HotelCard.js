@@ -4,7 +4,19 @@ import "./HotelCard.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useContext, useState, memo } from "react";
+import {
+  BookmarkContext,
+  ToastMessageContext,
+  UserContext,
+} from "@/utils/contexts";
+import { addHotelToBookmark, deleteHotelFromBookmark } from "@/services/user";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 function HotelCard({
   hotelId,
@@ -19,12 +31,78 @@ function HotelCard({
   rating,
   isBookmarked,
 }) {
-  const allImages = [backgroundImg];
+  const backgroundImg2 = backgroundImg.split("/");
+  const allImages = [backgroundImg2[backgroundImg2.length - 1]];
+  const { user } = useContext(UserContext);
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
+  const { setToastMessages } = useContext(ToastMessageContext);
+  const setBookmarkedHotels = useContext(BookmarkContext);
+
   images.forEach((image) => {
-    allImages.push(image.src);
+    let imgName = image.src.split("/");
+    allImages.push(imgName[imgName.length - 1]);
   });
-  const handleBookmark = (event) => {
+
+  const addToBookmark = () => {
+    setBookmarkedHotels((prev) => [
+      {
+        hotelId,
+        hotelName,
+        backgroundImg,
+        country,
+        district,
+        city,
+        address,
+        roomType: {
+          price: averagePirce,
+        },
+      },
+      ...prev,
+    ]);
+    setToastMessages(
+      getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
+    );
+    setBookmarked(true);
+  };
+
+  const removeFromBookmark = () => {
+    setBookmarkedHotels((prev) => {
+      const thisHotelId = hotelId;
+      return prev.filter(({ hotelId }) => hotelId !== thisHotelId);
+    });
+    setToastMessages(
+      getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
+    );
+    setBookmarked(false);
+  };
+
+  const handleBookmark = async (event) => {
     event.preventDefault();
+    if (!user.user_id) {
+      setToastMessages(
+        getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
+      );
+      return;
+    }
+    if (bookmarked) {
+      const res = await deleteHotelFromBookmark(hotelId, user.user_id).then(
+        (res) => res
+      );
+      if (res?.ok) {
+        removeFromBookmark();
+      } else {
+        setBookmarked(false);
+      }
+    } else {
+      const res = await addHotelToBookmark(hotelId, user.user_id).then(
+        (res) => res
+      );
+      if (res?.ok) {
+        addToBookmark();
+      } else {
+        setBookmarked(true);
+      }
+    }
   };
 
   return (
@@ -34,7 +112,11 @@ function HotelCard({
           <Carousel controls={true} interval={null}>
             {allImages.map((src, index) => (
               <Carousel.Item key={index}>
-                <img className={"carousel-image"} src={src} alt={hotelName} />
+                <img
+                  className={"carousel-image"}
+                  src={"http://localhost:8080/bookify/images/hotels/" + src}
+                  alt={hotelName}
+                />
               </Carousel.Item>
             ))}
           </Carousel>
@@ -54,12 +136,17 @@ function HotelCard({
             <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
           </div>
         </div>
-        <div className={"bookmark-icon"} onClick={handleBookmark}>
-          <FontAwesomeIcon icon={faHeart} style={{ zIndex: 0 }} />
+        <div
+          className={["bookmark-icon", bookmarked ? "bookmarked" : ""].join(
+            " "
+          )}
+          onClick={handleBookmark}
+        >
+          <FontAwesomeIcon icon={bookmarked ? faHeartSolid : faHeart} />
         </div>
       </div>
     </Link>
   );
 }
 
-export default HotelCard;
+export default memo(HotelCard);

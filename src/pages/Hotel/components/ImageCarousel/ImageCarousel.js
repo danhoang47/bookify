@@ -25,7 +25,6 @@ function ImageCarousel({ defaultActiveIndex, images, setActiveImageIndex }) {
         setIndex(selectedIndex);
     };
 
-    console.log(images);
     return (
         <Box
             sx={{

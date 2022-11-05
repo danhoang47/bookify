@@ -9,7 +9,7 @@ import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
 import { useNavigate } from "react-router-dom";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
-function OptionList() {
+function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
   const { isLogin, setLogin } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -88,7 +88,12 @@ function OptionList() {
 
   return (
     <>
-      <ul className={optionListStyles["option-list"]}>
+      <ul
+        className={optionListStyles["option-list"]}
+        onClick={(e) => {
+          handleClick(e);
+        }}
+      >
         {options.reduce(
           (prev, { title, style, isLoginRequired, onClickHandler }, index) => {
             if (isLogin === isLoginRequired) {

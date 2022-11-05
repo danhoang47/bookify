@@ -31,6 +31,8 @@
     }
     .carousel.slide {
         .carousel-indicators {
+            z-index: 1;
+
             button[type="button"] {
                 width: 0.4em;
                 height: 0.4em;
@@ -87,10 +89,17 @@
         position: absolute;
         top: 1em;
         left: 1em;
-        z-index: 2;
+        z-index: 1;
         cursor: pointer;
         font-size: 1.2em;
         color: global.$black;
+
+        &.bookmarked {
+
+            svg {
+                color: global.$main-color;
+            }
+        }
     }
 }
 

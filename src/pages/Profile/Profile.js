@@ -12,7 +12,7 @@ import profileStyle from "./Profile.module.scss";
 import { useMemo, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
-import { ToastMessageContext } from "@/utils/contexts";
+import { ToastMessageContext, UserContext } from "@/utils/contexts";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 const account = {
@@ -25,12 +25,34 @@ function Profile() {
   useEffect(() => {
     document.title = "Profile";
   }, []);
-  const { isLogin } = VerifyAuth();
+  const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  console.log(user);
   const navigate = useNavigate();
-  console.log("isLogin: " + isLogin);
 
   useEffect(() => {
-    if (!isLogin) {
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    const userForm = new FormData();
+    userForm.append("jwt", jwtString);
+    if (jwtString) {
+      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+        method: "POST",
+        body: userForm,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLogin(true);
+          setUser(data);
+        })
+        .catch((err) => {
+          setLogin(false);
+          navigate("/");
+          setToastMessages(
+            getFailureToastMessage({
+              message: "Đăng nhập để truy cập",
+            })
+          );
+        });
+    } else {
       navigate("/");
       setToastMessages(
         getFailureToastMessage({

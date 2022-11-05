@@ -7,6 +7,7 @@ function ToastMessageBox({ children }) {
             sx={{
                 position: "fixed",
                 bottom: "1em",
+                zIndex: '2',
                 left: "50%",
                 transform: "translateX(-50%)",
                 display: "flex",

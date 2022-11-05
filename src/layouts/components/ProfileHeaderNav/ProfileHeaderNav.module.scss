@@ -42,7 +42,7 @@
         padding: 0.4em 0;
         border-radius: 0.7em;
         background-color: global.$white;
-        filter: drop-shadow(0 3px 8px rgb(136, 136, 136));
+        @include global.box-shadow();
 
         input[type="checkbox"]:not(:checked) ~ * {
             display: none;

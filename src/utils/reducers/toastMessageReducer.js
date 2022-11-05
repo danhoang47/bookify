@@ -1,11 +1,9 @@
-import { ToastMessage } from "@/components";
-
 const toastType = {
     SUCCESS: "success",
     FAILURE: "failure",
 }
 
-const getSucessToastMessage = payload => ({
+const getSuccessToastMessage = payload => ({
     ...payload,
     type: toastType.SUCCESS
 })
@@ -29,5 +27,5 @@ export default function toastMessageReducer(state, toast) {
 export {
     toastType,
     getFailureToastMessage,
-    getSucessToastMessage
+    getSuccessToastMessage
 }

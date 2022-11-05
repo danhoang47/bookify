@@ -11,7 +11,7 @@ import {
 } from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getSucessToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 import { ToastMessageContext, UserContext } from "@/utils/contexts";
@@ -28,7 +28,7 @@ function SignInForm({ setModalOpen }) {
         username: true,
         password: true,
     });
-    const { user, isLogin, setLogin } = useContext(UserContext);
+    const { setUser, isLogin, setLogin } = useContext(UserContext);
     const { setToastMessages } = useContext(ToastMessageContext);
     const [isLoading, setLoading] = useState(false);
     const [isRemember, setRemember] = useState(false);
@@ -57,35 +57,11 @@ function SignInForm({ setModalOpen }) {
                         if (data?.error) {
                             console.log("account not found : " + data.error);
                         } else {
-                            console.log(data);
                             localStorage.setItem("jwt", data.token);
-                            user.name = data.user.name ? data.user.name : null;
-                            user.account_number = data.user.account_number
-                                ? data.user.account_number
-                                : null;
-                            user.avatar = data.user.avatar
-                                ? data.user.avatar
-                                : null;
-                            user.dob = data.user.dob
-                                ? format(new Date(data.user.dob), "yyyy-MM-dd")
-                                : null;
-                            user.email = data.user.email;
-                            user.phone = data.user.phone
-                                ? data.user.phone
-                                : null;
-                            user.role = data.user.role ? data.user.role : 0;
-                            user.self_description = data.user.self_description
-                                ? data.user.self_description
-                                : null;
-                            user.subname = data.user.subname
-                                ? data.user.subname
-                                : null;
-                            user.user_id = data.user.user_id;
-                            user.username = data.user.username;
-
+                            setUser(data.user);
                             setLogin(true);
                             setToastMessages(
-                                getSucessToastMessage({
+                                getSuccessToastMessage({
                                     message: "Đăng nhập thành công",
                                 })
                             );

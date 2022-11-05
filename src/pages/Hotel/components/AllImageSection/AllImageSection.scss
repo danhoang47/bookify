@@ -1,32 +1,47 @@
-@use 'src/global';
-@use 'src/static/styles/animations';
+@use "src/global";
+@use "src/static/styles/animations";
+
 #all-image-section {
     position: fixed;
     top: 0;
-    right: 0;
     bottom: 0;
     left: 0;
+    right: 0;
     z-index: 3;
     background: global.$white;
     animation: slide-in-bottom 0.2s ease-out;
+    overflow-y: scroll;
+    padding: 2em 7.35em;
+
     .close-album-button {
         position: absolute;
-        top: 1.5em;
+        top: 2.2em;
         left: 3em;
-        padding: 1em;
+        padding: 0.2em 0.58em;
+        border-radius: 50%;
+        border: 1px solid global.$black;
+        transition: all 0.2s linear;
+
         .fa-xmark {
             color: global.$black;
         }
+
+        &:hover {
+            opacity: 0.6;
+        }
     }
+
     &.no-scroll {
         overflow-y: hidden !important;
     }
+
     img {
         display: block;
         width: 100%;
         object-fit: cover;
         object-position: center;
     }
+
     .image-section {
         padding-top: 3em;
         .heading {
@@ -36,6 +51,7 @@
         .image-item {
             position: relative;
             cursor: pointer;
+
             &::before {
                 position: absolute;
                 content: "";
@@ -59,6 +75,6 @@
         transform: translateY(50%);
     }
     to {
-        transform: translateY(0%)
+        transform: translateY(0%);
     }
 }

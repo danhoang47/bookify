@@ -1,40 +1,44 @@
 import { Grid, Box } from "@mui/material";
 import hotelStyles from "./Hotel.module.scss";
 import { Album } from "./components";
-import { images, room } from "./datas";
+import { room } from "./datas";
 import Booking from "./components/Booking";
 import HotelInfo from "./components/HotelInfo";
 import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "@/utils/contexts";
 import { useEffect } from "react";
+import { useClsx } from "@/utils/hooks";
 
 function Hotel() {
-  const backgroundImage =
-    "photo/so-dien-thoai-le-tan-dat-phong-vinpearl-nam-hoi-an-1.jpg";
-  const hotelId = useParams();
+  const { id } = useParams();
   const { user } = useContext(UserContext);
   const [hotelInfo, setHotelInfo] = useState({});
+  const [isAllImageOpen, setAllImageOpen] = useState(false);
 
   useEffect(() => {
     fetch(
-      `http://localhost:8080/bookify/api/hotel?id=${hotelId.id}&userid=${user.user_id}`
+      `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user.user_id}`
     )
       .then((res) => res.json())
       .then((result) => {
         setHotelInfo(result);
       });
-  }, []);
-
-  console.log(hotelInfo);
+    //eslint-disable-next-line
+  }, [id]);
 
   return (
-    <div id={hotelStyles["hotel"]}>
+    <div
+      id={hotelStyles["hotel"]}
+      className={useClsx(isAllImageOpen ? hotelStyles["no-scroll"] : "")}
+    >
       <Grid container justifyContent={"center"}>
         <Grid item xs={10}>
           <Album
             backgroundImage={hotelInfo.backgroundImg}
-            images={hotelInfo.images}
+            images={hotelInfo.images || []}
+            isAllImageOpen={isAllImageOpen}
+            setAllImageOpen={setAllImageOpen}
           />
           <Box
             sx={{

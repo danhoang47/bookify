@@ -11,7 +11,9 @@
     font-size: 1.1em;
     background: global.$white;
     padding: 0.4em;
-    filter: drop-shadow(0 3px 4px rgb(174, 174, 174));
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 3px 4px rgb(133, 133, 133));
     animation: slide-in-bottom 0.25s ease-out, blur-fwd 0.4s ease-in 3s forwards;
 
 

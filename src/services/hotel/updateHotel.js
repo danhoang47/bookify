@@ -1,4 +1,4 @@
-import { types } from '@/services/hotel/searchHotelTypes'
+import { types } from "@/services/hotel/searchHotelTypes";
 
 const varToString = (varObj) => Object.keys(varObj)[0];
 const mergeTime = (timeObj) => {
@@ -6,13 +6,12 @@ const mergeTime = (timeObj) => {
     return `${hour}:${minutes}`;
 };
 const pushFilesToFormData = (formData, fileList, name) => {
-  if ( fileList !== null ) {
-    Array.from(fileList).forEach((file, index) => {
-      console.log(index);
-      formData.append(name, file);
-    })
-  }
-}
+    if (fileList !== null) {
+        Array.from(fileList).forEach((file) => {
+            formData.append(name, file);
+        });
+    }
+};
 
 export default async function updateHotel(
     hotelId,
@@ -41,13 +40,14 @@ export default async function updateHotel(
     }, {});
     const updatedBasicHotelInfor = {
         hotelName: basicHotelInfor.name,
-        hotelTypeId: types.find(({ name }) => name === basicHotelInfor.type).code,
+        hotelTypeId: types.find(({ name }) => name === basicHotelInfor.type)
+            .code,
         country: basicHotelInfor.country,
         city: basicHotelInfor.province,
         district: basicHotelInfor.district,
         address: basicHotelInfor.address,
-        description: basicHotelInfor.description
-    }
+        description: basicHotelInfor.description,
+    };
 
     const hotelUpdateForm = new FormData();
     const rawObject = {
@@ -55,17 +55,24 @@ export default async function updateHotel(
         updatedBasicHotelInfor,
         extraInforModified,
         roomInfor,
-        deletedImages
-    }
+        deletedImages,
+    };
     Object.keys(rawObject).forEach((key) => {
-        hotelUpdateForm.append(key, JSON.stringify(rawObject[key]))
-    })
+        hotelUpdateForm.append(key, JSON.stringify(rawObject[key]));
+    });
 
     hotelUpdateForm.append(varToString({ backgroundImage }), backgroundImage);
-    pushFilesToFormData(hotelUpdateForm, updatedViewImages, varToString({ updatedViewImages }))
-    pushFilesToFormData(hotelUpdateForm, updatedRoomImages, varToString({ updatedRoomImages }))
+    pushFilesToFormData(
+        hotelUpdateForm,
+        updatedViewImages,
+        varToString({ updatedViewImages })
+    );
+    pushFilesToFormData(
+        hotelUpdateForm,
+        updatedRoomImages,
+        varToString({ updatedRoomImages })
+    );
 
-    console.log(backgroundImage, updatedViewImages, updatedRoomImages, deletedImages);
     const data = await fetch(url, {
         method: "PUT",
         body: hotelUpdateForm,

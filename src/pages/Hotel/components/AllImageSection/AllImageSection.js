@@ -5,7 +5,7 @@ import ImageCarousel from "../ImageCarousel/ImageCarousel";
 import { v4 as uuid } from "uuid";
 import { ImageList, ImageListItem } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ImageItem = ({ src, index, setActiveImageIndex }) => {
   console.log(src);
@@ -22,7 +22,6 @@ const ImageItem = ({ src, index, setActiveImageIndex }) => {
 function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
   const [activeImageIndex, setActiveImageIndex] = useState(null);
 
-  console.log(backgroundImage, images);
   return (
     <div
       id={"all-image-section"}
@@ -105,7 +104,7 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
         className={"close-album-button"}
         onClick={() => setAllImageOpen(false)}
       >
-        <FontAwesomeIcon icon={faClose} />
+        <FontAwesomeIcon icon={faChevronLeft} />
       </button>
     </div>
   );

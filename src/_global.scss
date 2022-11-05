@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500;1,600&display=swap");
+
+@mixin box-shadow {
+    box-shadow: rgb(0 0 0 / 10%) -3px 4px 14px 0px;
+}
+
 @mixin reset-style {
     padding: 0;
     margin: 0;
@@ -100,6 +105,7 @@ a {
     position: relative;
     min-height: 100%;
     overflow-x: hidden;
+    
     .overlay {
         position: absolute;
         top: 0;

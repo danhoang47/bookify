@@ -11,6 +11,7 @@ import getDefaultAmenities from "./getDefaultAmenities";
 import getDefaultAmenityTypes from "./getDefaultAmenityTypes";
 import searchAdvanceHotel from "./searchAdvanceHotel";
 import filterHotel from "./filterHotel";
+import getAllBookmarkedHotel from "./getAllBookmarkedHotel";
 
 export {
     getDistanceFromUser,
@@ -25,5 +26,6 @@ export {
     getDefaultAmenities,
     getDefaultAmenityTypes,
     searchAdvanceHotel,
-    filterHotel
+    filterHotel,
+    getAllBookmarkedHotel
 }

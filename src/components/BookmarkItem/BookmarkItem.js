@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import bookmarkItemStyles from "./BookmarkItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { deleteHotelFromBookmark } from "@/services/user";
+import { useContext } from "react";
+import { UserContext } from "@/utils/contexts";
 
 function BookmarkItem({
     hotelId,
@@ -11,12 +14,16 @@ function BookmarkItem({
     district,
     city,
     address,
-    price,
-    rating,
-    isBookmarked,
+    roomType,
+    handleDeleted,
 }) {
+    const { user } = useContext(UserContext);
+
     const unBookmarkHotel = (event) => {
         event.preventDefault();
+        event.stopPropagation();
+        deleteHotelFromBookmark(hotelId, user.user_id);
+        handleDeleted(hotelId);
     };
 
     return (
@@ -29,8 +36,9 @@ function BookmarkItem({
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                 }}
+                tabIndex="-1"
             >
-                <div className={bookmarkItemStyles["item-infor"]}>
+                <div className={bookmarkItemStyles["item-infor"]} tabIndex="-1">
                     <div className={bookmarkItemStyles["infor-left"]}>
                         <h4 className={bookmarkItemStyles["hotel-name"]}>
                             {hotelName}
@@ -39,10 +47,13 @@ function BookmarkItem({
                             {`${address}, ${district}, ${city}, ${country}`}
                         </p>
                         <p className={bookmarkItemStyles["price"]}>
-                            {`$${price}`}
+                            {`$${roomType?.price}`}
                         </p>
                     </div>
-                    <div className={bookmarkItemStyles["infor-right"]}>
+                    <div
+                        className={bookmarkItemStyles["infor-right"]}
+                        tabIndex="-1"
+                    >
                         <button
                             className={bookmarkItemStyles["unbookmark-button"]}
                             onClick={unBookmarkHotel}
