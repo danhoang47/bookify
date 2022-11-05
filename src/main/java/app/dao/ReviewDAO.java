@@ -28,7 +28,6 @@ public class ReviewDAO {
 
     public List<ReviewDTO> listReview(String hotel_id) {
 
-//select * from Review where hotel_id=?
         try {
             String query = "select rv.*, (ud.subname + ' ' + ud.name) as displayName, ud.avatar\n"
                     + "from Review as rv, userDetail as ud \n"
@@ -53,9 +52,35 @@ public class ReviewDAO {
         }
         return null;
     }
+    
+     public int getNumberOfReview(int month) {
+
+        try {
+            String query = "select count(*) as reviewNumber from Review where month(create_at)=? ";
+
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, month);
+
+            rs = ps.executeQuery();
+
+            int res =0;
+
+            while (rs.next()) {
+                res = rs.getInt("reviewNumber");
+            }
+
+            return res;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ReviewDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
 
     public static void main(String[] args) {
         List<ReviewDTO> listReviewDTO = new ReviewDAO().listReview("0e496299-ba26-4270-8ba9-f642c6843a62");
-        System.out.println(listReviewDTO);
+        System.out.println(new ReviewDAO().getNumberOfReview(11));
     }
 }

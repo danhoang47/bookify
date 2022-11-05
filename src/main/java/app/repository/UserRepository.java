@@ -17,7 +17,8 @@ public class UserRepository {
         userDAO = new UserDAO();
     }
     
-    public boolean signUp() {
-        return false;
+    public boolean makeHosting(String userId) {
+        boolean check = userDAO.makeHosting(userId);
+        return check;
     }
 }

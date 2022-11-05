@@ -41,6 +41,7 @@ import service.UploadImage;
  */
 @Path("/user")
 public class UserController {
+
     @POST
     @Path("/login")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -77,8 +78,9 @@ public class UserController {
 
     @POST
     @Path("/verifyjwt")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDataByJWT(String jwtString) {
+    public Response getDataByJWT(@FormDataParam("jwt") String jwtString) {
         Gson gson = new Gson();
 
         String jwtToken = gson.fromJson(jwtString, String.class).toString();
@@ -95,19 +97,19 @@ public class UserController {
         userLogin.setUser_password(null);
         userLogin.setGgid(null);
         userLogin.setSalt(null);
-        
+
         System.out.println(userLogin);
 
         if (userLogin != null) {
-            obj.put("user", userLogin);
 
-            return Response.ok(new Gson().toJson(obj)).build();
+            return Response.ok(new Gson().toJson(userLogin)).build();
 
         } else {
             obj.put("error", "Login again");
             return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
+        
     }
 
     @POST
@@ -234,8 +236,8 @@ public class UserController {
             obj.put("success", "Password matched");
             return Response.ok(new Gson().toJson(obj)).build();
         } else {
-              obj.put("error", "Wrong password");
-                return Response.status(401).entity(new Gson().toJson(obj)).build();
+            obj.put("error", "Wrong password");
+            return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
     }

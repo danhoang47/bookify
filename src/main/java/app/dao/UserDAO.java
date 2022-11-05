@@ -38,7 +38,7 @@ public class UserDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(password, saltvalue);
 
         try {
-            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null)";
+            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null, GETDATE())";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -73,7 +73,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 listUser.add(new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15), rs.getDate(16)));
             }
 
             return listUser;
@@ -132,7 +132,7 @@ public class UserDAO {
             UserDTO ud = null;
             while (rs.next()) {
                 ud = (new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15), rs.getDate(16)));
 
                 return ud;
             }
@@ -306,6 +306,29 @@ public class UserDAO {
             Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    
+ //    ---------------------------- make host-------------------------------------------
+    public boolean makeHosting(String id) {
+        try {
+            String query = "update userDetail set role=2 where user_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            int a = ps.executeUpdate();
+
+            if(a==1) {
+                return true;
+            } else {
+                return false;
+            }
+            
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     public static void main(String[] args) {

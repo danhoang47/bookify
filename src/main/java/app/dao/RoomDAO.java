@@ -27,7 +27,7 @@ public class RoomDAO {
 
     public boolean addNewRoom(String hotel_id, int numberOfRoom, String roomTypeId) {
         List<Integer> check = new ArrayList<>();
-        dao.RoomDAO rd = new dao.RoomDAO();
+
         try {
             String query = "insert into Room values (?,?,?)";
             conn = new DBContext().getConnection();
@@ -54,11 +54,29 @@ public class RoomDAO {
         }
         return false;
     }
-    
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-                UUID uuid = UUID.randomUUID();
-                System.out.println(uuid.toString());
+
+    public List<String> getHotelNumberOfRoom(String hotel_id) {
+        List<String> listRoomId = new ArrayList<>();
+        try {
+            String query = "select room_id from Room where hotel_id=?";
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+            ps.setString(1, hotel_id);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+               listRoomId.add(rs.getString("room_id"));
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(dao.RoomDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return listRoomId;
+    }
+
+    public static void main(String[] args) {
+       List<String> a = new RoomDAO().getHotelNumberOfRoom("f98320c3-235a-4cb7-a0a8-eda132b0e545");
+        System.out.println(a);
     }
 }
