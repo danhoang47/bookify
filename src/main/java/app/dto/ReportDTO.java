@@ -13,7 +13,10 @@ import java.util.Date;
 public class ReportDTO {
     private String reportId;
     private String hotelId;
+    private String hotelName;
     private String userId;
+    private String username;
+    private String avatar;
     private String title;
     private String content;
     private Date reportDate;
@@ -21,14 +24,58 @@ public class ReportDTO {
     public ReportDTO() {
     }
 
-    public ReportDTO(String reportId, String hotelId, String userId, String title, String content, Date reportDate) {
+    public ReportDTO(String reportId, String hotelId, String userId, String username, String avatar, String title, String content, Date reportDate) {
         this.reportId = reportId;
         this.hotelId = hotelId;
         this.userId = userId;
+        this.username = username;
+        this.avatar = avatar;
         this.title = title;
         this.content = content;
         this.reportDate = reportDate;
     }
+
+    public ReportDTO(String reportId, String hotelId, String hotelName, String userId, String username, String avatar, String title, String content, Date reportDate) {
+        this.reportId = reportId;
+        this.hotelId = hotelId;
+        this.hotelName = hotelName;
+        this.userId = userId;
+        this.username = username;
+        this.avatar = avatar;
+        this.title = title;
+        this.content = content;
+        this.reportDate = reportDate;
+    }
+    
+    
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+    
+    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    
 
     public String getReportId() {
         return reportId;
@@ -80,8 +127,10 @@ public class ReportDTO {
 
     @Override
     public String toString() {
-        return "ReportDTO{" + "reportId=" + reportId + ", hotelId=" + hotelId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", reportDate=" + reportDate + '}';
+        return "ReportDTO{" + "reportId=" + reportId + ", hotelId=" + hotelId + ", userId=" + userId + ", username=" + username + ", avatar=" + avatar + ", title=" + title + ", content=" + content + ", reportDate=" + reportDate + '}';
     }
+
+    
     
     
 }

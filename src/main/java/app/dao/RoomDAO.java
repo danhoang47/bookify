@@ -55,10 +55,10 @@ public class RoomDAO {
         return false;
     }
 
-    public int getHotelNumberOfRoom(String hotel_id) {
-        int result = 0;
+    public List<String> getHotelNumberOfRoom(String hotel_id) {
+        List<String> listRoomId = new ArrayList<>();
         try {
-            String query = "select count(*) as rooms from Room where hotel_id=?";
+            String query = "select room_id from Room where hotel_id=?";
             conn = new DBContext().getConnection();
 
             ps = conn.prepareStatement(query);
@@ -66,17 +66,17 @@ public class RoomDAO {
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                result = rs.getInt("rooms");
+               listRoomId.add(rs.getString("room_id"));
             }
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(dao.RoomDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return result;
+        return listRoomId;
     }
 
     public static void main(String[] args) {
-        int a = new RoomDAO().getHotelNumberOfRoom("f98320c3-235a-4cb7-a0a8-eda132b0e545");
+       List<String> a = new RoomDAO().getHotelNumberOfRoom("f98320c3-235a-4cb7-a0a8-eda132b0e545");
         System.out.println(a);
     }
 }

@@ -7,6 +7,10 @@ package app.services;
 import app.repository.DateRangeRepo;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -21,5 +25,16 @@ public class DateRangeService {
     
     public boolean checkDateRange(String checkin, String checkout, String hotelId) throws SQLException, ParseException {
         return dateRangeRepo.checkDate(checkin, checkout, hotelId);
+    }
+    
+    public List<String> getFreeRooms(String checkin, String checkout, String hotelId) throws SQLException, ParseException {
+        HashSet<String> listFreeRooms = dateRangeRepo.getFreeRooms(checkin, checkout, hotelId);
+        List<String> listRooms = new ArrayList<>();
+        Iterator<String> it = listFreeRooms.iterator();
+        while (it.hasNext()) {
+            listRooms.add(it.next());
+        }
+        
+        return listRooms;
     }
 }

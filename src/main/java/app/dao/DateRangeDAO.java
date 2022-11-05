@@ -64,7 +64,7 @@ public class DateRangeDAO {
      }
      
      public static void main(String[] args) throws SQLException {
-        List<DateRangeDTO> list = new DateRangeDAO().getAll("2022-11-04", "2022-11-12", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
+        List<DateRangeDTO> list = new DateRangeDAO().getAll("2022-11-05", "2022-11-06", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
          System.out.println(list);
     }
 }

@@ -4,6 +4,7 @@
  */
 package app.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,10 +37,47 @@ public class DashboardDTO {
         this.listReport = listReport;
         this.month = month;
     }
+    
+    public DashboardDTO(int bookingNumber, int accessNumber, int paymentNumber, int reviewNumber, int userRegisNumber, List<Integer> bookingHotelTypeNumber, List<Integer> bookingDateNumber, List<ReportDTO> listReport, int month) {
+        this.bookingNumber = bookingNumber;
+        this.accessNumber = accessNumber;
+        this.paymentNumber = paymentNumber;
+        this.reviewNumber = reviewNumber;
+        this.userRegisNumber = userRegisNumber;
+        this.bookingHotelType = hotelType();
+        this.bookingHotelTypeNumber = bookingHotelTypeNumber;
 
-    public DashboardDTO() {
+        this.bookingDateNumber = bookingDateNumber;
+        this.listReport = listReport;
+        this.month = month;
+    }
+    
+      public DashboardDTO() {
+          this.bookingHotelType = hotelType();
+
     }
 
+    public DashboardDTO(List<Integer> bookingDate, List<Integer> bookingDateNumber) {
+        this.bookingDate = bookingDate;
+        this.bookingDateNumber = bookingDateNumber;
+    }
+      
+     
+    
+    public static List<String> hotelType() {
+        List<String> types = new ArrayList<>();
+        types.add("House");
+        types.add("Resort");
+        types.add("Serve");
+        types.add("Apartment");
+        types.add("Unique space");
+        types.add("Hotel");
+        
+        return types;
+    }
+    
+
+  
     public int getBookingNumber() {
         return bookingNumber;
     }

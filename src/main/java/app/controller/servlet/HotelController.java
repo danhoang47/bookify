@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
@@ -143,9 +144,12 @@ public class HotelController {
     @Path("/checkrange")
     @Produces(MediaType.APPLICATION_JSON)
     public Response checkDateRange(@QueryParam("checkin") String checkin, @QueryParam("checkout") String checkout, @QueryParam("hotelId") String hotelId) throws SQLException, ClassNotFoundException, ParseException {
-//        JSONObject obj = new JSONObject();
-        
-        return Response.ok(gson.toJson(dateRangeService.checkDateRange(checkin, checkout, hotelId))).build();
+        JSONObject obj = new JSONObject();
+        boolean check = dateRangeService.checkDateRange(checkin, checkout, hotelId);
+        List<String> listFreeRooms = dateRangeService.getFreeRooms(checkin, checkout, hotelId);
+        obj.put("check", check);
+        obj.put("listFreeRooms", listFreeRooms);
+        return Response.ok(gson.toJson(obj)).build();
     }
 
     @POST
