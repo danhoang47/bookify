@@ -21,18 +21,21 @@ import java.util.logging.Logger;
 //    private final String password = "13072002";
 public class DBContext {
 
-    private final static String serverName = "DESKTOP-A5IQJBR\\SQLEXPRESS";
-    private final static String dbName = "bookify";
-    private final static String portNumber = "1433";
-    private final static String userID = "sa";
-    private final static String password = "0000";
 
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-        return DriverManager.getConnection(url, userID, password);
+     public static  Connection getConnection() throws SQLException, ClassNotFoundException {
+        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber +";databaseName=" + dbName;
+	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		
+	return DriverManager.getConnection(url, userID, password); 
     }
+    
+   private static final String serverName = "DESKTOP-A5IQJBR\\SQLEXPRESS";
+    private static final String dbName = "bookify";
+    private static final String portNumber = "1433";
+    private static final String userID = "sa";
+    private static final String password = "0000";
+    
+    
 
     public static void main(String[] args) {
         try {

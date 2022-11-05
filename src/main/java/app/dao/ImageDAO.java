@@ -179,6 +179,6 @@ public class ImageDAO {
 
     public static void main(String[] args) throws SQLException {
         ImageDAO dao = new ImageDAO();
-        System.out.println(dao.getRandomImage("fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9").size());
+        System.out.println(dao.get("4765fdf0-3f70-41e4-a901-7d838c610614"));
     }
 }

@@ -27,8 +27,8 @@ public class HotelService {
         hotelRepo = new HotelRepository();
     }
     
-    public HotelDTO get(String hotelId) throws SQLException, ClassNotFoundException {
-        return hotelRepo.get(hotelId);
+    public HotelDTO get(String hotelId, String userId) throws SQLException, ClassNotFoundException {
+        return hotelRepo.get(hotelId, userId);
     }
     
     public void update(
@@ -56,12 +56,17 @@ public class HotelService {
         if (fileFormDataContentDispositionBG.getFileName() != null) {
             String backgroundImageSrc = UploadImage.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG, typeUpload, realPath);
             hotel.setBackgroundImg(backgroundImageSrc);
+            System.out.println(hotel.getBackgroundImg());
         }
         List<String> viewImageList = UploadImage.uploadMultipleFile(viewImages, typeUpload, realPath);
         for (String src : viewImageList) {
             System.out.println(src);
         }
+        
         List<String> roomImageList = UploadImage.uploadMultipleFile(roomImages, typeUpload, realPath);
+         for (String src : roomImageList) {
+            System.out.println(src);
+        }
         
         hotelRepo.update(hotel, amenities, roomTypeDto, viewImageList, roomImageList, deletedImageIdList);
     }
@@ -70,15 +75,19 @@ public class HotelService {
         return hotelRepo.addNewHotel(hotel);
     }
     
-    public List<HotelDTO> getAllHotelBasicInfo() throws SQLException, ClassNotFoundException {
-        return hotelRepo.getAllHotel();
+    public List<HotelDTO> getAllHotelBasicInfo(String userId) throws SQLException, ClassNotFoundException {
+        return hotelRepo.getAllHotel(userId);
     }
 
-    public List<HotelDTO> getFilterHotel(String type, String id) throws SQLException, ClassNotFoundException {
-        return hotelRepo.getFilterHotels(type, id);
+    public List<HotelDTO> getFilterHotel(String type, String userId, String id) throws SQLException, ClassNotFoundException {
+        return hotelRepo.getFilterHotels(type, userId, id);
     }
 
-    public List<HotelDTO> getFilterHotelAdvance(String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
-        return hotelRepo.getFilterHotelsAdvance(houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
+    public List<HotelDTO> getFilterHotelAdvance(String userId, String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
+        return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
+    }
+    
+    public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
+        return hotelRepo.getAllBookmarkedHotel(userId);
     }
 }

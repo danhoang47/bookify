@@ -34,8 +34,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.media.multipart.BodyPart;
-import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -50,12 +48,26 @@ public class HotelController {
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Context ServletContext context;
 
-
+    @GET
+    @Path("/bookmark/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBookmarkedHotel(@PathParam("userId") String userId) throws SQLException {
+        System.out.println("getBookmarkedHotel " + userId);
+        if (userId == null) {
+            return Response.noContent().build();
+        }
+        else {
+            return Response.ok(gson.toJson(service.getAllBookmarkedHotel(userId))).build();
+        }
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHotel(@QueryParam("id") String hotelId) throws SQLException, ClassNotFoundException {
+    public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
+        System.out.println(hotelId);
+        String newUserId = userid == null ? "" : userid;
 
-        return Response.ok(gson.toJson(service.get(hotelId))).build();
+        return Response.ok(gson.toJson(service.get(hotelId, newUserId))).build();
     }
     
     @PUT
@@ -95,24 +107,6 @@ public class HotelController {
         
         return Response.noContent().build();
     }
-
-    @POST
-    @Path("/{hotelId}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response updateHotel(
-            @PathParam("hotelId") String hotelId,
-            @FormDataParam("viewImages") FormDataBodyPart viewImagesBodyPart,
-            @FormDataParam("backgroundImage") FormDataContentDisposition backgroundImageBodyPart,
-            @FormDataParam("roomImages") FormDataBodyPart roomImagesBodyPart
-    ) {
-        System.out.println("updateHotel called");
-        for (BodyPart part : viewImagesBodyPart.getParent().getBodyParts()) {
-            ContentDisposition meta = part.getContentDisposition();
-            System.out.println(meta.getFileName());
-        }
-
-        return Response.ok(new Gson().toJson("hello")).build();
-    }
     
     @POST
     @Path("/search/advance")
@@ -125,18 +119,20 @@ public class HotelController {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHotel() throws SQLException, ClassNotFoundException {
+    public Response getHotelAll(@QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
 //        JSONObject obj = new JSONObject();
-
-        return Response.ok(gson.toJson(service.getAllHotelBasicInfo())).build();
+        System.out.println(userId);
+        return Response.ok(gson.toJson(service.getAllHotelBasicInfo(userId))).build();
     }
 
     @GET
     @Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id) throws SQLException, ClassNotFoundException {
+    public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id, @QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
 //        JSONObject obj = new JSONObject();
-        return Response.ok(gson.toJson(service.getFilterHotel(type, id))).build();
+        System.out.println("userid: " + userId);
+        String newUserId = userId == null ? "" : userId;
+        return Response.ok(gson.toJson(service.getFilterHotel(type,newUserId, id))).build();
     }
 
     @POST
@@ -144,6 +140,7 @@ public class HotelController {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFilterAdvanced(
+            @QueryParam("userid") String userId,
             @FormDataParam("houseType") String houseType,
             @FormDataParam("amenitiesPicked") List<String> amenitiesPicked,
             @FormDataParam("rooms") int rooms,
@@ -153,14 +150,9 @@ public class HotelController {
             @FormDataParam("max") int max
     ) throws SQLException, ClassNotFoundException {
 
-//        System.out.println(amenitiesPicked);
-//        System.out.println(rooms);
-//        System.out.println(numberOfBed);
-//        System.out.println(numberOfBathroom);
-//        System.out.println(min);
-//        System.out.println(max);
         List<String> newAmenity =  Arrays.asList(amenitiesPicked.get(0).trim().split(","));
-        List<HotelDTO> listHotel = service.getFilterHotelAdvance(houseType, newAmenity, rooms, numberOfBed, numberOfBathroom, min, max);
+        String newUserId = userId == null ? "" : userId;
+        List<HotelDTO> listHotel = service.getFilterHotelAdvance(newUserId, houseType, newAmenity, rooms, numberOfBed, numberOfBathroom, min, max);
 
         return Response.ok(gson.toJson(listHotel)).build();
     }
@@ -253,7 +245,7 @@ public class HotelController {
         if (viewImage != null) {
             listViewImagePath = uploadhotel.uploadMultipleFile2(viewImage);
         }
-        boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 2);
+        boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 0);
         System.out.println("Image " + addImageView);
         if (addImageView == false) {
             obj.put("message", "Sign up new image view failed, please try again");

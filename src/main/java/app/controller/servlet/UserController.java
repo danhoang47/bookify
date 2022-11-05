@@ -4,7 +4,9 @@
  */
 package app.controller.servlet;
 
+import app.dao.BookmarkDAO;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import dao.UserDetailDAO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -13,12 +15,17 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dto.UserDetail;
@@ -43,7 +50,6 @@ public class UserController {
         UserDetailDAO dao = new UserDetailDAO();
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
-        System.out.println(username + " " + password);
 
 //         Check if username is true or not
         Boolean checkUsername = dao.getUsername(username);
@@ -232,5 +238,39 @@ public class UserController {
                 return Response.status(401).entity(new Gson().toJson(obj)).build();
         }
 
+    }
+    
+    @PUT
+    @Path("/bookmark")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response bookmarkHotel(@QueryParam("hotelId") String hotelId, @QueryParam("userId") String userId) {
+        BookmarkDAO bookmarkDao = new BookmarkDAO();
+        boolean isAdded = bookmarkDao.add(hotelId, userId);
+        JsonObject response = new JsonObject(); 
+        
+        if (isAdded) {
+            response.addProperty("ok", "success");
+            return Response.ok(new Gson().toJson(response)).build();
+        } else {
+            response.addProperty("error", "can not perform this action");
+            return Response.ok(new Gson().toJson(response)).build();
+        }
+    }
+    
+    @DELETE
+    @Path("/bookmark")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteHotelFromBookmark(@QueryParam("hotelId") String hotelId, @QueryParam("userId") String userId) {
+        BookmarkDAO bookmarkDao = new BookmarkDAO();
+        boolean isDeleted =  bookmarkDao.delete(hotelId, userId);
+        JsonObject response = new JsonObject(); 
+        
+        if (isDeleted) {
+            response.addProperty("ok", "success");
+            return Response.ok(new Gson().toJson(response)).build();
+        } else {
+            response.addProperty("error", "can not perform this action");
+            return Response.ok(new Gson().toJson(response)).build();
+        }
     }
 }
