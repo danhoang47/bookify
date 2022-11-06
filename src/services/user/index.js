@@ -4,6 +4,7 @@ import compareCurrentPassword from "./passwordConfirm";
 import newPassowrdUpdate from "./newPassword";
 import addHotelToBookmark from "./addHotelToBookmark";
 import deleteHotelFromBookmark from "./deleteHotelFromBookmark";
+import getAmount from "./getAmount";
 
 export {
     signIn,
@@ -11,5 +12,6 @@ export {
     compareCurrentPassword,
     newPassowrdUpdate,
     addHotelToBookmark,
-    deleteHotelFromBookmark
+    deleteHotelFromBookmark,
+    getAmount
 };

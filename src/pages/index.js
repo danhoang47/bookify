@@ -10,10 +10,11 @@ import HotelManageBooking from "./HotelManage/HotelManageBooking";
 import HotelManageDetail from "./HotelManageDetail";
 import Dashboard from "./Dashboard";
 import Payment from "./Payment";
-import CheckOut from "./CheckOut";
+import CheckOut from "./BookingPayment";
 import Hotel from "./Hotel";
 import Register from "./Register";
 import Update from "./Update";
+import BookingPayment from "./BookingPayment";
 
 export {
   Home,
@@ -31,5 +32,6 @@ export {
   CheckOut,
   Hotel,
   Register,
-  Update
+  Update,
+  BookingPayment
 };

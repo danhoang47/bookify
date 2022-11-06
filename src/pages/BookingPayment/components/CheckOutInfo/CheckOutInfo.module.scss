@@ -2,6 +2,20 @@
 .Check-out-title {
     font-size: 30px;
     margin-bottom: 40px;
+    position: relative;
+
+    .back-button {
+        position: absolute;
+        left: -2em;
+        font-size: 0.8em;
+        top: 50%;
+        translate: 0 -50%;
+        transition: all 0.2s linear;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
 }
 
 .form-title {
@@ -95,7 +109,23 @@
     font-size: 16px;
     padding: 10px 0px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 0.8em;
     cursor: pointer;
     font-family: global.$default-font;
+    transition: all 0.2s linear;
+
+    &:hover {
+        opacity: 0.6;
+    }
+
+    &.inactive {
+        cursor: no-drop;
+        opacity: 0.6;
+        background: global.$pink;
+    }
+}
+
+.error-label {
+    margin-top: 0.4em;
+    color: global.$pink;
 }

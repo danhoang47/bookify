@@ -4,8 +4,7 @@ function usePopup(state = false) {
   const [isOpen, setOpen] = useState(state);
   const containerRef = useRef(); 
 
-  const handleClick = (event) => {
-    event.stopPropagation();
+  const handleClick = () => {
     setOpen(prev => !prev)
   }
 
@@ -15,7 +14,7 @@ function usePopup(state = false) {
 
     if (
       event.target?.innerText === 'Tìm kiếm khách sạn' ||
-      event.target.classList.item(0).includes('BookmarkItem_unbookmark-button')
+      event.target?.classList?.item(0)?.includes('BookmarkItem_unbookmark-button')
     ) {
       container.focus();
       return true;

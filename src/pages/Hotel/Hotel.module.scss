@@ -1,9 +1,14 @@
 @use "src/global";
 
 #hotel {
+    
     &.no-scroll {
         height: 0vh;
         overflow-y: hidden;
+    }
+
+    &.d-none {
+        display: none;
     }
 
     .left {

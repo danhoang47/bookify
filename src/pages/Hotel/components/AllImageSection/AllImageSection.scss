@@ -20,14 +20,16 @@
         padding: 0.2em 0.58em;
         border-radius: 50%;
         border: 1px solid global.$black;
-        transition: all 0.2s linear;
+        transition: all 0.1s linear;
+        opacity: 0.6;
 
         .fa-xmark {
             color: global.$black;
         }
 
         &:hover {
-            transform: translateX(20%);
+            transform: translateX(12%);
+            opacity: 1;
         }
     }
 

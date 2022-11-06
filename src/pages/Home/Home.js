@@ -95,7 +95,6 @@ function Home() {
       )
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
           setHotelsList(result);
         });
     } else {
@@ -120,6 +119,10 @@ function Home() {
     }),
     [roomAndBedRoom, houseType, price, amenitiesPicked]
   );
+
+  useEffect(() => {
+    document.title = 'Bookify'
+  }, [])
 
   return (
     <AdvanceFilterContext.Provider value={advanceFilterContextValue}>

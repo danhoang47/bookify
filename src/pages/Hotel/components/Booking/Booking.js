@@ -1,30 +1,15 @@
 import bookingStyles from "./Booking.module.scss";
-import { useState, useMemo, useLayoutEffect, useEffect } from "react";
+import { useState, useMemo, useLayoutEffect, useEffect, useContext } from "react";
 import { GuestsPicker, DatePicker } from "@/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { differenceInDays } from "date-fns";
-
-const description = {
-    adult: "Từ 13 tuổi trở lên",
-    child: "Độ tuổi 2 - 12",
-    infant: "Dưới 2 tuổi",
-    pet: "Bạn sẽ mang theo động vật ?",
-};
-
-const title = {
-    adult: "Người lớn",
-    child: "Trẻ em",
-    infant: "Em bé",
-    pet: "Thú cưng",
-};
-
-const guestsInitial = {
-    adult: 0,
-    child: 0,
-    infant: 0,
-    pet: 0,
-};
+import { searchBookingAvailable } from "@/services/hotel";
+import { description, title } from "./bookingInitState";
+import { CircleLoading } from "@/components";
+import { useNavigate } from "react-router-dom";
+import { BookingContext, UserContext, ModalContext } from "@/utils/contexts";
+import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function formatDay(date) {
     const options = {
@@ -42,10 +27,17 @@ function formatDay(date) {
     return undefined;
 }
 
-function Booking({ room }) {
-    const [selectedRoomType, setSelectedRoomType] = useState(room.roomType[0]);
-    const [selectDays, setSelectedDays] = useState({});
-    const [guests, setGuests] = useState(guestsInitial);
+function Booking({ roomType, isAllowPet = true, hotelId }) {
+    const [isLoading, setLoading] = useState(false);
+    const {user} = useContext(UserContext);
+    const { dispatch } = useContext(ModalContext);
+    const navigate = useNavigate();
+    const {
+        selectDays,
+        setSelectedDays,
+        guests,
+        setGuests,
+    } = useContext(BookingContext)
     const [isSelectBoxOpen, setSelectBoxOpen] = useState({
         roomTypeBox: false,
         datePickerBox: false,
@@ -67,7 +59,6 @@ function Booking({ room }) {
     );
     const isAllInformatioSelected = useMemo(() => {
         const isGuestsSelected = total !== 0;
-        console.log(selectDays);
         const selectDaysKey = Object.keys(selectDays || {});
         const isDateSelected =
             selectDaysKey.length !== 0 &&
@@ -89,9 +80,9 @@ function Booking({ room }) {
         if (!selectDateDiff) {
             return;
         } else {
-            setPrice(selectedRoomType.price * selectDateDiff);
+            setPrice(roomType.price * selectDateDiff);
         }
-    }, [selectDateDiff, selectedRoomType]);
+    }, [selectDateDiff, roomType]);
 
     const handleClick = (type) => {
         setSelectBoxOpen((prev) => {
@@ -111,11 +102,28 @@ function Booking({ room }) {
         });
     };
 
+    const handleBooking = async () => {
+        if (isAllInformatioSelected) {
+            if (!user.user_id) {
+                dispatch(getSignInModal({ isOpen: true }));
+                return;
+            }
+
+            const isAvailable = await searchBookingAvailable(
+                selectDays,
+                hotelId
+            ).then((data) => data);
+            if (isAvailable?.check) {
+                navigate('booking')
+            }
+        }
+    };
+
     return (
         <div id={bookingStyles["booking"]}>
             <div className={bookingStyles["heading-row"]}>
                 <p className={bookingStyles["price"]}>
-                    <span>${selectedRoomType.price}</span>/đêm
+                    <span>${roomType?.price}</span>/đêm
                 </p>
                 <div className={bookingStyles["ticket"]}></div>
             </div>
@@ -131,7 +139,7 @@ function Booking({ room }) {
                     <div className={bookingStyles["label"]}>
                         <p className={bookingStyles["title"]}>Loại phòng</p>
                         <div className={bookingStyles["input-value"]}>
-                            {selectedRoomType.name}
+                            Phòng loại 1
                             <button
                                 className={bookingStyles["float-right"]}
                                 onClick={() => handleClick("roomTypeBox")}
@@ -140,43 +148,6 @@ function Booking({ room }) {
                             </button>
                         </div>
                     </div>
-                    {isSelectBoxOpen["roomTypeBox"] && (
-                        <div className={bookingStyles["select-box"]}>
-                            {room.roomType.map(({ name, price }, index) => (
-                                <div
-                                    key={index}
-                                    className={[
-                                        bookingStyles["room-type-option"],
-                                        name === selectedRoomType.name
-                                            ? bookingStyles["selected"]
-                                            : "",
-                                    ].join(" ")}
-                                    onClick={() => {
-                                        handleClick("roomTypeBox");
-                                        setSelectedRoomType({
-                                            name,
-                                            price,
-                                        });
-                                    }}
-                                >
-                                    <p
-                                        className={
-                                            bookingStyles["room-type-title"]
-                                        }
-                                    >
-                                        {name}
-                                    </p>
-                                    <p
-                                        className={
-                                            bookingStyles["room-type-price"]
-                                        }
-                                    >
-                                        {price}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
                 <div
                     className={bookingStyles["date-range-input"]}
@@ -311,11 +282,11 @@ function Booking({ room }) {
                                 <GuestsPicker
                                     guests={guests}
                                     setGuests={setGuests}
-                                    totalLimit={room.limitNumberOfCustomers}
+                                    totalLimit={roomType.numberOfGuests}
                                     description={description}
-                                    isAllowPet={room.isAllowPet}
+                                    isAllowPet={isAllowPet}
                                     title={title}
-                                    limit={room.limitNumberOfCustomers}
+                                    limit={roomType.numberOfGuests}
                                 />
                             </div>
                         )}
@@ -327,7 +298,9 @@ function Booking({ room }) {
                     <div className={bookingStyles["provisional"]}>
                         <div className={bookingStyles["price-for-all-nights"]}>
                             <p className={bookingStyles["price-label"]}>
-                                ${selectedRoomType.price}<span>x</span>{selectDateDiff} đêm
+                                ${roomType.price}
+                                <span>x</span>
+                                {selectDateDiff} đêm
                             </p>
                             <p className={bookingStyles["price"]}>${price}</p>
                         </div>
@@ -339,16 +312,17 @@ function Booking({ room }) {
                         </div>
                     </div>
                     <div className={bookingStyles["final"]}>
-                        <div className={bookingStyles['title']}>
+                        <div className={bookingStyles["title"]}>
                             Tổng phải trả
                         </div>
-                        <div className={bookingStyles['price']}>
-                            ${price}
-                        </div>
+                        <div className={bookingStyles["price"]}>${price}</div>
                     </div>
                 </div>
             )}
-            <button className={bookingStyles["booking-button"]}>
+            <button
+                className={bookingStyles["booking-button"]}
+                onClick={handleBooking}
+            >
                 {isAllInformatioSelected
                     ? "Đặt phòng ngay"
                     : "Hãy điền thông tin"}

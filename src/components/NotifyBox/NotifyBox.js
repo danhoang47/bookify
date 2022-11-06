@@ -49,11 +49,11 @@ function NotifyBox({ notifs, setNotifs }) {
     return (  
         <DropdownBox 
             heading={"Thông báo"}
-            extraButtonTitle={"Đánh dấu đã đọc"}
+            extraButtonTittle={"Đánh dấu đã đọc"}
             isScrollable={notifs.length > 8}
         >
             {
-                notifs.map((notif) => (
+                tabs[index].list.map((notif) => (
                     <NotifyItem 
                         notif={notif}
                         key={notif.id}
