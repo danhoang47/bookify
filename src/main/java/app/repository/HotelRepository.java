@@ -4,6 +4,7 @@
  */
 package app.repository;
 
+import app.dao.BookingDAO;
 import app.dto.ImageDTO;
 import app.dto.HotelDTO;
 import app.dto.HotelAmenityDTO;
@@ -13,6 +14,7 @@ import app.dao.HotelAmenityDAO;
 import app.dao.ReviewDAO;
 import app.dao.RoomTypeDAO;
 import app.dao.UserDAO;
+import app.dto.BookingDTO;
 import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
@@ -32,6 +34,7 @@ public class HotelRepository {
     private RoomTypeDAO roomTypeDao;
     private ReviewDAO reviewDao;
     private UserDAO userDAO;
+    private BookingDAO bookingDao;
 
     public HotelRepository() {
         hotelDao = new HotelDAO();
@@ -40,6 +43,7 @@ public class HotelRepository {
         roomTypeDao = new RoomTypeDAO();
         reviewDao = new ReviewDAO();
         userDAO = new UserDAO();
+        bookingDao = new BookingDAO();
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
@@ -146,5 +150,17 @@ public class HotelRepository {
         HotelDTO hotel = hotelDao.get(userDAO.getOwnedHotelId(userId));
 
         return hotel;
+    }
+    
+    public List<BookingDTO> getAllTodayPendingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayPendingBooking(hotelId);
+    }
+    
+     public List<BookingDTO> getAllTodayBookedBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayBookedBooking(hotelId);
+    }
+     
+      public List<BookingDTO> getAllTodayCheckoutBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayCheckoutBooking(hotelId);
     }
 }

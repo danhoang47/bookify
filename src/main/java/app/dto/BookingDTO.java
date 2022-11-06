@@ -4,10 +4,10 @@ package app.dto;
 import java.util.Date;
 
 public class BookingDTO {
-    private String userId;
+    private UserDTO user;
     private String roomId;
     private String hotelId;
-    private String price;
+    private int price;
     private String bookingId;
     private String checkin;
     private String checkout;
@@ -22,8 +22,8 @@ public class BookingDTO {
     public BookingDTO() {
     }
 
-    public BookingDTO(String userId, String hotelId, String price, int adult, int child, int infant, int pet, int status, Date bookAt, RoomTypeDTO roomType) {
-        this.userId = userId;
+    public BookingDTO(UserDTO user, String hotelId, int price, int adult, int child, int infant, int pet, int status, Date bookAt, RoomTypeDTO roomType) {
+        this.user = user;
         this.hotelId = hotelId;
         this.price = price;
         this.adult = adult;
@@ -35,8 +35,12 @@ public class BookingDTO {
         this.roomType = roomType;
     }
 
-    public BookingDTO(String userId, String roomId, String hotelId, String price, String bookingId, String checkin, String checkout, int adult, int child, int infant, int pet, int status, Date bookAt, RoomTypeDTO roomType) {
-        this.userId = userId;
+    public BookingDTO(UserDTO user, String roomId, String hotelId, 
+            int price, String bookingId, String checkin, 
+            String checkout, int adult, int child, int infant, int pet, int status, 
+            Date bookAt, RoomTypeDTO roomType
+    ) {
+        this.user= user;
         this.roomId = roomId;
         this.hotelId = hotelId;
         this.price = price;
@@ -59,11 +63,11 @@ public class BookingDTO {
         int child,
         int pet,
         int infant,
-        String userId,
+        UserDTO userId,
         String roomId,
         String bookingId
     ) {
-        this.userId = userId;
+        this.user = user;
         this.roomId = roomId;
         this.bookingId = bookingId;
         this.adult = adult;
@@ -106,15 +110,15 @@ public class BookingDTO {
         return this.roomId;
     }
 
-    public String getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
     public String getHotelId() {
         return hotelId;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -146,15 +150,15 @@ public class BookingDTO {
         return roomType;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public void setHotelId(String hotelId) {
         this.hotelId = hotelId;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -188,7 +192,7 @@ public class BookingDTO {
 
     @Override
     public String toString() {
-        return "BookingDTO{" + "userId=" + userId + ", hotelId=" + hotelId + ", price=" + price + ", adult=" + adult + ", child=" + child + ", infant=" + infant + ", pet=" + pet + ", status=" + status + ", bookAt=" + bookAt + ", roomType=" + roomType + '}';
+        return "BookingDTO{" + "userId=" + user.getName() + ", hotelId=" + hotelId + ", price=" + price + ", adult=" + adult + ", child=" + child + ", infant=" + infant + ", pet=" + pet + ", status=" + status + ", bookAt=" + bookAt + ", roomType=" + roomType + '}';
     }
     
     

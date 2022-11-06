@@ -9,6 +9,7 @@ import app.dto.BookingDTO;
 import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
 import app.dto.RoomTypeDTO;
+import app.dto.UserDTO;
 import app.repository.HotelRepository;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -119,17 +120,28 @@ public class HotelService {
         List<String> availableRooms = dateRangeService.getFreeRooms(checkin, checkout, hotelId);
         String firstRoomId = availableRooms.get(0);
         BookingDAO bookingDao = new BookingDAO();
+        UserDTO user = new UserDTO();
+        user.setUser_id(userId);
 
         BookingDTO bookingDto = new BookingDTO(
                 checkin,
                 checkout,
                 adult, child, pet, infant,
-                userId, firstRoomId, UUID.randomUUID().toString()
+                user, firstRoomId, UUID.randomUUID().toString()
         );
         bookingDao.add(bookingDto);
     }
 
     public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
         return hotelRepo.getByUserId(userId);
+    }
+    
+    public List<BookingDTO> getAllTodayTypeBooking(String hotelId, String type) throws SQLException {
+        switch(type) {
+            case "pending": return hotelRepo.getAllTodayPendingBooking(hotelId);
+            case "checkout": return hotelRepo.getAllTodayBookedBooking(hotelId);
+            case "booked": return hotelRepo.getAllTodayCheckoutBooking(hotelId);
+            default: return null;
+        }
     }
 }

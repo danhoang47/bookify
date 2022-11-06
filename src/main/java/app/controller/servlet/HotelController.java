@@ -113,6 +113,9 @@ public class HotelController {
     @GET
     @Path("/owner/{userId}")
     public Response getHotelByUserId(@PathParam("userId") String userId) throws SQLException, ClassNotFoundException {
+        if (userId == "null") {
+            return Response.accepted().build();
+        }
         HotelDTO hotel = service.getByUserId(userId);
         if (hotel != null) {
             return Response.ok(gson.toJson(hotel)).build();
@@ -356,6 +359,15 @@ public class HotelController {
         obj.put("message", "Sign up new hotel successfully, please wait for permission");
         System.out.println("Hello");
         return Response.ok(new Gson().toJson(obj)).build();
-
+    }
+    
+    @GET
+    @Path("today")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTodayBooking(
+            @QueryParam("id") String hotelId, 
+            @QueryParam("type") String type
+    ) throws SQLException {
+        return Response.ok(gson.toJson(service.getAllTodayTypeBooking(hotelId, type))).build();
     }
 }
