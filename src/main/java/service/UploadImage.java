@@ -40,7 +40,6 @@ public class UploadImage {
                 outputStream.write(bytes, 0, read);
             }
             outputStream.flush();
-            outputStream.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {

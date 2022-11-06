@@ -7,6 +7,7 @@ package app.dao;
 import Context.DBContext;
 import app.dto.UserDTO;
 import dao.UserDetailDAO;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +28,7 @@ public class UserDAO {
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
+    
     //    ---------------------------------------------------------Sign up ---------------------------------------------------------
     public String signUp(String username, String password, String email) {
         UUID uuid = UUID.randomUUID();
@@ -38,7 +40,7 @@ public class UserDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(password, saltvalue);
 
         try {
-            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null, GETDATE())";
+            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null, GETDATE(), null)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -73,7 +75,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 listUser.add(new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15), rs.getDate(16)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getDate(14), rs.getDate(15), rs.getString(16)));
             }
 
             return listUser;
@@ -98,7 +100,7 @@ public class UserDAO {
             UserDTO ud = null;
             while (rs.next()) {
                 ud = (new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getDate(14), rs.getDate(15), rs.getString(16)));
 
                 break;
 
@@ -132,7 +134,7 @@ public class UserDAO {
             UserDTO ud = null;
             while (rs.next()) {
                 ud = (new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15), rs.getDate(16)));
+                        rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getDate(14), rs.getDate(15), rs.getString(16)));
 
                 return ud;
             }
@@ -295,9 +297,10 @@ public class UserDAO {
 
             UserDTO ud = null;
             while (rs.next()) {
-                ud = (new UserDTO(rs.getString(1), rs.getString(2), null, rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getInt(8), null, null, rs.getString(11), null, rs.getString(13), rs.getString(14), rs.getDate(15)));
-
+                ud = (new UserDTO(rs.getString("user_id"), rs.getString("username"), null, rs.getString("email"), rs.getString("phone"), rs.getString("name"),
+                        rs.getString("avatar"), rs.getInt("role"), null, null, rs.getString("self_description"), null, null, null, null));
+                ud.setSubname(rs.getString("subname"));
+                ud.setSignAt(rs.getDate("signAt"));
                 return ud;
             }
 
@@ -331,9 +334,30 @@ public class UserDAO {
         return false;
     }
     
+    public String getOwnedHotelId(String ownerId) {
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        String hotelId = null;
+        try {
+            String query = "proc_getHotelIdFromOwnerId @ownerId = ?";
+            conn = new DBContext().getConnection();
+            cs = conn.prepareCall(query);
+            cs.setString(1, ownerId);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                hotelId = rs.getString("hotel_id");
+            }
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return hotelId;
+    }
+    
     public static void main(String[] args) {
 
-        UserDTO ud = new UserDAO().login("duc", "123"); 
+        String ud = new UserDAO().getOwnedHotelId("ca8c99e4-a955-4439-baaf-dc02c6aacf5e"); 
         System.out.println(ud);
 //        List<UserDetail> list = new UserDetailDAO().listAll();
 //        System.out.println(list);

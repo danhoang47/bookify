@@ -16,7 +16,6 @@ import app.dao.UserDAO;
 import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -110,6 +109,12 @@ public class HotelRepository {
         return listHotelBasic;
     }
 
+    public List<HotelDTO> getAllHotelsDashboard() throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelDashboard = hotelDao.getAllHotelsDashboard();
+
+        return listHotelDashboard;
+    }
+
     public List<HotelDTO> getFilterHotels(String type, String userid, String id) throws SQLException, ClassNotFoundException {
         List<HotelDTO> listHotelFilter = hotelDao.getFilterHotel(type, userid, id);
         for (int i = 0; i < listHotelFilter.size(); i++) {
@@ -135,5 +140,11 @@ public class HotelRepository {
         }
 
         return bookmarkedHotels;
+    }
+
+    public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
+        HotelDTO hotel = hotelDao.get(userDAO.getOwnedHotelId(userId));
+
+        return hotel;
     }
 }

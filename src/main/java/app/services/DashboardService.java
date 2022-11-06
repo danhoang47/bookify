@@ -5,6 +5,7 @@
 package app.services;
 
 import app.dto.DashboardDTO;
+import app.dto.ExchangeDTO;
 import app.repository.DashboardRepository;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,5 +28,11 @@ public class DashboardService {
         listDashboardDTOs.add(dashboardRepo.getDashboardData(month-1));
                 
         return listDashboardDTOs;
+    }
+    
+    public List<ExchangeDTO> getExchangeData() throws SQLException {
+        List<ExchangeDTO> data = dashboardRepo.getExchangeData();
+
+        return data;
     }
 }

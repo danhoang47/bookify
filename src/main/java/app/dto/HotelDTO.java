@@ -3,6 +3,7 @@ package app.dto;
 import java.util.List;
 import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
+import java.util.Date;
 
 public class HotelDTO {
 //    13
@@ -32,6 +33,7 @@ public class HotelDTO {
     private RoomTypeDTO roomType;
     private boolean isBookmarked;
     private UserDTO hotelOwner;
+    private Date signAt;
 
     public HotelDTO() {
 
@@ -63,8 +65,10 @@ public class HotelDTO {
 
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
             boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district,
-            String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities,
-            List<ImageDTO> images, int rating) {
+
+            String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, 
+            List<ImageDTO> images, int rating, Date signAt) {
+
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -85,7 +89,39 @@ public class HotelDTO {
         this.hotelAmenities = hotelAmenities;
         this.images = images;
         this.rating = rating;
+        this.signAt = signAt;
     }
+
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, int averagePirce, int rating, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, List<ReviewDTO> reviews, RoomTypeDTO roomType, boolean isBookmarked, UserDTO hotelOwner, Date signAt) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isVerified = isVerified;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.averagePirce = averagePirce;
+        this.rating = rating;
+        this.hotelAmenities = hotelAmenities;
+        this.images = images;
+        this.reviews = reviews;
+        this.roomType = roomType;
+        this.isBookmarked = isBookmarked;
+        this.hotelOwner = hotelOwner;
+        this.signAt = signAt;
+    }
+    
+    
 
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
             boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country,
@@ -240,6 +276,18 @@ public class HotelDTO {
         this.hotelOwner = hotelOwner;
     }
 
+    public HotelDTO(String hotelId, String hotelName, Date signAt, boolean isVerified, UserDTO hotelOwner) {
+        this.hotelId = hotelId;
+        this.hotelName = hotelName;
+        this.isVerified = isVerified;
+        this.hotelOwner = hotelOwner;
+        this.signAt = signAt;
+  
+    }
+
+   
+    
+
     public HotelDTO(String hotelId, String hotelName, String hotelTypeId, String backgroundImg, String country, String district, String city, String address, int averagePirce, int rating, boolean isBookmarked) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
@@ -253,6 +301,17 @@ public class HotelDTO {
         this.rating = rating;
         this.isBookmarked = isBookmarked;
     }
+
+    public Date getSignAt() {
+        return signAt;
+    }
+
+    public void setSignAt(Date signAt) {
+        this.signAt = signAt;
+    }
+    
+    
+    
 
     public List<ReviewDTO> getReviews() {
         return reviews;

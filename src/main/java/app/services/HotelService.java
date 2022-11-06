@@ -94,31 +94,42 @@ public class HotelService {
         return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
     }
 
+    public List<HotelDTO> getAllHotelDashboard() throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelDashboard = hotelRepo.getAllHotelsDashboard();
+
+        return listHotelDashboard;
+    }
+
     public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
         return hotelRepo.getAllBookmarkedHotel(userId);
+
     }
 
     public void bookingRoom(
-        String hotelId,
-        String checkin,
-        String checkout,
-        int adult,
-        int child,
-        int pet,
-        int infant,
-        String userId
+            String hotelId,
+            String checkin,
+            String checkout,
+            int adult,
+            int child,
+            int pet,
+            int infant,
+            String userId
     ) throws SQLException, ParseException {
-        DateRangeService dateRangeService  = new DateRangeService();
+        DateRangeService dateRangeService = new DateRangeService();
         List<String> availableRooms = dateRangeService.getFreeRooms(checkin, checkout, hotelId);
         String firstRoomId = availableRooms.get(0);
         BookingDAO bookingDao = new BookingDAO();
 
         BookingDTO bookingDto = new BookingDTO(
-            checkin,
-            checkout,
-            adult, child, pet, infant,
-            userId, firstRoomId, UUID.randomUUID().toString()
+                checkin,
+                checkout,
+                adult, child, pet, infant,
+                userId, firstRoomId, UUID.randomUUID().toString()
         );
         bookingDao.add(bookingDto);
+    }
+
+    public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
+        return hotelRepo.getByUserId(userId);
     }
 }

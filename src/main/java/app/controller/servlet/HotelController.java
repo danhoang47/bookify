@@ -13,6 +13,7 @@ import app.services.HotelService;
 import app.services.ImageService;
 import app.services.RoomService;
 import app.services.UserService;
+import app.utils.UploadImage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -45,7 +46,6 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONObject;
-import service.UploadImage;
 
 // http://localhost:8080/bookify/images/hotels/uthappizza.png
 @Path("/hotel")
@@ -55,8 +55,7 @@ public class HotelController {
     private final static UserService userService = new UserService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    @Context
-    ServletContext context;
+    @Context ServletContext context;
 
     @POST
     @Path("/booking/{hotelId}")
@@ -102,6 +101,19 @@ public class HotelController {
 
         String newUserId = userid == null ? "" : userid;
         HotelDTO hotel = service.get(hotelId, newUserId);
+        if (hotel != null) {
+            return Response.ok(gson.toJson(hotel)).build();
+        } else {
+            JsonObject response = new JsonObject();
+            response.addProperty("error", "not found");
+            return Response.ok(response).build();
+        }
+    }
+    
+    @GET
+    @Path("/owner/{userId}")
+    public Response getHotelByUserId(@PathParam("userId") String userId) throws SQLException, ClassNotFoundException {
+        HotelDTO hotel = service.getByUserId(userId);
         if (hotel != null) {
             return Response.ok(gson.toJson(hotel)).build();
         } else {
@@ -169,6 +181,15 @@ public class HotelController {
     }
 
     @GET
+    @Path("/all/dashboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHotelAll() throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(service.getAllHotelDashboard())).build();
+    }
+
+    @GET
     @Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id, @QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
@@ -233,8 +254,8 @@ public class HotelController {
             @FormDataParam("amenitiesId") List<String> amenitiesId,
             @FormDataParam("amenitiesName") List<String> amenities,
             @FormDataParam("amenitiesTypes") List<String> amenitiyType,
-            @FormDataParam("hotelImage") List<FormDataBodyPart> hotelImage,
-            @FormDataParam("viewImage") List<FormDataBodyPart> viewImage,
+            @FormDataParam("hotelImage") FormDataBodyPart hotelImage,
+            @FormDataParam("viewImage") FormDataBodyPart viewImage,
             @FormDataParam("isCamera") boolean isCamera,
             @FormDataParam("isAnimalAccept") boolean isAnimalAccept,
             @FormDataParam("checkin") String checkin,
@@ -251,7 +272,7 @@ public class HotelController {
             @FormDataParam("userId") String userId) throws IOException {
         System.out.println(isCamera);
         System.out.println(isAnimalAccept);
-        UploadImage uploadhotel = new UploadImage();
+        
         HotelService hotelService = new HotelService();
         ImageService imgService = new ImageService();
         RoomService roomService = new RoomService();
@@ -260,12 +281,18 @@ public class HotelController {
         List<String> listHotelImagesPath = null;
         List<String> listViewImagePath = null;
         UUID uuid = UUID.randomUUID();
+        String realPath = context.getRealPath("");
         JSONObject obj = new JSONObject();
 
 ////        Upload background
         String backgroundImagePath = null;
         if (fileInputStreamBG != null && fileFormDataContentDispositionBG != null) {
-            backgroundImagePath = uploadhotel.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG, "hotels");
+            backgroundImagePath = UploadImage.uploadSingleFile(
+                    fileInputStreamBG, 
+                    fileFormDataContentDispositionBG, 
+                    "hotels",
+                    realPath
+            );
         }
 
         System.out.println(listHotelImagesPath);
@@ -292,7 +319,7 @@ public class HotelController {
 
         //        Upload hotel images
         if (hotelImage != null) {
-            listHotelImagesPath = uploadhotel.uploadMultipleFile2(hotelImage);
+            listHotelImagesPath = UploadImage.uploadMultipleFile(hotelImage, "hotels", realPath);
         }
         boolean addImageHotel = imgService.addImage(hotel.getHotelId(), listHotelImagesPath, 1);
         System.out.println("Image " + addImageHotel);
@@ -303,7 +330,7 @@ public class HotelController {
 
         //        Upload view images
         if (viewImage != null) {
-            listViewImagePath = uploadhotel.uploadMultipleFile2(viewImage);
+            listViewImagePath = UploadImage.uploadMultipleFile(viewImage, "hotels", realPath);
         }
         boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 0);
         System.out.println("Image " + addImageView);

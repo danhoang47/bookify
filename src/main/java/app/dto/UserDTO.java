@@ -28,6 +28,14 @@ public class UserDTO {
     private Date dob;
     private Date signAt;
 
+    public String getBankingAccountNumber() {
+        return bankingAccountNumber;
+    }
+
+    public void setBankingAccountNumber(String bankingAccountNumber) {
+        this.bankingAccountNumber = bankingAccountNumber;
+    }
+
     public String getSubname() {
         return subname;
     }
@@ -47,8 +55,10 @@ public class UserDTO {
     public UserDTO() {
         super();
     }
+    
+    
 
-    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String account_number, String subname, Date dob) {
+    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String subname, Date dob, String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -61,12 +71,12 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.bankingAccountNumber = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
         this.subname = subname;
         this.dob = dob;
     }
 
-    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String account_number, String subname, Date dob, Date signAt) {
+    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt,  String subname, Date dob, Date signAt,  String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -79,7 +89,7 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.bankingAccountNumber = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
         this.subname = subname;
         this.dob = dob;
         this.signAt = signAt;
@@ -89,7 +99,7 @@ public class UserDTO {
 
     public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, 
             String ggid, String wishlist_id,
-            String self_description,  String salt, String account_number) {
+            String self_description,  String salt, String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -102,7 +112,7 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.bankingAccountNumber = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
     }
 
     public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id,
@@ -260,14 +270,6 @@ public class UserDTO {
 
     public void setSelf_description(String self_description) {
         this.self_description = self_description;
-    }
-
-    public String getBankingAccountNumber() {
-        return bankingAccountNumber;
-    }
-
-    public void setBankingAccountNumber(String bankingAccountNumber) {
-        this.bankingAccountNumber = bankingAccountNumber;
     }
 
     @Override

@@ -8,6 +8,7 @@ import app.dao.DashboardDAO;
 import app.dao.ReportDAO;
 import app.dao.ReviewDAO;
 import app.dto.DashboardDTO;
+import app.dto.ExchangeDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,13 @@ public class DashboardRepository {
 
         return dashboard;
     }
+    
+    public List<ExchangeDTO> getExchangeData() throws SQLException {
+        List<ExchangeDTO> data = dashboardDAO.getExchangeData();
+
+        return data;
+    }
+
 
     public static void main(String[] args) throws SQLException {
         DashboardRepository repo = new DashboardRepository();
