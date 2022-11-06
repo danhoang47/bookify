@@ -56,7 +56,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 2em;
+    border-radius: 1.4em;
     padding-bottom: 1em;
     background: global.$white;
     @include animations.animate(slide-in-fwd-top, 0.25s, animations.$slide, true);

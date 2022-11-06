@@ -2,16 +2,22 @@ import IconButton from "../IconButton";
 import SearchBox from "../SearchBox";
 import ProfileHeaderNav from "../ProfileHeaderNav";
 import { UserContext } from "@/utils/contexts";
-import { BookmarkBox, Logo } from "@/components";
+import { BookmarkBox, Logo, NotifyBox } from "@/components";
 import { faBookmark, faBell } from "@fortawesome/free-regular-svg-icons";
 import { Grid, Box } from "@mui/material";
 import headerStyles from "./Header.module.scss";
-import { useContext } from "react";
 
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
-function Header({ location = "", bookmarkedHotels }) {
+function Header({ 
+    location = "", 
+    bookmarkedHotels, 
+    setBookmarkedHotels,
+    notifs,
+    setNotifs
+}) {
+
     return (
         <div className={headerStyles["header"]}>
             <Grid container alignItems={"center"} justifyContent={"center"}>
@@ -33,14 +39,22 @@ function Header({ location = "", bookmarkedHotels }) {
                     >
                         <BookmarkIconButton
                             icon={faBookmark}
-                            renderChild={(handleClick) => (
+                            renderChild={() => (
                                 <BookmarkBox
                                     bookmarkedHotels={bookmarkedHotels}
-                                    handleClick={handleClick}
+                                    setBookmarkedHotels={setBookmarkedHotels}
                                 />
                             )}
                         />
-                        <NotificationIconButton icon={faBell} />
+                        <NotificationIconButton 
+                            icon={faBell}
+                            renderChild={() => (
+                                <NotifyBox 
+                                    notifs={notifs}
+                                    setNotifs={setNotifs}
+                                />
+                            )}  
+                        />
                         <ProfileHeaderNav />
                     </Box>
                 </Grid>

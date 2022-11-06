@@ -13,6 +13,7 @@ function Location() {
           allowFullScreen=""
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
+          title="hotel-location-booking-infor"
         ></iframe>
       </div>
     </>

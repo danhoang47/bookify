@@ -1,13 +1,9 @@
 import DropdownBox from "../DropdownBox";
 import BookmarkItem from "../BookmarkItem";
-import { useState } from "react";
 
-function BookmarkBox({ bookmarkedHotels, handleClick }) {
-    const [hotelBookmarkedList, setHotelBookmarkedList] =
-        useState(bookmarkedHotels);
-
+function BookmarkBox({ bookmarkedHotels, setBookmarkedHotels }) {
     const handleDeleted = (deletedHotelId) => {
-        setHotelBookmarkedList((list) => {
+        setBookmarkedHotels((list) => {
             return list.filter(({ hotelId }) => hotelId !== deletedHotelId);
         });
     };
@@ -16,10 +12,9 @@ function BookmarkBox({ bookmarkedHotels, handleClick }) {
         <DropdownBox
             heading={"Yêu thích"}
             extraButtonTittle={""}
-            handleClick={handleClick}
-            isScrollable={hotelBookmarkedList.length > 8}
+            isScrollable={bookmarkedHotels.length > 8}
         >
-            {hotelBookmarkedList?.map((hotel) => (
+            {bookmarkedHotels?.map((hotel) => (
                 <BookmarkItem 
                     {...hotel} 
                     key={hotel.hotelId}

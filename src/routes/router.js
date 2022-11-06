@@ -17,10 +17,14 @@ import {
   Payment,
   Register,
   Hotel,
-  Update
+  Update,
+  BookingPayment
 } from "@/pages";
-import DefaultLayout from "@/layouts/DefaultLayout";
-import HostingRegisterLayout from "@/layouts/HostingRegisterLayout";
+import { 
+  DefaultLayout, 
+  HostingRegisterLayout,
+  HotelManageLayout
+} from "@/layouts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,24 +32,19 @@ const router = createBrowserRouter(
       <Route path="/" element={<DefaultLayout />}>
         <Route path="" element={<Home />} />
         <Route path="hotel">
-          <Route path=":id" element={<Hotel />}/>
+          <Route path=":id" element={<Hotel />} errorElement={<div>Can not found...</div>}>
+            <Route path="booking" element={<BookingPayment />}/>
+          </Route>
         </Route>
         <Route path="profile">
           <Route path="" element={<Profile />} />
           <Route path="info" element={<PersonalInfo />} />
           <Route path="loginandsecurity" element={<LoginandSecurity />} />
           <Route path="history" element={<BookingHistory />} />
-        </Route>
-        <Route path="hotelmanage" element={<DefaultLayout />}>
-          <Route path="" element={<HotelManageMain />} />
-          <Route path="detail" element={<HotelManageDetail />} />
-          <Route path="booking" element={<HotelManageBooking />} />
+          <Route path="payment" element={<Payment />} />
         </Route>
         <Route path="dashboard" element={<DefaultLayout />}>
           <Route path="" element={<Dashboard />} />
-        </Route>
-        <Route path="payment" element={<DefaultLayout />}>
-          <Route path="" element={<Payment />} />
         </Route>
       </Route>
       <Route path="hosting" element={<HostingRegisterLayout />}>
@@ -53,6 +52,13 @@ const router = createBrowserRouter(
         <Route path="register" element={<Register />} />
         <Route path="update">
           <Route path=":hotelId" element={<Update />} />
+        </Route>
+      </Route>
+      <Route path="manager">
+        <Route path=":id" element={<HotelManageLayout />}>
+          <Route path="" element={<HotelManageMain />} />
+          <Route path="detail" element={<HotelManageDetail />} />
+          <Route path="booking" element={<HotelManageBooking />} />
         </Route>
       </Route>
     </Route>

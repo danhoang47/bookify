@@ -82,7 +82,7 @@ function Profile() {
         description:
           "Tìm hiểu lại các khoản thanh toán, chi trả, phiếu giảm giá, thẻ quà tặng",
 
-        path: "/payment",
+        path: "payment",
       },
       {
         icon: faSliders,

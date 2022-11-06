@@ -17,7 +17,7 @@ function Setting({ setting }) {
     e.preventDefault();
     dispatch(setting.modal);
   };
-  console.log(setting);
+
   return (
     <Grid item xs={12} lg={4}>
       <div onClick={handleClick} className={SettingStyle["setting-card"]}>

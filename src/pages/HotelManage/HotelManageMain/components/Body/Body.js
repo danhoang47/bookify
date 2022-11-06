@@ -87,8 +87,11 @@ function Body({ hotel }) {
       <div className={BodyStyle["change-setting"]}>
         <h2>Thay đổi và chỉnh sửa</h2>
         <Grid container className={BodyStyle["grid-display"]} columnSpacing={8}>
-          {options.map((set) => (
-            <Setting setting={set} />
+          {options.map((set, index) => (
+            <Setting 
+              key={index}
+              setting={set} 
+            />
           ))}
         </Grid>
       </div>

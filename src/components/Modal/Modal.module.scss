@@ -4,6 +4,7 @@
 
 .modal {
     @include form.modal();
+    @include global.box-shadow();
     overflow-x: hidden;
-    z-index: 3;
+    z-index: 1;
 }

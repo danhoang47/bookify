@@ -1,20 +1,27 @@
 import { Grid, Box } from "@mui/material";
 import hotelStyles from "./Hotel.module.scss";
 import { Album } from "./components";
-import { room } from "./datas";
-import Booking from "./components/Booking";
-import HotelInfo from "./components/HotelInfo";
-import { useParams } from "react-router-dom";
-import { useContext, useState } from "react";
-import { UserContext } from "@/utils/contexts";
-import { useEffect } from "react";
+import { useHref, useParams, Outlet } from "react-router-dom";
+import { useContext, useState, useMemo } from "react";
+import {
+    UserContext,
+    BookingContext
+} from "@/utils/contexts";
+import { useEffect, Suspense, lazy } from "react";
 import { useClsx } from "@/utils/hooks";
+import { guestsInitial } from "./hotelInitState";
+
+const Booking = lazy(() => import("./components/Booking"));
+const HotelInfo = lazy(() => import("./components/HotelInfo"));
 
 function Hotel() {
-  const { id } = useParams();
-  const { user } = useContext(UserContext);
-  const [hotelInfo, setHotelInfo] = useState({});
-  const [isAllImageOpen, setAllImageOpen] = useState(false);
+    const { id } = useParams();
+    const { user } = useContext(UserContext);
+    const [hotelInfo, setHotelInfo] = useState({});
+    const [selectDays, setSelectedDays] = useState({});
+    const [guests, setGuests] = useState(guestsInitial);
+    const [isAllImageOpen, setAllImageOpen] = useState(false);
+    const href = useHref();
 
   useEffect(() => {
     fetch(
@@ -27,44 +34,82 @@ function Hotel() {
     //eslint-disable-next-line
   }, [id]);
 
-  return (
-    <div
-      id={hotelStyles["hotel"]}
-      className={useClsx(isAllImageOpen ? hotelStyles["no-scroll"] : "")}
-    >
-      <Grid container justifyContent={"center"}>
-        <Grid item xs={10}>
-          <Album
-            backgroundImage={hotelInfo.backgroundImg}
-            images={hotelInfo.images || []}
-            isAllImageOpen={isAllImageOpen}
-            setAllImageOpen={setAllImageOpen}
-          />
-          <Box
-            sx={{
-              marginTop: "2em",
-              position: "relative",
-              display: "flex",
-              gap: "0.6em",
-            }}
-          >
-            <div className={hotelStyles["left"]}>
-              <HotelInfo hotelInfo={hotelInfo} />
-              {/* Hotel Information */}
-            </div>
-            <div className={hotelStyles["right"]}>
-              {/* Booking Form */}
-              <Booking
-                room={room}
-                data={hotelInfo.roomType}
-                isAllowPet={hotelInfo.isAllowPet}
-              />
-            </div>
-          </Box>
-        </Grid>
-      </Grid>
-    </div>
-  );
+    const bookingContextValue = useMemo(
+        () => ({
+            selectDays,
+            setSelectedDays,
+            guests,
+            setGuests,
+        }),
+        [selectDays, guests]
+    );
+
+    useEffect(() => {
+        document.title = hotelInfo.hotelName;
+    }, [hotelInfo])
+
+    return (
+            <BookingContext.Provider value={bookingContextValue}>
+                <>
+                    <div
+                        id={hotelStyles["hotel"]}
+                        className={useClsx(
+                            isAllImageOpen ? hotelStyles["no-scroll"] : "",
+                            href.includes("/booking")
+                                ? hotelStyles["d-none"]
+                                : ""
+                        )}
+                    >
+                        <Grid container justifyContent={"center"}>
+                            <Grid item xs={10}>
+                                <Album
+                                    backgroundImage={hotelInfo.backgroundImg}
+                                    images={hotelInfo.images || []}
+                                    isAllImageOpen={isAllImageOpen}
+                                    setAllImageOpen={setAllImageOpen}
+                                />
+                                <Box
+                                    sx={{
+                                        marginTop: "2em",
+                                        position: "relative",
+                                        display: "flex",
+                                        gap: "0.6em",
+                                    }}
+                                >
+                                    <div className={hotelStyles["left"]}>
+                                        <Suspense
+                                            fallback={<div>Loading...</div>}
+                                        >
+                                            <HotelInfo hotelInfo={hotelInfo} />
+                                        </Suspense>
+                                        {/* Hotel Information */}
+                                    </div>
+                                    <div className={hotelStyles["right"]}>
+                                        {/* Booking Form */}
+                                        <Suspense
+                                            fallback={<div>Loading...</div>}
+                                        >
+                                            <Booking
+                                                roomType={hotelInfo?.roomType}
+                                                isAllowPet={
+                                                    hotelInfo?.isAllowPet
+                                                }
+                                                hotelId={hotelInfo?.hotelId}
+                                            />
+                                        </Suspense>
+                                    </div>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    {href.includes("/booking") ? (
+                        <Outlet context={hotelInfo} />
+                    ) : (
+                        ""
+                    )}
+                </>
+            </BookingContext.Provider>
+    );
 }
 
 export default Hotel;

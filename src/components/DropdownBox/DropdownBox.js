@@ -1,24 +1,31 @@
 import dropDownStyles from "./DropdownBox.module.scss";
 import { Box } from "@mui/material";
 import { useClsx } from "@/utils/hooks";
+import { useContext } from 'react';
+import { UserContext } from "@/utils/contexts";
 
 function DropdownBox({
     children,
     heading,
     extraButtonTittle,
+    extraButtonHandleClick,
     isScrollable,
-    handleClick,
+    tabs
 }) {
+    const { user } = useContext(UserContext)
+
     return (
         <div
             className={useClsx(dropDownStyles["drop-down-box"])}
-            onClick={handleClick}
             tabIndex="-1"
         >
             <div className={dropDownStyles["drop-down-header"]}>
                 <h4 className={dropDownStyles["heading"]}>{heading}</h4>
                 <button className={dropDownStyles["extra-button"]}>
-                    <p className={dropDownStyles["extra-button-title"]}>
+                    <p 
+                        className={dropDownStyles["extra-button-title"]} 
+                        onClick={extraButtonHandleClick}
+                    >
                         {extraButtonTittle}
                     </p>
                 </button>

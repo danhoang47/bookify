@@ -2,6 +2,7 @@
 @use "src/static/styles/form";
 @use "src/static/styles/animations";
 .sign-in-modal {
+
     &.slide-in-left {
         @include animations.animate(slide-in-left, 0.25s, animations.$slide, false);
     }
