@@ -44,7 +44,7 @@ function DefaultLayout() {
                 }}
             >
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Outlet />
+                    <Outlet context={setBookmarkedHotels}/>
                 </Suspense>
             </Box>
             {/* <Footer /> */}

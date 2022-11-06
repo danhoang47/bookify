@@ -1,11 +1,11 @@
 // libraries
 import { Grid, Box } from "@mui/material";
-import { useState, useMemo, Suspense, useEffect } from "react";
+import { useState, useMemo, Suspense, useEffect, useContext } from "react";
 import { useHref } from "react-router-dom";
 
 // app defined
 import { Jumbotron, TabBar } from "./components";
-import { RegisterContext } from "@/utils/contexts";
+import { RegisterContext, UserContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
 import {
     registerHotel,
@@ -40,6 +40,7 @@ function RegisterSection({
     const [backgroundImage, setBackgroundImage] = useState(
         backgroundImageInitState
     );
+    const { user } = useContext(UserContext);
     const [extraInfor, setExtraInfor] = useState(extraInforInitState);
     const [displayAmenities, setDisplayAmenities] = useState(
         displayAmenitiesInitState || []
@@ -144,7 +145,8 @@ function RegisterSection({
                 roomImages,
                 viewImages,
                 extraInfor,
-                roomInfor
+                roomInfor,
+                user.user_id
             );
         }
     };

@@ -1,5 +1,5 @@
 import BodyStyle from "../../HotelManage.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { useState, useMemo } from "react";
 import { ModalContext } from "@/utils/contexts";
@@ -16,8 +16,10 @@ import {
   getSignInModal,
 } from "@/utils/reducers/modalReducer";
 
-function Body({ hotel }) {
+function Body() {
   const { dispatch } = useContext(ModalContext);
+  const navigate = useNavigate();
+  const hotelInfo = useOutletContext();
 
   const hotelexample = {
     name: "Khách sạn Vin Pearl Nam Hội An",
@@ -59,43 +61,56 @@ function Body({ hotel }) {
       {
         icon: faPencil,
         title: "Thay đổi cài đặt khách sạn",
-        modal: getHotelSettingModal({ isOpen: true }),
+        handleClick: () => {
+          if (hotelInfo) {
+            navigate(`/hosting/update/${hotelInfo.hotelId}`)
+          }
+        }
       },
       {
         icon: faMoneyBill,
         title: "Tinh chỉnh giá phòng",
-        modal: getSignInModal({ isOpen: true }),
+        handleClick: () => {
+          if (hotelInfo) {
+            navigate(`/hosting/update/${hotelInfo.hotelId}`)
+          }
+        }
       },
       {
         icon: faCalendarWeek,
         title: "Cập nhật trạng thái khả dụng",
-        modal: getSignInModal({ isOpen: true }),
+        handleClick: () => {
+          if (hotelInfo) {
+            navigate(`/hosting/update/${hotelInfo.hotelId}`)
+          }
+        }
       },
     ],
-    []
+    [hotelInfo]
   );
 
   return (
-    <div className={BodyStyle["body"]}>
-      <div className={BodyStyle["body-header"]}>
-        <h2>Lịch đặt phòng hôm nay</h2>
-        <Link to="booking">
-          Tất cả các đơn <span>({hotelexample.tabs.length})</span>
-        </Link>
-      </div>
-      <BookingList width="30rem" bookList={hotelexample} />
-      <div className={BodyStyle["change-setting"]}>
-        <h2>Thay đổi và chỉnh sửa</h2>
-        <Grid container className={BodyStyle["grid-display"]} columnSpacing={8}>
-          {options.map((set, index) => (
-            <Setting 
-              key={index}
-              setting={set} 
-            />
-          ))}
-        </Grid>
-      </div>
-    </div>
+    <Grid container justifyContent={'center'}>
+      <Grid item xs={10}>
+        <div className={BodyStyle["body"]}>
+          <div className={BodyStyle["body-header"]}>
+            <h3>Lịch đặt phòng hôm nay</h3>
+          </div>
+          <BookingList width="30rem" bookList={hotelexample} />
+          <div className={BodyStyle["change-setting"]}>
+            <h3>Thay đổi và chỉnh sửa</h3>
+            <Grid container className={BodyStyle["grid-display"]} spacing={2}>
+              {options.map((setting, index) => (
+                <Setting 
+                  key={index}
+                  setting={setting} 
+                />
+              ))}
+            </Grid>
+          </div>
+        </div>
+      </Grid>
+    </Grid>
   );
 }
 export default Body;

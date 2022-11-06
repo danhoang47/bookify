@@ -7,7 +7,8 @@ export default async function registerHotel(
   roomImages,
   viewImages,
   extraInfor,
-  roomInfor
+  roomInfor,
+  userId
 ) {
   const hotelForm = new FormData();
   const amenitiesId = [];
@@ -81,7 +82,7 @@ export default async function registerHotel(
   hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
   hotelForm.append("roomNum", roomInfor.rooms);
 
-  hotelForm.append("userId", "b955c796-027c-4e11-92ff-1bb942a102c8");
+  hotelForm.append("userId", userId);
 
   const data = await fetch(
     "http://localhost:8080/bookify/api/hotel/signhotel",
@@ -92,21 +93,6 @@ export default async function registerHotel(
   )
     .then((res) => res.json())
     .then((result) => result);
-
-  // const data = {
-  //   amenities,
-  //   basicHotelInfor,
-  //   backgroundImage,
-  //   roomImages,
-  //   viewImages,
-  //   extraInfor,
-  //   roomInfor,
-  //   amenitiesId,
-  //   amenitiesNames,
-  //   amenitiesTypes,
-  // };
-
-  // console.log(data);
 
   return data;
 }

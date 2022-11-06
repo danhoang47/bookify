@@ -7,7 +7,6 @@ import { usePopup } from "@/utils/hooks";
 function ProfileHeaderNav() {
   const [isNavOpen, handleClick, containerRef] = usePopup();
 
-  console.log(isNavOpen);
   return (
     <div tabIndex="-1" className={profileNav["profile-header-nav"]}>
       <label htmlFor="button-toggle" onClick={handleClick} ref={containerRef}>

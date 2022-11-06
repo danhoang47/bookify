@@ -3,14 +3,9 @@ $background-color-1: #4361EE;
 $background-color-2: #7252E9;
 $background-color-3: #7209B7;
 .container {
-    height: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 20px;
-    padding-bottom: 15rem;
+
     .task1 {
+
         button {
             font-size: 14px;
             font-family: global.$default-font;
@@ -19,6 +14,7 @@ $background-color-3: #7209B7;
             color: black;
             padding: 5px 10px;
         }
+        
         button.Mui-selected {
             color: black;
             font-weight: 550;
