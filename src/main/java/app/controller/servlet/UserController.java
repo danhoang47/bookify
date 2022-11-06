@@ -4,8 +4,9 @@
  */
 package app.controller.servlet;
 
+import app.dao.UserDAO;
+import app.dto.UserDTO;
 import com.google.gson.Gson;
-import dao.UserDetailDAO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@FormDataParam("username") String username, @FormDataParam("password") String password) {
 
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
 
@@ -49,7 +50,7 @@ public class UserController {
         Boolean checkUsername = dao.getUsername(username);
 
         if (checkUsername) {
-            UserDetail userLogin = dao.login(username, password);
+            UserDTO userLogin = dao.login(username, password);
 
             if (userLogin != null) {
                 String jwtCode = userJwt.encodeToJWT(userLogin.getUser_id(), userLogin.getRole());
@@ -78,7 +79,7 @@ public class UserController {
 
         String jwtToken = gson.fromJson(jwtString, String.class).toString();
 
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
 //        UserDetail user = new UserDetail(username, password);
         JWTconvert userJwt = new JWTconvert();
         JSONObject obj = new JSONObject();
@@ -86,7 +87,7 @@ public class UserController {
 
         String userId = (String) res.getBody().get("user_id");
 
-        UserDetail userLogin = dao.getUser(userId);
+        UserDTO userLogin = dao.getUser(userId);
         userLogin.setUser_password(null);
         userLogin.setGgid(null);
         userLogin.setSalt(null);
@@ -111,7 +112,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(@FormDataParam("username") String username, @FormDataParam("password") String password, @FormDataParam("email") String email) {
 
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
         JSONObject obj = new JSONObject();
         UserDetail user = new UserDetail(username, password, email);
 
@@ -150,9 +151,9 @@ public class UserController {
         Date userDob = java.sql.Date.valueOf(ld);
         UploadImage uploaduser = new UploadImage();
         JSONObject obj = new JSONObject();
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
         // Get specific user
-        UserDetail ud = dao.getUser(user_id);
+        UserDTO ud = dao.getUser(user_id);
 
         // local variables
         String fileName = null;
@@ -200,7 +201,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response changePassword(@PathParam("user_id") String user_id, @FormDataParam("newPassword") String newPassword) {
 
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
         JSONObject obj = new JSONObject();
 //        Check if change password success or not
         Boolean checkChange = dao.changePassword(newPassword, user_id);
@@ -220,7 +221,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response compareCurrentPassword(@PathParam("user_id") String user_id, @FormDataParam("currentPassword") String currentPassword) {
 
-        UserDetailDAO dao = new UserDetailDAO();
+        UserDAO dao = new UserDAO();
         JSONObject obj = new JSONObject();
 //        Check if change password success or not
         Boolean checkChange = dao.compareCurrentPassword(user_id, currentPassword);

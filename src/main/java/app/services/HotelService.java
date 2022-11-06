@@ -81,4 +81,10 @@ public class HotelService {
     public List<HotelDTO> getFilterHotelAdvance(String userId, String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
         return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
     }
+    
+    public List<HotelDTO> getAllHotelDashboard() throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelDashboard = hotelRepo.getAllHotelsDashboard();
+        
+        return listHotelDashboard;
+    }
 }

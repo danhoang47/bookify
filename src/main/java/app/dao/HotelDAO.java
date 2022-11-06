@@ -6,12 +6,14 @@ package app.dao;
 
 import app.dto.HotelDTO;
 import Context.DBContext;
+import app.dto.UserDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,11 +54,12 @@ public class HotelDAO {
                 String closing = rs.getString("closing");
                 String opening = rs.getString("opening");
                 int rating = rs.getInt("rating");
+                Date signAt = rs.getDate("signAt");
                 hotel = new HotelDTO(id, ownerId,
                         hotelTypeId, name, backgroundImage,
                         isAllowPet, isAllowPet, isHasCamera,
                         description, country, district, city,
-                        address, closing, opening, checkin, checkout, null, null, rating);
+                        address, closing, opening, checkin, checkout, null, null, rating, signAt);
 
                 System.out.println(hotel.getHotelName());
             }
@@ -73,6 +76,47 @@ public class HotelDAO {
         }
 
         return hotel;
+    }
+
+    public List<HotelDTO> getAllHotelsDashboard() throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select ht.hotel_id, ht.hotel_name, ht.signAt, ht.is_verified, ud.user_id\n"
+                + "from hotel as ht, userDetail as ud where ht.user_id = ud.user_id";
+        HotelDTO hotel = null;
+        List<HotelDTO> listHotel = new ArrayList<>();
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareCall(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String hotelId = rs.getString("hotel_id");
+                String hotelName = rs.getString("hotel_name");
+                Date signAt = rs.getDate("signAt");
+                boolean isVerified = rs.getInt("is_verified") == 1 ? true : false;
+                String userId = rs.getString("user_id");
+                UserDTO owner = new UserDAO().getOwner(userId);
+
+                listHotel.add(new HotelDTO(hotelId, hotelName, signAt, isVerified, owner));
+
+            }
+
+            return listHotel;
+
+        } catch (Exception ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return null;
     }
 
     public void update(HotelDTO hotel) throws SQLException {
@@ -118,7 +162,7 @@ public class HotelDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String query = "INSERT INTO Hotel VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ?,  ? , ? , ? , ? )";
+            String query = "INSERT INTO Hotel VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ?,  ? , ? , ? , ? , GETDATE())";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 
@@ -153,7 +197,7 @@ public class HotelDAO {
         }
         return false;
     }
-    
+
     public boolean isHotelBookmarked(String hotelId, String userId) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -166,10 +210,9 @@ public class HotelDAO {
 
             ps.setString(1, hotelId);
             ps.setString(2, userId);
- 
 
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 a++;
             }
@@ -349,7 +392,7 @@ public class HotelDAO {
                 int averagePrice = rs.getInt("average_price");
                 int rating = rs.getInt("rating");
                 int isBookmarked = rs.getInt("isBookmarked");
-                HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating, isBookmarked==1 ? true: false);
+                HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating, isBookmarked == 1 ? true : false);
 
                 listHotel.add(hotel);
             }
@@ -372,6 +415,8 @@ public class HotelDAO {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         HotelDAO dao = new HotelDAO();
 //        System.out.println(dao.getAllHotelBasicInfo());
-        System.out.println(dao.isHotelBookmarked("4765fdf0-3f70-41e4-a901-7d838c610614", null));
+//        System.out.println(dao.isHotelBookmarked("4765fdf0-3f70-41e4-a901-7d838c610614", null));
+        List<HotelDTO> list = dao.getAllHotelsDashboard();
+        System.out.println(list);
     }
 }

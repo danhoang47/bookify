@@ -23,18 +23,20 @@ public class UserDTO {
     private String wishlist_id;
     private String self_description;
     private String salt;
-    private String account_number;
+    private String bankingAccountNumber;
     private String subname;
     private Date dob;
     private Date signAt;
 
-    public String getAccount_number() {
-        return account_number;
+    public String getBankingAccountNumber() {
+        return bankingAccountNumber;
     }
 
-    public void setAccount_number(String account_number) {
-        this.account_number = account_number;
+    public void setBankingAccountNumber(String bankingAccountNumber) {
+        this.bankingAccountNumber = bankingAccountNumber;
     }
+
+   
 
     public String getSubname() {
         return subname;
@@ -55,8 +57,10 @@ public class UserDTO {
     public UserDTO() {
         super();
     }
+    
+    
 
-    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String account_number, String subname, Date dob) {
+    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String subname, Date dob, String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -69,12 +73,12 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.account_number = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
         this.subname = subname;
         this.dob = dob;
     }
 
-    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt, String account_number, String subname, Date dob, Date signAt) {
+    public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id, String self_description, String salt,  String subname, Date dob, Date signAt,  String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -87,7 +91,7 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.account_number = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
         this.subname = subname;
         this.dob = dob;
         this.signAt = signAt;
@@ -97,7 +101,7 @@ public class UserDTO {
 
     public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, 
             String ggid, String wishlist_id,
-            String self_description,  String salt, String account_number) {
+            String self_description,  String salt, String bankingAccountNumber) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -110,7 +114,7 @@ public class UserDTO {
         this.wishlist_id = wishlist_id;
         this.self_description = self_description;
         this.salt = salt;
-        this.account_number = account_number;
+        this.bankingAccountNumber = bankingAccountNumber;
     }
 
     public UserDTO(String user_id, String username, String user_password, String email, String phone, String name, String avatar, int role, String ggid, String wishlist_id,
@@ -272,8 +276,10 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" + "user_id=" + user_id + ", username=" + username + ", user_password=" + user_password + ", email=" + email + ", phone=" + phone + ", name=" + name + ", avatar=" + avatar + ", role=" + role + ", ggid=" + ggid + ", wishlist_id=" + wishlist_id + ", self_description=" + self_description + ", salt=" + salt + ", account_number=" + account_number + ", subname=" + subname + ", dob=" + dob + ", signAt=" + signAt + '}';
+        return "UserDTO{" + "user_id=" + user_id + ", username=" + username + ", user_password=" + user_password + ", email=" + email + ", phone=" + phone + ", name=" + name + ", avatar=" + avatar + ", role=" + role + ", ggid=" + ggid + ", wishlist_id=" + wishlist_id + ", self_description=" + self_description + ", salt=" + salt + ", bankingAccountNumber=" + bankingAccountNumber + ", subname=" + subname + ", dob=" + dob + ", signAt=" + signAt + '}';
     }
+
+    
 
     
 }

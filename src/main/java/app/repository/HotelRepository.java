@@ -109,6 +109,12 @@ public class HotelRepository {
         return listHotelBasic;
     }
     
+    public List<HotelDTO> getAllHotelsDashboard() throws SQLException, ClassNotFoundException {
+        List<HotelDTO> listHotelDashboard = hotelDao.getAllHotelsDashboard();
+        
+        return listHotelDashboard;
+    }
+    
     public List<HotelDTO> getFilterHotels(String type, String userid, String id) throws SQLException, ClassNotFoundException {
         List<HotelDTO> listHotelFilter = hotelDao.getFilterHotel(type, userid, id);
         for(int i =0; i<listHotelFilter.size(); i++) {

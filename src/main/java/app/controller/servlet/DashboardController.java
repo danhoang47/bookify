@@ -26,5 +26,11 @@ public class DashboardController {
         return Response.ok(gson.toJson(service.getDashboardData(month))).build();
     }
     
-    
+    @GET
+    @Path("/exchange")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getExchangeData() throws SQLException {
+
+        return Response.ok(gson.toJson(service.getExchangeData())).build();
+    }
 }

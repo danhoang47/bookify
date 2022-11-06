@@ -54,52 +54,54 @@ public class HotelController {
     private final static UserService userService = new UserService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    @Context ServletContext context;
-
+    @Context
+    ServletContext context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
-        
+
         String newUserId = userid == null ? "" : userid;
         return Response.ok(gson.toJson(service.get(hotelId, newUserId))).build();
     }
-    
+
     @PUT
     @Path("/update/{hotelId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response updateHotel(
-        @PathParam("hotelId") String hotelId,
-        @FormDataParam("amenities") String amenities,
-        @FormDataParam("updatedBasicHotelInfor") String basicHotelInfor,
-        @FormDataParam("extraInforModified") String extraInfor,
-        @FormDataParam("roomInfor") String roomInfor,
-        @FormDataParam("deletedImages") String deletedImagesString,
-        @FormDataParam("backgroundImage") String backgroundImage,
-        @FormDataParam("backgroundImage") InputStream fileInputStreamBG,
-        @FormDataParam("backgroundImage") FormDataContentDisposition fileFormDataContentDispositionBG,
-        @FormDataParam("updatedViewImages") FormDataBodyPart viewImages,
-        @FormDataParam("updatedRoomImages") FormDataBodyPart roomImages
+            @PathParam("hotelId") String hotelId,
+            @FormDataParam("amenities") String amenities,
+            @FormDataParam("updatedBasicHotelInfor") String basicHotelInfor,
+            @FormDataParam("extraInforModified") String extraInfor,
+            @FormDataParam("roomInfor") String roomInfor,
+            @FormDataParam("deletedImages") String deletedImagesString,
+            @FormDataParam("backgroundImage") String backgroundImage,
+            @FormDataParam("backgroundImage") InputStream fileInputStreamBG,
+            @FormDataParam("backgroundImage") FormDataContentDisposition fileFormDataContentDispositionBG,
+            @FormDataParam("updatedViewImages") FormDataBodyPart viewImages,
+            @FormDataParam("updatedRoomImages") FormDataBodyPart roomImages
     ) throws IllegalAccessException, InvocationTargetException, IOException, SQLException {
-        Type hotelAmenityListType = new TypeToken<List<HotelAmenityDTO>>() {}.getType();
-        Type deletedIdListType = new TypeToken<List<String>>() {}.getType();
+        Type hotelAmenityListType = new TypeToken<List<HotelAmenityDTO>>() {
+        }.getType();
+        Type deletedIdListType = new TypeToken<List<String>>() {
+        }.getType();
         List<HotelAmenityDTO> amenityList = gson.fromJson(amenities, hotelAmenityListType);
         List<String> deletedImageIdList = gson.fromJson(deletedImagesString, deletedIdListType);
         HotelDTO hotel = gson.fromJson(basicHotelInfor, HotelDTO.class);
         HotelDTO extraInforDto = gson.fromJson(extraInfor, HotelDTO.class);
         RoomTypeDTO roomTypeDto = gson.fromJson(roomInfor, RoomTypeDTO.class);
-        
+
         hotel.setHotelId(hotelId);
         hotel.setBackgroundImg(backgroundImage);
-        
+
         service.update(
-                hotel, extraInforDto, amenityList, 
-                roomTypeDto, fileInputStreamBG, 
-                fileFormDataContentDispositionBG, 
+                hotel, extraInforDto, amenityList,
+                roomTypeDto, fileInputStreamBG,
+                fileFormDataContentDispositionBG,
                 viewImages, roomImages, deletedImageIdList,
                 context.getRealPath("")
         );
-        
+
         return Response.noContent().build();
     }
 
@@ -131,15 +133,24 @@ public class HotelController {
     }
 
     @GET
+    @Path("/all/dashboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHotelAll() throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(service.getAllHotelDashboard())).build();
+    }
+
+    @GET
     @Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFilter(@QueryParam("type") String type, @QueryParam("id") String id, @QueryParam("userid") String userId) throws SQLException, ClassNotFoundException {
 //        JSONObject obj = new JSONObject();
         System.out.println("userid: " + userId);
         String newUserId = userId == null ? "" : userId;
-        return Response.ok(gson.toJson(service.getFilterHotel(type,newUserId, id))).build();
+        return Response.ok(gson.toJson(service.getFilterHotel(type, newUserId, id))).build();
     }
-    
+
     @GET
     @Path("/checkrange")
     @Produces(MediaType.APPLICATION_JSON)
@@ -167,7 +178,7 @@ public class HotelController {
             @FormDataParam("max") int max
     ) throws SQLException, ClassNotFoundException {
 
-        List<String> newAmenity =  Arrays.asList(amenitiesPicked.get(0).trim().split(","));
+        List<String> newAmenity = Arrays.asList(amenitiesPicked.get(0).trim().split(","));
         String newUserId = userId == null ? "" : userId;
         List<HotelDTO> listHotel = service.getFilterHotelAdvance(newUserId, houseType, newAmenity, rooms, numberOfBed, numberOfBathroom, min, max);
 
@@ -276,10 +287,10 @@ public class HotelController {
             obj.put("message", "Sign up new hotel amenities failed, please try again");
             return Response.ok(new Gson().toJson(obj)).build();
         }
-        
+
 //        Update userRole
         boolean updateUser = userService.makeHosting(userId);
-        if(updateUser==false) {
+        if (updateUser == false) {
             obj.put("message", "Update user failed, please try again");
             return Response.ok(new Gson().toJson(obj)).build();
         }
