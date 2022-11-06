@@ -48,9 +48,6 @@ function StaticCard({ prevMonthData, currentMonthData, month }) {
     },
   ];
 
-  console.log(currentMonthData);
-  console.log(prevMonthData);
-
   return (
     <div className={StaticStyle["static-wrapper"]}>
       <Box sx={{ flexGrow: 1 }}>

@@ -9,7 +9,6 @@ const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
 function YearPicker({ yearChanging }) {
   const [year, setYear] = useState(2022);
   const [yearCur, setYearCur] = useState(years[year]);
-  console.log(year);
   const refLeft = useRef();
   const refRight = useRef();
 

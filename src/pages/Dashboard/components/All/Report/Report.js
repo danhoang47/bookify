@@ -1,7 +1,8 @@
 import ReportStyle from "./Report.module.scss";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 function Report({ reportData = [] }) {
   return (
@@ -39,7 +40,7 @@ function Report({ reportData = [] }) {
                       <p>{data.content}</p>
                     </div>
                     <div className={ReportStyle["card-time"]}>
-                      <p>{data.reportDate}</p>
+                      <p>{format(new Date(data.reportDate), "yyyy-MM-dd")}</p>
                     </div>
                   </div>
                 </div>

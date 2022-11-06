@@ -3,22 +3,42 @@ import {
   TransactionDataYear,
   TransactionDataYears,
   getYearExchange,
-  getYearsExchange,
+  getYearsSum,
+  getMonthData,
+  getYearSum,
+  TransactionDataYears2,
 } from "../AllService";
 import YearPicker from "./YearPicker";
 import { useState, useMemo } from "react";
 import ChartStyle from "../Exchange.module.scss";
-function Chart() {
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+function Chart({ exchangeData }) {
   const [year, setYear] = useState(2022);
   const [select, setSelect] = useState("months");
-  let transYearNumber = useMemo(() => TransactionDataYear(year), [year]);
-  let transYearsNumber = useMemo(() => TransactionDataYears(), []);
-  let transYear = useMemo(() => getYearExchange(year), [year]);
-  let transYears = useMemo(() => getYearsExchange(), []);
+
+  let sumByYear = getYearSum(exchangeData, year);
+  let transYears = getYearsSum(exchangeData);
+
+  let monthsData = getMonthData(exchangeData, year);
+
+  let transYearsNumber2 = TransactionDataYears2(exchangeData);
 
   const handleChange = (e) => {
     setSelect(e.target.value);
-    console.log(select);
   };
   const yearChanging = (data) => {
     setYear(data);
@@ -46,7 +66,7 @@ function Chart() {
         <label htmlFor="years">Theo năm</label>
 
         {select === "months" ? (
-          <h2>${transYear}.00</h2>
+          <h2>${sumByYear}.00</h2>
         ) : (
           <h2>${transYears}.00</h2>
         )}
@@ -61,8 +81,8 @@ function Chart() {
           <>
             <SingleLineChart
               label={"Tổng tiền giao dịch"}
-              labels={transYearNumber.month}
-              data={transYearNumber.transNumber}
+              labels={months}
+              data={monthsData || []}
               isY={false}
               color={"#f72585"}
             />
@@ -74,8 +94,8 @@ function Chart() {
           <>
             <SingleLineChart
               label={"Tổng tiền giao dịch"}
-              labels={transYearsNumber.year}
-              data={transYearsNumber.transNumber}
+              labels={transYearsNumber2.year}
+              data={transYearsNumber2.transNumber}
               isY={false}
               color={"#f72585"}
             />

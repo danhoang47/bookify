@@ -1,11 +1,12 @@
 import TableStyle from "../Exchange.module.scss";
-import moment from "moment";
+import { format } from "date-fns";
+import moment from "moment/moment";
 import { useState, useContext, useCallback } from "react";
 import { HotelContext } from "@/utils/contexts";
-function Table() {
+function Table({ exchangeData }) {
   const [filter, setFilter] = useState(null);
   const data = useContext(HotelContext);
-  console.log(data);
+
   const handleChange = useCallback(
     (event) => {
       const value = event.target.value;
@@ -46,21 +47,21 @@ function Table() {
           <th>Chi tiết</th>
         </thead>
         <tbody>
-          {data.map((row, key) => (
+          {exchangeData?.map((row, key) => (
             <tr key={key}>
               <td>
-                <p>{row.hotelhostName}</p>
-                <p>ID:{row.ID}</p>
+                <p>{row.userFullName ? row.userFullName : row.username}</p>
+                <p>ID:{row.user_id}</p>
               </td>
               <td>
-                <p>{moment(row.Time).format("MMMM dS, yyyy")}</p>
-                <p>Lúc: {moment(row.Time).format("HH:MM")}</p>
+                <p>{format(new Date(row.check_out), "MMMM dd, yyyy")}</p>
+                <p>Lúc: 12:10</p>
               </td>
               <td>
-                <p>{row.ID}</p>
+                <p>{row.booking_id}</p>
               </td>
               <td>
-                <p>${row.totalMoney} USD</p>
+                <p>${row.price} USD</p>
               </td>
               <td>
                 <button>

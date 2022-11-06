@@ -1,8 +1,8 @@
 import TableStyle from "../Hotel.module.scss";
 import moment from "moment";
 import { useMemo } from "react";
-function Table({ data, filter }) {
-  console.log(data);
+import { format } from "date-fns";
+function Table({ data, filter, hotels }) {
   return (
     <table>
       <thead>
@@ -13,26 +13,30 @@ function Table({ data, filter }) {
         <th>Chi tiết</th>
       </thead>
       <tbody>
-        {data.map((row) => (
+        {hotels?.map((row) => (
           <tr>
             <td>
-              <p>{row.hotelhostName}</p>
-              <p>ID:{row.ID}</p>
+              <p>
+                {row.hotelOwner.subname && row.hotelOwner.name
+                  ? row.hotelOwner.subname + " " + row.hotelOwner.name
+                  : row.hotelOwner.username}
+              </p>
+              <p>ID:{row.hotelOwner.user_id}</p>
             </td>
             <td>
               <p>{row.hotelName}</p>
             </td>
             <td>
-              <p>{moment(row.Time).format("MMMM dS, yyyy")}</p>
-              <p>Lúc: {moment(row.Time).format("HH:MM")}</p>
+              <p>{format(new Date(row.signAt), "MMMM dd, yyyy")}</p>
+              <p>Lúc: 12:00</p>
             </td>
             <td>
-              {row.status === 1 ? (
+              {row.isVerified === true ? (
                 <p className={TableStyle["active"]}>Hoạt động</p>
-              ) : row.status === 2 ? (
+              ) : row.isVerified === false ? (
                 <p className={TableStyle["waiting"]}>Xét duyệt</p>
               ) : (
-                <p className={TableStyle["cancel"]}>Đóng cửa</p>
+                <p className={TableStyle["cancel"]}></p>
               )}
             </td>
             <td>

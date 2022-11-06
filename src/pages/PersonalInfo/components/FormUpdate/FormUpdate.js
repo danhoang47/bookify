@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import FormUpdateStyle from "./FormUpdate.module.scss";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-
+import { format } from "date-fns";
 import FileUpload from "../FileUpload";
 import PersonalInput from "../PersonalInput";
 import UpdateButton from "../UpdateButton";
 import DatePicker from "../DatePicker";
+import { ToastMessageContext, UserContext } from "@/utils/contexts";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 function FormUpdate({ account }) {
+  const { setToastMessages } = useContext(ToastMessageContext);
   const [subname, setSubname] = useState(account.subname);
   const [name, setName] = useState(account.name);
   const [email, setEmail] = useState(account.email);
@@ -49,7 +55,7 @@ function FormUpdate({ account }) {
 
   const onSubmitClick = (e) => {
     e.preventDefault();
-    console.log(subname, name, email, phone, dob, des, avatar);
+
     account.name = name;
     account.subname = subname;
     account.email = email;
@@ -63,30 +69,33 @@ function FormUpdate({ account }) {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone);
-    formData.append("dob", dob);
+    formData.append("dob", format(new Date(dob), "yyyy-MM-dd"));
     formData.append("selfdescription", des);
     formData.append("avatar", avatar);
 
-    fetch(
-      "http://localhost:8080/testUpload/rest/user_detail/update/" +
-        account.user_id,
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
+    fetch("http://localhost:8080/bookify/api/user/update/" + account.user_id, {
+      method: "POST",
+      body: formData,
+    })
       .then((data) => {
         data.json();
       })
       .then((result) => {
-        console.log(account);
-        console.log(result.message);
-        if (result.message) {
-          console.log(result.message);
-        }
+        setToastMessages(
+          getSuccessToastMessage({
+            message: "Cập nhật thành công",
+          })
+        );
+        setReadOnly(true);
       })
       .catch((error) => {
         console.log(error);
+        setToastMessages(
+          getFailureToastMessage({
+            message: "Cập nhật thất bại",
+          })
+        );
+        setReadOnly(true);
       });
   };
 

@@ -26,7 +26,7 @@ function Profile() {
     document.title = "Profile";
   }, []);
   const { user, setUser, isLogin, setLogin } = useContext(UserContext);
-  console.log(user);
+
   const navigate = useNavigate();
 
   useEffect(() => {
