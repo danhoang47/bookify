@@ -58,12 +58,10 @@ const router = createBrowserRouter(
           <Route path=":hotelId" element={<Update />} />
         </Route>
       </Route>
-      <Route path="manager">
-        <Route path=":id" element={<HotelManageLayout />}>
+      <Route path="manager" element={<HotelManageLayout />}>
           <Route path="" element={<HotelManageMain />} />
           <Route path="detail" element={<HotelManageDetail />} />
           <Route path="booking" element={<HotelManageBooking />} />
-        </Route>
       </Route>
     </Route>
   )
