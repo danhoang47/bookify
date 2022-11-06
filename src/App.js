@@ -9,6 +9,8 @@ import {
 import { modalReducer, toastMessageReducer } from "./utils/reducers";
 import { Modal, ToastMessage, ToastMessageBox } from "./components";
 import { Container } from "@mui/material";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const appInitState = {
   isOpen: false,
@@ -73,26 +75,25 @@ function App({ children }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //     const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-  //     console.log(jwtString);
-  //     if (jwtString) {
-  //         fetch(
-  //             "http://localhost:8080/testUpload/rest/user_detail/verifyjwt",
-  //             {
-  //                 method: "POST",
-  //                 body: jwtString,
-  //             }
-  //         )
-  //             .then((res) => {
-  //                 res.json();
-  //             })
-  //             .then((data) => {
-  //                 console.log(data);
-  //             })
-  //             .catch((err) => console.log(err));
-  //     }Í
-  // }, []);
+  useEffect(() => {
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    const userForm = new FormData();
+    userForm.append("jwt", jwtString);
+    if (jwtString) {
+      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+        method: "POST",
+        body: userForm,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLogin(true);
+          setUser(data);
+        })
+        .catch((err) => {
+          setLogin(false);
+        });
+    }
+  }, []);
 
   return (
     <CoordinatesContext.Provider value={currentCoordinates}>

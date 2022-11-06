@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePickerStyle from "./DatePicker.module.scss";
+import { format } from "date-fns";
 
 function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
+  value = format(new Date(value), "yyyy-MM-dd");
   const newValue = value ? value.split("/").reverse().join("-") : "";
 
   return (

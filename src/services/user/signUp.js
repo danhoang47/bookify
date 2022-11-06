@@ -1,5 +1,5 @@
 async function signUp(username, email, password) {
-  const url = "http://localhost:8080/testUpload/rest/user_detail/signup";
+  const url = "http://localhost:8080/bookify/api/user/signup";
   const accountForm = new FormData();
   accountForm.append("username", username);
   accountForm.append("password", password);

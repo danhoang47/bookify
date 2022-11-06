@@ -1,13 +1,27 @@
 import { InputField } from "@/components";
 import formStyles from "./SignUpForm.module.scss";
-import { useState, memo, useEffect, useRef, useCallback, useMemo } from "react";
+import {
+  useState,
+  memo,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  useContext,
+} from "react";
 import { accountValidation } from "@/utils/validation";
 import { useUppercase } from "@/utils/hooks";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SignUp } from "@/services/user";
+import { ToastMessageContext, UserContext } from "@/utils/contexts";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 function SignUpForm() {
+  const { setToastMessages } = useContext(ToastMessageContext);
   const [registerAccount, setRegisterAccount] = useState({
     username: null,
     email: null,
@@ -48,8 +62,17 @@ function SignUpForm() {
         ).then((data) => {
           if (data?.error) {
             console.log("account not found : " + data.error);
+            setToastMessages(
+              getFailureToastMessage({
+                message: data.error,
+              })
+            );
           } else {
-            console.log(data);
+            setToastMessages(
+              getSuccessToastMessage({
+                message: data.message || "Đăng ký thành công",
+              })
+            );
           }
         });
       } finally {

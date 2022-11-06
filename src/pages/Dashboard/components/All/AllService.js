@@ -1,7 +1,6 @@
 import { dashboarData } from "./FakeDataDashBoardAll";
 
 export const getStatic = (month) => {
-  console.log(month);
   let staticObj = {
     views: 0,
     booking: 0,
@@ -106,4 +105,89 @@ export const ReportData = (month) => {
     .map((data) => data.report);
 
   return dataByMonth[0];
+};
+
+export const getIncreasePercent2 = (prevData, curData, month) => {
+  let increasePercent = {
+    views: 0,
+    booking: 0,
+    checkOut: 0,
+    rating: 0,
+    register: 0,
+  };
+
+  if (month === 1) {
+    return increasePercent;
+  }
+
+  // prevData.paymentNumber = 1;
+  // prevData.reviewNumber = 1;
+  // prevData.userRegisNumber = 1;
+  // prevData.bookingNumber = 1;
+  // prevData.userRegisNumber = 5;
+
+  if (prevData.accessNumber !== 0 && curData.accessNumber !== 0) {
+    increasePercent.views = parseFloat(
+      (
+        ((1 -
+          (curData.accessNumber - prevData.accessNumber) /
+            prevData.accessNumber) *
+          100 *
+          100) /
+        100
+      ).toFixed(1)
+    );
+  }
+
+  if (prevData.bookingNumber !== 0 && curData.bookingNumber !== 0) {
+    increasePercent.booking = parseFloat(
+      (
+        ((1 -
+          (curData.bookingNumber - prevData.bookingNumber) /
+            curData.bookingNumber) *
+          100 *
+          100) /
+        100
+      ).toFixed(1)
+    );
+  }
+
+  if (prevData.paymentNumber !== 0 && curData.paymentNumber !== 0) {
+    increasePercent.checkOut = parseFloat(
+      (
+        ((1 -
+          (curData.paymentNumber - prevData.paymentNumber) /
+            curData.paymentNumber) *
+          100 *
+          100) /
+        100
+      ).toFixed(1)
+    );
+  }
+
+  if (prevData.reviewNumber !== 0 && curData.reviewNumber !== 0) {
+    increasePercent.rating = parseFloat(
+      (
+        (((curData.reviewNumber - prevData.reviewNumber) /
+          prevData.reviewNumber) *
+          100 *
+          100) /
+        100
+      ).toFixed(1)
+    );
+  }
+
+  if (prevData.userRegisNumber !== 0 && curData.userRegisNumber !== 0) {
+    increasePercent.register = parseFloat(
+      (
+        (((curData.userRegisNumber - prevData.userRegisNumber) /
+          prevData.userRegisNumber) *
+          100 *
+          100) /
+        100
+      ).toFixed(1)
+    );
+  }
+
+  return increasePercent;
 };

@@ -4,7 +4,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import DashboardStyle from "./Dashboard.module.scss";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import All from "./components/All";
 import Hotel from "./components/Hotel";
 import Exchange from "./components/Exchange";
@@ -12,6 +12,7 @@ import HotelContext from "@/utils/contexts/HotelContext";
 
 function Dashboard() {
   const [value, setValue] = useState("1");
+
   const hotelData = useMemo(
     () => [
       {

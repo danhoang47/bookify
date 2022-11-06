@@ -1,26 +1,32 @@
 import LoginandSecurityStyle from "./LoginandSecurity.module.scss";
 import HeaderInfo from "./components/HeaderInfo";
 import FormUpdate from "./components/Form";
-import { useContext } from "react";
-import { UserContext } from "@/utils/contexts";
+import VerifyAuth from "@/utils/hooks/verifyAuth";
+import { useNavigate } from "react-router-dom";
+import { ToastMessageContext } from "@/utils/contexts";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useEffect, useContext } from "react";
 
-const account = {
-  username: "duc123",
-  subname: "Le Quy",
-  name: "Duc",
-  email: "duc@gmail.com",
-  phone: "129031201238",
-  dob: "02/02/2002",
-  selfDes:
-    "Esse tempor magna et nulla sunt ea excepteur tempor incididunt nisi labore id. Eu dolor quis cupidatat occaecat laborum cillum culpa minim dolore. Aliqua est ullamco enim voluptate in. ",
-};
 function LoginandSecurity() {
-  let { user } = useContext(UserContext);
+  const { user } = VerifyAuth();
+  const { setToastMessages } = useContext(ToastMessageContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || user.username === "") {
+      navigate("/");
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để truy cập",
+        })
+      );
+    }
+  }, []);
 
   return (
     <div className={LoginandSecurityStyle["container"]}>
       <HeaderInfo />
-      <FormUpdate account={account} />
+      <FormUpdate />
     </div>
   );
 }

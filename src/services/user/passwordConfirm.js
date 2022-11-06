@@ -1,7 +1,6 @@
 async function compareCurrentPassword(userId, currentPassword) {
   const url =
-    "http://localhost:8080/testUpload/rest/user_detail/compareCurrentPassword/" +
-    userId;
+    "http://localhost:8080/bookify/api/user/compareCurrentPassword/" + userId;
   const accountForm = new FormData();
   accountForm.append("currentPassword", currentPassword);
   const options = {

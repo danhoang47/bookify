@@ -12,19 +12,19 @@ import { BookingContext, UserContext, ModalContext } from "@/utils/contexts";
 import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function formatDay(date) {
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    };
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
-    if (date) {
-        const from = date.toLocaleDateString(undefined, options).split(", ");
-        return `${from[1]}, ${from[2]}`;
-    }
+  if (date) {
+    const from = date.toLocaleDateString(undefined, options).split(", ");
+    return `${from[1]}, ${from[2]}`;
+  }
 
-    return undefined;
+  return undefined;
 }
 
 function Booking({ roomType, isAllowPet = true, hotelId }) {
@@ -64,17 +64,17 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
             selectDaysKey.length !== 0 &&
             selectDaysKey.every((key) => selectDays[key]);
 
-        return isGuestsSelected && isDateSelected;
-    }, [selectDays, total]);
+    return isGuestsSelected && isDateSelected;
+  }, [selectDays, total]);
 
-    useLayoutEffect(() => {
-        if (selectDateDiff === 0) {
-            setSelectedDays((prev) => ({
-                ...prev,
-                to: undefined,
-            }));
-        }
-    }, [selectDateDiff]);
+  useLayoutEffect(() => {
+    if (selectDateDiff === 0) {
+      setSelectedDays((prev) => ({
+        ...prev,
+        to: undefined,
+      }));
+    }
+  }, [selectDateDiff]);
 
     useEffect(() => {
         if (!selectDateDiff) {
@@ -84,23 +84,23 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
         }
     }, [selectDateDiff, roomType]);
 
-    const handleClick = (type) => {
-        setSelectBoxOpen((prev) => {
-            return Object.keys(prev).reduce((prevState, key) => {
-                if (key === type) {
-                    return {
-                        ...prevState,
-                        [key]: !prev[key],
-                    };
-                } else {
-                    return {
-                        ...prevState,
-                        [key]: false,
-                    };
-                }
-            }, {});
-        });
-    };
+  const handleClick = (type) => {
+    setSelectBoxOpen((prev) => {
+      return Object.keys(prev).reduce((prevState, key) => {
+        if (key === type) {
+          return {
+            ...prevState,
+            [key]: !prev[key],
+          };
+        } else {
+          return {
+            ...prevState,
+            [key]: false,
+          };
+        }
+      }, {});
+    });
+  };
 
     const handleBooking = async () => {
         if (isAllInformatioSelected) {

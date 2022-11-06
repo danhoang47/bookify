@@ -17,6 +17,8 @@ const months = [
   "Tháng 12",
 ];
 
+const monthsNum = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 function SelectBox() {
   let date = new Date();
   const [month, setMonth] = useContext(MonthContext);
@@ -38,7 +40,7 @@ function SelectBox() {
             return (
               <option
                 disabled={months.indexOf(data) > date.getMonth() ? true : false}
-                value={index + 1}
+                value={monthsNum[index]}
                 key={index}
               >
                 {data}

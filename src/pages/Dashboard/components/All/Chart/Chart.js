@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 function Chart({ typeBooking, bookingNumber }) {
+  const initArr = [1, 3, 5, 7, 9, 10, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29];
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1}>
@@ -24,7 +25,9 @@ function Chart({ typeBooking, bookingNumber }) {
           <div className={ChartStyle["chart-2"]}>
             <SingleLineChart
               label="Lượt đặt phòng"
-              labels={bookingNumber.day}
+              labels={
+                bookingNumber.day.length !== 0 ? bookingNumber.day : initArr
+              }
               data={bookingNumber.numberBooking}
               isY={false}
               color={"#f72585"}

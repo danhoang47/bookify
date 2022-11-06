@@ -17,7 +17,11 @@ export default async function registerHotel(
   amenities.forEach((item) => {
     amenitiesId.push(item.id);
     amenitiesNames.push(item.name);
-    amenitiesTypes.push(item.type);
+    if (item.type) {
+      amenitiesTypes.push(item.type);
+    } else {
+      amenitiesTypes.push(item.amenityTypeId);
+    }
   });
 
   const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0]
@@ -67,6 +71,8 @@ export default async function registerHotel(
     "opening",
     extraInfor.opening.hour + ":" + extraInfor.opening.minutes
   );
+  hotelForm.append("isCamera", extraInfor.isAllowPet);
+  hotelForm.append("isAnimalAccept", extraInfor.isHasCamera);
   hotelForm.append("isbathPrivate", roomInfor.isPrivateBathRoom);
   hotelForm.append("bathNum", roomInfor.numberOfBathroom);
   hotelForm.append("bedNum", roomInfor.numberOfBed);
@@ -74,6 +80,7 @@ export default async function registerHotel(
   hotelForm.append("maxGuest", roomInfor.numberOfGuests);
   hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
   hotelForm.append("roomNum", roomInfor.rooms);
+
   hotelForm.append("userId", "b955c796-027c-4e11-92ff-1bb942a102c8");
 
   const data = await fetch(
@@ -94,6 +101,9 @@ export default async function registerHotel(
   //   viewImages,
   //   extraInfor,
   //   roomInfor,
+  //   amenitiesId,
+  //   amenitiesNames,
+  //   amenitiesTypes,
   // };
 
   // console.log(data);

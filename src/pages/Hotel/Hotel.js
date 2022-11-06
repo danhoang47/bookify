@@ -23,16 +23,16 @@ function Hotel() {
     const [isAllImageOpen, setAllImageOpen] = useState(false);
     const href = useHref();
 
-    useEffect(() => {
-        fetch(
-            `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user.user_id}`
-        )
-            .then((res) => res.json())
-            .then((result) => {
-                setHotelInfo(result);
-            });
-        //eslint-disable-next-line
-    }, [id]);
+  useEffect(() => {
+    fetch(
+      `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user.user_id}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setHotelInfo(result);
+      });
+    //eslint-disable-next-line
+  }, [id]);
 
     const bookingContextValue = useMemo(
         () => ({

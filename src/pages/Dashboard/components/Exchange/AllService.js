@@ -53,3 +53,67 @@ const sumByYear = (yearDetail) => {
   }, 0);
   return res;
 };
+
+export const getMonthData = (data, year) => {
+  const dataRes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let month = new Date().getMonth();
+  let getYear = new Date().getFullYear();
+  for (var i = 0; i < data.length; i++) {
+    let monthSpe = new Date(data[i].check_out).getMonth();
+    let yearSpe = new Date(data[i].check_out).getFullYear();
+    if (yearSpe === parseInt(year)) {
+      dataRes[monthSpe] += data[i].price;
+    }
+  }
+  for (var i = 0; i < dataRes.length; i++) {
+    if (i > month && year === getYear) {
+      dataRes[i] = null;
+    }
+  }
+
+  return dataRes;
+};
+
+export const getYearSum = (data, year) => {
+  let transc = 0;
+
+  data?.forEach((data) => {
+    let yearSpe = new Date(data.check_out).getFullYear();
+    if (yearSpe === year) {
+      transc += data.price;
+    }
+  });
+  return transc;
+};
+
+export const getYearsSum = (data) => {
+  let transc = 0;
+
+  data?.forEach((data) => {
+    transc += data.price;
+  });
+  return transc;
+};
+
+export const TransactionDataYears2 = (data) => {
+  let yearSpe = new Date().getFullYear();
+  const dataRes = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let listYear = [];
+  for (var i = 0; i <= 8; i++) {
+    listYear.push(yearSpe - i);
+  }
+  listYear = listYear.reverse();
+
+  data.forEach((item) => {
+    let yearSum = new Date(item.check_out).getFullYear();
+    let index = listYear.indexOf(parseInt(yearSum));
+    if (index !== -1) {
+      dataRes[index] += item.price;
+    }
+  });
+
+  return {
+    year: listYear,
+    transNumber: dataRes,
+  };
+};

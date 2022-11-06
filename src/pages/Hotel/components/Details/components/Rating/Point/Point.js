@@ -10,19 +10,21 @@ function Point({ pointsData }) {
     () => [
       {
         point_name: "Mức độ chính xác",
-        point: pointsData.accuracyPoint,
+        point: pointsData.accuracyPoint ? pointsData.accuracyPoint : 0,
       },
       {
         point_name: "Giá trị",
-        point: pointsData.locationPoint,
+        point: pointsData.locationPoint ? pointsData.locationPoint : 0,
       },
       {
         point_name: "Mức độ sạch sẽ",
-        point: pointsData.valuePoint,
+        point: pointsData.valuePoint ? pointsData.valuePoint : 0,
       },
       {
         point_name: "Phục vụ",
-        point: pointsData.communicationPoint,
+        point: pointsData.communicationPoint
+          ? pointsData.communicationPoint
+          : 0,
       },
     ],
     []

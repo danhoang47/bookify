@@ -8,103 +8,102 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useContext, useState, memo } from "react";
 import {
-    BookmarkContext,
-    ToastMessageContext,
-    UserContext,
+  BookmarkContext,
+  ToastMessageContext,
+  UserContext,
 } from "@/utils/contexts";
 import { addHotelToBookmark, deleteHotelFromBookmark } from "@/services/user";
 import {
-    getFailureToastMessage,
-    getSuccessToastMessage,
+  getFailureToastMessage,
+  getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
 
 function HotelCard({
-    hotelId,
-    hotelName,
-    country,
-    city,
-    district,
-    address,
-    backgroundImg,
-    images,
-    averagePirce,
-    rating,
-    isBookmarked,
+  hotelId,
+  hotelName,
+  country,
+  city,
+  district,
+  address,
+  backgroundImg,
+  images,
+  averagePirce,
+  rating,
+  isBookmarked,
 }) {
-    const backgroundImg2 = backgroundImg.split("/");
-    const allImages = [backgroundImg2[backgroundImg2.length - 1]];
-    const { user } = useContext(UserContext);
-    const [bookmarked, setBookmarked] = useState(isBookmarked);
-    const { setToastMessages } = useContext(ToastMessageContext);
-    const setBookmarkedHotels = useContext(BookmarkContext);
+  const backgroundImg2 = backgroundImg.split("/");
+  const allImages = [backgroundImg2[backgroundImg2.length - 1]];
+  const { user } = useContext(UserContext);
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
+  const { setToastMessages } = useContext(ToastMessageContext);
+  const setBookmarkedHotels = useContext(BookmarkContext);
 
-    images.forEach((image) => {
-        let imgName = image.src.split("/");
-        allImages.push(imgName[imgName.length - 1]);
+  images.forEach((image) => {
+    let imgName = image.src.split("/");
+    allImages.push(imgName[imgName.length - 1]);
+  });
+
+  const addToBookmark = () => {
+    setBookmarkedHotels((prev) => [
+      {
+        hotelId,
+        hotelName,
+        backgroundImg,
+        country,
+        district,
+        city,
+        address,
+        roomType: {
+          price: averagePirce,
+        },
+      },
+      ...prev,
+    ]);
+    setToastMessages(
+      getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
+    );
+    setBookmarked(true);
+  };
+
+  const removeFromBookmark = () => {
+    setBookmarkedHotels((prev) => {
+      const thisHotelId = hotelId;
+      return prev.filter(({ hotelId }) => hotelId !== thisHotelId);
     });
+    setToastMessages(
+      getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
+    );
+    setBookmarked(false);
+  };
 
-    const addToBookmark = () => {
-        setBookmarkedHotels((prev) => [
-            {
-                hotelId,
-                hotelName,
-                backgroundImg,
-                country,
-                district,
-                city,
-                address,
-                roomType: {
-                    price: averagePirce,
-                },
-            },
-            ...prev,
-        ]);
-        setToastMessages(
-            getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
-        );
-        setBookmarked(true);
-    };
-
-    const removeFromBookmark = () => {
-        setBookmarkedHotels((prev) => {
-            const thisHotelId = hotelId;
-            return prev.filter(({ hotelId }) => hotelId !== thisHotelId);
-        });
-        setToastMessages(
-            getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
-        );
+  const handleBookmark = async (event) => {
+    event.preventDefault();
+    if (!user.user_id) {
+      setToastMessages(
+        getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
+      );
+      return;
+    }
+    if (bookmarked) {
+      const res = await deleteHotelFromBookmark(hotelId, user.user_id).then(
+        (res) => res
+      );
+      if (res?.ok) {
+        removeFromBookmark();
+      } else {
         setBookmarked(false);
-    };
-
-    const handleBookmark = async (event) => {
-        event.preventDefault();
-        if (!user.user_id) {
-            setToastMessages(
-                getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
-            );
-            return;
-        }
-        if (bookmarked) {
-            const res = await deleteHotelFromBookmark(
-                hotelId,
-                user.user_id
-            ).then((res) => res);
-            if (res?.ok) {
-                removeFromBookmark();
-            } else {
-                setBookmarked(false);
-            }
-        } else {
-            const res = await addHotelToBookmark(hotelId, user.user_id).then(
-                (res) => res
-            );
-            if (res?.ok) {
-                addToBookmark();
-            } else {
-                setBookmarked(true);
-            }
-        }
-    };
+      }
+    } else {
+      const res = await addHotelToBookmark(hotelId, user.user_id).then(
+        (res) => res
+      );
+      if (res?.ok) {
+        addToBookmark();
+      } else {
+        setBookmarked(true);
+      }
+    }
+  };
 
     return (
         <Link to={`hotel/${hotelId}`}>

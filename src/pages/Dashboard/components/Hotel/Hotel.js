@@ -1,12 +1,19 @@
 import TableStyle from "./Hotel.module.scss";
 import Table from "./Table";
-import { useState, useContext, useCallback } from "react";
+import { useState, useContext, useCallback, useEffect } from "react";
 import { HotelContext } from "@/utils/contexts";
 import moment from "moment";
 function Hotel() {
   const [filter, setFilter] = useState(null);
   const data = useContext(HotelContext);
-  console.log(data);
+  const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/bookify/api/hotel/all/dashboard")
+      .then((res) => res.json())
+      .then((result) => setHotels(result));
+  }, []);
+
   const handleChange = useCallback(
     (event) => {
       console.log("push");
@@ -39,7 +46,7 @@ function Hotel() {
           <option value={false}>Cũ nhất</option>
         </select>
       </div>
-      <Table data={data} filter={filter} />
+      <Table data={data} hotels={hotels} filter={filter} />
     </div>
   );
 }

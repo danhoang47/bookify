@@ -50,12 +50,7 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
         >
           {isFilePicked ? (
             // <img src={preview} accept="image/*" alt="" loading="lazy" />
-            <img
-              src="https://m.media-amazon.com/images/M/MV5BMjM2OTkyNTY3N15BMl5BanBnXkFtZTgwNzgzNDc2NjE@._V1_QL75_UY281_CR86,0,500,281_.jpg"
-              accept="image/*"
-              alt=""
-              loading="lazy"
-            />
+            <img src={preview} accept="image/*" alt="" loading="lazy" />
           ) : (
             <>
               <input

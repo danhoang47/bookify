@@ -2,10 +2,28 @@ import PersonalInfoStyle from "./PersonalInfo.module.scss";
 import HeaderInfo from "./components/HeaderInfo";
 import FormUpdate from "./components/FormUpdate";
 import { UserContext } from "@/utils/contexts";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import VerifyAuth from "@/utils/hooks/verifyAuth";
+import { ToastMessageContext } from "@/utils/contexts";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function PersonalInfo() {
   let { user } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
+  const { isLogin } = VerifyAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin === false || isLogin === undefined) {
+      navigate("/");
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để truy cập",
+        })
+      );
+    }
+  }, []);
 
   return (
     <div className={PersonalInfoStyle["container"]}>
