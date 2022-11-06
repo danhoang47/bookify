@@ -28,8 +28,11 @@ public class HotelService {
     }
     
     public HotelDTO get(String hotelId, String userId) throws SQLException, ClassNotFoundException {
+        
         return hotelRepo.get(hotelId, userId);
     }
+    
+   
     
     public void update(
         HotelDTO hotel, 
@@ -97,5 +100,9 @@ public class HotelService {
     public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
         return hotelRepo.getAllBookmarkedHotel(userId);
 
+    }
+
+    public HotelDTO getBasicHotelInfo(String userId) throws SQLException {
+        return hotelRepo.getBasicHotelInfo(userId);
     }
 }

@@ -52,8 +52,36 @@ public class ReviewDAO {
         }
         return null;
     }
-    
-     public int getNumberOfReview(int month) {
+
+    public List<ReviewDTO> listReviewWithPoint(String hotel_id, int point) {
+
+        try {
+            String query = "select rv.*, (ud.subname + ' ' + ud.name) as displayName, ud.avatar \n"
+                    + "from Review as rv, userDetail as ud where rv.user_id=ud.user_id and rv.hotel_id=?\n"
+                    + "and (rv.communication_point + rv.accuracy_point + rv.location_point + rv.value_point)/4=?";
+
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+            ps.setString(1, hotel_id);
+            ps.setInt(2, point);
+
+            rs = ps.executeQuery();
+
+            List<ReviewDTO> listReview = new ArrayList<>();
+
+            while (rs.next()) {
+                listReview.add(new ReviewDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getDate(10), rs.getString(11), rs.getString(12)));
+            }
+
+            return listReview;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ReviewDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int getNumberOfReview(int month) {
 
         try {
             String query = "select count(*) as reviewNumber from Review where month(create_at)=? ";
@@ -65,7 +93,7 @@ public class ReviewDAO {
 
             rs = ps.executeQuery();
 
-            int res =0;
+            int res = 0;
 
             while (rs.next()) {
                 res = rs.getInt("reviewNumber");
@@ -78,9 +106,9 @@ public class ReviewDAO {
         return 0;
     }
 
-
     public static void main(String[] args) {
         List<ReviewDTO> listReviewDTO = new ReviewDAO().listReview("0e496299-ba26-4270-8ba9-f642c6843a62");
         System.out.println(new ReviewDAO().getNumberOfReview(11));
+        System.out.println(listReviewDTO);
     }
 }

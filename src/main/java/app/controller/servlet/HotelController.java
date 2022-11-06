@@ -4,11 +4,13 @@
  */
 package app.controller.servlet;
 
+import app.dao.ViewDAO;
 import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.HotelDTO;
 import app.services.AmenityService;
 import app.services.DateRangeService;
+import app.services.HotelManageService;
 import app.services.HotelService;
 import app.services.ImageService;
 import app.services.RoomService;
@@ -24,7 +26,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
@@ -50,10 +51,12 @@ public class HotelController {
 
     private final static HotelService service = new HotelService();
     private final static UserService userService = new UserService();
+    private final static HotelManageService manageService = new HotelManageService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    @Context ServletContext context;
+    @Context
+    ServletContext context;
 
     @GET
     @Path("/bookmark/{userId}")
@@ -62,18 +65,26 @@ public class HotelController {
         System.out.println("getBookmarkedHotel " + userId);
         if (userId == null) {
             return Response.noContent().build();
-        }
-        else {
+        } else {
             return Response.ok(gson.toJson(service.getAllBookmarkedHotel(userId))).build();
         }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
 
         String newUserId = userid == null ? "" : userid;
         return Response.ok(gson.toJson(service.get(hotelId, newUserId))).build();
+    }
+    
+    @GET
+    @Path("/manage/gethotel")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHotel(@QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
+
+        String newUserId = userid == null ? "" : userid;
+        return Response.ok(gson.toJson(service.getBasicHotelInfo(newUserId))).build();
     }
 
     @PUT
@@ -115,12 +126,12 @@ public class HotelController {
 
         return Response.noContent().build();
     }
-    
+
     @POST
     @Path("/search/advance")
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchAdvanceHotel(@FormDataParam("searchData") String searchData) {
-        
+
         return Response.ok().build();
     }
 
@@ -141,6 +152,43 @@ public class HotelController {
 
         return Response.ok(gson.toJson(service.getAllHotelDashboard())).build();
     }
+
+    @GET
+    @Path("/manage/income")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelBookingData(@QueryParam("hotelid") String hotelId, @QueryParam("month") int month) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelBookingData(hotelId, month))).build();
+    }
+    
+    @GET
+    @Path("/manage/views")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelBookingDataAll(@QueryParam("hotelid") String hotelId, @QueryParam("month") int month) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelBookingDataAll(hotelId, month))).build();
+    }
+    
+    @GET
+    @Path("/manage/rating")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelRating(@QueryParam("hotelid") String hotelId) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelRatingData(hotelId))).build();
+    }
+    
+    @GET
+    @Path("/manage/rating/point")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelRating(@QueryParam("hotelid") String hotelId, @QueryParam("point") int point) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelRatingWithPoint(hotelId, point))).build();
+    }
+    
 
     @GET
     @Path("/filter")
@@ -219,13 +267,13 @@ public class HotelController {
             @FormDataParam("bedroomNum") int bedroomNum,
             @FormDataParam("isbathPrivate") boolean isbathPrivate,
             @FormDataParam("userId") String userId) throws IOException {
-        System.out.println(isCamera);
-        System.out.println(isAnimalAccept);
+
         UploadImage uploadhotel = new UploadImage();
         HotelService hotelService = new HotelService();
         ImageService imgService = new ImageService();
         RoomService roomService = new RoomService();
         AmenityService amenityService = new AmenityService();
+        ViewDAO view = new ViewDAO();
 //
         List<String> listHotelImagesPath = null;
         List<String> listViewImagePath = null;
@@ -293,6 +341,11 @@ public class HotelController {
         boolean updateUser = userService.makeHosting(userId);
         if (updateUser == false) {
             obj.put("message", "Update user failed, please try again");
+            return Response.ok(new Gson().toJson(obj)).build();
+        }
+        boolean addNewView = view.addNewView(hotel.getHotelId());
+        if (addNewView == false) {
+            obj.put("message", "Update view failed, please try again");
             return Response.ok(new Gson().toJson(obj)).build();
         }
 
