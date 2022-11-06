@@ -133,4 +133,12 @@ public class HotelRepository {
         return listHotel;
     }
     
+    public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
+        List<HotelDTO> bookmarkedHotels = hotelDao.getAllBookmarkedHotel(userId);
+        for (HotelDTO hotel : bookmarkedHotels) {
+            hotel.setRoomType(roomTypeDao.get(hotel.getHotelId()));
+        }
+        
+        return bookmarkedHotels;
+    }
 }

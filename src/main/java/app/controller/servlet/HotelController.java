@@ -38,8 +38,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.media.multipart.BodyPart;
-import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -54,9 +52,22 @@ public class HotelController {
     private final static UserService userService = new UserService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    @Context
-    ServletContext context;
 
+    @Context ServletContext context;
+
+    @GET
+    @Path("/bookmark/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBookmarkedHotel(@PathParam("userId") String userId) throws SQLException {
+        System.out.println("getBookmarkedHotel " + userId);
+        if (userId == null) {
+            return Response.noContent().build();
+        }
+        else {
+            return Response.ok(gson.toJson(service.getAllBookmarkedHotel(userId))).build();
+        }
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHotel(@QueryParam("id") String hotelId, @QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
@@ -104,23 +115,13 @@ public class HotelController {
 
         return Response.noContent().build();
     }
-
+    
     @POST
-    @Path("/{hotelId}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response updateHotel(
-            @PathParam("hotelId") String hotelId,
-            @FormDataParam("viewImages") FormDataBodyPart viewImagesBodyPart,
-            @FormDataParam("backgroundImage") FormDataContentDisposition backgroundImageBodyPart,
-            @FormDataParam("roomImages") FormDataBodyPart roomImagesBodyPart
-    ) {
-        System.out.println("updateHotel called");
-        for (BodyPart part : viewImagesBodyPart.getParent().getBodyParts()) {
-            ContentDisposition meta = part.getContentDisposition();
-            System.out.println(meta.getFileName());
-        }
-
-        return Response.ok(new Gson().toJson("hello")).build();
+    @Path("/search/advance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchAdvanceHotel(@FormDataParam("searchData") String searchData) {
+        
+        return Response.ok().build();
     }
 
     @GET

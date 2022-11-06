@@ -29,12 +29,11 @@ public class DBContext {
 	return DriverManager.getConnection(url, userID, password); 
     }
     
-   private static final String serverName = "LEDUC\\MAYAO";
+    private static final String serverName = "LEDUC\\MAYAO";
     private static final String dbName = "bookify";
     private static final String portNumber = "1433";
     private static final String userID = "sa";
     private static final String password = "13072002";
-    
     
 
     public static void main(String[] args) {

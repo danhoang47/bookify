@@ -56,12 +56,17 @@ public class HotelService {
         if (fileFormDataContentDispositionBG.getFileName() != null) {
             String backgroundImageSrc = UploadImage.uploadSingleFile(fileInputStreamBG, fileFormDataContentDispositionBG, typeUpload, realPath);
             hotel.setBackgroundImg(backgroundImageSrc);
+            System.out.println(hotel.getBackgroundImg());
         }
         List<String> viewImageList = UploadImage.uploadMultipleFile(viewImages, typeUpload, realPath);
         for (String src : viewImageList) {
             System.out.println(src);
         }
+        
         List<String> roomImageList = UploadImage.uploadMultipleFile(roomImages, typeUpload, realPath);
+         for (String src : roomImageList) {
+            System.out.println(src);
+        }
         
         hotelRepo.update(hotel, amenities, roomTypeDto, viewImageList, roomImageList, deletedImageIdList);
     }
@@ -82,9 +87,15 @@ public class HotelService {
         return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
     }
     
+
     public List<HotelDTO> getAllHotelDashboard() throws SQLException, ClassNotFoundException {
         List<HotelDTO> listHotelDashboard = hotelRepo.getAllHotelsDashboard();
         
         return listHotelDashboard;
+    }
+
+    public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
+        return hotelRepo.getAllBookmarkedHotel(userId);
+
     }
 }

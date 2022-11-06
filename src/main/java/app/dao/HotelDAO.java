@@ -275,6 +275,52 @@ public class HotelDAO {
 
         return null;
     }
+    
+    public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
+        String query = "proc_getAllBookmarkedHotel @user_id = ?";
+        Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+
+        List<HotelDTO> listHotel = new ArrayList<>();
+        try {
+            conn = new DBContext().getConnection();
+            cs = conn.prepareCall(query);
+            cs.setString(1, userId);
+            cs.executeQuery();
+            rs = cs.getResultSet();
+
+            while (rs.next()) {
+                String hotelId = rs.getString("hotel_id");
+                String hotelName = rs.getString("hotel_name");
+                String hotelTypeId = rs.getString("hotelType_id");
+                String bgImage = rs.getString("background_image");
+                String country = rs.getString("country");
+                String city = rs.getString("city");
+                String district = rs.getString("district");
+                String address = rs.getString("address");
+                int averagePrice = 0;
+                int rating = 0;
+                HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelTypeId, bgImage, country, city, district, address, averagePrice, rating,  true);
+
+                listHotel.add(hotel);
+            }
+
+            return listHotel;
+
+        } catch (Exception ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (cs != null) {
+                cs.close();
+            }
+        }
+
+        return null;
+    }
 
     public List<HotelDTO> getFilterHotel(String type, String userId, String id) throws SQLException {
         String query = "";
@@ -415,8 +461,6 @@ public class HotelDAO {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         HotelDAO dao = new HotelDAO();
 //        System.out.println(dao.getAllHotelBasicInfo());
-//        System.out.println(dao.isHotelBookmarked("4765fdf0-3f70-41e4-a901-7d838c610614", null));
-        List<HotelDTO> list = dao.getAllHotelsDashboard();
-        System.out.println(list);
+
     }
 }

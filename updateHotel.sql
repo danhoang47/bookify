@@ -3,6 +3,7 @@ use bookify
 select * from Hotel where hotel_id = 'fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9'
 select * from Image where hotel_id = 'fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9'
 select * from RoomType
+select * from userDetail
 
 alter table Hotel
 add checkout varchar(5)
@@ -173,3 +174,11 @@ from review as rv where rv.hotel_id=ht.hotel_id), 0)) as rating
 from Hotel as ht, Room as rm, RoomType as rt
 where ht.hotel_id=rm.hotel_id and rm.room_type_id=rt.id 
 group by ht.hotel_id, ht.hotel_name, ht.city, ht.district, ht.address, ht.country, ht.hoteltype_id, ht.background_image
+
+image_id	hotel_id	image	type
+0dc5d3bb-ca1e-4334-87a4-182a4a13acd9	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/Hotel-Gardens-The-10-Most-Beautiful-Around-the-World-1.jpg	0
+5859c084-9528-4385-87f9-3390af7ae31e	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/six-senses-ninh-van-bay-7.jpg	0
+65a646a3-31a9-4321-ac24-03313ab51509	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/VPRGNHA-Facade_1636079565.jpg	0
+b53e352a-f4a0-40cd-9c5b-964861a2b9bf	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/ho-boi-spa.png	0
+cf77f826-0d67-48bc-b7fb-ed15a089f5ce	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/intercontinental-danang-city-3986758374-2x1-1657599743.jpg	0
+ee3bf56b-a747-4e0a-8e91-70ffc969dd2f	fe1f3fd7-6b6f-4450-b8c5-9f1ccee123a9	http://localhost:8080/bookify/images/hotels/b11a2b3b7db771727f524e7d67f1e1e7.png	0

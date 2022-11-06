@@ -1,4 +1,3 @@
-
 package app.dto;
 
 import java.util.List;
@@ -6,10 +5,6 @@ import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
 import java.util.Date;
 
-/**
- *
- * @author toten
- */
 public class HotelDTO {
 //    13
 
@@ -67,11 +62,13 @@ public class HotelDTO {
         this.hotelAmenities = hotelAmenities;
         this.images = images;
     }
-    
+
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
             boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district,
+
             String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, 
             List<ImageDTO> images, int rating, Date signAt) {
+
         this.hotelId = hotelId;
         this.userId = userId;
         this.hotelTypeId = hotelTypeId;
@@ -224,7 +221,6 @@ public class HotelDTO {
         this.roomType = roomType;
     }
 
-
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, int averagePirce, int rating, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images, List<ReviewDTO> reviews, RoomTypeDTO roomType, boolean isBookmarked) {
         this.hotelId = hotelId;
         this.userId = userId;
@@ -324,8 +320,6 @@ public class HotelDTO {
     public void setReviews(List<ReviewDTO> reviews) {
         this.reviews = reviews;
     }
-    
-    
 
     public boolean isIsBookmarked() {
         return isBookmarked;
@@ -334,7 +328,7 @@ public class HotelDTO {
     public void setIsBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
     }
-    
+
     public void setRoomType(RoomTypeDTO roomType) {
         this.roomType = roomType;
     }
@@ -521,10 +515,16 @@ public class HotelDTO {
 
     @Override
     public String toString() {
-        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + userId + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera + ", description=" + description + ", country=" + country + ", district=" + district + ", city=" + city + ", address=" + address + ", closing=" + closing + ", opening=" + opening + ", checkin=" + checkin + ", checkout=" + checkout + ", averagePirce=" + averagePirce + ", rating=" + rating + ", hotelAmenities=" + hotelAmenities + ", images=" + images + ", reviews=" + reviews + ", roomType=" + roomType + ", isBookmarked=" + isBookmarked + ", hotelOwner=" + hotelOwner + '}';
+
+        return "HotelDTO{" + "hotelId=" + hotelId + ", userId=" + userId
+                + ", hotelTypeId=" + hotelTypeId + ", hotelName=" + hotelName
+                + ", backgroundImg=" + backgroundImg + ", isVerified=" + isVerified
+                + ", isAllowPet=" + isAllowPet + ", isHasCamera=" + isHasCamera
+                + ", description=" + description + ", country=" + country + ", district="
+                + district + ", city=" + city + ", address=" + address + ", closing=" + closing
+                + ", opening=" + opening + ", checkin=" + checkin + ", checkout="
+                + checkout + ", averagePirce=" + averagePirce + ", rating=" + rating
+                + ", hotelAmenities=" + hotelAmenities + ", images=" + images + ", reviews="
+                + reviews + ", roomType=" + roomType + ", isBookmarked=" + isBookmarked + ", hotelOwner=" + hotelOwner + '}';
     }
-
-    
-
-
 }

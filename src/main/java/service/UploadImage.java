@@ -89,9 +89,6 @@ public class UploadImage {
             }
         }
 
-        
-
-
         return listPath;
     }
 

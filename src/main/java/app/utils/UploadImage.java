@@ -45,8 +45,6 @@ public class UploadImage {
                 }
             }
         }
-        
-        System.out.println(listPath);
 
         return listPath;
     }
