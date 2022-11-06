@@ -1,7 +1,7 @@
 import IncomeStyle from "./Income.module.scss";
 import SelectBox from "./components/SelectBox";
 import { income } from "./fakeIncomeData";
-import { lazy, useState, Suspense } from "react";
+import { lazy, useState, Suspense, useEffect } from "react";
 
 const Chart = lazy(() => import("./components/Chart"));
 
@@ -40,6 +40,8 @@ function Income() {
       return cur + prev;
     }, 0);
   }
+
+  useEffect(() => {}, []);
 
   return (
     <div className={IncomeStyle["income-wrapper"]}>
