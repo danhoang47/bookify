@@ -1,8 +1,8 @@
 import optionListStyles from "./OptionList.module.scss";
 import {
-  ModalContext,
-  UserContext,
-  ToastMessageContext,
+    ModalContext,
+    UserContext,
+    ToastMessageContext,
 } from "@/utils/contexts";
 import { useContext, useMemo } from "react";
 import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
@@ -11,8 +11,8 @@ import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function OptionList({ handleClick }) {
     const { dispatch } = useContext(ModalContext);
-    const { isLogin, setLogin } = useContext(UserContext);
-    const { user } = useContext(UserContext);
+    const { setLogin } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const { setToastMessages } = useContext(ToastMessageContext);
     const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ function OptionList({ handleClick }) {
                 isLoginRequired: true,
                 onClickHandler: (event) => {
                     event.stopPropagation();
-                    navigate("/hosting/manager");
+                    navigate("/manager");
                 },
             },
             {
@@ -81,14 +81,16 @@ function OptionList({ handleClick }) {
                 requiredRole: [1, 2, 3],
                 isLoginRequired: true,
                 onClickHandler: (e) => {
-                  localStorage.removeItem("jwt");
-                  setLogin(false);
-                  navigate("/");
-                  setToastMessages(
-                    getFailureToastMessage({
-                      message: "Đã đăng xuất",
-                    })
-                  );
+                    handleClick(e);
+                    localStorage.removeItem("jwt");
+                    setUser({ role: 0 });
+                    setLogin(false);
+                    navigate("/");
+                    setToastMessages(
+                        getFailureToastMessage({
+                            message: "Đã đăng xuất",
+                        })
+                    );
                 },
             },
             {
@@ -126,12 +128,7 @@ function OptionList({ handleClick }) {
                 {options.reduce(
                     (
                         prev,
-                        {
-                            title,
-                            style,
-                            requiredRole,
-                            onClickHandler,
-                        },
+                        { title, style, requiredRole, onClickHandler },
                         index
                     ) => {
                         if (requiredRole.includes(user.role)) {
