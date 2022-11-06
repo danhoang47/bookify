@@ -9,7 +9,7 @@ const validateUsername = (username, isSignIn) => {
   if (isSignIn) {
     return username.length !== 0;
   }
-  return username !== null && username.length >= 8;
+  return username !== null && username.length >= 5;
 };
 
 const validateEmail = (email) => {

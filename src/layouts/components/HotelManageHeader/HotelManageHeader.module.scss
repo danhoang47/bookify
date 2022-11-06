@@ -1,5 +1,8 @@
 @use 'src/global';
 
 #hotel-manage-header {
-    
+
+    .hotel-manage-tabs {
+        display: flex;
+    }
 }

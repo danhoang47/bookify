@@ -4,7 +4,7 @@ function getUsernameErrorMessage(isSignIn = false) {
     return (
         isSignIn ?
         'Username required' :
-        'Username must be at least 8 characters' 
+        'Username must be at least 5 characters' 
     )
 }
 

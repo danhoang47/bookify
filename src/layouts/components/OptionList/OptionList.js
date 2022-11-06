@@ -11,8 +11,9 @@ import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function OptionList({ handleClick }) {
     const { dispatch } = useContext(ModalContext);
-    const { isLogin } = useContext(UserContext);
+    const { isLogin, setLogin } = useContext(UserContext);
     const { user } = useContext(UserContext);
+    const { setToastMessages } = useContext(ToastMessageContext);
     const navigate = useNavigate();
 
     const options = useMemo(
@@ -79,6 +80,16 @@ function OptionList({ handleClick }) {
                 style: "secondary",
                 requiredRole: [1, 2, 3],
                 isLoginRequired: true,
+                onClickHandler: (e) => {
+                  localStorage.removeItem("jwt");
+                  setLogin(false);
+                  navigate("/");
+                  setToastMessages(
+                    getFailureToastMessage({
+                      message: "Đã đăng xuất",
+                    })
+                  );
+                },
             },
             {
                 title: "Đăng nhập",
@@ -118,7 +129,6 @@ function OptionList({ handleClick }) {
                         {
                             title,
                             style,
-                            isLoginRequired,
                             requiredRole,
                             onClickHandler,
                         },
