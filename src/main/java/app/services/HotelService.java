@@ -4,6 +4,8 @@
  */
 package app.services;
 
+import app.dao.BookingDAO;
+import app.dto.BookingDTO;
 import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
 import app.dto.RoomTypeDTO;
@@ -15,33 +17,38 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import app.utils.UploadImage;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  *
  * @author ADMIN
  */
 public class HotelService {
+
     final private HotelRepository hotelRepo;
 
     public HotelService() {
         hotelRepo = new HotelRepository();
     }
-    
+
     public HotelDTO get(String hotelId, String userId) throws SQLException, ClassNotFoundException {
         return hotelRepo.get(hotelId, userId);
     }
-    
+
     public void update(
-        HotelDTO hotel, 
-        HotelDTO extraInforDto, 
-        List<HotelAmenityDTO> amenities,
-        RoomTypeDTO roomTypeDto,
-        InputStream fileInputStreamBG,
-        FormDataContentDisposition fileFormDataContentDispositionBG,
-        FormDataBodyPart viewImages,
-        FormDataBodyPart roomImages,
-        List<String> deletedImageIdList,
-        String realPath
+            HotelDTO hotel,
+            HotelDTO extraInforDto,
+            List<HotelAmenityDTO> amenities,
+            RoomTypeDTO roomTypeDto,
+            InputStream fileInputStreamBG,
+            FormDataContentDisposition fileFormDataContentDispositionBG,
+            FormDataBodyPart viewImages,
+            FormDataBodyPart roomImages,
+            List<String> deletedImageIdList,
+            String realPath
     ) throws IOException, SQLException {
         String typeUpload = "hotels";
         // merge hotel and extraInfor
@@ -62,19 +69,19 @@ public class HotelService {
         for (String src : viewImageList) {
             System.out.println(src);
         }
-        
+
         List<String> roomImageList = UploadImage.uploadMultipleFile(roomImages, typeUpload, realPath);
-         for (String src : roomImageList) {
+        for (String src : roomImageList) {
             System.out.println(src);
         }
-        
+
         hotelRepo.update(hotel, amenities, roomTypeDto, viewImageList, roomImageList, deletedImageIdList);
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
         return hotelRepo.addNewHotel(hotel);
     }
-    
+
     public List<HotelDTO> getAllHotelBasicInfo(String userId) throws SQLException, ClassNotFoundException {
         return hotelRepo.getAllHotel(userId);
     }
@@ -86,8 +93,32 @@ public class HotelService {
     public List<HotelDTO> getFilterHotelAdvance(String userId, String houseType, List<String> amenitiesPicked, int rooms, int numberOfBed, int numberOfBathroom, int min, int max) throws SQLException {
         return hotelRepo.getFilterHotelsAdvance(userId, houseType, amenitiesPicked, rooms, numberOfBed, numberOfBathroom, min, max);
     }
-    
+
     public List<HotelDTO> getAllBookmarkedHotel(String userId) throws SQLException {
         return hotelRepo.getAllBookmarkedHotel(userId);
+    }
+
+    public void bookingRoom(
+        String hotelId,
+        String checkin,
+        String checkout,
+        int adult,
+        int child,
+        int pet,
+        int infant,
+        String userId
+    ) throws SQLException, ParseException {
+        DateRangeService dateRangeService  = new DateRangeService();
+        List<String> availableRooms = dateRangeService.getFreeRooms(checkin, checkout, hotelId);
+        String firstRoomId = availableRooms.get(0);
+        BookingDAO bookingDao = new BookingDAO();
+
+        BookingDTO bookingDto = new BookingDTO(
+            checkin,
+            checkout,
+            adult, child, pet, infant,
+            userId, firstRoomId, UUID.randomUUID().toString()
+        );
+        bookingDao.add(bookingDto);
     }
 }

@@ -12,6 +12,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
@@ -274,5 +275,18 @@ public class UserController {
             response.addProperty("error", "can not perform this action");
             return Response.ok(new Gson().toJson(response)).build();
         }
+    }
+    
+    @GET
+    @Path("amount/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAmount(@PathParam("userId") String userId) throws SQLException {
+        JsonObject response = new JsonObject();
+        UserDetailDAO dao = new UserDetailDAO();
+        int amount = dao.getAmount(userId);
+        Gson gson = new Gson();
+        response.addProperty("amount", amount);
+        
+        return Response.ok(gson.toJson(response)).build();
     }
 }
