@@ -10,7 +10,8 @@ import app.dto.UserDTO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dao.UserDetailDAO;
-
+import app.services.UserService;
+import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import service.UploadImage;
  */
 @Path("/user")
 public class UserController {
+    private UserService service = new UserService();
 
     @POST
     @Path("/login")
@@ -290,5 +292,26 @@ public class UserController {
         response.addProperty("amount", amount);
         
         return Response.ok(gson.toJson(response)).build();
+    }
+    
+    @GET
+    @Path("notification")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNotificaiton(@QueryParam("userId") String userId, @QueryParam("type") String type) throws SQLException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(userId + " " + type);
+        return Response.ok(gson.toJson(service.getNotification(userId, type))).build();   
+    }
+    
+    @PUT
+    @Path("notification/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response markNotifAsRead(@PathParam("id") int notifId) throws SQLException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(notifId);
+        service.markNotifAsRead(notifId);
+        JsonObject response = new JsonObject();
+        response.addProperty("status", "success");
+        return Response.ok(gson.toJson(response)).build();   
     }
 }

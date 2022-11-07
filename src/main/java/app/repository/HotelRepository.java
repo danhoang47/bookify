@@ -163,4 +163,24 @@ public class HotelRepository {
       public List<BookingDTO> getAllTodayCheckoutBooking(String hotelId) throws SQLException {
         return bookingDao.getAllTodayCheckoutBooking(hotelId);
     }
+      
+      public void acceptBooking(String bookingId) throws SQLException{
+          bookingDao.acceptBooking(bookingId);
+      }
+      
+      public void rejectBooking(String bookingId) throws SQLException {
+          bookingDao.rejectBooking(bookingId);
+      }
+
+    public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllPendingBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllCheckoutBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllCheckoutBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllIncomingBooking(hotelId);
+    }
 }

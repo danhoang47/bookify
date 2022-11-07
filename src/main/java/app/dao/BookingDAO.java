@@ -12,6 +12,7 @@ import app.dto.UserDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -112,12 +113,41 @@ public class BookingDAO {
         ResultSet rs = null;
         String sql = "proc_getAllTodayCheckout @hotelId = ?";
 
-        try {
+         try {
             conn = DBContext.getConnection();
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
-            cs.executeUpdate();
-
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                String userId = rs.getString("user_id");
+                String bookingId = rs.getString("booking_id");
+                String checkin = rs.getString("check_in");
+                String checkout = rs.getString("check_out");
+                String roomId = rs.getString("room_id");
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infant = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int status = 2;
+                String username = rs.getString("username");
+                String avatar = rs.getString("avatar");
+                Date bookAt = rs.getDate("bookAt");
+                RoomTypeDTO roomType = new RoomTypeDTO();
+                roomType.setBedType(rs.getString("bed_type"));
+                roomType.setBathroomType(rs.getString("bathroom_type"));
+                UserDTO user = new UserDTO();
+                user.setUser_id(userId);
+                user.setAvatar(avatar);
+                user.setUsername(username);
+                BookingDTO booking = new BookingDTO(user, 
+                        roomId, hotelId, 0, bookingId, checkin, 
+                        checkout, adult, child, infant, pets,
+                        status, bookAt, roomType
+                );
+                list.add(booking);
+            }
+            
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -139,8 +169,37 @@ public class BookingDAO {
             conn = DBContext.getConnection();
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
-            cs.executeUpdate();
-
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                String userId = rs.getString("user_id");
+                String bookingId = rs.getString("booking_id");
+                String checkin = rs.getString("check_in");
+                String checkout = rs.getString("check_out");
+                String roomId = rs.getString("room_id");
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infant = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int status = 1;
+                String username = rs.getString("username");
+                String avatar = rs.getString("avatar");
+                Date bookAt = rs.getDate("bookAt");
+                RoomTypeDTO roomType = new RoomTypeDTO();
+                roomType.setBedType(rs.getString("bed_type"));
+                roomType.setBathroomType(rs.getString("bathroom_type"));
+                UserDTO user = new UserDTO();
+                user.setUser_id(userId);
+                user.setAvatar(avatar);
+                user.setUsername(username);
+                BookingDTO booking = new BookingDTO(user, 
+                        roomId, hotelId, 0, bookingId, checkin, 
+                        checkout, adult, child, infant, pets,
+                        status, bookAt, roomType
+                );
+                list.add(booking);
+            }
+            
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -150,9 +209,205 @@ public class BookingDAO {
         }
         return list;
     }
-    
+
+    public void acceptBooking(String bookingId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "update Booking set status = 1 where booking_id = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, bookingId);
+            ps.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+
+    public void rejectBooking(String bookingId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "update Booking set status = 2 where booking_id = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, bookingId);
+            ps.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
         BookingDAO dao = new BookingDAO();
-        System.out.println(dao.getAllTodayPendingBooking("ae257b6b-43d4-4621-91f1-b331c6d4dea9"));
+        System.out.println(dao.getAllIncomingBooking("ae257b6b-43d4-4621-91f1-b331c6d4dea9"));
+    }
+
+    public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
+        List<BookingDTO> list = new ArrayList<>();
+        Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        String sql = "proc_getAllPendingBooking @hotelId = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, hotelId);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                String userId = rs.getString("user_id");
+                String bookingId = rs.getString("booking_id");
+                String checkin = rs.getString("check_in");
+                String checkout = rs.getString("check_out");
+                String roomId = rs.getString("room_id");
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infant = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int status = 1;
+                String username = rs.getString("username");
+                String avatar = rs.getString("avatar");
+                Date bookAt = rs.getDate("bookAt");
+                RoomTypeDTO roomType = new RoomTypeDTO();
+                roomType.setBedType(rs.getString("bed_type"));
+                roomType.setBathroomType(rs.getString("bathroom_type"));
+                UserDTO user = new UserDTO();
+                user.setUser_id(userId);
+                user.setAvatar(avatar);
+                user.setUsername(username);
+                BookingDTO booking = new BookingDTO(user, 
+                        roomId, hotelId, 0, bookingId, checkin, 
+                        checkout, adult, child, infant, pets,
+                        status, bookAt, roomType
+                );
+                list.add(booking);
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+        return list;
+    }
+
+    public List<BookingDTO> getAllCheckoutBooking(String hotelId) throws SQLException {
+        List<BookingDTO> list = new ArrayList<>();
+        Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        String sql = "proc_getAllCheckout @hotelId = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, hotelId);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                String userId = rs.getString("user_id");
+                String bookingId = rs.getString("booking_id");
+                String checkin = rs.getString("check_in");
+                String checkout = rs.getString("check_out");
+                String roomId = rs.getString("room_id");
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infant = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int status = 1;
+                String username = rs.getString("username");
+                String avatar = rs.getString("avatar");
+                Date bookAt = rs.getDate("bookAt");
+                RoomTypeDTO roomType = new RoomTypeDTO();
+                roomType.setBedType(rs.getString("bed_type"));
+                roomType.setBathroomType(rs.getString("bathroom_type"));
+                UserDTO user = new UserDTO();
+                user.setUser_id(userId);
+                user.setAvatar(avatar);
+                user.setUsername(username);
+                BookingDTO booking = new BookingDTO(user, 
+                        roomId, hotelId, 0, bookingId, checkin, 
+                        checkout, adult, child, infant, pets,
+                        status, bookAt, roomType
+                );
+                list.add(booking);
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+        return list;
+    }
+
+   public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
+        List<BookingDTO> list = new ArrayList<>();
+        Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        String sql = "proc_getAllIncomingBooking @hotelId = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, hotelId);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                String userId = rs.getString("user_id");
+                String bookingId = rs.getString("booking_id");
+                String checkin = rs.getString("check_in");
+                String checkout = rs.getString("check_out");
+                String roomId = rs.getString("room_id");
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infant = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int status = 1;
+                String username = rs.getString("username");
+                String avatar = rs.getString("avatar");
+                Date bookAt = rs.getDate("bookAt");
+                RoomTypeDTO roomType = new RoomTypeDTO();
+                roomType.setBedType(rs.getString("bed_type"));
+                roomType.setBathroomType(rs.getString("bathroom_type"));
+                UserDTO user = new UserDTO();
+                user.setUser_id(userId);
+                user.setAvatar(avatar);
+                user.setUsername(username);
+                BookingDTO booking = new BookingDTO(user, 
+                        roomId, hotelId, 0, bookingId, checkin, 
+                        checkout, adult, child, infant, pets,
+                        status, bookAt, roomType
+                );
+                list.add(booking);
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+        return list;
     }
 }

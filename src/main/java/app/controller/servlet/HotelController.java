@@ -94,6 +94,17 @@ public class HotelController {
             return Response.ok(gson.toJson(service.getAllBookmarkedHotel(userId))).build();
         }
     }
+    
+//    ----------------------- ACCEPT/REJECT BOOKING FROM USER
+    @PUT
+    @Path("/booking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response handleBooking(@QueryParam("id") String bookingId, @QueryParam("action") String action) throws SQLException {
+        JsonObject response = new JsonObject();
+        service.handleBooking(bookingId, action);
+        response.addProperty("status", "ok");
+        return Response.ok(gson.toJson(response)).build();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -362,12 +373,22 @@ public class HotelController {
     }
     
     @GET
-    @Path("today")
+    @Path("/today")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTodayBooking(
             @QueryParam("id") String hotelId, 
             @QueryParam("type") String type
     ) throws SQLException {
         return Response.ok(gson.toJson(service.getAllTodayTypeBooking(hotelId, type))).build();
+    }
+    
+    @GET
+    @Path("/allbooking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllBooking(
+            @QueryParam("id") String hotelId, 
+            @QueryParam("type") String type
+    ) throws SQLException {
+        return Response.ok(gson.toJson(service.getAllTypeBooking(hotelId, type))).build();
     }
 }

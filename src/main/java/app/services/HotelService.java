@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.services;
 
 import app.dao.BookingDAO;
@@ -139,8 +135,29 @@ public class HotelService {
     public List<BookingDTO> getAllTodayTypeBooking(String hotelId, String type) throws SQLException {
         switch(type) {
             case "pending": return hotelRepo.getAllTodayPendingBooking(hotelId);
-            case "checkout": return hotelRepo.getAllTodayBookedBooking(hotelId);
-            case "booked": return hotelRepo.getAllTodayCheckoutBooking(hotelId);
+            case "booked": return hotelRepo.getAllTodayBookedBooking(hotelId);
+            case "checkout": return hotelRepo.getAllTodayCheckoutBooking(hotelId);
+            default: return null;
+        }
+    }
+    
+    public void handleBooking(String bookingId, String type) throws SQLException {
+        switch(type) {
+            case "accept": 
+                hotelRepo.acceptBooking(bookingId);  
+                return; 
+            case "reject": 
+                hotelRepo.acceptBooking(bookingId);
+                 return; 
+        }
+    }
+
+    public List<BookingDTO> getAllTypeBooking(String hotelId, String type) throws SQLException {
+        switch(type) {
+            case "pending": return hotelRepo.getAllPendingBooking(hotelId);
+            case "incoming": return hotelRepo.getAllIncomingBooking(hotelId);
+            case "booked": return hotelRepo.getAllTodayBookedBooking(hotelId);
+            case "checkout": return hotelRepo.getAllCheckoutBooking(hotelId);
             default: return null;
         }
     }

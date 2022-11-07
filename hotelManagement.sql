@@ -81,10 +81,59 @@ begin
 	where 
 		datediff(day, getdate(), Booking.check_out) = 0
 	and Room.hotel_id = @hotelId
+	and Booking.status = 1
 end
 
 select * from Hotel
 
 proc_getAllTodayPendingBooking @hotelId = 'ae257b6b-43d4-4621-91f1-b331c6d4dea9'
+proc_getAllTodayBookedBooking @hotelId = 'ae257b6b-43d4-4621-91f1-b331c6d4dea9'
 
+--------------------------------------------------
+-- proc get all booking
+create or alter proc proc_getAllPendingBooking
+@hotelId varchar(50)
+as
+begin
+	select * 
+	from 
+		Booking join userDetail on Booking.user_id = userDetail.user_id
+		join Room on Booking.room_id = Room.room_id
+		join RoomType on Room.room_type_id = RoomType.id
+	where 
+		Room.hotel_id = @hotelId
+	and Booking.status = 0
+end
+
+-- proc get all checkout
+create or alter proc proc_getAllCheckout
+@hotelId varchar(50)
+as
+begin
+	select * 
+	from 
+		Booking join userDetail on Booking.user_id = userDetail.user_id
+		join Room on Booking.room_id = Room.room_id
+		join RoomType on Room.room_type_id = RoomType.id
+	where 
+		datediff(day, Booking.check_out, getdate()) >= 0
+	and Room.hotel_id = @hotelId
+	and Booking.status = 1
+end
+
+-- proc get all incoming booking
+create or alter proc proc_getAllIncomingBooking
+@hotelId varchar(50)
+as
+begin
+	select * 
+	from 
+		Booking join userDetail on Booking.user_id = userDetail.user_id
+		join Room on Booking.room_id = Room.room_id
+		join RoomType on Room.room_type_id = RoomType.id
+	where 
+		datediff(day, getdate(), Booking.check_in) > 0
+	and Room.hotel_id = @hotelId
+	and Booking.status = 1
+end
 

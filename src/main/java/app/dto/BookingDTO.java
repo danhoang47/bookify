@@ -63,7 +63,7 @@ public class BookingDTO {
         int child,
         int pet,
         int infant,
-        UserDTO userId,
+        UserDTO user,
         String roomId,
         String bookingId
     ) {

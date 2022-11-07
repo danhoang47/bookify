@@ -101,3 +101,15 @@ begin
 			where BankingAccount.id = @bankNumber
 		end
 end
+
+insert into BankingAccount
+values('aafc-dawd-2312d-aaaa', 10000)
+
+select * from BankingAccount
+select * from userDetail
+
+update userDetail
+set banking_account_id = 1
+where user_id = '13069adc-3485-492b-8239-ba93c43d9d6e'
+
+select * from Booking
