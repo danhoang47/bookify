@@ -1,5 +1,11 @@
+import { UserContext } from "@/utils/contexts";
 import { faFlag, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { reportContext } from "../../Hotel";
+import { ToastMessageContext } from "@/utils/contexts";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+
 import InfoHeaderStyle from "./InfoHeader.module.scss";
 
 function InfoHeader({
@@ -8,7 +14,40 @@ function InfoHeader({
   hotelName = null,
   rating = 0,
   isBookmarked = false,
+  hotelId = null,
 }) {
+  const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useContext(reportContext);
+  const { user } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
+
+  const checkUser = () => {
+    if (user.user_id) {
+      fetch(
+        `http://localhost:8080/bookify/api/hotel/report?hotelid=${hotelId}&userid=${user.user_id}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          console.log(result);
+          if (result.require) {
+            setToastMessages(
+              getFailureToastMessage({
+                message: "Bạn chưa từng ở khách sạn này",
+              })
+            );
+          }
+          if (result.success) {
+            setAdvanceFilterOpen(true);
+          }
+        });
+    } else {
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để thực hiện",
+        })
+      );
+    }
+  };
+
   return (
     <div className={InfoHeaderStyle["hotel_header"]}>
       <div className={InfoHeaderStyle["hotel_banner"]}>
@@ -26,7 +65,11 @@ function InfoHeader({
       </div>
       <div className={InfoHeaderStyle["hotel_options"]}>
         <div className={InfoHeaderStyle["option_icon"]}>
-          <span>
+          <span
+            onClick={() => {
+              checkUser();
+            }}
+          >
             <FontAwesomeIcon icon={faFlag} />
           </span>
         </div>

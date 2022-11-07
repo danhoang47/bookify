@@ -5,6 +5,7 @@ import { useState } from "react";
 
 function HotelInfo({ hotelInfo }) {
   const {
+    hotelId,
     description,
     hotelAmenities,
     hotelOwner,
@@ -24,6 +25,7 @@ function HotelInfo({ hotelInfo }) {
           hotelName={hotelName}
           rating={rating}
           isBookmarked={isBookmarked}
+          hotelId={hotelId}
         />
       </div>
       <div className={HotelInfoStyle["details"]}>

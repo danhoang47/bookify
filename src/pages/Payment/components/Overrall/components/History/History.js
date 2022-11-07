@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { OverrallDataContext } from "@/pages/Payment/Payment";
+import { useContext, useEffect, useState } from "react";
 import HistoryData from "./components/HistoryData";
 import MonthPicker from "./components/MonthPicker";
 import HistoryStyle from "./History.module.scss";
@@ -8,6 +9,8 @@ function History({ data }) {
   useEffect(() => {
     document.getElementById("list-history").scrollTo(0, 0);
   }, [showmore]);
+
+  const [paymentList, setPaymentList] = useContext(OverrallDataContext);
 
   return (
     <div className={HistoryStyle["history-list"]}>
@@ -20,13 +23,13 @@ function History({ data }) {
         }
         id="list-history"
       >
-        {data == null || data.length === 0 ? (
+        {paymentList == null || paymentList.length === 0 ? (
           <h3>Bạn chưa thực hiện giao dịch nào</h3>
         ) : (
-          <HistoryData data={data} />
+          <HistoryData data={paymentList} />
         )}
       </div>
-      {data == null || data.length === 0 ? (
+      {paymentList == null || paymentList.length === 0 ? (
         <div></div>
       ) : (
         <button
