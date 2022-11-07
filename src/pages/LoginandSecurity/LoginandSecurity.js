@@ -1,5 +1,5 @@
 import LoginandSecurityStyle from "./LoginandSecurity.module.scss";
-import HeaderInfo from "./components/header";
+import HeaderInfo from "./components/Header";
 import FormUpdate from "./components/Form";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
 import { useNavigate } from "react-router-dom";
