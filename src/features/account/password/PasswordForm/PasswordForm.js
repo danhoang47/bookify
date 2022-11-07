@@ -64,10 +64,12 @@ function PasswordForm({ submodal }) {
                 })
               );
             }
-            getNewPasswordModal({
-              isOpen: true,
-              animation: "slide-in-right",
-            });
+            dispatch(
+              getChangeCard({
+                isOpen: true,
+                animation: "slide-in-right",
+              })
+            );
           }
         });
       } finally {
