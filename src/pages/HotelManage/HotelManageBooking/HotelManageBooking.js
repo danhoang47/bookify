@@ -7,7 +7,7 @@ function HotelManageBooking() {
     <Grid container justifyContent={'center'}>
       <Grid item xs={10}>
         <div className={BookingListStyle["container"]}>
-          <h2>Lịch đặt phòng</h2>
+          <h2 className={BookingListStyle['header']}>Lịch đặt phòng</h2>
           <BookingList />
         </div>
       </Grid>

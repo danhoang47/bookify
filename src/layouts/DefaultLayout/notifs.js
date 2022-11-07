@@ -3,6 +3,7 @@ const notifsInitState = [
         id: '0',
         userId: '123',
         hotelId: '123',
+        sourceId: '123',
         notifyType: 0,
         notifyDate: '2022-11-04 00:46:00',
         hotelName: 'Khach san Vinpearl Nam Hoi An',

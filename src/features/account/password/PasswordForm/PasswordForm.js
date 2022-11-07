@@ -63,13 +63,14 @@ function PasswordForm({ submodal }) {
                   animation: "slide-in-right",
                 })
               );
+            } else {
+              dispatch(
+                getChangeCard({
+                  isOpen: true,
+                  animation: "slide-in-right",
+                })
+              );
             }
-            dispatch(
-              getChangeCard({
-                isOpen: true,
-                animation: "slide-in-right",
-              })
-            );
           }
         });
       } finally {

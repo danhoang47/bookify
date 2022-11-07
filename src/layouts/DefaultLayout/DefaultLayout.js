@@ -10,24 +10,31 @@ import { getAllBookmarkedHotel } from "@/services/hotel";
 
 //testing purpose only
 import notifsInitState from "./notifs";
+import getNotification from "@/services/hotel/getNotification";
 
 function DefaultLayout() {
     const href = useHref();
     const { user } = useContext(UserContext);
     const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
-    const [notifs, setNotifs] = useState(notifsInitState);
-        
+    const [notifs, setNotifs] = useState([]);
+    const [type, setType] = useState(1);
+
     const getBookmarkedHotel = () => {
         getAllBookmarkedHotel(user.user_id).then((data) => {
             setBookmarkedHotels(data);
         });
     };
 
+    const getNotifications = () => {
+        getNotification(user.user_id, type).then((data) => setNotifs(data));
+    };
+
     useEffect(() => {
         getBookmarkedHotel();
+        getNotifications();
         //eslint-disable-next-line
     }, [user]);
-
+    
     return (
         <div className={styles["default-layout"]}>
             <Header
@@ -44,7 +51,7 @@ function DefaultLayout() {
                 }}
             >
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Outlet context={setBookmarkedHotels}/>
+                    <Outlet context={setBookmarkedHotels} />
                 </Suspense>
             </Box>
             {/* <Footer /> */}

@@ -6,6 +6,7 @@ import { BookmarkBox, Logo, NotifyBox } from "@/components";
 import { faBookmark, faBell } from "@fortawesome/free-regular-svg-icons";
 import { Grid, Box } from "@mui/material";
 import headerStyles from "./Header.module.scss";
+import { useMemo } from 'react';
 
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
@@ -17,6 +18,7 @@ function Header({
     notifs,
     setNotifs
 }) {
+    const isHasNotifUnRead = useMemo(() => notifs?.some(({ isRead }) => !isRead), [notifs])
 
     return (
         <div className={headerStyles["header"]}>
@@ -48,12 +50,14 @@ function Header({
                         />
                         <NotificationIconButton 
                             icon={faBell}
-                            renderChild={() => (
+                            renderChild={(setDropdownOpen) => (
                                 <NotifyBox 
                                     notifs={notifs}
                                     setNotifs={setNotifs}
+                                    setDropdownOpen={setDropdownOpen}
                                 />
                             )}  
+                            isHasNotifUnRead={isHasNotifUnRead}
                         />
                         <ProfileHeaderNav />
                     </Box>

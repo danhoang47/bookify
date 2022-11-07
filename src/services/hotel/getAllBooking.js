@@ -1,6 +1,7 @@
 
 const getType = (type) => {
     switch(type) {
+        case "0": return 'incoming';
         case "1": return 'pending';
         case "2": return 'booked';
         case "3": return 'checkout';

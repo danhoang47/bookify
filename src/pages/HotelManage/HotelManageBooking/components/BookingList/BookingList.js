@@ -14,7 +14,7 @@ const tabPanelStyle = {
 
 const BookingTabs = lazy(() => import("@/components/Tabs/BookingTabs"));
 function BookingList({ width, bookList }) {
-    const [value, setValue] = useState("1");
+    const [value, setValue] = useState("0");
     const [bookingList, setBookingList] = useState([]);
     const hotelInfo = useOutletContext();
 
@@ -60,11 +60,20 @@ function BookingList({ width, bookList }) {
                                     },
                                 }}
                             >
-                                <Tab label="Sắp đến" value="1" />
+                                <Tab label="Sắp đến" value="0" />
+                                <Tab label="Đang chờ" value="1" />
                                 <Tab label="Đang được đặt" value="2" />
                                 <Tab label="Trả phòng" value="3" />
                             </TabList>
                         </Box>
+                        <TabPanel value="0" sx={tabPanelStyle}>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <BookingTabs
+                                    list={bookingList}
+                                    setBookingList={setBookingList}
+                                />
+                            </Suspense>
+                        </TabPanel>  
                         <TabPanel value="1" sx={tabPanelStyle}>
                             <Suspense fallback={<div>Loading...</div>}>
                                 <BookingTabs
@@ -72,7 +81,7 @@ function BookingList({ width, bookList }) {
                                     setBookingList={setBookingList}
                                 />
                             </Suspense>
-                        </TabPanel>
+                        </TabPanel>                       
                         <TabPanel value="2" sx={tabPanelStyle}>
                             <Suspense fallback={<div>Loading...</div>}>
                                 <BookingTabs

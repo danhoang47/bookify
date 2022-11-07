@@ -1,7 +1,14 @@
 @use 'src/global';
 
 #hotel-manage-header {
-    padding: 1em 0;
+    padding: 1em 1em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid global.$gray-200;
+    background: global.$white;
+    z-index: 1;
 
     .hotel-manage-tabs {
         @include global.center();
