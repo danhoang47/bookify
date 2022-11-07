@@ -2,6 +2,7 @@ import TableStyle from "../Hotel.module.scss";
 import moment from "moment";
 import { useMemo } from "react";
 import { format } from "date-fns";
+
 function Table({ data, filter, hotels }) {
   return (
     <table>
@@ -27,7 +28,7 @@ function Table({ data, filter, hotels }) {
               <p>{row.hotelName}</p>
             </td>
             <td>
-              <p>{format(new Date(row.signAt), "MMMM dd, yyyy")}</p>
+              <p>{format(new Date(row.signAt), "MM dd,yyyy")}</p>
               <p>Lúc: 12:00</p>
             </td>
             <td>

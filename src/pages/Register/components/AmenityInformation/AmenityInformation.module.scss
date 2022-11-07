@@ -38,11 +38,8 @@
         }
         margin-top: 1em;
         .card-holder {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1em;
+
             .amenity-card {
-                width: 16rem;
                 overflow-x: scroll;
                 overflow-y: hidden;
                 display: flex;

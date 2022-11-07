@@ -34,10 +34,18 @@ function OptionList({ handleClick }) {
                 isLoginRequired: true,
             },
             {
+                title: 'Quản lý thông tin',
+                style: 'primary',
+                requiredRole: [3],
+                onClickHandler: (event) => {
+                    event.stopPropagation();
+                    navigate("/dashboard");
+                },
+            },
+            {
                 title: "Đặt phòng",
                 style: "primary",
                 requiredRole: [1, 2, 3],
-                isLoginRequired: true,
             },
             {
                 title: "Khách sạn của bạn",
@@ -56,7 +64,17 @@ function OptionList({ handleClick }) {
                 isLoginRequired: true,
                 onClickHandler: (event) => {
                     event.stopPropagation();
-                    navigate("/hosting/register");
+                    if (!user.bankingAccountNumber) {
+                        setToastMessages(
+                            getFailureToastMessage({
+                                message:
+                                    "Bạn chưa liên kết tài khoản ngân hàng",
+                            })
+                        );
+                        handleClick(event);
+                    } else {
+                        navigate("/hosting/register");
+                    }
                 },
             },
             {

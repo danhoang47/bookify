@@ -1,20 +1,19 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "./DefaultLayout.module.scss";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Outlet, useHref } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Suspense, useContext } from "react";
-import { UserContext } from "@/utils/contexts";
+import { UserContext, WebSocketContext } from "@/utils/contexts";
 import { getAllBookmarkedHotel } from "@/services/hotel";
-
-//testing purpose only
-import notifsInitState from "./notifs";
 import getNotification from "@/services/hotel/getNotification";
+
 
 function DefaultLayout() {
     const href = useHref();
     const { user } = useContext(UserContext);
+    const current = useContext(WebSocketContext);
     const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
     const [notifs, setNotifs] = useState([]);
     const [type, setType] = useState(1);
@@ -26,15 +25,35 @@ function DefaultLayout() {
     };
 
     const getNotifications = () => {
-        getNotification(user.user_id, type).then((data) => setNotifs(data));
+        getNotification(user.user_id, type).then((data) => {
+            setNotifs(data)
+        });
     };
 
     useEffect(() => {
         getBookmarkedHotel();
         getNotifications();
+
         //eslint-disable-next-line
     }, [user]);
-    
+
+    const handleOnMessage = (event) => {
+        const newNotif = JSON.parse(event.data);
+        setNotifs(prev => [newNotif, ...prev]);
+    }
+
+    const handleClose = (event) => {
+        console.log(event.data);
+    }
+
+    useEffect(() => {
+        if (current) {
+            current.addEventListener("message", handleOnMessage)
+            current.addEventListener("close", handleClose)
+        }
+        return () => current?.removeEventListener("message", handleOnMessage);
+    }, [current])
+
     return (
         <div className={styles["default-layout"]}>
             <Header

@@ -1,6 +1,7 @@
 import DropdownBox from "../DropdownBox";
 import NotifyItem from "../NotifyItem";
 import { useMemo, useState } from "react";
+import markAllNotifAsRead from "@/services/hotel/markAllNotifAsRead";
 
 function NotifyBox({ notifs, setNotifs, setDropdownOpen }) {
     const handleClick = (readNotifId) => {
@@ -25,7 +26,7 @@ function NotifyBox({ notifs, setNotifs, setDropdownOpen }) {
                 } else {
                     return [...prev, {
                         ...notif,
-                        notifType: type,
+                        notifyType: type,
                         isRead: true
                     }]
                 }
@@ -58,6 +59,12 @@ function NotifyBox({ notifs, setNotifs, setDropdownOpen }) {
             index: 3,
             list: notifs.filter(({ notifyType }) => notifyType === 0),
             role: [2],
+        },
+        {
+            title: 'Báo cáo',
+            index: 4,
+            list: notifs.filter(({ notifyType }) => notifyType === 7),
+            role: [3],
         }
     ]), [notifs])
 
@@ -70,7 +77,14 @@ function NotifyBox({ notifs, setNotifs, setDropdownOpen }) {
             tabs={tabs}
             activeIndex={index}
             setActiveIndex={setIndex}
-            extraButtonHandleClick={() => {}}
+            extraButtonHandleClick={(userId) => {
+                markAllNotifAsRead(userId).then(data => {
+                    setNotifs(prev => prev.map((notif) => ({
+                        ...notif,
+                        isRead: true
+                    })))
+                });
+            }}
         >
             {
                 tabs[index].list.map((notif) => (

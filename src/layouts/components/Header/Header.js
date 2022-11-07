@@ -6,19 +6,22 @@ import { BookmarkBox, Logo, NotifyBox } from "@/components";
 import { faBookmark, faBell } from "@fortawesome/free-regular-svg-icons";
 import { Grid, Box } from "@mui/material";
 import headerStyles from "./Header.module.scss";
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 const NotificationIconButton = IconButton;
 const BookmarkIconButton = IconButton;
 
-function Header({ 
-    location = "", 
-    bookmarkedHotels, 
+function Header({
+    location = "",
+    bookmarkedHotels,
     setBookmarkedHotels,
     notifs,
-    setNotifs
+    setNotifs,
 }) {
-    const isHasNotifUnRead = useMemo(() => notifs?.some(({ isRead }) => !isRead), [notifs])
+    const isHasNotifUnRead = useMemo(
+        () => notifs?.some(({ isRead }) => !isRead),
+        [notifs]
+    );
 
     return (
         <div className={headerStyles["header"]}>
@@ -28,7 +31,16 @@ function Header({
                         <h3>Bookify</h3>
                     </Logo>
                 </Grid>
-                <Grid item md={location.includes("/hotel") ? 6 : 8}>
+                <Grid
+                    item
+                    md={
+                        location.includes("/hotel") ||
+                        location.includes("/profile") ||
+                        location.includes("/dashboard")
+                            ? 6
+                            : 8
+                    }
+                >
                     <SearchBox />
                 </Grid>
                 <Grid item md={2}>
@@ -48,15 +60,15 @@ function Header({
                                 />
                             )}
                         />
-                        <NotificationIconButton 
+                        <NotificationIconButton
                             icon={faBell}
                             renderChild={(setDropdownOpen) => (
-                                <NotifyBox 
+                                <NotifyBox
                                     notifs={notifs}
                                     setNotifs={setNotifs}
                                     setDropdownOpen={setDropdownOpen}
                                 />
-                            )}  
+                            )}
                             isHasNotifUnRead={isHasNotifUnRead}
                         />
                         <ProfileHeaderNav />

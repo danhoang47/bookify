@@ -16,20 +16,22 @@ function HotelManageLayout() {
     getHotelByOwnerId(user.user_id).then((hotel) => setHotelInfo(hotel));
   }, [user]);
 
-    return (  
-        <div id={manageLayoutStyles['hotel-manage-layout']}>
-            <HotelManageHeader />
-            <Box sx={{
-                position: 'relative',
-                top: '70.81px'
-            }}>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Outlet context={hotelInfo}/>
-                </Suspense>
-            </Box>
-            {/* <Footer /> */}
-        </div>
-    );
+  return (
+    <div id={manageLayoutStyles["hotel-manage-layout"]}>
+      <HotelManageHeader />
+      <Box
+        sx={{
+          position: "relative",
+          top: "70.81px",
+        }}
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <Outlet context={hotelInfo} />
+        </Suspense>
+      </Box>
+      {/* <Footer /> */}
+    </div>
+  );
 }
 
 export default HotelManageLayout;

@@ -1,1 +1,1 @@
-export const validCardNumber = new RegExp("^(?:[0-9]{16})$");
+export const validCardNumber = new RegExp("^(?:[\\w]{4}-[\\w]{4})-[\\w]{4}-[\\w]{4}$");

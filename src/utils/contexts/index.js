@@ -12,6 +12,7 @@ import AdvanceFilterContext from "./AdvanceFilterContext";
 import ToastMessageContext from "./ToastMessageContext";
 import BookmarkContext from './BookmarkContext';
 import BookingContext from "./BookingContext";
+import WebSocketContext from "./WebSocketContext";
 
 export {
   HotelContext,
@@ -27,4 +28,5 @@ export {
   ToastMessageContext,
   BookmarkContext,
   BookingContext,
+  WebSocketContext
 };

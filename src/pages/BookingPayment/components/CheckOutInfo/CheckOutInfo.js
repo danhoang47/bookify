@@ -1,7 +1,7 @@
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckOutInfoStyle from "./CheckOutInfo.module.scss";
-import { BookingContext, ToastMessageContext, UserContext } from "@/utils/contexts";
+import { BookingContext, ToastMessageContext, UserContext, WebSocketContext } from "@/utils/contexts";
 import { useContext, useMemo, useState } from "react";
 import { useClsx, useFormatDate } from "@/utils/hooks";
 import { differenceInDays } from "date-fns";
@@ -10,12 +10,14 @@ import { DatePicker } from "@/components";
 import { getAmount } from "@/services/user";
 import bookingRoom from "@/services/hotel/bookingRoom";
 import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
+import getNotification from "@/services/hotel/getNotification";
 
 function CheckOutInfo() {
     const { selectDays, setSelectedDays, guests, setGuests } =
         useContext(BookingContext);
     const { user } = useContext(UserContext);
     const { setToastMessages } = useContext(ToastMessageContext);
+    const current = useContext(WebSocketContext);
     const { user_id } = user;
     const [error, setError] = useState();
     const hotelInfo = useOutletContext();
@@ -46,7 +48,10 @@ function CheckOutInfo() {
         } else {
             setError('');
             const data = await bookingRoom(selectDays, guests, user_id, hotelInfo.hotelId).then(data => data);
-            if (data?.status === 'ok') {
+            if (data?.status) {
+                const { bookingId } = data;
+                const notification = await getNotification(user_id, 2,bookingId).then(data => data);
+                current.send(JSON.stringify(notification));
                 navigate(-1);
                 setToastMessages(
                     getSuccessToastMessage({

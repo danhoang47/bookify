@@ -119,6 +119,7 @@ function HotelCard({
                                         src
                                     }
                                     alt={hotelName}
+                                    loading="lazy"
                                 />
                             </Carousel.Item>
                         ))}

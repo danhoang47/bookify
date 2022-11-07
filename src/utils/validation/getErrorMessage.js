@@ -33,6 +33,8 @@ function getErrorMessage(type, isSignIn = false) {
             return getPasswordErrorMessage(isSignIn);
         case types.RE_PASSWORD:
             return getRePasswordErrorMessage();
+        case "Card Number":
+            return "Số tài khoản không hợp lệ"
         default:
             throw new Error("Invalidation");
             
