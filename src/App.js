@@ -29,12 +29,13 @@ const userInitState = {
   subname: "",
   user_id: null,
   username: "",
+  bank_card: ""
 };
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(modalReducer, appInitState);
   const [user, setUser] = useState(userInitState);
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState(true);
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
 

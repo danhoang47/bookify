@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "../PasswordForm.module.scss";
 import {
   useState,
@@ -9,10 +9,13 @@ import {
   useEffect,
 } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
-import { getNewPasswordModal } from "@/utils/reducers/modalReducer";
+import {
+  getNewPasswordModal,
+  getChangeCard,
+} from "@/utils/reducers/modalReducer";
 import { compareCurrentPassword } from "@/services/user";
 
-function PasswordForm() {
+function PasswordForm({ submodal }) {
   const { dispatch } = useContext(ModalContext);
   const { user } = useContext(UserContext);
   //user password input
@@ -40,13 +43,18 @@ function PasswordForm() {
             console.log(data.error);
           } else {
             console.log(data);
-
-            dispatch(
-              getNewPasswordModal({
-                isOpen: true,
-                animation: "slide-in-right",
-              })
-            );
+            if (submodal === "new password") {
+              dispatch(
+                getNewPasswordModal({
+                  isOpen: true,
+                  animation: "slide-in-right",
+                })
+              );
+            }
+            getNewPasswordModal({
+              isOpen: true,
+              animation: "slide-in-right",
+            });
           }
         });
       } finally {

@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import { InputField } from "@/components";
 import formStyles from "../PasswordForm.module.scss";
 import {
   useState,
