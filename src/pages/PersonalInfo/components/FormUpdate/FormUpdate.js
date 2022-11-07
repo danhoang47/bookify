@@ -111,7 +111,7 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên đệm của bạn"}
                     name={"subname"}
-                    value={subname}
+                    value={subname ? subname : ""}
                     onChange={onChangeSubname}
                     labelContent={"Họ và tên đệm"}
                     readOnly={readOnly}
@@ -122,7 +122,7 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên bạn"}
                     name={"name"}
-                    value={name}
+                    value={name ? name : ""}
                     onChange={onChangeName}
                     labelContent={"Tên"}
                     readOnly={readOnly}
@@ -148,7 +148,7 @@ function FormUpdate({ account }) {
                     type={"phone"}
                     placeholder={"Điền số điền thoại"}
                     name={"phone"}
-                    value={phone}
+                    value={phone ? phone : ""}
                     onChange={onChangePhone}
                     labelContent={"Số điện thoại"}
                     readOnly={readOnly}
@@ -160,7 +160,7 @@ function FormUpdate({ account }) {
                   {/* <PersonalInput /> */}
                   <DatePicker
                     name={"dob"}
-                    value={dob}
+                    value={dob ? dob : ""}
                     onChange={onChangeDob}
                     labelContent={"Ngày sinh"}
                     readOnly={readOnly}
@@ -190,7 +190,7 @@ function FormUpdate({ account }) {
                       onChange={(e) => {
                         setDes(e.target.value);
                       }}
-                      defaultValue={des}
+                      defaultValue={des ? des : ""}
                       readOnly={readOnly}
                     ></textarea>
                     <label
@@ -207,7 +207,13 @@ function FormUpdate({ account }) {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={5}>
                   <FileUpload
-                    avatar={account.avatar}
+                    avatar={
+                      account.avatar !== "" ||
+                      account.avatar !==
+                        "http://localhost:8080/bookify/images/users/null"
+                        ? account.avatar
+                        : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                    }
                     onAvatarUpload={onAvatarUpload}
                     readOnly={readOnly}
                   />

@@ -7,14 +7,23 @@ function Description({ description, hotelOwner }) {
       <p className={DescriptionStyle["description"]}>{description}</p>
       <div className={DescriptionStyle["host-info"]}>
         <div className={DescriptionStyle["img-container"]}>
-          <img src={hotelOwner?.avatar} alt="" />
+          <img
+            src={
+              hotelOwner?.avatar ||
+              "https://images.assetsdelivery.com/compings_v2/tuktukdesign/tuktukdesign1606/tuktukdesign160600119.jpg"
+            }
+            alt=""
+          />
         </div>
         <div className={DescriptionStyle["host"]}>
           <h4 className={DescriptionStyle["host-name"]}>
-            {hotelOwner?.subname + " " + hotelOwner?.name}
+            {hotelOwner?.subname || hotelOwner?.name
+              ? hotelOwner?.subname + " " + hotelOwner?.name
+              : hotelOwner?.username}
           </h4>
           <p className={DescriptionStyle["host-sub"]}>
-            Đã tham gia vào tháng 4 năm 2014
+            Đã tham gia vào tháng {new Date(hotelOwner?.signAt).getDate()} năm{" "}
+            {new Date(hotelOwner?.signAt).getFullYear()}
           </p>
         </div>
       </div>

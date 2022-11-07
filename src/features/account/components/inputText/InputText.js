@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
 import { ModalContext, UserContext } from "@/utils/contexts";
 import { getPasswordModal} from "@/utils/reducers/modalReducer";
-
 function InputText({
   value,
   onValueChange,
@@ -48,6 +47,7 @@ function InputText({
               placeholder={inputPlaceholder}
               onChange={(e) => onValueChange(e.target.value)}
             />
+
             {type === "password" || label === "Card" ? (
               <button
                 className={InputTextStyles["button"]}

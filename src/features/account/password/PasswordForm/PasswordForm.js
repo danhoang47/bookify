@@ -8,16 +8,26 @@ import {
   useContext,
   useEffect,
 } from "react";
-import { ModalContext, UserContext } from "@/utils/contexts";
+import {
+  ModalContext,
+  UserContext,
+  ToastMessageContext,
+} from "@/utils/contexts";
 import {
   getNewPasswordModal,
   getChangeCard,
 } from "@/utils/reducers/modalReducer";
+
 import { compareCurrentPassword } from "@/services/user";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 function PasswordForm({ submodal }) {
   const { dispatch } = useContext(ModalContext);
   const { user } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
   //user password input
   const [password, setPassword] = useState("");
   //call api check password
@@ -41,6 +51,9 @@ function PasswordForm({ submodal }) {
         await compareCurrentPassword(user.user_id, password).then((data) => {
           if (data?.error) {
             console.log(data.error);
+            setToastMessages(
+              getFailureToastMessage({ message: "Sai mật khẩu" })
+            );
           } else {
             console.log(data);
             if (submodal === "new password") {
@@ -51,10 +64,12 @@ function PasswordForm({ submodal }) {
                 })
               );
             }
-            getNewPasswordModal({
-              isOpen: true,
-              animation: "slide-in-right",
-            });
+            dispatch(
+              getChangeCard({
+                isOpen: true,
+                animation: "slide-in-right",
+              })
+            );
           }
         });
       } finally {
@@ -86,7 +101,7 @@ function PasswordForm({ submodal }) {
     <div className={formStyles["form-wrapper"]}>
       <form onSubmit={handleSubmit} className={formStyles["form"]}>
         <InputField
-          value={password}
+          value={password ? password : ""}
           id="password"
           onValueChange={handlePasswordChange}
           isValid={isPasswordValid}

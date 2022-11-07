@@ -1,7 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Route
+  Route,
 } from "react-router-dom";
 import {
   Home,
@@ -18,12 +18,12 @@ import {
   Register,
   Hotel,
   Update,
-  BookingPayment
+  BookingPayment,
 } from "@/pages";
-import { 
-  DefaultLayout, 
+import {
+  DefaultLayout,
   HostingRegisterLayout,
-  HotelManageLayout
+  HotelManageLayout,
 } from "@/layouts";
 
 const router = createBrowserRouter(
@@ -32,8 +32,12 @@ const router = createBrowserRouter(
       <Route path="/" element={<DefaultLayout />}>
         <Route path="" element={<Home />} />
         <Route path="hotel">
-          <Route path=":id" element={<Hotel />} errorElement={<div>Can not found...</div>}>
-            <Route path="booking" element={<BookingPayment />}/>
+          <Route
+            path=":id"
+            element={<Hotel />}
+            errorElement={<div>Can not found...</div>}
+          >
+            <Route path="booking" element={<BookingPayment />} />
           </Route>
         </Route>
         <Route path="profile">

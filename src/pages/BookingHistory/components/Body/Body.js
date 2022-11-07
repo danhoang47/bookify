@@ -10,6 +10,8 @@ import { useState } from "react";
 import Tabs from "./components/Tabs";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
+import { format } from "date-fns";
+
 const CustomizedTabPanel = styled(TabPanel)`
   padding: 0;
 `;
@@ -58,16 +60,18 @@ function Body() {
 
             <div className={BodyStyle["grid-container"]}>
               <CustomizedTabPanel value="1">
-                <Tabs />
+                <Tabs category={{ filter: "all" }} />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="2">
-                <Tabs category={{ checkinDate: "16/8/2022" }} />
+                <Tabs
+                  category={{ checkinDate: format(new Date(), "yyyy-MM-dd") }}
+                />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="3">
-                <Tabs category={{ status: false }} />
+                <Tabs category={{ status: 1 }} />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="4">
-                <Tabs category={{ status: true }} />
+                <Tabs category={{ status: 0 }} />
               </CustomizedTabPanel>
               <div className={BodyStyle["alert"]}>
                 <div className={BodyStyle["alert-body"]}>

@@ -1,19 +1,20 @@
-import { Suspense, useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+
 import { Box } from "@mui/material";
 import HotelManageHeader from "../components/HotelManageHeader";
-import manageLayoutStyles from './HotelManageLayout.module.scss';
+import manageLayoutStyles from "./HotelManageLayout.module.scss";
 import Footer from "../components/Footer";
-import { UserContext } from '@/utils/contexts';
-import { getHotelByOwnerId } from '@/services/hotel';
+import { UserContext } from "@/utils/contexts";
+import { getHotelByOwnerId } from "@/services/hotel";
 
-function HotelManageLayout() {    
-    const { user } = useContext(UserContext);
-    const [hotelInfo, setHotelInfo] = useState();
+function HotelManageLayout() {
+  const { user } = useContext(UserContext);
+  const [hotelInfo, setHotelInfo] = useState();
 
-    useEffect(() => {
-        getHotelByOwnerId(user.user_id).then(hotel => setHotelInfo(hotel));
-    }, [user])
+  useEffect(() => {
+    getHotelByOwnerId(user.user_id).then((hotel) => setHotelInfo(hotel));
+  }, [user]);
 
     return (  
         <div id={manageLayoutStyles['hotel-manage-layout']}>

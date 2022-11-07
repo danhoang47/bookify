@@ -76,6 +76,8 @@ function App({ children }) {
     });
   }, []);
 
+  console.log("App hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
   useEffect(() => {
     const jwtString = JSON.stringify(localStorage.getItem("jwt"));
     const userForm = new FormData();

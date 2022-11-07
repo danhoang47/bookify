@@ -1,22 +1,23 @@
 import SelectBoxStyle from "./SelectBox.module.scss";
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Tháng 1",
+  "Tháng 2",
+  "Tháng 3",
+  "Tháng 4",
+  "Tháng 5",
+  "Tháng 6",
+  "Tháng 7",
+  "Tháng 8",
+  "Tháng 8",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12",
 ];
 
 function SelectBox({ onChangeMonth }) {
   const currentMonth = new Date().getMonth() + 1;
+  console.log(currentMonth);
   const monthSelect = (e) => {
     onChangeMonth(e.target.value);
   };
@@ -33,13 +34,13 @@ function SelectBox({ onChangeMonth }) {
           onChange={monthSelect}
           className={SelectBoxStyle["months"]}
         >
-          <option value="">Tất cả các tháng</option>
           {months.map((data, index) => {
             return (
               <option
                 value={index + 1}
                 key={index}
                 disabled={index + 1 > currentMonth ? true : false}
+                selected={index + 1 === currentMonth ? true : false}
               >
                 {data}
               </option>
