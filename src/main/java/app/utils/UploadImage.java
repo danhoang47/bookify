@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 import org.glassfish.jersey.media.multipart.BodyPart;
+import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import static service.UploadImage.UPLOAD_FILE_SERVER;
@@ -42,6 +43,25 @@ public class UploadImage {
                     if(!listPath.contains(path)) {
                         listPath.add(path);
                     }
+                }
+            }
+        }
+
+        return listPath;
+    }
+   
+   public static List<String> uploadMultipleFile2(List<FormDataBodyPart> body,  String typeUpload, String realPath ) throws IOException {
+
+        List<String> listPath = new ArrayList<>();
+        
+        if(body!=null) {
+            for(int i =0; i<body.size(); i++) {
+                BodyPartEntity bodyPartEntity = (BodyPartEntity) body.get(i).getEntity();
+                String fileName = body.get(i).getContentDisposition().getFileName();
+                if(fileName!=null) {
+                    String path = writeToFileServer(typeUpload, bodyPartEntity.getInputStream(), fileName, realPath);
+                    System.out.println(path);
+                    listPath.add(path);
                 }
             }
         }

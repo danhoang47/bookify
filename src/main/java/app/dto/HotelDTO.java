@@ -39,6 +39,30 @@ public class HotelDTO {
 
     }
 
+    public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg, boolean isAllowPet, boolean isHasCamera, String description, String country, String district, String city, String address, String closing, String opening, String checkin, String checkout, Date signAt) {
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.hotelTypeId = hotelTypeId;
+        this.hotelName = hotelName;
+        this.backgroundImg = backgroundImg;
+        this.isAllowPet = isAllowPet;
+        this.isHasCamera = isHasCamera;
+        this.description = description;
+        this.country = country;
+        this.district = district;
+        this.city = city;
+        this.address = address;
+        this.closing = closing;
+        this.opening = opening;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.signAt = signAt;
+    }
+    
+
+    
+    
+
     public HotelDTO(String hotelId, String userId, String hotelTypeId, String hotelName, String backgroundImg,
             boolean isVerified, boolean isAllowPet, boolean isHasCamera, String description, String country, String district,
             String city, String address, String closing, String opening, String checkin, String checkout, List<HotelAmenityDTO> hotelAmenities, List<ImageDTO> images) {
@@ -302,6 +326,12 @@ public class HotelDTO {
         this.isBookmarked = isBookmarked;
     }
 
+    HotelDTO(String hotelName, String address) {
+        this.hotelName=hotelName;
+        this.address = address;
+    }
+
+   
     public Date getSignAt() {
         return signAt;
     }

@@ -50,7 +50,7 @@ public class UserService {
         return notifDao.getNotification(sourceId);
     }
 
-    public void markAllNotifAsRead(String userId) {
+    public void markAllNotifAsRead(String userId) throws SQLException {
         notifDao.markAllAsRead(userId);
     }
 }

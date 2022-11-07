@@ -11,11 +11,14 @@ import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import java.util.Date;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +57,110 @@ public class BookingDAO {
         }
     }
 
+    public List<BookingDTO> getUserBookingHistory(String userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "select bk.*, ht.hotel_name, rt.price,(ht.address + ' - ' + ht.city + ' - ' + ht.district) as hotel_address \n"
+                + "from Booking bk, hotel ht, Room rm ,RoomType rt where bk.room_id=rm.room_id and rm.hotel_id=ht.hotel_id and rm.room_type_id = rt.id\n"
+                + "and bk.user_id=? order by bk.check_out desc";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            BookingDTO booking = null;
+            ps.setString(1, userId);
+            rs = ps.executeQuery();
+
+            List<BookingDTO> listRes = new ArrayList<>();
+
+            while (rs.next()) {
+                String userIdData = rs.getString("user_id");
+                String checkIn = rs.getDate("check_in").toString();
+                String checkOut = rs.getDate("check_out").toString();
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infants = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int price = rs.getInt("price");
+                String roomId = rs.getString("room_id");
+                int status = rs.getInt("status");
+                Date bookAt = rs.getDate("bookAt");
+                String hotelName = rs.getString("hotel_name");
+                String address = rs.getString("hotel_address");
+                listRes.add(new BookingDTO(userIdData, checkIn, checkOut, adult, child, infants, pets, price, roomId, status, bookAt, hotelName, address));
+            }
+
+            return listRes;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return null;
+    }
+
+    public List<BookingDTO> getUserBookingHistoryFilter(String userId, String condition) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String type = (!condition.equals("1") && !condition.equals("0")) ? "and bk.check_in" : "and bk.status";
+
+        String sql = "select bk.*, ht.hotel_name, rt.price,(ht.address + ' - ' + ht.city + ' - ' + ht.district) as hotel_address \n"
+                + "from Booking bk, hotel ht, Room rm ,RoomType rt where bk.room_id=rm.room_id and rm.hotel_id=ht.hotel_id \n"
+                + "and rm.room_type_id = rt.id and bk.user_id=? " + type + "=? order by bk.check_out desc ";
+
+        System.out.println(sql);
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            BookingDTO booking = null;
+            ps.setString(1, userId);
+            if (type.equals("and bk.status")) {
+                ps.setInt(2, Integer.parseInt(condition));
+            } else if (type.equals("and bk.check_in")) {
+                ps.setString(2, condition);
+            }
+
+            rs = ps.executeQuery();
+
+            List<BookingDTO> listRes = new ArrayList<>();
+
+            while (rs.next()) {
+                String userIdData = rs.getString("user_id");
+                String checkIn = rs.getDate("check_in").toString();
+                String checkOut = rs.getDate("check_out").toString();
+                int adult = rs.getInt("adult");
+                int child = rs.getInt("child");
+                int infants = rs.getInt("infants");
+                int pets = rs.getInt("pets");
+                int price = rs.getInt("price");
+                String roomId = rs.getString("room_id");
+                int status = rs.getInt("status");
+                Date bookAt = rs.getDate("bookAt");
+                String hotelName = rs.getString("hotel_name");
+                String address = rs.getString("hotel_address");
+                listRes.add(new BookingDTO(userIdData, checkIn, checkOut, adult, child, infants, pets, price, roomId, status, bookAt, hotelName, address));
+            }
+
+            return listRes;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+        }
+        return null;
+    }
+
     public List<BookingDTO> getAllTodayPendingBooking(String hotelId) throws SQLException {
         List<BookingDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -66,8 +173,8 @@ public class BookingDAO {
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -88,14 +195,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -113,13 +220,13 @@ public class BookingDAO {
         ResultSet rs = null;
         String sql = "proc_getAllTodayCheckout @hotelId = ?";
 
-         try {
+        try {
             conn = DBContext.getConnection();
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -140,14 +247,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -170,8 +277,8 @@ public class BookingDAO {
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -192,14 +299,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -248,11 +355,14 @@ public class BookingDAO {
                 ps.close();
             }
         }
+
     }
 
     public static void main(String[] args) throws SQLException {
         BookingDAO dao = new BookingDAO();
         System.out.println(dao.getAllIncomingBooking("ae257b6b-43d4-4621-91f1-b331c6d4dea9"));
+        List<BookingDTO> list = new BookingDAO().getUserBookingHistoryFilter("deaa34d5-2c36-4c1c-b97b-8dbf3e1b18c3", "1");
+        System.out.println(list);
     }
 
     public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
@@ -267,8 +377,8 @@ public class BookingDAO {
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -289,14 +399,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -319,8 +429,8 @@ public class BookingDAO {
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -341,14 +451,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -359,7 +469,7 @@ public class BookingDAO {
         return list;
     }
 
-   public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
+    public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
         List<BookingDTO> list = new ArrayList<>();
         Connection conn = null;
         CallableStatement cs = null;
@@ -371,8 +481,8 @@ public class BookingDAO {
             cs = conn.prepareCall(sql);
             cs.setString(1, hotelId);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 String userId = rs.getString("user_id");
                 String bookingId = rs.getString("booking_id");
                 String checkin = rs.getString("check_in");
@@ -393,14 +503,14 @@ public class BookingDAO {
                 user.setUser_id(userId);
                 user.setAvatar(avatar);
                 user.setUsername(username);
-                BookingDTO booking = new BookingDTO(user, 
-                        roomId, hotelId, 0, bookingId, checkin, 
+                BookingDTO booking = new BookingDTO(user,
+                        roomId, hotelId, 0, bookingId, checkin,
                         checkout, adult, child, infant, pets,
                         status, bookAt, roomType
                 );
                 list.add(booking);
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -409,5 +519,6 @@ public class BookingDAO {
             }
         }
         return list;
+
     }
 }

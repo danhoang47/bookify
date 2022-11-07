@@ -4,6 +4,7 @@
  */
 package app.repository;
 
+import app.dao.ViewDAO;
 import app.dao.BookingDAO;
 import app.dto.ImageDTO;
 import app.dto.HotelDTO;
@@ -19,6 +20,8 @@ import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +37,9 @@ public class HotelRepository {
     private RoomTypeDAO roomTypeDao;
     private ReviewDAO reviewDao;
     private UserDAO userDAO;
+
+    private ViewDAO viewDAO;
+
     private BookingDAO bookingDao;
 
     public HotelRepository() {
@@ -43,7 +49,11 @@ public class HotelRepository {
         roomTypeDao = new RoomTypeDAO();
         reviewDao = new ReviewDAO();
         userDAO = new UserDAO();
+
+        viewDAO = new ViewDAO();
+
         bookingDao = new BookingDAO();
+
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
@@ -53,20 +63,22 @@ public class HotelRepository {
     public HotelDTO get(String id, String userId) throws SQLException, ClassNotFoundException {
 
         HotelDTO hotelDto = hotelDao.get(id);
-        if (hotelDto != null) {
-            List<ImageDTO> imageDtos = imageDao.get(hotelDto.getHotelId());
-            List<HotelAmenityDTO> hotelAmenityDtos = hotelAmenityDao.get(hotelDto.getHotelId());
-            List<ReviewDTO> listReviews = reviewDao.listReview(id);
-            RoomTypeDTO roomType = roomTypeDao.get(hotelDto.getHotelId());
-            UserDTO owner = userDAO.getOwner(hotelDto.getUserId());
+        List<ImageDTO> imageDtos = imageDao.get(hotelDto.getHotelId());
+        List<HotelAmenityDTO> hotelAmenityDtos = hotelAmenityDao.get(hotelDto.getHotelId());
+        List<ReviewDTO> listReviews = reviewDao.listReview(id);
+        RoomTypeDTO roomType = roomTypeDao.get(hotelDto.getHotelId());
+        UserDTO owner = userDAO.getOwner(hotelDto.getUserId());
 
-            hotelDto.setIsBookmarked(hotelDao.isHotelBookmarked(id, userId));
-            hotelDto.setImages(imageDtos);
-            hotelDto.setHotelAmenities(hotelAmenityDtos);
-            hotelDto.setRoomType(roomType);
-            hotelDto.setReviews(listReviews);
-            hotelDto.setHotelOwner(owner);
-        }
+        hotelDto.setIsBookmarked(hotelDao.isHotelBookmarked(id, userId));
+        hotelDto.setImages(imageDtos);
+        hotelDto.setHotelAmenities(hotelAmenityDtos);
+        hotelDto.setRoomType(roomType);
+        hotelDto.setReviews(listReviews);
+        hotelDto.setHotelOwner(owner);
+
+        Calendar cal = Calendar.getInstance();
+        String monthInshort = new SimpleDateFormat("MMM").format(cal.getTime());
+        viewDAO.increaseView(hotelDto.getHotelId(), monthInshort);
 
         return hotelDto;
     }
@@ -146,31 +158,43 @@ public class HotelRepository {
         return bookmarkedHotels;
     }
 
+    public static void main(String[] args) {
+        HotelRepository repo = new HotelRepository();
+        Calendar cal = Calendar.getInstance();
+        String monthInshort = new SimpleDateFormat("MMM").format(cal.getTime());
+        System.out.println(monthInshort);
+    }
+
+    public HotelDTO getBasicHotelInfo(String userId) throws SQLException {
+        return hotelDao.getBasicHotelInfo(userId);
+    }
+
     public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
         HotelDTO hotel = hotelDao.get(userDAO.getOwnedHotelId(userId));
 
         return hotel;
+
     }
-    
+
     public List<BookingDTO> getAllTodayPendingBooking(String hotelId) throws SQLException {
         return bookingDao.getAllTodayPendingBooking(hotelId);
     }
-    
-     public List<BookingDTO> getAllTodayBookedBooking(String hotelId) throws SQLException {
+
+    public List<BookingDTO> getAllTodayBookedBooking(String hotelId) throws SQLException {
         return bookingDao.getAllTodayBookedBooking(hotelId);
     }
-     
-      public List<BookingDTO> getAllTodayCheckoutBooking(String hotelId) throws SQLException {
+
+    public List<BookingDTO> getAllTodayCheckoutBooking(String hotelId) throws SQLException {
         return bookingDao.getAllTodayCheckoutBooking(hotelId);
     }
-      
-      public void acceptBooking(String bookingId) throws SQLException{
-          bookingDao.acceptBooking(bookingId);
-      }
-      
-      public void rejectBooking(String bookingId) throws SQLException {
-          bookingDao.rejectBooking(bookingId);
-      }
+
+    public void acceptBooking(String bookingId) throws SQLException {
+        bookingDao.acceptBooking(bookingId);
+    }
+
+    public void rejectBooking(String bookingId) throws SQLException {
+        bookingDao.rejectBooking(bookingId);
+    }
 
     public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
         return bookingDao.getAllPendingBooking(hotelId);

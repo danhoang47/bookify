@@ -95,9 +95,9 @@ public class DateRangeRepo {
     
     public static void main(String[] args) throws SQLException, ParseException {
 
-         boolean check = new  DateRangeRepo().checkDate("2022-11-05", "2022-11-06", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
+         boolean check = new  DateRangeRepo().checkDate("2022-11-7", "2022-11-10", "2f5923a5-64d0-4bdc-bf0b-fabfa76f0404");
          HashSet<String> freeRooms = new  DateRangeRepo().getFreeRooms("2022-11-24", "2022-11-29", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
-         System.out.println(freeRooms);
+         System.out.println(check);
          
     }
 }

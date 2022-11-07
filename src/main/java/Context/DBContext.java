@@ -21,11 +21,11 @@ import java.util.logging.Logger;
 //    private final String password = "13072002";
 public class DBContext {
 
-    private static final String serverName = "DESKTOP-A5IQJBR\\SQLEXPRESS";
+        private static final String serverName = "LEDUC\\MAYAO";
     private static final String dbName = "bookify";
     private static final String portNumber = "1433";
     private static final String userID = "sa";
-    private static final String password = "0000";
+    private static final String password = "13072002";
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:sqlserver://"+serverName+":"+portNumber+";databaseName="+dbName;

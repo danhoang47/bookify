@@ -1,6 +1,7 @@
 package app.services;
 
 import app.dao.BookingDAO;
+import app.dao.ReportDAO;
 import app.dto.BookingDTO;
 import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
@@ -26,12 +27,15 @@ import java.util.UUID;
 public class HotelService {
 
     final private HotelRepository hotelRepo;
+    final private ReportDAO reportDao;
 
     public HotelService() {
         hotelRepo = new HotelRepository();
+        reportDao = new ReportDAO();
     }
 
     public HotelDTO get(String hotelId, String userId) throws SQLException, ClassNotFoundException {
+        
         return hotelRepo.get(hotelId, userId);
     }
 
@@ -101,6 +105,18 @@ public class HotelService {
         return hotelRepo.getAllBookmarkedHotel(userId);
 
     }
+    
+    public boolean addReport(String hotelId, String userId, String title, String content) throws SQLException {
+        return reportDao.addReport(hotelId, userId, title, content);
+    }
+    
+    public int getUserBookingTimes(String hotelId, String userId) throws SQLException {
+        return reportDao.checkNumberBookingTime(hotelId, userId);
+    }
+
+    public HotelDTO getBasicHotelInfo(String userId) throws SQLException {
+        return hotelRepo.getBasicHotelInfo(userId);
+    }
 
     public String bookingRoom(
             String hotelId,
@@ -133,6 +149,7 @@ public class HotelService {
 
     public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
         return hotelRepo.getByUserId(userId);
+
     }
     
     public List<BookingDTO> getAllTodayTypeBooking(String hotelId, String type) throws SQLException {

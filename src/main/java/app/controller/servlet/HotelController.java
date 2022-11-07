@@ -4,11 +4,13 @@
  */
 package app.controller.servlet;
 
+import app.dao.ViewDAO;
 import app.dto.HotelAmenityDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.HotelDTO;
 import app.services.AmenityService;
 import app.services.DateRangeService;
+import app.services.HotelManageService;
 import app.services.HotelService;
 import app.services.ImageService;
 import app.services.RoomService;
@@ -53,9 +55,12 @@ public class HotelController {
 
     private final static HotelService service = new HotelService();
     private final static UserService userService = new UserService();
+    private final static HotelManageService manageService = new HotelManageService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    @Context ServletContext context;
+
+    @Context
+    ServletContext context;
 
     @POST
     @Path("/booking/{hotelId}")
@@ -71,9 +76,10 @@ public class HotelController {
             @QueryParam("userId") String userId
     ) throws SQLException, ParseException {
         JsonObject response = new JsonObject();
+
         String bookingId = service.bookingRoom(
-                hotelId, 
-                checkin, 
+                hotelId,
+                checkin,
                 checkout,
                 adult, child, pet, infant, userId
         );
@@ -121,7 +127,7 @@ public class HotelController {
             return Response.ok(response).build();
         }
     }
-    
+
     @GET
     @Path("/owner/{userId}")
     public Response getHotelByUserId(@PathParam("userId") String userId) throws SQLException, ClassNotFoundException {
@@ -136,6 +142,15 @@ public class HotelController {
             response.addProperty("error", "not found");
             return Response.ok(response).build();
         }
+    }
+
+    @GET
+    @Path("/manage/gethotel")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHotel(@QueryParam("userid") String userid) throws SQLException, ClassNotFoundException {
+
+        String newUserId = userid == null ? "" : userid;
+        return Response.ok(gson.toJson(service.getBasicHotelInfo(newUserId))).build();
     }
 
     @PUT
@@ -186,6 +201,42 @@ public class HotelController {
         return Response.ok().build();
     }
 
+    @POST
+    @Path("/report")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addReport(@FormDataParam("hotelid") String hotelid, @FormDataParam("userid") String userid, @FormDataParam("title") String title, @FormDataParam("content") String content) throws SQLException {
+        JSONObject obj = new JSONObject();
+
+        boolean check = service.addReport(hotelid, userid, title, content);
+
+        if (check == true) {
+            obj.put("success", "Report allow");
+        } else if (check == false) {
+            obj.put("error", "Report failed");
+        }
+
+        return Response.ok(gson.toJson(obj)).build();
+    }
+
+    @GET
+    @Path("/report")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkUser(@QueryParam("hotelid") String hotelid, @QueryParam("userid") String userid) throws SQLException {
+        JSONObject obj = new JSONObject();
+        int getTimeBooking = service.getUserBookingTimes(hotelid, userid);
+
+        if (getTimeBooking > 0) {
+
+            obj.put("success", "Report successfully");
+
+        } else {
+            obj.put("require", "Login require");
+        }
+
+        return Response.ok(gson.toJson(obj)).build();
+    }
+
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -202,6 +253,42 @@ public class HotelController {
 //        JSONObject obj = new JSONObject();
 
         return Response.ok(gson.toJson(service.getAllHotelDashboard())).build();
+    }
+
+    @GET
+    @Path("/manage/income")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelBookingData(@QueryParam("hotelid") String hotelId, @QueryParam("month") int month) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelBookingData(hotelId, month))).build();
+    }
+
+    @GET
+    @Path("/manage/views")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelBookingDataAll(@QueryParam("hotelid") String hotelId, @QueryParam("month") int month) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelBookingDataAll(hotelId, month))).build();
+    }
+
+    @GET
+    @Path("/manage/rating")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelRating(@QueryParam("hotelid") String hotelId) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelRatingData(hotelId))).build();
+    }
+
+    @GET
+    @Path("/manage/rating/point")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listHotelRating(@QueryParam("hotelid") String hotelId, @QueryParam("point") int point) throws SQLException, ClassNotFoundException {
+//        JSONObject obj = new JSONObject();
+
+        return Response.ok(gson.toJson(manageService.listHotelRatingWithPoint(hotelId, point))).build();
     }
 
     @GET
@@ -269,8 +356,8 @@ public class HotelController {
             @FormDataParam("amenitiesId") List<String> amenitiesId,
             @FormDataParam("amenitiesName") List<String> amenities,
             @FormDataParam("amenitiesTypes") List<String> amenitiyType,
-            @FormDataParam("hotelImage") FormDataBodyPart hotelImage,
-            @FormDataParam("viewImage") FormDataBodyPart viewImage,
+            @FormDataParam("hotelImage") List<FormDataBodyPart> hotelImage,
+            @FormDataParam("viewImage") List<FormDataBodyPart> viewImage,
             @FormDataParam("isCamera") boolean isCamera,
             @FormDataParam("isAnimalAccept") boolean isAnimalAccept,
             @FormDataParam("checkin") String checkin,
@@ -285,13 +372,17 @@ public class HotelController {
             @FormDataParam("bedroomNum") int bedroomNum,
             @FormDataParam("isbathPrivate") boolean isbathPrivate,
             @FormDataParam("userId") String userId) throws IOException {
+
+        UploadImage uploadhotel = new UploadImage();
+
         System.out.println(isCamera);
         System.out.println(isAnimalAccept);
-        
+
         HotelService hotelService = new HotelService();
         ImageService imgService = new ImageService();
         RoomService roomService = new RoomService();
         AmenityService amenityService = new AmenityService();
+        ViewDAO view = new ViewDAO();
 //
         List<String> listHotelImagesPath = null;
         List<String> listViewImagePath = null;
@@ -303,8 +394,8 @@ public class HotelController {
         String backgroundImagePath = null;
         if (fileInputStreamBG != null && fileFormDataContentDispositionBG != null) {
             backgroundImagePath = UploadImage.uploadSingleFile(
-                    fileInputStreamBG, 
-                    fileFormDataContentDispositionBG, 
+                    fileInputStreamBG,
+                    fileFormDataContentDispositionBG,
                     "hotels",
                     realPath
             );
@@ -334,7 +425,7 @@ public class HotelController {
 
         //        Upload hotel images
         if (hotelImage != null) {
-            listHotelImagesPath = UploadImage.uploadMultipleFile(hotelImage, "hotels", realPath);
+            listHotelImagesPath = UploadImage.uploadMultipleFile2(hotelImage, "hotels", realPath);
         }
         boolean addImageHotel = imgService.addImage(hotel.getHotelId(), listHotelImagesPath, 1);
         System.out.println("Image " + addImageHotel);
@@ -345,7 +436,7 @@ public class HotelController {
 
         //        Upload view images
         if (viewImage != null) {
-            listViewImagePath = UploadImage.uploadMultipleFile(viewImage, "hotels", realPath);
+            listViewImagePath = UploadImage.uploadMultipleFile2(viewImage, "hotels", realPath);
         }
         boolean addImageView = imgService.addImage(hotel.getHotelId(), listViewImagePath, 0);
         System.out.println("Image " + addImageView);
@@ -365,6 +456,11 @@ public class HotelController {
         boolean updateUser = userService.makeHosting(userId);
         if (updateUser == false) {
             obj.put("message", "Update user failed, please try again");
+            return Response.ok(new Gson().toJson(obj)).build();
+        }
+        boolean addNewView = view.addNewView(hotel.getHotelId());
+        if (addNewView == false) {
+            obj.put("message", "Update view failed, please try again");
             return Response.ok(new Gson().toJson(obj)).build();
         }
 

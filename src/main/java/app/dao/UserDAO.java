@@ -40,7 +40,7 @@ public class UserDAO {
         String encrypPassword = passEncrypt.generateSecurePassword(password, saltvalue);
 
         try {
-            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, null, GETDATE(), null)";
+            String query = "INSERT INTO userDetail VALUES (?, ?, ?, ?, null, null, null, 1, null, null, null, ?, null, null, GETDATE(), null)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
 

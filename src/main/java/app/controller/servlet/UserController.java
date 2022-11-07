@@ -6,7 +6,10 @@ package app.controller.servlet;
 
 import app.dao.BookmarkDAO;
 import app.dao.UserDAO;
+import app.dto.NotificationDTO;
+import app.dto.TransactDTO;
 import app.dto.UserDTO;
+import app.services.BookingService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dao.UserDetailDAO;
@@ -20,6 +23,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -295,6 +299,43 @@ public class UserController {
     }
     
     @GET
+
+    @Path("bookingHistory/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingHistory(@PathParam("userId") String userId) throws SQLException {
+        BookingService service = new BookingService();
+        
+        
+        return Response.ok(new Gson().toJson(service.getUserBookingHistory(userId))).build();
+    }
+    
+    @GET
+    @Path("bookingHistory/filter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingHistory(@QueryParam("userid") String userid, @QueryParam("condition") String condition) throws SQLException {
+        BookingService service = new BookingService();
+        
+        
+        return Response.ok(new Gson().toJson(service.getUserBookingHistoryFilter(userid, condition))).build();
+    }
+    
+    @GET
+    @Path("bookingHistory/transaction")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingTrans(@QueryParam("userid") String userid, @QueryParam("month") int month) throws SQLException {
+        BookingService service = new BookingService();
+        JSONObject obj = new JSONObject();
+        List<TransactDTO> listTrans = service.getAllTransactOfUser(userid, month);
+        int walletAmount = service.getAmountWallet(userid);
+        TransactDTO dataChange = service.getAllTransactOfUserByDays(userid, month);
+        obj.put("listTrans", listTrans);
+        obj.put("wallet", walletAmount);
+        obj.put("chartData", dataChange);
+        
+        return Response.ok(new Gson().toJson(obj)).build();
+    }
+    
+    @GET
     @Path("notification")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNotificaiton(
@@ -304,6 +345,7 @@ public class UserController {
     ) throws SQLException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(userId + " " + type);
+
         if (type.equals("latest")) {
             return Response.ok(gson.toJson(service.getNotification(sourceId))).build();  
         } else {
@@ -321,6 +363,7 @@ public class UserController {
         JsonObject response = new JsonObject();
         response.addProperty("status", "success");
         return Response.ok(gson.toJson(response)).build();   
+
     }
     
     @PUT
