@@ -1,7 +1,11 @@
 import "./NotifyItem.scss";
 import { memo } from "react";
 import differenceInHours from "date-fns/differenceInHours";
-import { differenceInBusinessDays } from "date-fns";
+import { differenceInBusinessDays, differenceInMinutes } from "date-fns";
+import { useClsx } from "@/utils/hooks";
+import { acceptBooking, rejectBooking } from "@/services/hotel";
+import markNotifAsRead from "@/services/hotel/markNotifAsRead";
+import { Link } from 'react-router-dom';
 
 const getNotifAction = (notif) => {
     switch (notif.notifyType) {
@@ -9,7 +13,7 @@ const getNotifAction = (notif) => {
             return (
                 <p className="action-infor">
                     Khách sạn của bạn vừa nhận được 1 đơn đặt phòng bởi&nbsp;
-                    <span className="notif-hightlight">{notif.actorName}</span>
+                    <span className="notif-hightlight">{notif.actorName}</span>.
                 </p>
             );
         case 1:
@@ -25,14 +29,15 @@ const getNotifAction = (notif) => {
                 <p className="action-infor">
                     Bạn vừa nhận được một đánh giá từ&nbsp;
                     <span className="notif-hightlight">{notif.actorName}</span>,
-                    hãy kiểm tra ngay
+                    hãy kiểm tra ngay.
                 </p>
             );
         case 3:
             return (
                 <p className="action-infor">
-                    Khách sạn của bạn vừa nhận được 1 đơn đặt phòng bởi&nbsp;
-                    <span className="notif-hightlight">{notif.actorName}</span>
+                    Đơn đặt phòng của bạn vừa được&nbsp;
+                    <span className="notif-hightlight">{notif.hotelName}</span>{" "}
+                    chấp nhận. Hãy kiểm tra ngay.
                 </p>
             );
         case 4:
@@ -40,9 +45,24 @@ const getNotifAction = (notif) => {
                 <p className="action-infor">
                     Đơn đặt phòng của bạn vừa được&nbsp;
                     <span className="notif-hightlight">{notif.hotelName}</span>{" "}
-                    chấp nhận. Hãy kiểm tra ngay
+                    hủy bỏ. Hãy kiểm tra ngay.
                 </p>
             );
+        case 5: 
+            return (
+                <p className="action-infor">
+                    Bạn đã chấp nhận đơn đặt phòng của&nbsp;
+                    <span className="notif-hightlight">{notif.actorName}</span>{" "}
+                    Hãy chuẩn bị để đón tiếp họ.
+                </p>
+            )
+        case 6: 
+            return (
+                <p className="action-infor">
+                    Bạn đã hủy đơn đặt phòng của&nbsp;
+                    <span className="notif-hightlight">{notif.actorName}</span>{" "}
+                </p>
+            )
         default:
             throw new Error("Invalid Notification type");
     }
@@ -50,8 +70,15 @@ const getNotifAction = (notif) => {
 
 const getDateDiff = (notifDate) => {
     const today = new Date();
+    const diffInMinutes = differenceInMinutes(today, new Date(notifDate));
     const diffInHours = differenceInHours(today, new Date(notifDate));
-    if (diffInHours < 24) {
+    if (diffInMinutes < 60) {
+        return {
+            diff: diffInMinutes,
+            type: 'phút'
+        }
+    }
+    else if (diffInHours < 24) {
         return {
             diff: diffInHours,
             type: "giờ",
@@ -64,48 +91,87 @@ const getDateDiff = (notifDate) => {
     }
 };
 
-function NotifItem({ notif, handleClick }) {
-    const dateDiff = getDateDiff(notif.notifyDate);
-    const handleAccepted = (event) => {};
+const getNotificationLinkTo = (type) => {
+    if ( type === 5 || type === 6) {
+        return "manager/booking"
+    } 
+    else if (type === 3 || type === 4) {
+        return "profile/history"
+    }
+}
 
-    const handleRejected = (event) => {};
+function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
+    const dateDiff = getDateDiff(notif.notifyDate);
+    const { isRead, notifyType } = notif;
+
+    const handleAccepted = async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const type = 5;
+        const data = await acceptBooking(notif.sourceId).then(data => data);
+        if (data?.status) {
+            handleActBooking(notif.sourceId, type);
+            markNotifAsRead(notif.id).then(data => console.log(data));
+        }
+    };
+
+    const handleRejected = async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const type = 6;
+        const data = await rejectBooking(notif.sourceId).then(data => data);
+        if (data?.status) {
+            markNotifAsRead(notif.id).then(data => console.log(data));
+            handleActBooking(notif.sourceId, type);
+        }
+    };
+
+    const handleChangeReadStatus = (event) => {
+        setDropdownOpen(event);
+        if (!isRead) {
+            markNotifAsRead(notif.id).then(data => console.log(data));
+            handleClick(notif.id)
+        }
+    }
 
     return (
-        <div className="notif-item">
-            <div className="notif-actor-avatar">
-                <div className="actor-avatar">
-                    <img
-                        src="photo/Hotel-Gardens-The-10-Most-Beautiful-Around-the-World-1.jpg"
-                        alt=""
-                        className="actor-avatar-img"
-                    />
-                </div>
-            </div>
-            <div className="notif-infor">
-                <div className="notif-action">{getNotifAction(notif)}</div>
-                <div className="notif-date-diff">
-                    <p className="date-diff">
-                        {`${dateDiff.diff} ${dateDiff.type}`} trước
-                    </p>
-                </div>
-                {notif.notifyType === 0 && (
-                    <div className="hotel-function-buttons">
-                        <button
-                            className={['notif-func-button', 'accept'].join(' ')}
-                            onClick={handleAccepted}
-                        >
-                            Chấp nhận
-                        </button>
-                        <button
-                            className={['notif-func-button', 'reject'].join(' ')}
-                            onClick={handleRejected}
-                        >
-                            Từ chối
-                        </button>
+        <Link to={getNotificationLinkTo(notifyType)}>
+            <div className={useClsx("notif-item", isRead ? '' : 'un-read')} onClick={handleChangeReadStatus}>
+                <div className="notif-actor-avatar">
+                    <div className="actor-avatar">
+                        <img
+                            src="photo/Hotel-Gardens-The-10-Most-Beautiful-Around-the-World-1.jpg"
+                            alt=""
+                            className="actor-avatar-img"
+                        />
                     </div>
-                )}
+                </div>
+                <div className="notif-infor">
+                    <div className="notif-action">{getNotifAction(notif)}</div>
+                    <div className="notif-date-diff">
+                        <p className="date-diff">
+                            {`${dateDiff.diff} ${dateDiff.type}`} trước
+                        </p>
+                    </div>
+                    {notifyType === 0 && (
+                        <div className="hotel-function-buttons">
+                            <button
+                                className={['notif-func-button', 'accept'].join(' ')}
+                                onClick={handleAccepted}
+                            >
+                                Chấp nhận
+                            </button>
+                            <button
+                                className={['notif-func-button', 'reject'].join(' ')}
+                                onClick={handleRejected}
+                            >
+                                Từ chối
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </Link>
     );
 }
 
@@ -132,6 +198,6 @@ export default memo(NotifItem);
     notifyType,
     notifyDate,
     hotelName,
-    actorName,
+    actorNam    e,
  * }
  */

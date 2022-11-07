@@ -11,7 +11,8 @@ import { useOutletContext } from "react-router-dom";
 const BookingTabs = lazy(() => import("@/components/Tabs/BookingTabs"));
 const tabPanelStyle = {
     padding: "1em 0",
-    maxWidth: "60vh",
+    paddingRight: '1em',
+    maxHeight: "40vh",
     overflowY: "scroll",
 };
 
@@ -64,7 +65,7 @@ function BookingList() {
                                     },
                                 }}
                             >
-                                <Tab label="Sắp đến" value="1" />
+                                <Tab label="Đang chờ" value="1" />
                                 <Tab label="Đang được đặt" value="2" />
                                 <Tab label="Trả phòng" value="3" />
                             </TabList>

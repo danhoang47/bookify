@@ -18,7 +18,10 @@ function HotelManageLayout() {
     return (  
         <div id={manageLayoutStyles['hotel-manage-layout']}>
             <HotelManageHeader />
-            <Box>
+            <Box sx={{
+                position: 'relative',
+                top: '70.81px'
+            }}>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Outlet context={hotelInfo}/>
                 </Suspense>
