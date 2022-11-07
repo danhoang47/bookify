@@ -24,10 +24,10 @@ function ChartComponent({
     <div>
       <div className={ChartStyle["static"]}>
         <h1>${total}</h1>
-        <p>Đã thu được trong năm 2022</p>
+        <p>Đã thu được trong tháng {months}</p>
       </div>
 
-      {!monthIncome ? (
+      {/* {!monthIncome ? (
         <>
           <div className={ChartStyle["sub-static"]}>
             <h4 className={ChartStyle["realistic"]}>${total}</h4>
@@ -41,16 +41,26 @@ function ChartComponent({
             data2={expected}
           />
         </>
-      ) : (
-        <>
-          <div className={ChartStyle["sub-static"]}>
-            <h4 className={ChartStyle["realistic"]}>${daysTotal}</h4>
-          </div>
-          <div className={ChartStyle["signleChart-static"]}>
-            <SingleLineChart labels={days} label="Đã thu" data={dayIncome} />
-          </div>
-        </>
-      )}
+      ) : ( */}
+      <>
+        <div className={ChartStyle["sub-static"]}>
+          <h4 className={ChartStyle["realistic"]}>${daysTotal}</h4>
+          <h4 className={ChartStyle["expected"]}>
+            ${Math.floor(expectIncome)}
+          </h4>
+        </div>
+        <div className={ChartStyle["signleChart-static"]}>
+          {/* <SingleLineChart labels={days} label="Đã thu" data={dayIncome} /> */}
+          <DualLineChart
+            labels={days}
+            label1="Đã thu"
+            label2="Ước tính"
+            data1={dayIncome}
+            data2={expected}
+          />
+        </div>
+      </>
+      {/* )} */}
     </div>
   );
 }

@@ -17,6 +17,7 @@ const months = [
 
 function SelectBox({ onChangeMonth }) {
   const currentMonth = new Date().getMonth() + 1;
+  console.log(currentMonth);
   const monthSelect = (e) => {
     onChangeMonth(e.target.value);
   };
@@ -33,13 +34,13 @@ function SelectBox({ onChangeMonth }) {
           onChange={monthSelect}
           className={SelectBoxStyle["months"]}
         >
-          <option value="">Tất cả các tháng</option>
           {months.map((data, index) => {
             return (
               <option
                 value={index + 1}
                 key={index}
                 disabled={index + 1 > currentMonth ? true : false}
+                selected={index + 1 === currentMonth ? true : false}
               >
                 {data}
               </option>

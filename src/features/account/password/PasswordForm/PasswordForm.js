@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import InputField from "@/components/InputField";
 import formStyles from "../PasswordForm.module.scss";
 import {
   useState,
@@ -8,13 +8,22 @@ import {
   useContext,
   useEffect,
 } from "react";
-import { ModalContext, UserContext } from "@/utils/contexts";
+import {
+  ModalContext,
+  ToastMessageContext,
+  UserContext,
+} from "@/utils/contexts";
 import { getNewPasswordModal } from "@/utils/reducers/modalReducer";
 import { compareCurrentPassword } from "@/services/user";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 function PasswordForm() {
   const { dispatch } = useContext(ModalContext);
   const { user } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
   //user password input
   const [password, setPassword] = useState("");
   //call api check password
@@ -38,6 +47,9 @@ function PasswordForm() {
         await compareCurrentPassword(user.user_id, password).then((data) => {
           if (data?.error) {
             console.log(data.error);
+            setToastMessages(
+              getFailureToastMessage({ message: "Sai mật khẩu" })
+            );
           } else {
             console.log(data);
 
@@ -78,7 +90,7 @@ function PasswordForm() {
     <div className={formStyles["form-wrapper"]}>
       <form onSubmit={handleSubmit} className={formStyles["form"]}>
         <InputField
-          value={password}
+          value={password ? password : ""}
           id="password"
           onValueChange={handlePasswordChange}
           isValid={isPasswordValid}

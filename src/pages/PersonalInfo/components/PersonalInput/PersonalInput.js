@@ -26,7 +26,7 @@ function PersonalInput({
         type={type}
         placeholder={placeholder}
         name={name}
-        value={newValue}
+        value={newValue ? newValue : null}
         className={
           !readOnly
             ? PersonalInputStyle["input-update"]

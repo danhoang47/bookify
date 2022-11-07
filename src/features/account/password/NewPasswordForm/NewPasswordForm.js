@@ -1,4 +1,4 @@
-import { InputField } from "../../components";
+import InputField from "@/components/InputField";
 import formStyles from "../PasswordForm.module.scss";
 import {
   useState,
@@ -11,8 +11,14 @@ import {
 } from "react";
 import { accountValidation } from "@/utils/validation";
 import { compareCurrentPassword, newPassowrdUpdate } from "@/services/user";
-import { UserContext } from "@/utils/contexts";
+import { ToastMessageContext, UserContext } from "@/utils/contexts";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
+
 function NewPasswordForm() {
+  const { setToastMessages } = useContext(ToastMessageContext);
   const [newPassword, setNewPassword] = useState({
     password: null,
     rePassword: null,
@@ -49,6 +55,9 @@ function NewPasswordForm() {
               console.log(data.error);
             } else {
               console.log(data);
+              setToastMessages(
+                getSuccessToastMessage({ message: "Đổi mật khẩu thành công" })
+              );
             }
           }
         );

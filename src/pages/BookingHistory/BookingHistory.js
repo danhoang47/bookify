@@ -1,7 +1,7 @@
 import Header from "./components/HeaderInfo";
 import Body from "./components/Body";
-import { HistoryContext } from "@/utils/contexts";
-import { useMemo } from "react";
+import { HistoryContext, UserContext } from "@/utils/contexts";
+import { useContext, useEffect, useMemo, useState } from "react";
 import BookingHistoryStyle from "./BookingHistory.module.scss";
 function BookingHistory() {
   const list = useMemo(
@@ -86,10 +86,22 @@ function BookingHistory() {
     ],
     []
   );
+
+  const { user } = useContext(UserContext);
+  const [value, setValue] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/bookify/api/user/bookingHistory/" + user.user_id
+    )
+      .then((res) => res.json())
+      .then((result) => setValue(result));
+  }, []);
+
   return (
     <div className={BookingHistoryStyle["container"]}>
       <Header />
-      <HistoryContext.Provider value={list}>
+      <HistoryContext.Provider value={[value, setValue]}>
         <Body />
       </HistoryContext.Provider>
     </div>

@@ -50,7 +50,17 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
         >
           {isFilePicked ? (
             // <img src={preview} accept="image/*" alt="" loading="lazy" />
-            <img src={preview} accept="image/*" alt="" loading="lazy" />
+            <img
+              src={
+                !preview ||
+                preview === "http://localhost:8080/bookify/images/users/null"
+                  ? "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                  : preview
+              }
+              accept="image/*"
+              alt=""
+              loading="lazy"
+            />
           ) : (
             <>
               <input

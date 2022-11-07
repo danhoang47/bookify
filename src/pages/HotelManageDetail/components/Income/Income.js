@@ -2,46 +2,38 @@ import IncomeStyle from "./Income.module.scss";
 import SelectBox from "./components/SelectBox";
 import { income } from "./fakeIncomeData";
 import { lazy, useState, Suspense, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { getRandomExpected, getTotal } from "./IncomeService";
 
 const Chart = lazy(() => import("./components/Chart"));
 
 function Income() {
+  const [hotel, setHotel] = useOutletContext();
+  const [days2, setDays2] = useState([]);
+  const [totalIncome, setTotalIncome] = useState([]);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const months = [];
-  const days = [];
-  const dayIncome = [];
-  let daysTotal = 0;
-  const incomeByMonth = [];
-  const expected = [];
-  const total = income.reduce((prev, curr) => {
-    return curr.income + prev;
-  }, 0);
-  const expectIncome = income.reduce((prev, curr) => {
-    return curr.expected + prev;
-  }, 0);
 
-  income.forEach((data) => {
-    months.push(data.month);
-    incomeByMonth.push(data.income);
-    expected.push(data.expected);
-  });
+  const incomeByMonth = [];
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:8080/bookify/api/hotel/manage/income?hotelid=${hotel.hotelId}&month=${month}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setDays2(result.incomeDays);
+        setTotalIncome(result.totalIncomePerDays);
+      });
+  }, [month]);
+
+  const expectIncome2 = getRandomExpected(totalIncome);
+  const total2 = getTotal(totalIncome);
+  const expectIncomeTotal2 = getTotal(expectIncome2);
 
   const onChangeMonth = (data) => {
     setMonth(data);
   };
-
-  if (month) {
-    const dayData = income.filter((data) => data.month === parseInt(month));
-    dayData[0]?.details.forEach((data) => {
-      days.push(data.day);
-      dayIncome.push(data.dayIncome);
-    });
-    daysTotal = dayIncome.reduce((prev, cur) => {
-      return cur + prev;
-    }, 0);
-  }
-
-  useEffect(() => {}, []);
 
   return (
     <div className={IncomeStyle["income-wrapper"]}>
@@ -50,14 +42,14 @@ function Income() {
         <Suspense fallback={<div>Loading...</div>}>
           <Chart
             monthSelected={month}
-            total={total}
-            days={days}
-            dayIncome={dayIncome}
-            daysTotal={daysTotal}
-            expectIncome={expectIncome}
-            months={months}
+            total={total2}
+            days={days2}
+            dayIncome={totalIncome}
+            daysTotal={total2}
+            expectIncome={expectIncomeTotal2}
+            months={month}
             incomeByMonth={incomeByMonth}
-            expected={expected}
+            expected={expectIncome2}
           />
         </Suspense>
       </div>

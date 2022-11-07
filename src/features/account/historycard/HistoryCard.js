@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { usePopup } from "@/utils/hooks";
 function HistoryCard({
-  room,
   hotel,
   address,
   adult,
@@ -17,9 +16,7 @@ function HistoryCard({
   return (
     <div className={CardStyle["grid-box"]}>
       <div className={CardStyle["card-header"]}>
-        <h5>
-          Phòng {room} - Hotel {hotel}
-        </h5>
+        <h5>Hotel {hotel}</h5>
         <label htmlFor="cancel" onClick={handleClick} ref={containerRef}>
           <button className={CardStyle["button"]}>
             <FontAwesomeIcon icon={faEllipsis} />

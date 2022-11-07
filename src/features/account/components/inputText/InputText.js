@@ -2,6 +2,9 @@ import InputTextStyles from "./inputText.module.scss";
 import React, { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import { getPasswordModal } from "@/utils/reducers/modalReducer";
+import { useContext } from "react";
+import { ModalContext } from "@/utils/contexts";
 
 function InputText({
   value,
@@ -14,6 +17,7 @@ function InputText({
   icon = null,
 }) {
   console.log("input field rerender");
+  const { dispatch } = useContext(ModalContext);
 
   return (
     <>
@@ -38,7 +42,10 @@ function InputText({
               onChange={(e) => onValueChange(e.target.value)}
             />
             {type === "password" ? (
-              <button className={InputTextStyles["button"]}>
+              <button
+                className={InputTextStyles["button"]}
+                onClick={() => dispatch(getPasswordModal({ isOpen: true }))}
+              >
                 <FontAwesomeIcon icon={faWrench} />
               </button>
             ) : (

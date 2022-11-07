@@ -25,6 +25,8 @@ function PersonalInfo() {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <div className={PersonalInfoStyle["container"]}>
       <HeaderInfo />
