@@ -463,4 +463,25 @@ public class HotelDAO {
 //        System.out.println(dao.getAllHotelBasicInfo());
 
     }
+
+    public void setVerified(String hotelId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "update Hotel set is_verified = 1 where hotel_id = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareCall(sql);
+            ps.setString(1, hotelId);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
 }

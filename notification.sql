@@ -41,7 +41,7 @@ begin
 end
 
 -- trigger adding notif when user get confirm booking
--- type 3, 4, 5
+-- type 3, 4, 5, 6
 create or alter trigger tggr_getNotifWhileConfirmBooking
 on Booking
 after update
@@ -87,15 +87,20 @@ after insert
 as
 begin
 	declare @source_id varchar(50) = (select review_id from inserted)
-	declare @user_id varchar(50) = (select user_id from inserted)
+	declare @owner_id varchar(50) = (select Hotel.user_id 
+										from 
+											inserted join Hotel on inserted.hotel_id = Hotel.hotel_id
+									)
 
 	insert into Notification 
-	values(@user_id, @source_id, 2, getdate(), 0)
+	values(@owner_id, @source_id, 2, getdate(), 0)
 end
 
 -- procedure get all notification
+-- UPDATED
 create or alter proc proc_getAllNotification
-@userId varchar(50)
+@userId varchar(50),
+@sourceId varchar(50) = null
 as
 begin
 	select joinedNotifs.notify_id, joinedNotifs.user_id, joinedNotifs.source_id,
@@ -103,6 +108,7 @@ begin
 			joinedNotifs.actor_id, joinedNotifs.hotel_id, Hotel.hotel_name, 
 			userDetail.username as actorName, userDetail.avatar as actorAvatar from
 	(
+		-- Booking
 		select 
 			Notification.notify_id, Notification.user_id, Notification.source_id,
 			Notification.notify_date, Notification.notify_type, Notification.is_read,
@@ -110,22 +116,32 @@ begin
 		from 
 			Notification join Booking on Notification.source_id = Booking.booking_id
 			join Room on Booking.room_id = Room.room_id
-			where Notification.notify_type in (0, 3, 4, 5) 
+			where Notification.notify_type in (0, 3, 4, 5, 6) 
 		union
+		--- Review
 		select 
 			Notification.notify_id, Notification.user_id, Notification.source_id,
 			Notification.notify_date, Notification.notify_type, Notification.is_read,
 			Review.user_id as actor_id, Review.hotel_id
 		from 
 			Notification join Review on Notification.source_id = Review.review_id
-			where Notification.notify_type = 1
+			where Notification.notify_type = 2
+		union
+		--- Report
+		select
+			Notification.notify_id, Notification.user_id, Notification.source_id,
+			Notification.notify_date, Notification.notify_type, Notification.is_read,
+			Report.user_id as actor_id, Report.hotel_id
+		from 
+			Notification join Report on Notification.source_id = Report.report_id
+			where Notification.notify_type = 7
 	) as joinedNotifs join Hotel on joinedNotifs.hotel_id = Hotel.hotel_id
 	join userDetail on joinedNotifs.actor_id = userDetail.user_id
-	where joinedNotifs.user_id = @userId
+	where joinedNotifs.user_id = @userId and joinedNotifs.source_id = ISNULL(@sourceId, joinedNotifs.source_id)
 	order by notify_date desc
 end
 
-proc_getAllNotification @userId = 'ca8c99e4-a955-4439-baaf-dc02c6aacf5e' 
+proc_getAllNotification @userId = '13069adc-3485-492b-8239-ba93c43d9d6e', @sourceId = 'af2a30da-6bb4-4b6d-8a4e-6324cafad135'
 
 select * from Notification
 select * from userDetail
@@ -133,3 +149,4 @@ select * from userDetail
 select * from BankingAccount 
 
 select * from Transact where user_id = 'ca8c99e4-a955-4439-baaf-dc02c6aacf5e'
+

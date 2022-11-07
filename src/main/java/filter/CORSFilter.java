@@ -7,46 +7,60 @@ import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class CORSFilter implements Filter {
-    
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
-    public CORSFilter() {
-    }   
 
-   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
-      throws IOException, ServletException {
- 
-    HttpServletRequest request = (HttpServletRequest) servletRequest;
-    System.out.println("CORSFilter HTTP Request: " + request.getMethod());
- 
-    // Authorize (allow) all domains to consume the content
-    ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
-    ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
- 
-    HttpServletResponse resp = (HttpServletResponse) servletResponse;
- 
-    // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
-    if (request.getMethod().equals("OPTIONS")) {
-      resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-      return;
+    public CORSFilter() {
     }
- 
-    // pass the request along the filter chain
-    chain.doFilter(servletRequest, servletResponse);
-  }
+
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+        
+        // Authorize (allow) all domains to consume the content
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST, DELETE");
+
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+
+        // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
+        if (request.getMethod().equals("OPTIONS")) {
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            return;
+        }
+
+        // pass the request along the filter chain
+        chain.doFilter(servletRequest, servletResponse);
+    }
+
+    public void getView() {
+        ServletContext context = this.getFilterConfig().getServletContext();
+
+        int views = (int) context.getAttribute("views");
+        if (views == 0) {
+            System.out.println("Views init " + views);
+            context.setAttribute("views", 1);
+        } else {
+            System.out.println("Views: " + views);
+            context.setAttribute("views", views + 1);
+        }
+
+    }
 
     /**
      * Return the filter configuration object for this filter.
@@ -67,16 +81,16 @@ public class CORSFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("CORSFilter:Initializing filter");
             }
         }
@@ -95,20 +109,20 @@ public class CORSFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -125,7 +139,7 @@ public class CORSFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -139,9 +153,9 @@ public class CORSFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

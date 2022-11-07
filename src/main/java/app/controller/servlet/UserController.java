@@ -297,10 +297,18 @@ public class UserController {
     @GET
     @Path("notification")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getNotificaiton(@QueryParam("userId") String userId, @QueryParam("type") String type) throws SQLException {
+    public Response getNotificaiton(
+            @QueryParam("userId") String userId, 
+            @QueryParam("type") String type,
+            @QueryParam("sourceId") String sourceId
+    ) throws SQLException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(userId + " " + type);
-        return Response.ok(gson.toJson(service.getNotification(userId, type))).build();   
+        if (type.equals("latest")) {
+            return Response.ok(gson.toJson(service.getNotification(sourceId))).build();  
+        } else {
+            return Response.ok(gson.toJson(service.getNotification(userId, type))).build();  
+        } 
     }
     
     @PUT
@@ -312,6 +320,36 @@ public class UserController {
         service.markNotifAsRead(notifId);
         JsonObject response = new JsonObject();
         response.addProperty("status", "success");
+        return Response.ok(gson.toJson(response)).build();   
+    }
+    
+    @PUT
+    @Path("notification/all/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response markAllNotifAsRead(@PathParam("id") String userId ) throws SQLException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        service.markAllNotifAsRead(userId);
+        JsonObject response = new JsonObject();
+        response.addProperty("status", "success");
+        return Response.ok(gson.toJson(response)).build();   
+    }
+    
+//    UPDATE BANKING NUMBER
+    @POST
+    @Path("bank")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateBankingAccount(
+            @FormDataParam("bankingAccountNumber") String bankingAccountNumber,
+            @FormDataParam("userId") String userId
+    ) throws SQLException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        boolean isExisted = service.updateBankingAccountNumber(userId, bankingAccountNumber);
+        JsonObject response = new JsonObject();
+        if (isExisted) {
+            response.addProperty("success", "ok");
+        } else {
+            response.addProperty("fail", "not found");
+        }
         return Response.ok(gson.toJson(response)).build();   
     }
 }

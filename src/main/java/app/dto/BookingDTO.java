@@ -192,8 +192,11 @@ public class BookingDTO {
 
     @Override
     public String toString() {
-        return "BookingDTO{" + "userId=" + user.getName() + ", hotelId=" + hotelId + ", price=" + price + ", adult=" + adult + ", child=" + child + ", infant=" + infant + ", pet=" + pet + ", status=" + status + ", bookAt=" + bookAt + ", roomType=" + roomType + '}';
+        return "BookingDTO{" + "user=" + user + ", roomId=" 
+                + roomId + ", hotelId=" + hotelId + ", price=" + price + 
+                ", bookingId=" + bookingId + ", checkin=" + checkin + 
+                ", checkout=" + checkout + ", adult=" + adult + ", child="
+                + child + ", infant=" + infant + ", pet=" + pet + ", status=" 
+                + status + ", bookAt=" + bookAt + ", roomType=" + roomType + '}';
     }
-    
-    
 }

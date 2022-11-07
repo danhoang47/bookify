@@ -19,6 +19,7 @@ public class NotificationDTO {
     private String actorName;
     private boolean isRead;
     private String actorAvatar;
+    private String actorId;
 
     public NotificationDTO(int id, String userId, String hotelId, String sourceId, 
             int notifyType, String notifyDate, String hotelName, 
@@ -35,6 +36,30 @@ public class NotificationDTO {
         this.actorAvatar = actorAvatar;
     }
 
+    public NotificationDTO(int id, String userId, String hotelId, String sourceId, 
+            int notifyType, String notifyDate, String hotelName, String actorName,
+            boolean isRead, String actorAvatar, String actorId) {
+        this.id = id;
+        this.userId = userId;
+        this.hotelId = hotelId;
+        this.sourceId = sourceId;
+        this.notifyType = notifyType;
+        this.notifyDate = notifyDate;
+        this.hotelName = hotelName;
+        this.actorName = actorName;
+        this.isRead = isRead;
+        this.actorAvatar = actorAvatar;
+        this.actorId = actorId;
+    }
+
+    public String getActorId() {
+        return actorId;
+    }
+
+    public void setActorId(String actorId) {
+        this.actorId = actorId;
+    }
+  
     public void setActorAvatar(String actorAvatar) {
         this.actorAvatar = actorAvatar;
     }

@@ -71,7 +71,7 @@ public class HotelController {
             @QueryParam("userId") String userId
     ) throws SQLException, ParseException {
         JsonObject response = new JsonObject();
-        service.bookingRoom(
+        String bookingId = service.bookingRoom(
                 hotelId, 
                 checkin, 
                 checkout,
@@ -79,6 +79,7 @@ public class HotelController {
         );
 
         response.addProperty("status", "ok");
+        response.addProperty("bookingId", bookingId);
 
         return Response.ok(gson.toJson(response)).build();
     }

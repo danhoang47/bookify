@@ -102,7 +102,7 @@ public class HotelService {
 
     }
 
-    public void bookingRoom(
+    public String bookingRoom(
             String hotelId,
             String checkin,
             String checkout,
@@ -117,15 +117,18 @@ public class HotelService {
         String firstRoomId = availableRooms.get(0);
         BookingDAO bookingDao = new BookingDAO();
         UserDTO user = new UserDTO();
+        String id = UUID.randomUUID().toString();
         user.setUser_id(userId);
 
         BookingDTO bookingDto = new BookingDTO(
                 checkin,
                 checkout,
                 adult, child, pet, infant,
-                user, firstRoomId, UUID.randomUUID().toString()
+                user, firstRoomId, id
         );
         bookingDao.add(bookingDto);
+        
+        return id;
     }
 
     public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
@@ -147,8 +150,9 @@ public class HotelService {
                 hotelRepo.acceptBooking(bookingId);  
                 return; 
             case "reject": 
-                hotelRepo.acceptBooking(bookingId);
+                hotelRepo.rejectBooking(bookingId);
                  return; 
+            default: return;
         }
     }
 

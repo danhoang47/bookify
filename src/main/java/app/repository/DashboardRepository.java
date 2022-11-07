@@ -5,6 +5,7 @@
 package app.repository;
 
 import app.dao.DashboardDAO;
+import app.dao.HotelDAO;
 import app.dao.ReportDAO;
 import app.dao.ReviewDAO;
 import app.dto.DashboardDTO;
@@ -23,11 +24,13 @@ public class DashboardRepository {
     private ReportDAO reportDAO;
     private DashboardDAO dashboardDAO;
     private ReviewDAO reviewDAO;
+    private HotelDAO hotelDao;
 
     public DashboardRepository() {
         reportDAO = new ReportDAO();
         dashboardDAO = new DashboardDAO();
         reviewDAO = new ReviewDAO();
+        hotelDao = new HotelDAO();
     }
 
     public DashboardDTO getDashboardData(int month) throws SQLException {
@@ -75,5 +78,9 @@ public class DashboardRepository {
         DashboardRepository repo = new DashboardRepository();
         DashboardDTO dashboard = repo.getDashboardData(11);
         System.out.println(dashboard);
+    }
+
+    public void verifiedHotel(String hotelId) throws SQLException {
+        hotelDao.setVerified(hotelId);
     }
 }
