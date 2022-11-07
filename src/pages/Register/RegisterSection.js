@@ -40,6 +40,7 @@ function RegisterSection({
   const [backgroundImage, setBackgroundImage] = useState(
     backgroundImageInitState
   );
+  const { user } = useContext(UserContext);
   const [extraInfor, setExtraInfor] = useState(extraInforInitState);
   const [displayAmenities, setDisplayAmenities] = useState(
     displayAmenitiesInitState || []
@@ -48,7 +49,6 @@ function RegisterSection({
   const [updatedViewImages, setUpdatedViewImages] = useState([]);
   const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
-  const { user } = useContext(UserContext);
   const href = useHref();
 
   useEffect(() => {

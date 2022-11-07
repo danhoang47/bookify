@@ -3,11 +3,8 @@ import DatePickerStyle from "./DatePicker.module.scss";
 import { format } from "date-fns";
 
 function PersonalInput({ name, value, onChange, labelContent, readOnly }) {
-  let newValue = "";
-  if (value) {
-    value = format(new Date(value), "yyyy-MM-dd");
-    newValue = value ? value.split("/").reverse().join("-") : "";
-  }
+  value = value ? format(new Date(value), "yyyy-MM-dd") : "";
+  const newValue = value ? value.split("/").reverse().join("-") : "";
 
   return (
     <span

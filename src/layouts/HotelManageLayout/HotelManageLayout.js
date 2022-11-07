@@ -1,38 +1,27 @@
-import { Suspense, useState } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { Suspense, useContext, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+
 import { Box } from "@mui/material";
 import HotelManageHeader from "../components/HotelManageHeader";
 import manageLayoutStyles from "./HotelManageLayout.module.scss";
 import Footer from "../components/Footer";
-import { useContext, useEffect } from "react";
 import { UserContext } from "@/utils/contexts";
+import { getHotelByOwnerId } from "@/services/hotel";
 
 function HotelManageLayout() {
   const { user } = useContext(UserContext);
-  // useOutletContext
-  const [hotel, setHotel] = useState();
+  const [hotelInfo, setHotelInfo] = useState();
 
   useEffect(() => {
-    fetch(
-      `http://localhost:8080/bookify/api/hotel/manage/gethotel?userid=${user.user_id}`
-    )
-      .then((res) => res.json())
-      .then((result) => setHotel(result));
-  }, []);
-
-  console.log(hotel);
+    getHotelByOwnerId(user.user_id).then((hotel) => setHotelInfo(hotel));
+  }, [user]);
 
   return (
     <div id={manageLayoutStyles["hotel-manage-layout"]}>
       <HotelManageHeader />
-      <Box
-        sx={{
-          position: "relative",
-          top: "72.78px",
-        }}
-      >
+      <Box>
         <Suspense fallback={<div>Loading...</div>}>
-          <Outlet context={[hotel, setHotel]} />
+          <Outlet context={hotelInfo} />
         </Suspense>
       </Box>
       {/* <Footer /> */}

@@ -35,7 +35,7 @@ function CheckOutInfo() {
     );
 
     const handleBookingPayment = async (e) => {
-        if (!user?.account_number) {
+        if (!user?.bankingAccountNumber) {
             setError("Bạn chưa liên kết tài khoản thanh toán nào");
             return;
         }

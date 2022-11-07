@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useContext, useState, memo } from "react";
 import {
   BookmarkContext,
@@ -36,7 +36,7 @@ function HotelCard({
   const { user } = useContext(UserContext);
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const { setToastMessages } = useContext(ToastMessageContext);
-  const setBookmarkedHotels = useContext(BookmarkContext);
+  const setBookmarkedHotels = useOutletContext(BookmarkContext);
 
   images.forEach((image) => {
     let imgName = image.src.split("/");
