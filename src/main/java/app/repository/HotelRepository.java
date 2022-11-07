@@ -5,6 +5,7 @@
 package app.repository;
 
 import app.dao.ViewDAO;
+import app.dao.BookingDAO;
 import app.dto.ImageDTO;
 import app.dto.HotelDTO;
 import app.dto.HotelAmenityDTO;
@@ -14,6 +15,7 @@ import app.dao.HotelAmenityDAO;
 import app.dao.ReviewDAO;
 import app.dao.RoomTypeDAO;
 import app.dao.UserDAO;
+import app.dto.BookingDTO;
 import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
@@ -35,7 +37,10 @@ public class HotelRepository {
     private RoomTypeDAO roomTypeDao;
     private ReviewDAO reviewDao;
     private UserDAO userDAO;
+
     private ViewDAO viewDAO;
+
+    private BookingDAO bookingDao;
 
     public HotelRepository() {
         hotelDao = new HotelDAO();
@@ -44,7 +49,11 @@ public class HotelRepository {
         roomTypeDao = new RoomTypeDAO();
         reviewDao = new ReviewDAO();
         userDAO = new UserDAO();
+
         viewDAO = new ViewDAO();
+
+        bookingDao = new BookingDAO();
+
     }
 
     public boolean addNewHotel(HotelDTO hotel) {
@@ -52,7 +61,6 @@ public class HotelRepository {
     }
 
     public HotelDTO get(String id, String userId) throws SQLException, ClassNotFoundException {
-
 
         HotelDTO hotelDto = hotelDao.get(id);
         List<ImageDTO> imageDtos = imageDao.get(hotelDto.getHotelId());
@@ -67,16 +75,13 @@ public class HotelRepository {
         hotelDto.setRoomType(roomType);
         hotelDto.setReviews(listReviews);
         hotelDto.setHotelOwner(owner);
-        
+
         Calendar cal = Calendar.getInstance();
         String monthInshort = new SimpleDateFormat("MMM").format(cal.getTime());
         viewDAO.increaseView(hotelDto.getHotelId(), monthInshort);
 
-
         return hotelDto;
     }
-    
-    
 
     public void update(
             HotelDTO hotel,
@@ -169,5 +174,37 @@ public class HotelRepository {
 
         return hotel;
 
+    }
+
+    public List<BookingDTO> getAllTodayPendingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayPendingBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllTodayBookedBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayBookedBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllTodayCheckoutBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllTodayCheckoutBooking(hotelId);
+    }
+
+    public void acceptBooking(String bookingId) throws SQLException {
+        bookingDao.acceptBooking(bookingId);
+    }
+
+    public void rejectBooking(String bookingId) throws SQLException {
+        bookingDao.rejectBooking(bookingId);
+    }
+
+    public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllPendingBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllCheckoutBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllCheckoutBooking(hotelId);
+    }
+
+    public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
+        return bookingDao.getAllIncomingBooking(hotelId);
     }
 }

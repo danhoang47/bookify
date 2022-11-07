@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.services;
 
 import app.dao.BookingDAO;
@@ -10,6 +6,7 @@ import app.dto.BookingDTO;
 import app.dto.HotelAmenityDTO;
 import app.dto.HotelDTO;
 import app.dto.RoomTypeDTO;
+import app.dto.UserDTO;
 import app.repository.HotelRepository;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -135,12 +132,14 @@ public class HotelService {
         List<String> availableRooms = dateRangeService.getFreeRooms(checkin, checkout, hotelId);
         String firstRoomId = availableRooms.get(0);
         BookingDAO bookingDao = new BookingDAO();
+        UserDTO user = new UserDTO();
+        user.setUser_id(userId);
 
         BookingDTO bookingDto = new BookingDTO(
                 checkin,
                 checkout,
                 adult, child, pet, infant,
-                userId, firstRoomId, UUID.randomUUID().toString()
+                user, firstRoomId, UUID.randomUUID().toString()
         );
         bookingDao.add(bookingDto);
     }
@@ -148,5 +147,35 @@ public class HotelService {
     public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
         return hotelRepo.getByUserId(userId);
 
+    }
+    
+    public List<BookingDTO> getAllTodayTypeBooking(String hotelId, String type) throws SQLException {
+        switch(type) {
+            case "pending": return hotelRepo.getAllTodayPendingBooking(hotelId);
+            case "booked": return hotelRepo.getAllTodayBookedBooking(hotelId);
+            case "checkout": return hotelRepo.getAllTodayCheckoutBooking(hotelId);
+            default: return null;
+        }
+    }
+    
+    public void handleBooking(String bookingId, String type) throws SQLException {
+        switch(type) {
+            case "accept": 
+                hotelRepo.acceptBooking(bookingId);  
+                return; 
+            case "reject": 
+                hotelRepo.acceptBooking(bookingId);
+                 return; 
+        }
+    }
+
+    public List<BookingDTO> getAllTypeBooking(String hotelId, String type) throws SQLException {
+        switch(type) {
+            case "pending": return hotelRepo.getAllPendingBooking(hotelId);
+            case "incoming": return hotelRepo.getAllIncomingBooking(hotelId);
+            case "booked": return hotelRepo.getAllTodayBookedBooking(hotelId);
+            case "checkout": return hotelRepo.getAllCheckoutBooking(hotelId);
+            default: return null;
+        }
     }
 }
