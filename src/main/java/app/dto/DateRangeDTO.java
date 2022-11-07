@@ -15,12 +15,21 @@ public class DateRangeDTO {
     private String room_id;
     private Date check_in;
     private Date check_out;
+    private String hotel_id;
 
     public DateRangeDTO(String room_id, Date check_in, Date check_out) {
         this.room_id = room_id;
         this.check_in = check_in;
         this.check_out = check_out;
     }
+
+    public DateRangeDTO(String hotel_id, Date check_in, Date check_out, String room_id) {
+        this.room_id = room_id;
+        this.check_in = check_in;
+        this.check_out = check_out;
+        this.hotel_id = hotel_id;
+    }
+
 
     public DateRangeDTO() {
     }

@@ -74,9 +74,29 @@ public class RoomDAO {
         }
         return listRoomId;
     }
+    
+    public List<String> getAllRooms() {
+        List<String> listRoomId = new ArrayList<>();
+        try {
+            String query = "select room_id from Room";
+            conn = new DBContext().getConnection();
+
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+               listRoomId.add(rs.getString("room_id"));
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(dao.RoomDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listRoomId;
+    }
+
 
     public static void main(String[] args) {
-       List<String> a = new RoomDAO().getHotelNumberOfRoom("f98320c3-235a-4cb7-a0a8-eda132b0e545");
-        System.out.println(a);
+       List<String> a = new RoomDAO().getAllRooms();
+        System.out.println(a.size());
     }
 }

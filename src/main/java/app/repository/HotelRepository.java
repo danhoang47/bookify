@@ -207,4 +207,8 @@ public class HotelRepository {
     public List<BookingDTO> getAllIncomingBooking(String hotelId) throws SQLException {
         return bookingDao.getAllIncomingBooking(hotelId);
     }
+    
+    public List<String> getHotelByCondition(String district, int numberOfGuest) throws SQLException {
+        return bookingDao.getHotelByCondition(district, numberOfGuest);
+    }
 }

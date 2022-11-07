@@ -19,6 +19,7 @@ public class BookingService {
     private BookingDAO bookingdao;
     private TransactDAO transactDAO;
     
+    
     public BookingService() {
         bookingdao = new BookingDAO();
         transactDAO = new TransactDAO();
@@ -42,6 +43,10 @@ public class BookingService {
     
     public TransactDTO getAllTransactOfUserByDays(String userid, int month) throws SQLException {
         return transactDAO.getAllTransactOfUserByDays(userid, month);
+    }
+    
+    public List<String> getHotelByCondition(String district, int numberOfGuest) throws SQLException {
+        return bookingdao.getHotelByCondition(district, numberOfGuest);
     }
     
     

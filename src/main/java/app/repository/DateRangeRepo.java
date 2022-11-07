@@ -21,6 +21,7 @@ import java.util.List;
  * @author toten
  */
 public class DateRangeRepo {
+
     RoomDAO roomDao;
     DateRangeDAO daterRangeDao;
 
@@ -31,7 +32,7 @@ public class DateRangeRepo {
 
     public boolean checkDate(String checkin, String checkout, String hotelId) throws SQLException, ParseException {
         List<DateRangeDTO> list = daterRangeDao.getAll(checkin, checkout, hotelId);
-        
+
         List<String> roomsId = roomDao.getHotelNumberOfRoom(hotelId);
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,31 +40,28 @@ public class DateRangeRepo {
         Date e1 = s.parse(checkout);
         int result = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (s1.compareTo(list.get(i).getCheck_in())<=0 && e1.compareTo(list.get(i).getCheck_in()) >=0
-                    || s1.compareTo(list.get(i).getCheck_out()) <=0 && e1.compareTo(list.get(i).getCheck_out()) >=0
-                    || s1.compareTo(list.get(i).getCheck_in()) <=0 && e1.compareTo(list.get(i).getCheck_out()) >=0
-                    || s1.compareTo(list.get(i).getCheck_in()) >=0 && e1.compareTo(list.get(i).getCheck_out())<=0) {
-                
-                
+            if (s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_in()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_out()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) >= 0 && e1.compareTo(list.get(i).getCheck_out()) <= 0) {
+
                 result++;
 
-                
-            } 
+            }
         }
         System.out.println(result);
 
-        
-        if(result<roomsId.size()) {
+        if (result < roomsId.size()) {
             return true;
         } else {
             return false;
         }
 
     }
-    
+
     public HashSet<String> getFreeRooms(String checkin, String checkout, String hotelId) throws SQLException, ParseException {
         List<DateRangeDTO> list = daterRangeDao.getAll(checkin, checkout, hotelId);
-        
+
         List<String> roomsId = roomDao.getHotelNumberOfRoom(hotelId);
         HashSet<String> listFreeRoom = addToSet(roomsId);
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,33 +69,90 @@ public class DateRangeRepo {
         Date e1 = s.parse(checkout);
 
         for (int i = 0; i < list.size(); i++) {
-            if (s1.compareTo(list.get(i).getCheck_in())<=0 && e1.compareTo(list.get(i).getCheck_in()) >=0
-                    || s1.compareTo(list.get(i).getCheck_out()) <=0 && e1.compareTo(list.get(i).getCheck_out()) >=0
-                    || s1.compareTo(list.get(i).getCheck_in()) <=0 && e1.compareTo(list.get(i).getCheck_out()) >=0
-                    || s1.compareTo(list.get(i).getCheck_in()) >=0 && e1.compareTo(list.get(i).getCheck_out())<=0) {
+            if (s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_in()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_out()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) >= 0 && e1.compareTo(list.get(i).getCheck_out()) <= 0) {
 
                 listFreeRoom.remove(list.get(i).getRoom_id());
-                
-            } 
+
+            }
         }
-        
+
         return listFreeRoom;
 
     }
-    
+
+    public HashSet<String> getFreeRoomsAll(String checkin, String checkout) throws SQLException, ParseException {
+        List<DateRangeDTO> list = daterRangeDao.getAllBookedRoom();
+
+        List<String> roomsId = roomDao.getAllRooms();
+        HashSet<String> listFreeRoom = addToSet(roomsId);
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        Date s1 = s.parse(checkin);
+        Date e1 = s.parse(checkout);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_in()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_out()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) >= 0 && e1.compareTo(list.get(i).getCheck_out()) <= 0) {
+
+                listFreeRoom.remove(list.get(i).getRoom_id());
+
+            }
+        }
+
+        return listFreeRoom;
+
+    }
+
+    public HashSet<String> getFreeRoomsAllWithHotel(String checkin, String checkout, List<String> hotel) throws SQLException, ParseException {
+        List<DateRangeDTO> list = new ArrayList<>();
+        DateRangeDAO drd = new DateRangeDAO();
+        
+        
+        for (int i = 0; i < hotel.size(); i++) {
+            List<DateRangeDTO> listArr = daterRangeDao.getAllBookedRoomWithHotel(hotel.get(i));
+            list.addAll(listArr);
+        }
+
+
+        List<String> roomsId = roomDao.getAllRooms();
+        HashSet<String> listFreeRoom = addToSet(roomsId);
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        Date s1 = s.parse(checkin);
+        Date e1 = s.parse(checkout);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_in()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_out()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) <= 0 && e1.compareTo(list.get(i).getCheck_out()) >= 0
+                    || s1.compareTo(list.get(i).getCheck_in()) >= 0 && e1.compareTo(list.get(i).getCheck_out()) <= 0) {
+
+                listFreeRoom.remove(list.get(i).getRoom_id());
+
+            }
+        }
+
+        return listFreeRoom;
+
+    }
+
     public static HashSet<String> addToSet(List<String> roomsId) {
         HashSet<String> listFreeRoom = new HashSet<>();
-        for(String id : roomsId) {
+        for (String id : roomsId) {
             listFreeRoom.add(id);
         }
         return listFreeRoom;
     }
-    
+
     public static void main(String[] args) throws SQLException, ParseException {
 
-         boolean check = new  DateRangeRepo().checkDate("2022-11-7", "2022-11-10", "2f5923a5-64d0-4bdc-bf0b-fabfa76f0404");
-         HashSet<String> freeRooms = new  DateRangeRepo().getFreeRooms("2022-11-24", "2022-11-29", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
-         System.out.println(check);
-         
+        boolean check = new DateRangeRepo().checkDate("2022-11-7", "2022-11-10", "2f5923a5-64d0-4bdc-bf0b-fabfa76f0404");
+        HashSet<String> freeRooms = new DateRangeRepo().getFreeRooms("2022-11-24", "2022-11-29", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
+        HashSet<String> freeRoomsAll = new DateRangeRepo().getFreeRoomsAll("2022-11-7", "2022-11-10");
+        System.out.println(freeRoomsAll.size());
+
     }
 }

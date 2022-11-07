@@ -358,13 +358,6 @@ public class BookingDAO {
 
     }
 
-    public static void main(String[] args) throws SQLException {
-        BookingDAO dao = new BookingDAO();
-        System.out.println(dao.getAllIncomingBooking("ae257b6b-43d4-4621-91f1-b331c6d4dea9"));
-        List<BookingDTO> list = new BookingDAO().getUserBookingHistoryFilter("deaa34d5-2c36-4c1c-b97b-8dbf3e1b18c3", "1");
-        System.out.println(list);
-    }
-
     public List<BookingDTO> getAllPendingBooking(String hotelId) throws SQLException {
         List<BookingDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -520,5 +513,63 @@ public class BookingDAO {
         }
         return list;
 
+    }
+
+    public List<String> getHotelByCondition(String district, int numberOfGuest) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        System.out.println(district);
+
+        String sql = "select * from SearchAdvance ";
+
+        if ((district.length() > 0 || district != null) && numberOfGuest == 0) {
+            sql = sql + "where district=?";
+        } else if ((district.length() == 0 || district == null) && numberOfGuest != 0) {
+            sql = sql + "where number_of_guest >=?";
+        } else if ((district.length() > 0 || district != null) && numberOfGuest != 0) {
+            sql = sql + "where district=? and number_of_guest >=? ";
+        }
+
+        System.out.println(sql);
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+
+            if ((district.length() > 0 || district != null) && numberOfGuest == 0) {
+                ps.setString(1, district);
+            } else if ((district.length() == 0 || district == null) && numberOfGuest != 0) {
+                ps.setInt(1, numberOfGuest);
+            } else if ((district.length() > 0 || district != null) && numberOfGuest != 0) {
+                ps.setString(1, district);
+                ps.setInt(2, numberOfGuest);
+            }
+
+            rs = ps.executeQuery();
+
+            List<String> listRes = new ArrayList<>();
+
+            while (rs.next()) {
+                listRes.add(rs.getString("hotel_id"));
+            }
+
+            return listRes;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        BookingDAO dao = new BookingDAO();
+        List<String> list = dao.getHotelByCondition("Thành phố Đà Nẵng", 5);
+        System.out.println(list);
     }
 }

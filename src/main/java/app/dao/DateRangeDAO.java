@@ -62,6 +62,77 @@ public class DateRangeDAO {
 
     }
     
+    public List<DateRangeDTO> getAllBookedRoom() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        String sql = "select * from dateRangeBookingMerged";
+        List<DateRangeDTO> listHotel = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String room_id = rs.getString("room_id");
+                Date check_in = rs.getDate("check_in");
+                Date check_out = rs.getDate("check_out");
+                String hotel_id = rs.getString("hotel_id");
+
+                DateRangeDTO hotel = new DateRangeDTO(hotel_id, check_in, check_out, room_id);
+
+                listHotel.add(hotel);
+            }
+
+            return listHotel;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DateRangeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return null;
+
+    }
+    
+    public List<DateRangeDTO> getAllBookedRoomWithHotel(String hotelId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        String sql = "select * from dateRangeBookingMerged where hotel_id=?";
+        List<DateRangeDTO> listHotel = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, hotelId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String room_id = rs.getString("room_id");
+                Date check_in = rs.getDate("check_in");
+                Date check_out = rs.getDate("check_out");
+                String hotel_id = rs.getString("hotel_id");
+
+                DateRangeDTO hotel = new DateRangeDTO(hotel_id, check_in, check_out, room_id);
+
+                listHotel.add(hotel);
+            }
+
+            return listHotel;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DateRangeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return null;
+
+    }
+    
     public void test() throws SQLException {
         Connection conn = null;
         CallableStatement cs = null;
@@ -86,7 +157,8 @@ public class DateRangeDAO {
                 "2022-11-06",
                 "f98320c3-235a-4cb7-a0a8-eda132b0e545"
         );
-        System.out.println(list);
-        new DateRangeDAO().test();
+        
+        List<DateRangeDTO> list2 = new DateRangeDAO().getAllBookedRoom();
+        System.out.println(list2.size());
     }
 }

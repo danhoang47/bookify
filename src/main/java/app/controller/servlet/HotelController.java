@@ -13,7 +13,9 @@ import app.services.DateRangeService;
 import app.services.HotelManageService;
 import app.services.HotelService;
 import app.services.ImageService;
+import app.services.ReviewService;
 import app.services.RoomService;
+import app.services.SearchService;
 import app.services.UserService;
 import app.utils.UploadImage;
 import com.google.gson.Gson;
@@ -55,6 +57,8 @@ public class HotelController {
 
     private final static HotelService service = new HotelService();
     private final static UserService userService = new UserService();
+    private final static SearchService searchService = new SearchService();
+    private final static ReviewService reviewService = new ReviewService();
     private final static HotelManageService manageService = new HotelManageService();
     private final static DateRangeService dateRangeService = new DateRangeService();
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -191,12 +195,16 @@ public class HotelController {
         return Response.noContent().build();
     }
 
-    @POST
+    @GET
     @Path("/search/advance")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchAdvanceHotel(@FormDataParam("searchData") String searchData) {
-
-        return Response.ok().build();
+    public Response searchAdvanceHotel(@QueryParam("place") String place, @QueryParam("check-in") String checkin, @QueryParam("check-out") String checkout, 
+            @QueryParam("guest") int guest) throws SQLException, ParseException, ClassNotFoundException {
+        String placeNew = (place==null || place.length()==0) ? "" : place;
+        String checkinNew = (checkin==null || checkin.length()==0) ? "" : checkin;
+        String checkoutNew = (checkout==null || checkout.length()==0) ? "" : checkout;
+        
+        return Response.ok(gson.toJson(searchService.getHotelsAdvanceSearch(place, checkin, checkout, guest))).build();
     }
 
     @POST
@@ -216,7 +224,7 @@ public class HotelController {
 
         return Response.ok(gson.toJson(obj)).build();
     }
-
+    
     @GET
     @Path("/report")
     @Produces(MediaType.APPLICATION_JSON)
@@ -234,6 +242,52 @@ public class HotelController {
 
         return Response.ok(gson.toJson(obj)).build();
     }
+    
+    @POST
+    @Path("/review")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addReview(
+            @FormDataParam("hotelid") String hotelid, 
+            @FormDataParam("userid") String userid, 
+            @FormDataParam("content") String content, 
+            @FormDataParam("communication_point") int communicationPoint,
+            @FormDataParam("accuracy_point") int accuracyPoint,
+            @FormDataParam("location_point") int locationPoint,
+            @FormDataParam("value_point") int valuePoint
+    ) throws SQLException {
+        JSONObject obj = new JSONObject();
+
+        boolean check = reviewService.addNewReview(hotelid, userid, content, communicationPoint, accuracyPoint, locationPoint, valuePoint);
+
+        if (check == true) {
+            obj.put("success", "Review allow");
+        } else if (check == false) {
+            obj.put("error", "Review failed");
+        }
+
+        return Response.ok(gson.toJson(obj)).build();
+    }
+    
+    @GET
+    @Path("/review")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkUserReview(@QueryParam("hotelid") String hotelid, @QueryParam("userid") String userid) throws SQLException {
+        JSONObject obj = new JSONObject();
+        int getTimeBooking = service.getUserBookingTimes(hotelid, userid);
+
+        if (getTimeBooking > 0) {
+
+            obj.put("success", "Review successfully");
+
+        } else {
+            obj.put("require", "Login require");
+        }
+
+        return Response.ok(gson.toJson(obj)).build();
+    }
+
+    
 
     @GET
     @Path("/all")

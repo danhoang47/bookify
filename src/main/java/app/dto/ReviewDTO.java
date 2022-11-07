@@ -27,6 +27,8 @@ public class ReviewDTO {
     private Date createdAt;
     private String username;
     private String avatar;
+    private String usernameAcount;
+    private String minute;
 
     public ReviewDTO(String reviewId, String hotelId, String userId, String content, int sourceId, int communication_point, int accuracy_point, int location_point, int value_point, Date createdAt, String username, String avatar) {
         this.reviewId = reviewId;
@@ -42,6 +44,25 @@ public class ReviewDTO {
         this.username = username;
         this.avatar = avatar;
     }
+
+    public ReviewDTO(String reviewId, String hotelId, String userId, String content, int sourceId, int communication_point, int accuracy_point, int location_point, int value_point, Date createdAt, String username, String avatar, String usernameAcount, String minute) {
+        this.reviewId = reviewId;
+        this.hotelId = hotelId;
+        this.userId = userId;
+        this.content = content;
+        this.sourceId = sourceId;
+        this.communication_point = communication_point;
+        this.accuracy_point = accuracy_point;
+        this.location_point = location_point;
+        this.value_point = value_point;
+        this.createdAt = createdAt;
+        this.username = username;
+        this.avatar = avatar;
+        this.usernameAcount = usernameAcount;
+        this.minute = minute;
+    }
+    
+    
 
     public ReviewDTO() {
     }
@@ -60,6 +81,22 @@ public class ReviewDTO {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getUsernameAcount() {
+        return usernameAcount;
+    }
+
+    public void setUsernameAcount(String usernameAcount) {
+        this.usernameAcount = usernameAcount;
+    }
+
+    public String getMinute() {
+        return minute;
+    }
+
+    public void setMinute(String minute) {
+        this.minute = minute;
     }
 
     
