@@ -1,5 +1,5 @@
 import LoginandSecurityStyle from "./LoginandSecurity.module.scss";
-import HeaderInfo from "./components/HeaderInfo";
+import HeaderInfo from "./components/Header";
 import FormUpdate from "./components/Form";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
 import { useNavigate } from "react-router-dom";
@@ -12,16 +12,16 @@ function LoginandSecurity() {
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user || user.username === "") {
-      navigate("/");
-      setToastMessages(
-        getFailureToastMessage({
-          message: "Đăng nhập để truy cập",
-        })
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user || user.username === "") {
+  //     navigate("/");
+  //     setToastMessages(
+  //       getFailureToastMessage({
+  //         message: "Đăng nhập để truy cập",
+  //       })
+  //     );
+  //   }
+  // }, []);
 
   return (
     <div className={LoginandSecurityStyle["container"]}>

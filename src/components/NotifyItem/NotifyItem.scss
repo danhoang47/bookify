@@ -7,17 +7,19 @@
 }
 
 .notif-item {
-    width: 24em;
-    transition: all 0.2s linear;
+    width: 24.3em;
     display: flex;
     cursor: pointer;
     position: relative;
+    opacity: 0.6;
+    transition: all 0.2s linear;
+    background: global.$white;
 
     &:hover {
         background: global.$gray-100;
     }
 
-    &::before {
+    &:not(:last-child)::before {
         content: "";
         position: absolute;
         bottom: 0;
@@ -25,6 +27,10 @@
         right: 1em;
         height: 1px;
         background: global.$gray-100;
+    }
+
+    &.un-read {
+        opacity: 1;
     }
 
     .notif-actor-avatar {

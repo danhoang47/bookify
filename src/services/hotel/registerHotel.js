@@ -96,20 +96,5 @@ export default async function registerHotel(
     .then((res) => res.json())
     .then((result) => result);
 
-  // const data = {
-  //   amenities,
-  //   basicHotelInfor,
-  //   backgroundImage,
-  //   roomImages,
-  //   viewImages,
-  //   extraInfor,
-  //   roomInfor,
-  //   amenitiesId,
-  //   amenitiesNames,
-  //   amenitiesTypes,
-  // };
-
-  // console.log(data);
-
   return data;
 }

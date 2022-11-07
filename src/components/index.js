@@ -13,6 +13,7 @@ import BookmarkBox from "./BookmarkBox";
 import BookmarkItem from "./BookmarkItem";
 import DropdownBox from "./DropdownBox";
 import NotifyBox from "./NotifyBox";
+import BookingItem from "./BookingItem";
 
 export {
     Logo,
@@ -29,5 +30,6 @@ export {
     BookmarkBox,
     BookmarkItem,
     DropdownBox,
-    NotifyBox
+    NotifyBox,
+    BookingItem
 }

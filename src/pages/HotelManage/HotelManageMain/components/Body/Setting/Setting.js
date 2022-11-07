@@ -2,12 +2,6 @@ import SettingStyle from "../../../HotelManage.module.scss";
 import { ModalContext } from "@/utils/contexts";
 import Grid from "@mui/material/Grid";
 import { useContext } from "react";
-
-import {
-  getHotelSettingModal,
-  getSignInModal,
-} from "@/utils/reducers/modalReducer";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Setting({ setting }) {
@@ -15,11 +9,11 @@ function Setting({ setting }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    dispatch(setting.modal);
+    setting.handleClick();
   };
 
   return (
-    <Grid item xs={12} lg={4}>
+    <Grid item xs={12} md={4}>
       <div onClick={handleClick} className={SettingStyle["setting-card"]}>
         <FontAwesomeIcon
           className={SettingStyle["setting-icon"]}

@@ -54,6 +54,7 @@ function Profile() {
         });
     } else {
       navigate("/");
+      setUser({ role: 0 });
       setToastMessages(
         getFailureToastMessage({
           message: "Đăng nhập để truy cập",

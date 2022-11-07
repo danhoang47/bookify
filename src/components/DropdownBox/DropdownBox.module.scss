@@ -10,6 +10,7 @@
     overflow-x: hidden;
     @include global.box-shadow();
     @include animations.animate(slide-in-right, 0.25s, animations.$slide, false);
+    min-width: 24em;
 
     .drop-down-header {
         display: flex;
@@ -43,6 +44,41 @@
         }
 
         
+    }
+
+    .drop-down-tabs {
+        padding: 0 1em;
+        display: flex;
+        gap: 0.4em;
+        font-size: 0.9em;
+        border-bottom: 1px solid global.$gray-200;
+        transition: all 0.2s linear;
+
+        .tab-button {
+            padding: 0.4em 0.6em;
+            border-bottom: 1px solid transparent;
+            opacity: 0.6;
+
+            &.active {
+                opacity: 1;
+                border-color: global.$black;
+            }
+
+            .number-of-notif {
+                margin-left: 0.4em;
+                display: inline-block;
+                min-width: 1.4em;
+                padding: 0 0.3em;
+                background: global.$black;
+                color: global.$white;
+                border-radius: 0.4em;
+            }
+
+            &:hover:not(.active) {
+                opacity: 1;
+                border-color: global.$black;
+            }
+        }
     }
 
     .drop-down-content {

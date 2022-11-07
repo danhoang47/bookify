@@ -46,7 +46,7 @@ function OptionList({ handleClick }) {
                 isLoginRequired: true,
                 onClickHandler: (event) => {
                     event.stopPropagation();
-                    navigate("/manager");
+                    navigate("/manager/hotel");
                 },
             },
             {
@@ -66,6 +66,7 @@ function OptionList({ handleClick }) {
                 isLoginRequired: true,
                 onClickHandler: (event) => {
                     event.stopPropagation();
+                    handleClick(event);
                     navigate("/profile");
                 },
             },

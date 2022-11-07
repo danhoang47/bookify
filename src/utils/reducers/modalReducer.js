@@ -4,6 +4,7 @@ import {
   PasswordModal,
   NewPasswordModal,
   HotelSettingModal,
+  ChangeCardModal,
 } from "@/features/account";
 
 const modalType = {
@@ -13,6 +14,7 @@ const modalType = {
   PASSWORD: "password",
   NEWPASSWORD: "newpassword",
   HOTELSETTING: "hotelsetting",
+  CHANGECARD: "changecard",
 };
 
 const getSignInModal = (payload) => {
@@ -50,6 +52,9 @@ const getNewPasswordModal = (payload) => {
 const getHotelSettingModal = (payload) => {
   return { ...payload, type: modalType.HOTELSETTING };
 };
+const getChangeCard = (payload) => {
+  return { ...payload, type: modalType.CHANGECARD };
+};
 
 const reducer = (state, modal) => {
   const newState = {
@@ -70,7 +75,7 @@ const reducer = (state, modal) => {
     case modalType.PASSWORD:
       return {
         ...newState,
-        renderModal: () => <PasswordModal animation={modal?.animation} />,
+        renderModal: () => <PasswordModal submodal={modal?.modal} animation={modal?.animation} />,
       };
     case modalType.NEWPASSWORD:
       return {
@@ -81,6 +86,11 @@ const reducer = (state, modal) => {
       return {
         ...newState,
         renderModal: () => <HotelSettingModal animation={modal?.animation} />,
+      };
+    case modalType.CHANGECARD:
+      return {
+        ...newState,
+        renderModal: () => <ChangeCardModal animation={modal?.animation} />,
       };
     case modalType.FILTER:
       break;
@@ -97,4 +107,5 @@ export {
   getPasswordModal,
   getNewPasswordModal,
   getHotelSettingModal,
-}; 
+  getChangeCard,
+};

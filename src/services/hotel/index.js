@@ -13,6 +13,11 @@ import searchAdvanceHotel from "./searchAdvanceHotel";
 import filterHotel from "./filterHotel";
 import getAllBookmarkedHotel from "./getAllBookmarkedHotel";
 import searchBookingAvailable from "./searchBookingAvailable";
+import getHotelByOwnerId from "./getHotelByOwnerId";
+import getAllTodayBooking from "./getAllTodayBooking";
+import acceptBooking from "./acceptBooking";
+import rejectBooking from "./rejectBooking";
+import getAllBooking from "./getAllBooking";
 
 export {
     getDistanceFromUser,
@@ -29,5 +34,10 @@ export {
     searchAdvanceHotel,
     filterHotel,
     getAllBookmarkedHotel,
-    searchBookingAvailable
+    searchBookingAvailable,
+    getHotelByOwnerId,
+    getAllTodayBooking,
+    acceptBooking,
+    rejectBooking,
+    getAllBooking
 }

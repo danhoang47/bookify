@@ -8,10 +8,7 @@ import {
   useMemo,
 } from "react";
 import { ModalContext, UserContext } from "@/utils/contexts";
-import {
-  getPasswordModal,
-  getHotelSettingModal,
-} from "@/utils/reducers/modalReducer";
+import { getPasswordModal, getChangeCard } from "@/utils/reducers/modalReducer";
 import InputText from "@/features/account/components/inputText";
 import { accountValidation } from "@/utils/validation";
 import { useUppercase } from "@/utils/hooks";
@@ -22,10 +19,12 @@ function FormUpdate() {
   const [inputs, setInputs] = useState({
     username: user.username,
     id: user.id,
+    card: user.bank_card,
   });
   const [account, setAccount] = useState({
     username: user.username,
     password: "abcxyz",
+    card: user.bank_card,
   });
   const [isAccountValid, setAccountValid] = useState({
     username: true,
@@ -93,11 +92,11 @@ function FormUpdate() {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const onClickHandler = (e) => {};
-  const formSubmit = (e) => {
+  const onClickHandler = (e) => {
     e.preventDefault();
-    dispatch(getPasswordModal({ isOpen: true }));
+    dispatch(getChangeCard({ isOpen: true }));
   };
+  const formSubmit = (e) => {};
 
   return (
     <div className={FormUpdateStyle["container"]}>
@@ -115,23 +114,10 @@ function FormUpdate() {
                 label={useUppercase(key)}
                 type={key === "password" ? "password" : "text"}
                 icon="faWrench"
+                onClickHandler={onClickHandler}
               />
             </span>
           ))}
-          <span className={FormUpdateStyle["text-input-field"]}>
-            <label htmlFor="card-number">
-              <b className={FormUpdateStyle["label"]}>Mã số thẻ</b>
-            </label>
-            <input
-              type="text"
-              readOnly={true}
-              placeholder="XXXX-XXXX-XXXX-XXXX"
-              name="cardNumber"
-              value={user.cardNumber}
-              className={FormUpdateStyle["input-update"]}
-            />
-            <span></span>
-          </span>
           <span className={FormUpdateStyle["text-input-field"]}>
             <label htmlFor="bank">
               <b className={FormUpdateStyle["label"]}>Ngân Hàng</b>
