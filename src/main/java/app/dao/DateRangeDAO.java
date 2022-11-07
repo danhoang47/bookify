@@ -23,9 +23,8 @@ import java.util.logging.Logger;
  */
 public class DateRangeDAO {
 
-     
-     public List<DateRangeDTO> getAll(String checkin, String checkout, String hotelId) throws SQLException {
-         Connection conn = null;
+    public List<DateRangeDTO> getAll(String checkin, String checkout, String hotelId) throws SQLException {
+        Connection conn = null;
         CallableStatement cs = null;
         ResultSet rs;
         String sql = "proc_getAllMergedDayBooking @check_in=?, @check_out=?, @hotelId=?";
@@ -36,20 +35,20 @@ public class DateRangeDAO {
             cs.setString(1, checkin);
             cs.setString(2, checkout);
             cs.setString(3, hotelId);
-            
+
             cs.executeQuery();
             rs = cs.getResultSet();
-            
+
             while (rs.next()) {
                 String room_id = rs.getString("room_id");
                 Date check_in = rs.getDate("check_in");
                 Date check_out = rs.getDate("check_out");
-                
+
                 DateRangeDTO hotel = new DateRangeDTO(room_id, check_in, check_out);
 
                 listHotel.add(hotel);
             }
-            
+
             return listHotel;
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -59,12 +58,35 @@ public class DateRangeDAO {
                 cs.close();
             }
         }
-             return null;
+        return null;
 
-     }
-     
-     public static void main(String[] args) throws SQLException {
-        List<DateRangeDTO> list = new DateRangeDAO().getAll("2022-11-05", "2022-11-06", "f98320c3-235a-4cb7-a0a8-eda132b0e545");
-         System.out.println(list);
+    }
+    
+    public void test() throws SQLException {
+        Connection conn = null;
+        CallableStatement cs = null;
+        String sql = "proc_testProc";
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.executeQuery();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DateRangeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        List<DateRangeDTO> list = new DateRangeDAO().getAll(
+                "2022-11-05",
+                "2022-11-06",
+                "f98320c3-235a-4cb7-a0a8-eda132b0e545"
+        );
+        System.out.println(list);
+        new DateRangeDAO().test();
     }
 }

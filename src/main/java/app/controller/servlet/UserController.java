@@ -6,18 +6,22 @@ package app.controller.servlet;
 
 import app.dao.BookmarkDAO;
 import app.dao.UserDAO;
+import app.dto.TransactDTO;
 import app.dto.UserDTO;
+import app.services.BookingService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dao.UserDetailDAO;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -276,5 +280,54 @@ public class UserController {
             response.addProperty("error", "can not perform this action");
             return Response.ok(new Gson().toJson(response)).build();
         }
+    }
+    
+    @GET
+    @Path("amount/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAmount(@PathParam("userId") String userId) throws SQLException {
+        JsonObject response = new JsonObject();
+        UserDetailDAO dao = new UserDetailDAO();
+        int amount = dao.getAmount(userId);
+        Gson gson = new Gson();
+        response.addProperty("amount", amount);
+        
+        return Response.ok(gson.toJson(response)).build();
+    }
+    
+    @GET
+    @Path("bookingHistory/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingHistory(@PathParam("userId") String userId) throws SQLException {
+        BookingService service = new BookingService();
+        
+        
+        return Response.ok(new Gson().toJson(service.getUserBookingHistory(userId))).build();
+    }
+    
+    @GET
+    @Path("bookingHistory/filter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingHistory(@QueryParam("userid") String userid, @QueryParam("condition") String condition) throws SQLException {
+        BookingService service = new BookingService();
+        
+        
+        return Response.ok(new Gson().toJson(service.getUserBookingHistoryFilter(userid, condition))).build();
+    }
+    
+    @GET
+    @Path("bookingHistory/transaction")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserBookingTrans(@QueryParam("userid") String userid, @QueryParam("month") int month) throws SQLException {
+        BookingService service = new BookingService();
+        JSONObject obj = new JSONObject();
+        List<TransactDTO> listTrans = service.getAllTransactOfUser(userid, month);
+        int walletAmount = service.getAmountWallet(userid);
+        TransactDTO dataChange = service.getAllTransactOfUserByDays(userid, month);
+        obj.put("listTrans", listTrans);
+        obj.put("wallet", walletAmount);
+        obj.put("chartData", dataChange);
+        
+        return Response.ok(new Gson().toJson(obj)).build();
     }
 }

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,6 +64,82 @@ public class ReportDAO {
         }
 
         return reports;
+    }
+
+    public boolean addReport(String hotelId, String userId, String title, String content) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "insert into Report values (?, ?, ?, ?, ?, GETDATE())";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            UUID uuid = UUID.randomUUID();
+            ps.setString(1, uuid.toString());
+            ps.setString(2, hotelId);
+            ps.setString(3, userId);
+            ps.setString(4, title);
+            ps.setString(5, content);
+            int a = ps.executeUpdate();
+
+            if (a == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return false;
+    }
+
+    public int checkNumberBookingTime(String hotelId, String userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select count(*) as bookingTimes from Booking bk, room rm, hotel ht where bk.room_id=rm.room_id and rm.hotel_id=ht.hotel_id\n"
+                + "and ht.hotel_id=? and bk.user_id=?\n"
+                + "and bk.check_out >= GETDATE()";
+
+        try {
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(sql);
+            UUID uuid = UUID.randomUUID();
+            ps.setString(1, hotelId);
+            ps.setString(2, userId);
+            
+            rs = ps.executeQuery();
+            int result = 0;
+            
+            while(rs.next()) {
+                result = rs.getInt("bookingTimes");
+                return result;
+            }
+            
+            return result;
+
+        } catch (Exception ex) {
+            Logger.getLogger(ReportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return 0;
     }
 
     public static void main(String[] args) throws SQLException {

@@ -17,7 +17,6 @@ import app.dao.UserDAO;
 import app.dto.ReviewDTO;
 import app.dto.RoomTypeDTO;
 import app.dto.UserDTO;
-
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,6 +53,7 @@ public class HotelRepository {
 
     public HotelDTO get(String id, String userId) throws SQLException, ClassNotFoundException {
 
+
         HotelDTO hotelDto = hotelDao.get(id);
         List<ImageDTO> imageDtos = imageDao.get(hotelDto.getHotelId());
         List<HotelAmenityDTO> hotelAmenityDtos = hotelAmenityDao.get(hotelDto.getHotelId());
@@ -71,6 +71,7 @@ public class HotelRepository {
         Calendar cal = Calendar.getInstance();
         String monthInshort = new SimpleDateFormat("MMM").format(cal.getTime());
         viewDAO.increaseView(hotelDto.getHotelId(), monthInshort);
+
 
         return hotelDto;
     }
@@ -161,5 +162,12 @@ public class HotelRepository {
 
     public HotelDTO getBasicHotelInfo(String userId) throws SQLException {
         return hotelDao.getBasicHotelInfo(userId);
+    }
+
+    public HotelDTO getByUserId(String userId) throws SQLException, ClassNotFoundException {
+        HotelDTO hotel = hotelDao.get(userDAO.getOwnedHotelId(userId));
+
+        return hotel;
+
     }
 }

@@ -6,6 +6,7 @@ package dao;
 
 import model.dto.UserDetail;
 import Context.DBContext;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,6 +110,7 @@ public class UserDetailDAO {
             while (rs.next()) {
                 ud = (new UserDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getDate(15)));
+                
 
                 break;
 
@@ -318,11 +320,35 @@ public class UserDetailDAO {
         return null;
     }
 
-//    public static void main(String[] args) {
-//        String data = "{deletes: [a, b, c]}";
-//        HashMap<String, Object> map = new Gson().fromJson(data, HashMap.class);
-//        System.out.println(map.get("deletes").getClass().getName());
-//    }
+    public int getAmount(String userId) throws SQLException {
+        Connection conn = null;
+        CallableStatement cs = null;
+        String sql = "proc_getAmount @userId=?";
+        ResultSet rs = null;
+        int amount = 0;
+
+        try {
+            conn = DBContext.getConnection();
+            cs = conn.prepareCall(sql);
+            cs.setString(1, userId);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                amount = rs.getInt("amount");
+            }
+            
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+        }
+        
+        return amount;
+    }
+
     public static void main(String[] args) {
 
         UserDetail ud = new UserDetailDAO().login("duc", "123"); 

@@ -326,6 +326,11 @@ public class HotelDTO {
         this.isBookmarked = isBookmarked;
     }
 
+    HotelDTO(String hotelName, String address) {
+        this.hotelName=hotelName;
+        this.address = address;
+    }
+
    
     public Date getSignAt() {
         return signAt;

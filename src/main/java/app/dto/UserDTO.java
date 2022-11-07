@@ -36,8 +36,6 @@ public class UserDTO {
         this.bankingAccountNumber = bankingAccountNumber;
     }
 
-   
-
     public String getSubname() {
         return subname;
     }
@@ -278,8 +276,4 @@ public class UserDTO {
     public String toString() {
         return "UserDTO{" + "user_id=" + user_id + ", username=" + username + ", user_password=" + user_password + ", email=" + email + ", phone=" + phone + ", name=" + name + ", avatar=" + avatar + ", role=" + role + ", ggid=" + ggid + ", wishlist_id=" + wishlist_id + ", self_description=" + self_description + ", salt=" + salt + ", bankingAccountNumber=" + bankingAccountNumber + ", subname=" + subname + ", dob=" + dob + ", signAt=" + signAt + '}';
     }
-
-    
-
-    
 }
