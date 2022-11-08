@@ -6,12 +6,11 @@ import DateSearchHeader from "../DateSearchHeader";
 import GuestsSearchHeader from "../GuestsSearchHeader";
 
 // Util Import
-import { useState, useMemo, lazy, Suspense, useContext } from "react";
+import { useState, lazy, Suspense, useContext } from "react";
 import { useClsx } from "@/utils/hooks";
-import { SearchContext } from "@/utils/contexts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { AdvanceSearchContext } from "@/utils/contexts";
+import { AdvanceSearchContext, SearchContext } from "@/utils/contexts";
 
 // styles import
 import advanceSearchStyles from "./AdvanceSearch.module.scss";
@@ -37,22 +36,10 @@ const guestsInitial = {
 
 function AdvanceSearch({ handleChangeMode }) {
     const [currentTab, setCurrentTab] = useState(0);
-    const [place, setPlace] = useState("Hà Nội");
-    const [selectedDays, setSelectedDays] = useState({});
-    const [guests, setGuests] = useState(guestsInitial);
     const [isSearched, setSearched] = useState(false);
-    const {setAdvanceSearchOpen, handleOpenSearchBar} = useContext(AdvanceSearchContext);
-
-    const searchContextValue = useMemo(() => {
-        return {
-            place,
-            setPlace,
-            selectedDays,
-            setSelectedDays,
-            guests,
-            setGuests,
-        };
-    }, [place, guests, selectedDays]);
+    const { setAdvanceSearchOpen, handleOpenSearchBar } =
+        useContext(AdvanceSearchContext);
+    const { setSearchAdvanceMode, resetSearchAdvance } = useContext(SearchContext);
 
     const handleTabChange = (event) => {
         event.stopPropagation();
@@ -60,21 +47,22 @@ function AdvanceSearch({ handleChangeMode }) {
         setCurrentTab(parseInt(tabIndex));
 
         if (isSearched) {
-            setSearched(prev => !prev);
+            setSearched((prev) => !prev);
             handleOpenSearchBar(event);
-            setAdvanceSearchOpen(prev => !prev);
+            setAdvanceSearchOpen((prev) => !prev);
         }
-    }
+    };
 
     const changeSearchMode = (event) => {
-        event.stopPropagation();
+        setSearchAdvanceMode(false);
         handleChangeMode(false);
+        resetSearchAdvance();
     };
 
     const handleAdvanceSearch = (e) => {
         e.stopPropagation();
         setSearched(!isSearched);
-        setAdvanceSearchOpen(prev => !prev);
+        setAdvanceSearchOpen((prev) => !prev);
 
         if (!isSearched) {
             setCurrentTab("3");
@@ -86,102 +74,99 @@ function AdvanceSearch({ handleChangeMode }) {
     };
 
     return (
-        <SearchContext.Provider value={searchContextValue}>
+        <div
+            id={advanceSearchStyles["advance-search"]}
+            className={useClsx(
+                isSearched ? advanceSearchStyles["to-header"] : ""
+            )}
+            tabIndex={-1}
+        >
             <div
-                id={advanceSearchStyles["advance-search"]}
                 className={useClsx(
-                    isSearched ? advanceSearchStyles["to-header"] : ""
+                    advanceSearchStyles["advance-search-header"],
+                    isSearched ? advanceSearchStyles["d-none"] : ""
                 )}
-                tabIndex={-1}
             >
                 <div
-                    className={useClsx(
-                        advanceSearchStyles["advance-search-header"],
-                        isSearched ? advanceSearchStyles["d-none"] : ""
-                    )}
+                    className={advanceSearchStyles["search-field-nav"]}
+                    onClick={changeSearchMode}
+                    tabIndex={-1}
                 >
-                    <div
-                        className={advanceSearchStyles["search-field-nav"]}
-                        onClick={changeSearchMode}
-                        tabIndex={-1}
-                    >
-                        Tìm kiếm khách sạn
-                    </div>
-                    <div
-                        className={[
-                            advanceSearchStyles["search-field-nav"],
-                            advanceSearchStyles["active"],
-                        ].join(" ")}
-                    >
-                        Tìm kiếm nâng cao
-                    </div>
+                    Tìm kiếm khách sạn
                 </div>
                 <div
-                    className={useClsx(
-                        advanceSearchStyles["left"],
-                        isSearched ? advanceSearchStyles["d-none"] : ""
-                    )}
-                ></div>
-                <div
-                    className={useClsx(
-                        advanceSearchStyles["advance-search-header-field"],
-                        isSearched ? advanceSearchStyles["searched"] : ""
-                    )}
+                    className={[
+                        advanceSearchStyles["search-field-nav"],
+                        advanceSearchStyles["active"],
+                    ].join(" ")}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            borderRadius: "1.6em",
-                            backgroundColor: "#ebebeb",
-                            position: "relative",
-                        }}
-                    >
-                        <ExploreSearchHeader
-                            onTabChange={handleTabChange}
-                            currentTab={currentTab}
-                        />
-                        <DateSearchHeader
-                            onTabChange={handleTabChange}
-                            currentTab={currentTab}
-                        />
-                        <GuestsSearchHeader
-                            onTabChange={handleTabChange}
-                            currentTab={currentTab}
-                        />
-                        <div
-                            className={
-                                advanceSearchStyles["advance-search-button"]
-                            }
-                            tabIndex="-1"
-                            onClick={handleAdvanceSearch}
-                        >
-                            <button
-                                className={advanceSearchStyles["search-button"]}
-                            >
-                                <FontAwesomeIcon
-                                    icon={faMagnifyingGlass}
-                                    style={{
-                                        marginRight: "0.2em",
-                                    }}
-                                />
-                                <span
-                                    className={useClsx(
-                                        isSearched
-                                            ? advanceSearchStyles["d-none"]
-                                            : ""
-                                    )}
-                                >
-                                    Tìm kiếm
-                                </span>
-                            </button>
-                        </div>
-                    </Box>
+                    Tìm kiếm nâng cao
                 </div>
-                <Suspense>
-                    {isSearched || <SearchField index={currentTab} />}
-                </Suspense>
             </div>
-        </SearchContext.Provider>
+            <div
+                className={useClsx(
+                    advanceSearchStyles["left"],
+                    isSearched ? advanceSearchStyles["d-none"] : ""
+                )}
+            ></div>
+            <div
+                className={useClsx(
+                    advanceSearchStyles["advance-search-header-field"],
+                    isSearched ? advanceSearchStyles["searched"] : ""
+                )}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        borderRadius: "1.6em",
+                        backgroundColor: "#ebebeb",
+                        position: "relative",
+                    }}
+                >
+                    <ExploreSearchHeader
+                        onTabChange={handleTabChange}
+                        currentTab={currentTab}
+                    />
+                    <DateSearchHeader
+                        onTabChange={handleTabChange}
+                        currentTab={currentTab}
+                    />
+                    <GuestsSearchHeader
+                        onTabChange={handleTabChange}
+                        currentTab={currentTab}
+                    />
+                    <div
+                        className={advanceSearchStyles["advance-search-button"]}
+                        tabIndex="-1"
+                        onClick={handleAdvanceSearch}
+                    >
+                        <button
+                            className={advanceSearchStyles["search-button"]}
+                            onClick={() => setSearchAdvanceMode(true)}
+                        >
+                            <FontAwesomeIcon
+                                icon={faMagnifyingGlass}
+                                style={{
+                                    marginRight: "0.2em",
+                                }}
+                            />
+                            <span
+                                className={useClsx(
+                                    isSearched
+                                        ? advanceSearchStyles["d-none"]
+                                        : ""
+                                )}
+                            >
+                                Tìm kiếm
+                            </span>
+                        </button>
+                    </div>
+                </Box>
+            </div>
+            <Suspense>
+                {isSearched || <SearchField index={currentTab} />}
+            </Suspense>
+        </div>
     );
 }
 
