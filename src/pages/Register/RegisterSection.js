@@ -5,7 +5,7 @@ import { useHref } from "react-router-dom";
 
 // app defined
 import { Jumbotron, TabBar } from "./components";
-import { RegisterContext, UserContext } from "@/utils/contexts";
+import { RegisterContext, ToastMessageContext, UserContext } from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
 import {
   registerHotel,
@@ -14,7 +14,9 @@ import {
   updateHotel,
 } from "@/services/hotel";
 import { useClsx } from "@/utils/hooks";
+import { useNavigate } from "react-router-dom";
 import tabs from "./tabs";
+import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function RegisterSection({
   hotelId,
@@ -49,6 +51,8 @@ function RegisterSection({
   const [updatedViewImages, setUpdatedViewImages] = useState([]);
   const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
+  const { setToastMessages } = useContext(ToastMessageContext);
+  const navigate = useNavigate();
   const href = useHref();
 
   useEffect(() => {
@@ -137,6 +141,7 @@ function RegisterSection({
         updatedRoomImages,
         deletedImages
       );
+      setToastMessages(getSuccessToastMessage({ message: 'Đăng ký khách sạn thành công'}))
     } else {
       const data = await registerHotel(
         amenities,
@@ -148,7 +153,9 @@ function RegisterSection({
         roomInfor,
         user.user_id
       );
+      setToastMessages(getSuccessToastMessage({ message: 'Cập nhật khách sạn thành công'}))
     }
+    navigate("/manager/hotel")
   };
 
   const toNextTab = (e) => {
