@@ -8,11 +8,11 @@ function DropdownBox({
     children,
     heading,
     extraButtonTittle,
-    extraButtonHandleClick,
     isScrollable,
     tabs,
     activeIndex,
     setActiveIndex = () => {},
+    extraButtonHandleClick = () => {}
 }) {
     const { user } = useContext(UserContext);
     const handleTabChange = (event, index) => {
@@ -27,7 +27,10 @@ function DropdownBox({
                 <button className={dropDownStyles["extra-button"]}>
                     <p
                         className={dropDownStyles["extra-button-title"]}
-                        onClick={extraButtonHandleClick}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            extraButtonHandleClick(user.user_id);
+                        }}
                     >
                         {extraButtonTittle}
                     </p>

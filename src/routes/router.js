@@ -47,9 +47,7 @@ const router = createBrowserRouter(
           <Route path="history" element={<BookingHistory />} />
           <Route path="payment" element={<Payment />} />
         </Route>
-        <Route path="dashboard" element={<DefaultLayout />}>
-          <Route path="" element={<Dashboard />} />
-        </Route>
+        <Route path="dashboard" element={<Dashboard />} />
       </Route>
       <Route path="hosting" element={<HostingRegisterLayout />}>
         <Route path="introduction" element={<Introduction />} />

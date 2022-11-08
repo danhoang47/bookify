@@ -3,6 +3,7 @@ import Table from "./Table";
 import { useState, useContext, useCallback, useEffect } from "react";
 import { HotelContext } from "@/utils/contexts";
 import moment from "moment";
+
 function Hotel() {
   const [filter, setFilter] = useState(null);
   const data = useContext(HotelContext);

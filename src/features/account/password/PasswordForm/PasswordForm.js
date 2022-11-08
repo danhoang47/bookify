@@ -10,13 +10,14 @@ import {
 } from "react";
 import {
   ModalContext,
-  ToastMessageContext,
   UserContext,
+  ToastMessageContext,
 } from "@/utils/contexts";
 import {
   getNewPasswordModal,
   getChangeCard,
 } from "@/utils/reducers/modalReducer";
+
 import { compareCurrentPassword } from "@/services/user";
 import {
   getFailureToastMessage,
@@ -62,11 +63,14 @@ function PasswordForm({ submodal }) {
                   animation: "slide-in-right",
                 })
               );
+            } else {
+              dispatch(
+                getChangeCard({
+                  isOpen: true,
+                  animation: "slide-in-right",
+                })
+              );
             }
-            getNewPasswordModal({
-              isOpen: true,
-              animation: "slide-in-right",
-            });
           }
         });
       } finally {

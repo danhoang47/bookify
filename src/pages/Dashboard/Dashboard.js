@@ -4,14 +4,19 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import DashboardStyle from "./Dashboard.module.scss";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useContext } from "react";
 import All from "./components/All";
 import Hotel from "./components/Hotel";
 import Exchange from "./components/Exchange";
 import HotelContext from "@/utils/contexts/HotelContext";
+import { ToastMessageContext, UserContext } from "@/utils/contexts";
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [value, setValue] = useState("1");
+  const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
 
   const hotelData = useMemo(
     () => [
@@ -111,6 +116,52 @@ function Dashboard() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    const userForm = new FormData();
+    userForm.append("jwt", jwtString);
+    if (jwtString) {
+      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+        method: "POST",
+        body: userForm,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.role === 3) {
+            setLogin(true);
+            setUser(data);
+          } else {
+            navigate("/");
+            setToastMessages(
+              getFailureToastMessage({
+                message: "Bạn không đủ quyền hạn",
+              })
+            );
+          }
+        })
+        .catch((err) => {
+          setUser({ role: 0 });
+          navigate("/");
+          setToastMessages(
+            getFailureToastMessage({
+              message: "Đăng nhập để truy cập",
+            })
+          );
+        });
+    } else {
+      navigate("/");
+      setUser({ role: 0 });
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để truy cập",
+        })
+      );
+    }
+  }, []);
 
   return (
     <HotelContext.Provider value={hotelData}>

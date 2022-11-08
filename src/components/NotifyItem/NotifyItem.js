@@ -104,7 +104,6 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
 
   const handleAccepted = async (event) => {
     event.preventDefault();
-    event.stopPropagation();
     const type = 5;
     const data = await acceptBooking(notif.sourceId).then((data) => data);
     if (data?.status) {
@@ -115,7 +114,6 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
 
   const handleRejected = async (event) => {
     event.preventDefault();
-    event.stopPropagation();
     const type = 6;
     const data = await rejectBooking(notif.sourceId).then((data) => data);
     if (data?.status) {
@@ -137,6 +135,7 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
       <div
         className={useClsx("notif-item", isRead ? "" : "un-read")}
         onClick={handleChangeReadStatus}
+        tabIndex="-1"
       >
         <div className="notif-actor-avatar">
           <div className="actor-avatar">

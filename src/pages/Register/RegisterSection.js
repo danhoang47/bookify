@@ -5,7 +5,11 @@ import { useHref } from "react-router-dom";
 
 // app defined
 import { Jumbotron, TabBar } from "./components";
-import { RegisterContext, UserContext } from "@/utils/contexts";
+import {
+  RegisterContext,
+  UserContext,
+  ToastMessageContext,
+} from "@/utils/contexts";
 import registerStyles from "./Register.module.scss";
 import {
   registerHotel,
@@ -15,6 +19,9 @@ import {
 } from "@/services/hotel";
 import { useClsx } from "@/utils/hooks";
 import tabs from "./tabs";
+
+import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useNavigate } from "react-router-dom";
 
 function RegisterSection({
   hotelId,
@@ -29,6 +36,9 @@ function RegisterSection({
 }) {
   // show BasicInformation first
   const [inputTabIndex, setInputTabIndex] = useState(0);
+  const navigate = useNavigate();
+  const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  const { setToastMessages } = useContext(ToastMessageContext);
   const [basicHotelInfor, setBasicHotelInfo] = useState(
     basicHotelInforInitState
   );
@@ -40,6 +50,7 @@ function RegisterSection({
   const [backgroundImage, setBackgroundImage] = useState(
     backgroundImageInitState
   );
+
   const [extraInfor, setExtraInfor] = useState(extraInforInitState);
   const [displayAmenities, setDisplayAmenities] = useState(
     displayAmenitiesInitState || []
@@ -48,7 +59,6 @@ function RegisterSection({
   const [updatedViewImages, setUpdatedViewImages] = useState([]);
   const [updatedRoomImages, setUpdatedRoomImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
-  const { user } = useContext(UserContext);
   const href = useHref();
 
   useEffect(() => {
@@ -76,6 +86,50 @@ function RegisterSection({
     });
 
     //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+    const userForm = new FormData();
+    userForm.append("jwt", jwtString);
+    if (jwtString) {
+      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+        method: "POST",
+        body: userForm,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.role === 1) {
+            setLogin(true);
+            setUser(data);
+          } else {
+            navigate("/");
+            setToastMessages(
+              getFailureToastMessage({
+                message: "Bạn không đủ quyền hạn",
+              })
+            );
+          }
+        })
+        .catch((err) => {
+          setUser({ role: 0 });
+          navigate("/");
+          setToastMessages(
+            getFailureToastMessage({
+              message: "Đăng nhập để truy cập",
+            })
+          );
+        });
+    } else {
+      navigate("/");
+      setUser({ role: 0 });
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đăng nhập để truy cập",
+        })
+      );
+    }
   }, []);
 
   const registerContextValue = useMemo(

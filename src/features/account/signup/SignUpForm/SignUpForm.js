@@ -14,11 +14,12 @@ import { useUppercase } from "@/utils/hooks";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SignUp } from "@/services/user";
-import { ToastMessageContext, UserContext } from "@/utils/contexts";
+import { ModalContext, ToastMessageContext, UserContext } from "@/utils/contexts";
 import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function SignUpForm() {
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -34,6 +35,7 @@ function SignUpForm() {
     password: true,
     rePassword: true,
   });
+  const { dispatch } = useContext(ModalContext);
   const [isLoading, setLoading] = useState(false);
   const isInformationFilled = useMemo(() => {
     const isAllFilled = Object.keys(registerAccount).every((key) => {
@@ -73,6 +75,7 @@ function SignUpForm() {
                 message: data.message || "Đăng ký thành công",
               })
             );
+            dispatch(getSignInModal({ isOpen: true }));
           }
         });
       } finally {
