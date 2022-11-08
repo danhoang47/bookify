@@ -7,32 +7,40 @@ import { useNavigate } from "react-router-dom";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
 import { ToastMessageContext } from "@/utils/contexts";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { Grid } from "@mui/material";
 
 function PersonalInfo() {
-  let { user } = useContext(UserContext);
-  const { setToastMessages } = useContext(ToastMessageContext);
-  const { isLogin } = VerifyAuth();
-  const navigate = useNavigate();
+    let { user } = useContext(UserContext);
+    const { setToastMessages } = useContext(ToastMessageContext);
+    const { isLogin } = VerifyAuth();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLogin === false || isLogin === undefined) {
-      navigate("/");
-      setToastMessages(
-        getFailureToastMessage({
-          message: "Đăng nhập để truy cập",
-        })
-      );
-    }
-  }, []);
+    useEffect(() => {
+        if (isLogin === false || isLogin === undefined) {
+            navigate("/");
+            setToastMessages(
+                getFailureToastMessage({
+                    message: "Đăng nhập để truy cập",
+                })
+            );
+        }
+    }, []);
 
-  console.log(user);
+    console.log(user);
 
-  return (
-    <div className={PersonalInfoStyle["container"]}>
-      <HeaderInfo />
-      <FormUpdate account={user} />
-    </div>
-  );
+    return (
+        <Grid
+            container
+            justifyContent={"center"}
+        >
+            <Grid item xs={10}>
+                <div className={PersonalInfoStyle[""]}>
+                    <HeaderInfo />
+                    <FormUpdate account={user} />
+                </div>
+            </Grid>
+        </Grid>
+    );
 }
 
 export default PersonalInfo;

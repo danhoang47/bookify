@@ -1,6 +1,6 @@
 import BankCardStyle from "./BankCard.module.scss";
 
-function BankCard() {
+function BankCard({ bankWallet }) {
   return (
     <div className={BankCardStyle["card-wrapper"]}>
       <div className={BankCardStyle["bank-title"]}>
@@ -11,7 +11,7 @@ function BankCard() {
         <div className={BankCardStyle["remain-title"]}>Số dư trong ví</div>
         <div className={BankCardStyle["remainer"]}>
           <h1>
-            $<span className={BankCardStyle["static"]}>6789.0</span>
+            $<span className={BankCardStyle["static"]}>{bankWallet}.0</span>
           </h1>
         </div>
       </div>

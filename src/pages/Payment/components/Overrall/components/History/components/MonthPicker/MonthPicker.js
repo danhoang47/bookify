@@ -1,7 +1,7 @@
 import MonthPickerStyle from "./MonthPicker.module.scss";
 import { useContext, useMemo } from "react";
-import { OverrallContext } from "../../../../Overall";
-
+import { OverrallContext } from "@/pages/Payment/Payment";
+const monthsNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 function MonthPicker() {
   const [month, setMonth] = useContext(OverrallContext);
   let date = new Date();
@@ -34,14 +34,14 @@ function MonthPicker() {
             setMonth(e.target.value);
           }}
         >
-          <option value={currentMonth}>Tháng này</option>
+          <option value={monthsNumber[date.getMonth()]}>Tháng này</option>
           {months.map((month, index) => {
             return (
               <option
                 disabled={
                   months.indexOf(month) > date.getMonth() ? true : false
                 }
-                value={month}
+                value={monthsNumber[index]}
                 key={index}
               >
                 {month}

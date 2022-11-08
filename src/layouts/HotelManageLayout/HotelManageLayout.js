@@ -1,6 +1,5 @@
 import { Suspense, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-
 import { Box } from "@mui/material";
 import HotelManageHeader from "../components/HotelManageHeader";
 import manageLayoutStyles from "./HotelManageLayout.module.scss";

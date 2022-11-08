@@ -13,7 +13,7 @@ const getNotifAction = (notif) => {
       return (
         <p className="action-infor">
           Khách sạn của bạn vừa nhận được 1 đơn đặt phòng bởi&nbsp;
-          <span className="notif-hightlight">{notif.actorName}</span>.
+          <span className="notif-hightlight">{notif.actorName}</span>
         </p>
       );
     case 1:
@@ -44,23 +44,8 @@ const getNotifAction = (notif) => {
       return (
         <p className="action-infor">
           Đơn đặt phòng của bạn vừa được&nbsp;
-          <span className="notif-hightlight">{notif.hotelName}</span> hủy bỏ.
-          Hãy kiểm tra ngay.
-        </p>
-      );
-    case 5:
-      return (
-        <p className="action-infor">
-          Bạn đã chấp nhận đơn đặt phòng của&nbsp;
-          <span className="notif-hightlight">{notif.actorName}</span> Hãy chuẩn
-          bị để đón tiếp họ.
-        </p>
-      );
-    case 6:
-      return (
-        <p className="action-infor">
-          Bạn đã hủy đơn đặt phòng của&nbsp;
-          <span className="notif-hightlight">{notif.actorName}</span>{" "}
+          <span className="notif-hightlight">{notif.hotelName}</span> chấp nhận.
+          Hãy kiểm tra ngay
         </p>
       );
     default:
@@ -70,14 +55,8 @@ const getNotifAction = (notif) => {
 
 const getDateDiff = (notifDate) => {
   const today = new Date();
-  const diffInMinutes = differenceInMinutes(today, new Date(notifDate));
   const diffInHours = differenceInHours(today, new Date(notifDate));
-  if (diffInMinutes < 60) {
-    return {
-      diff: diffInMinutes,
-      type: "phút",
-    };
-  } else if (diffInHours < 24) {
+  if (diffInHours < 24) {
     return {
       diff: diffInHours,
       type: "giờ",
@@ -104,6 +83,7 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
 
   const handleAccepted = async (event) => {
     event.preventDefault();
+    event.stopPropagation();
     const type = 5;
     const data = await acceptBooking(notif.sourceId).then((data) => data);
     if (data?.status) {
@@ -114,6 +94,7 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
 
   const handleRejected = async (event) => {
     event.preventDefault();
+    event.stopPropagation();
     const type = 6;
     const data = await rejectBooking(notif.sourceId).then((data) => data);
     if (data?.status) {
@@ -135,7 +116,6 @@ function NotifItem({ notif, handleClick, handleActBooking, setDropdownOpen }) {
       <div
         className={useClsx("notif-item", isRead ? "" : "un-read")}
         onClick={handleChangeReadStatus}
-        tabIndex="-1"
       >
         <div className="notif-actor-avatar">
           <div className="actor-avatar">

@@ -33,5 +33,5 @@ export {
   Hotel,
   Register,
   Update,
-  BookingPayment
+  BookingPayment,
 };
