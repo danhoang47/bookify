@@ -15,41 +15,69 @@ import {
   getSuccessToastMessage,
   getFailureToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import { pickers, pointInitialState } from "./ReviewInitState";
+import PointPicker from "../PointPicker";
+import { reviewDataContext } from "../../Hotel";
+import { format } from "date-fns";
+import { v4 as uuid } from "uuid";
 
 function AdvanceFilter({
-  isAdvanceFilterOpen,
-  setAdvanceFilterOpen,
-  getAdvanceFilterHotel,
+  isReviewOpen,
+  setIsReviewOpen,
+  getReviewHotel,
   hotelInfo,
 }) {
-  const [isOpen, handleClick, containerRef] = usePopup(isAdvanceFilterOpen);
+  const [isOpen, handleClick, containerRef] = usePopup(isReviewOpen);
   const { setToastMessages } = useContext(ToastMessageContext);
-
-  const [title, setTitle] = useState("");
+  const [point, setPoint] = useState(pointInitialState);
   const [content, setContent] = useState("");
   const { user } = useContext(UserContext);
-  console.log(user.user_id);
+  const [currentReview, setCurrentReview] = useContext(reviewDataContext);
+
   useEffect(() => {
-    setAdvanceFilterOpen(isOpen);
+    setIsReviewOpen(isOpen);
     //eslint-disable-next-line
   }, [isOpen]);
 
-  const submitReport = () => {
-    console.log(title);
+  const submitReview = () => {
+    console.log(point);
     console.log(content);
+
     const reportForm = new FormData();
     reportForm.append("hotelid", hotelInfo.hotelId);
     reportForm.append("userid", user.user_id);
-    reportForm.append("title", title);
     reportForm.append("content", content);
-    fetch("http://localhost:8080/bookify/api/hotel/report", {
+    reportForm.append("accuracy_point", point.accuracy_point);
+    reportForm.append("location_point", point.location_point);
+    reportForm.append("value_point", point.value_point);
+    reportForm.append("communication_point", point.communication_point);
+    fetch("http://localhost:8080/bookify/api/hotel/review", {
       method: "POST",
       body: reportForm,
     })
       .then((res) => res.json())
       .then((result) => {
-        setAdvanceFilterOpen(false);
-        console.log(result);
+        setIsReviewOpen(false);
+        setCurrentReview([
+          ...currentReview,
+          {
+            accuracy_point: point.accuracy_point,
+            communication_point: point.communication_point,
+            content: content,
+            createdAt: format(new Date(), "hh:mm dd-MM-yyy"),
+            hotelId: hotelInfo.hotelId,
+            location_point: point.location_point,
+            reviewId: uuid(),
+            sourceId: 0,
+            userId: user.user_id,
+            username:
+              user.subname && user.name ? user.subname + " " + user.name : null,
+            avatar: user.avatar ? user.avatar : null,
+            usernameAcount: user.username,
+
+            value_point: point.value_point,
+          },
+        ]);
         setToastMessages(
           getSuccessToastMessage({
             message: "Báo cáo thành công",
@@ -57,16 +85,6 @@ function AdvanceFilter({
         );
       });
   };
-
-  useEffect(() => {
-    if (!user.user_id) {
-      setToastMessages(
-        getFailureToastMessage({
-          message: "Đăng nhập để thực hiện",
-        })
-      );
-    }
-  }, []);
 
   return (
     <div
@@ -76,7 +94,7 @@ function AdvanceFilter({
     >
       <div className={advanceFilterStyles["heading"]} tabIndex={-1}>
         <h4 className={advanceFilterStyles["filter-heading"]}>
-          Báo cáo khách sạn
+          Đánh giá về chuyến đi của bạn
         </h4>
       </div>
       <Box
@@ -89,29 +107,22 @@ function AdvanceFilter({
       >
         <div className={advanceFilterStyles["report-description"]}>
           <p>
-            Bạn vừa có 1 trải nghiệm không đáng có về chuyến đi hoặc bị đe dọa?
-            Hãy báo cáo ngay cho chúng tôi. Lorem Ipsum is simply dummy text of
-            the printing and typesetting industry.
+            Bạn vừa hoàn thành chuyến đi ở {hotelInfo.hotelName}, hãy đánh giá
+            về dịch vụ của {hotelInfo.hotelName} để mọi người có thể tham khảo
+            !!!
           </p>
         </div>
         <div className={advanceFilterStyles["report-body"]}>
-          <h4>Báo cáo về khách sạn</h4>
-          <div className={advanceFilterStyles["report-title"]}>
-            <label htmlFor="title">Tiêu đề</label>
-            <input
-              type="text"
-              id={"title"}
-              placeholder={"Tiêu đề của báo cáo"}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+          <h3>Hãy cho điểm về các dịch vụ của khách sạn</h3>
+          <div>
+            <PointPicker pickers={pickers} point={point} onSelect={setPoint} />
           </div>
           <div className={advanceFilterStyles["report-content"]}>
-            <label htmlFor="content">Báo cáo</label>
+            <label htmlFor="content">Feedback</label>
             <textarea
               type="text"
               id={"content"}
-              placeholder={"Nội dung báo cáo"}
+              placeholder={"Chia sẻ suy nghĩ của bạn"}
               value={content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
@@ -131,16 +142,16 @@ function AdvanceFilter({
         >
           <button
             className={advanceFilterStyles["find-button"]}
-            onClick={submitReport}
+            onClick={submitReview}
           >
-            Gửi báo cáo
+            Gửi đánh giá
           </button>
         </Box>
       </div>
       <button
         className={advanceFilterStyles["close-button"]}
         onClick={(e) => {
-          setAdvanceFilterOpen(false);
+          setIsReviewOpen(false);
         }}
       >
         <FontAwesomeIcon icon={faXmark} />

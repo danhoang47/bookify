@@ -4,10 +4,13 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Description from "./components/Description";
 import Amenities from "./components/Amenities";
 import Rating from "./components/Rating";
+import { createContext } from "react";
+import { reviewDataContext } from "../../Hotel";
+import { format } from "date-fns";
 
 function Details({
   reviews,
@@ -16,6 +19,8 @@ function Details({
   hotelOwner,
   roomType,
   rating,
+  hotelId,
+  signAt,
 }) {
   const [value, setValue] = useState("1");
 
@@ -26,7 +31,10 @@ function Details({
   return (
     <div className={DetailStyle["tabs"]}>
       <div className={DetailStyle["sign_time"]}>
-        <h4>Đăng ký vào 25/12/2022</h4>
+        <h4>
+          Đăng ký vào{" "}
+          {signAt ? format(new Date(signAt), "dd/MM/yyyy") : "năm 2022"}{" "}
+        </h4>
       </div>
       <div className={DetailStyle["tabs_list"]}>
         <Box sx={{ width: "100%", typography: "body1" }}>
@@ -65,7 +73,7 @@ function Details({
               <Amenities hotelAmenities={hotelAmenities} roomType={roomType} />
             </TabPanel>
             <TabPanel value="3" className={DetailStyle["panel"]}>
-              <Rating reviews={reviews} rating={rating} />
+              <Rating reviews={reviews} rating={rating} hotelId={hotelId} />
             </TabPanel>
           </TabContext>
         </Box>

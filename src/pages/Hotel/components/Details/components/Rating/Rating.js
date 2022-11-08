@@ -7,7 +7,7 @@ import Point from "./Point";
 import Comments from "./Comments";
 import { getPoints } from "./RatingService";
 
-function Rating({ reviews, rating }) {
+function Rating({ reviews, rating, hotelId }) {
   const pointsData = getPoints(reviews);
   return (
     <div>
@@ -18,7 +18,7 @@ function Rating({ reviews, rating }) {
         <Point pointsData={pointsData} />
       </div>
       <div className={RatingStyle["comment-container"]}>
-        <Comments reviews={reviews} />
+        <Comments reviews={reviews} hotelId={hotelId} />
       </div>
     </div>
   );

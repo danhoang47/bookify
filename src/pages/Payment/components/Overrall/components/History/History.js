@@ -34,7 +34,7 @@ function History({ data }) {
       ) : (
         <button
           className={
-            data.length > 4
+            paymentList.length > 4
               ? HistoryStyle["show-btn"]
               : HistoryStyle["hide-btn"]
           }

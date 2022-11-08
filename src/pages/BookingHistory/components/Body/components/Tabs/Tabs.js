@@ -37,7 +37,7 @@ function Tabs({ category }) {
         .then((res) => res.json())
         .then((result) => setBookingData(result));
     }
-    if (category.status) {
+    if (category.status === 1 || category.status === 0) {
       fetch(
         `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user.user_id}&condition=${category.status}`
       )

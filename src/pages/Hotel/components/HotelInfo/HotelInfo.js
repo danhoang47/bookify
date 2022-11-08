@@ -1,7 +1,8 @@
 import HotelInfoStyle from "./HotelInfo.module.scss";
 import InfoHeader from "../InfoHeader";
 import Details from "../Details";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { reviewDataContext } from "../../Hotel";
 
 function HotelInfo({ hotelInfo }) {
   const {
@@ -14,8 +15,8 @@ function HotelInfo({ hotelInfo }) {
     reviews,
     roomType,
     isBookmarked,
+    signAt,
   } = hotelInfo;
-
   return (
     <div>
       <div className={HotelInfoStyle["header"]}>
@@ -36,6 +37,8 @@ function HotelInfo({ hotelInfo }) {
           hotelOwner={hotelOwner}
           roomType={roomType}
           rating={rating}
+          hotelId={hotelId}
+          signAt={signAt}
         />
       </div>
     </div>

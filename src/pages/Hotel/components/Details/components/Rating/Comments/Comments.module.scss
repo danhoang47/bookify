@@ -59,3 +59,15 @@ p {
         }
     }
 }
+
+.btn-add-cmt {
+    background-color: global.$main-color;
+    padding: 0.5em 1em;
+    color: white;
+    font-family: global.$default-font;
+    border-radius: 1em;
+    &:hover {
+        opacity: 0.6;
+        transition: all 0.5s;
+    }
+}

@@ -9,10 +9,10 @@ import { getHotelByOwnerId } from "@/services/hotel";
 
 function HotelManageLayout() {
   const { user } = useContext(UserContext);
-  const [hotelInfo, setHotelInfo] = useState();
+  const [hotel, setHotel] = useState({});
 
   useEffect(() => {
-    getHotelByOwnerId(user.user_id).then((hotel) => setHotelInfo(hotel));
+    getHotelByOwnerId(user.user_id).then((hotel) => setHotel(hotel));
   }, [user]);
 
   return (
@@ -25,7 +25,7 @@ function HotelManageLayout() {
         }}
       >
         <Suspense fallback={<div>Loading...</div>}>
-          <Outlet context={hotelInfo} />
+          <Outlet context={[hotel, setHotel]} />
         </Suspense>
       </Box>
       {/* <Footer /> */}
