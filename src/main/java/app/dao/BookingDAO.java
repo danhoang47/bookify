@@ -122,6 +122,7 @@ public class BookingDAO {
             BookingDTO booking = null;
             ps.setString(1, userId);
             if (type.equals("and bk.status")) {
+                System.out.println("status: " + condition);
                 ps.setInt(2, Integer.parseInt(condition));
             } else if (type.equals("and bk.check_in")) {
                 ps.setString(2, condition);

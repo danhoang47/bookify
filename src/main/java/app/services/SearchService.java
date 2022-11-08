@@ -82,7 +82,11 @@ public class SearchService {
         List<String> listHotels = new SearchService().getHotelByRoomId(listHotelId);
         List<HotelDTO> listHotelArray = new ArrayList<>();
         for(int i=0; i<listHotels.size(); i++) {
-            listHotelArray.add(hotelDAO.getVerifiedHotel(listHotels.get(i)));
+            HotelDTO htd = hotelDAO.getVerifiedHotel(listHotels.get(i));
+            if(htd.isIsVerified()==true) {
+                listHotelArray.add(hotelDAO.getVerifiedHotel(listHotels.get(i)));
+            }
+            
         }
         for(int i=0; i<listHotelArray.size(); i++) {
             listHotelArray.get(i).setImages(imageDao.get(listHotels.get(i)));
