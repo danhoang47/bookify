@@ -5,6 +5,7 @@
 package app.repository;
 
 import app.dao.UserDAO;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,5 +21,11 @@ public class UserRepository {
     public boolean makeHosting(String userId) {
         boolean check = userDAO.makeHosting(userId);
         return check;
+    }
+
+    public boolean updateBankingAccountNumber(String userId, String bankingAccountNumber) throws SQLException {
+        System.out.println(userId);
+        boolean isSuccess = userDAO.updateBankingAccountNumber(userId, bankingAccountNumber);
+        return isSuccess;
     }
 }

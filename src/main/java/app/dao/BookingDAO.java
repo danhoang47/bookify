@@ -32,7 +32,7 @@ public class BookingDAO {
     public void add(BookingDTO booking) throws SQLException {
         Connection conn = null;
         CallableStatement cs = null;
-        String sql = " proc_bookingRoom @bookingId = ?, @userId = ?, @checkin = ?, @checkout = ?, @adult = ?, @child = ?, @infants = ?, @pets = ?, @roomId = ?";
+        String sql = "proc_bookingRoom @bookingId = ?, @userId = ?, @checkin = ?, @checkout = ?, @adult = ?, @child = ?, @infants = ?, @pets = ?, @roomId = ?";
 
         try {
             conn = DBContext.getConnection();

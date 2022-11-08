@@ -257,7 +257,4 @@ public class BookingDTO {
     public String toString() {
         return "BookingDTO{" + "user=" + user + ", userId=" + userId + ", roomId=" + roomId + ", hotelId=" + hotelId + ", price=" + price + ", bookingId=" + bookingId + ", checkin=" + checkin + ", checkout=" + checkout + ", adult=" + adult + ", child=" + child + ", infant=" + infant + ", pet=" + pet + ", status=" + status + ", bookAt=" + bookAt + ", roomType=" + roomType + ", hotel=" + hotel + '}';
     }
-
-    
-    
 }

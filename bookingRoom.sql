@@ -18,14 +18,17 @@ begin
 	-- 0: pending
 	-- 1: accepted
 	-- 2: rejected
-
 	insert into Booking values
-		(
-			@bookingId, @userId, @checkin, @checkout, 
-			@adult, @child, @infants, @pets, 
-			@roomId, 0, getDate() 
-		)
+		( @bookingId, @userId, @checkin, @checkout, @adult, @child, @infants, @pets, @roomId, 0, getDate() )
 end
+
+select * from Booking
+proc_bookingRoom 
+	@bookingId = '8f6c84b1-8cc9-4d71-b6a9-4fc46b2e42c9',
+	@userId = '13069adc-3485-492b-8239-ba93c43d9d6e',
+	@checkin = '2022-11-08', @checkout = '2022-11-10',
+	@adult = 3, @child = 0, @infants = 0, @pets = 0, 
+	@roomId = 'c77e2c0d-75ef-44ef-b68b-b3835ed6bab0'
 
 -- Transaction histories
 create table Transact (
@@ -37,8 +40,6 @@ create table Transact (
 	foreign key(user_id) references userDetail(user_id)
 )
 
-select * from Booking
-
 -- trigger to insert into Transact table
 -- if Booking was rejected -> Transact.type = 2 -> Money back to User Banking Account 
 -- if Booking was accepted -> Transact.type = 1 -> Money deposits to HotelOwner BankingAccount 
@@ -49,7 +50,7 @@ on Booking
 after insert, update
 as
 begin
-
+	declare @bookingId varchar(50) = (select inserted.booking_id from inserted)
 	declare @type int = (select status from inserted)
 	declare @money int = (
 							select datediff(day, check_in, check_out) * RoomType.price as amount
@@ -112,4 +113,13 @@ update userDetail
 set banking_account_id = 1
 where user_id = '13069adc-3485-492b-8239-ba93c43d9d6e'
 
+select * from BankingAccount
+select * from userDetail
 select * from Booking
+
+BookingDTO{
+user=UserDTO{user_id=13069adc-3485-492b-8239-ba93c43d9d6e, 
+roomId=c77e2c0d-75ef-44ef-b68b-b3835ed6bab0, hotelId=null, price=0, 
+bookingId=8f6c84b1-8cc9-4d71-b6a9-4fc46b2e42c9, checkin=2022-11-08, 
+checkout=2022-11-10, adult=3, child=0, infant=0, pet=0, status=0,
+

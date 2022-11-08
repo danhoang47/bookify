@@ -355,10 +355,37 @@ public class UserDAO {
         return hotelId;
     }
     
+    
+    public boolean updateBankingAccountNumber(String userId, String bankingAccountNumber) {
+        try {
+            String query = "select * from BankingAccount where bank_number = ?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, bankingAccountNumber);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String bankId = rs.getString("bank_number");
+                String updateQuery = "update userDetail set banking_account_id = ? where user_id = ?";
+                PreparedStatement pss = conn.prepareStatement(updateQuery);
+                pss.setString(1, bankId);
+                pss.setString(2, userId);
+                
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public static void main(String[] args) {
 
-        String ud = new UserDAO().getOwnedHotelId("ca8c99e4-a955-4439-baaf-dc02c6aacf5e"); 
-        System.out.println(ud);
+        boolean ud = new UserDAO().updateBankingAccountNumber(
+                "asdasdasd",
+                "asdc-dawd-2312d-dasd"
+        ); 
 //        List<UserDetail> list = new UserDetailDAO().listAll();
 //        System.out.println(list);
 //        for (int i = 1; i <= 10; i++) {
@@ -371,5 +398,4 @@ public class UserDAO {
 //        System.out.println(test);
 
     }
-
 }
