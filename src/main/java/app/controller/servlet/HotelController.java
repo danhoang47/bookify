@@ -200,8 +200,12 @@ public class HotelController {
     @GET
     @Path("/search/advance")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchAdvanceHotel(@QueryParam("place") String place, @QueryParam("check-in") String checkin, @QueryParam("check-out") String checkout, 
-            @QueryParam("guest") int guest) throws SQLException, ParseException, ClassNotFoundException {
+    public Response searchAdvanceHotel(
+            @QueryParam("place") String place,
+            @QueryParam("check-in") String checkin, 
+            @QueryParam("check-out") String checkout, 
+            @QueryParam("guest") int guest
+    ) throws SQLException, ParseException, ClassNotFoundException {
         String placeNew = (place==null || place.length()==0) ? "" : place;
         String checkinNew = (checkin==null || checkin.length()==0) ? "" : checkin;
         String checkoutNew = (checkout==null || checkout.length()==0) ? "" : checkout;

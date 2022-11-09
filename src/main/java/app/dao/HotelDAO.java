@@ -56,11 +56,13 @@ public class HotelDAO {
                 String opening = rs.getString("opening");
                 int rating = rs.getInt("rating");
                 Date signAt = rs.getDate("signAt");
+                boolean isVerified = rs.getBoolean("is_verified");
                 hotel = new HotelDTO(id, ownerId,
                         hotelTypeId, name, backgroundImage,
                         isAllowPet, isAllowPet, isHasCamera,
                         description, country, district, city,
                         address, closing, opening, checkin, checkout, null, null, rating, signAt);
+                hotel.setIsVerified(isVerified);
 
                 System.out.println(hotel.getHotelName());
             }
@@ -619,6 +621,27 @@ public class HotelDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "update Hotel set is_verified = 1 where hotel_id = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareCall(sql);
+            ps.setString(1, hotelId);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            Logger.getLogger(HotelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+
+    public void setDisabled(String hotelId)  throws SQLException  {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "update Hotel set is_verified = 0 where hotel_id = ?";
 
         try {
             conn = new DBContext().getConnection();

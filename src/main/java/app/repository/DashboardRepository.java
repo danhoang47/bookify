@@ -83,4 +83,8 @@ public class DashboardRepository {
     public void verifiedHotel(String hotelId) throws SQLException {
         hotelDao.setVerified(hotelId);
     }
+
+    public void disabledHotel(String hotelId) throws SQLException {
+        hotelDao.setDisabled(hotelId);
+    }
 }

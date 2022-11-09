@@ -46,4 +46,14 @@ public class DashboardController {
         response.addProperty("success", "ok");
         return Response.ok(gson.toJson(response)).build();
     }
+    
+    @PUT
+    @Path("/disabled/{hotelId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response disabledHotel(@PathParam("hotelId") String hotelId) throws SQLException {
+        service.disabledHotel(hotelId);
+        JsonObject response = new JsonObject();
+        response.addProperty("success", "ok");
+        return Response.ok(gson.toJson(response)).build();
+    }
 }

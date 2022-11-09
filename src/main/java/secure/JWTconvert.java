@@ -27,7 +27,7 @@ public class JWTconvert {
                     .claim("user_id", user_id)
                     .claim("role", role)
                     .setIssuedAt(Date.from(now))
-                    .setExpiration(Date.from(now.plus(20, ChronoUnit.MINUTES)))
+                    .setExpiration(Date.from(now.plus(120, ChronoUnit.MINUTES)))
                     .signWith(Keys.hmacShaKeyFor(secret))
                     .compact();
 

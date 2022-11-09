@@ -39,4 +39,8 @@ public class DashboardService {
     public void verifiedHotel(String hotelId) throws SQLException {
        dashboardRepo.verifiedHotel(hotelId);
     }
+
+    public void disabledHotel(String hotelId)throws SQLException{
+        dashboardRepo.disabledHotel(hotelId);
+    }
 }
