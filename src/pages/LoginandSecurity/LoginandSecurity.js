@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastMessageContext } from "@/utils/contexts";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 import { useEffect, useContext } from "react";
+import { Grid } from '@mui/material';
 
 function LoginandSecurity() {
   const { user } = VerifyAuth();
@@ -24,10 +25,14 @@ function LoginandSecurity() {
   // }, []);
 
   return (
-    <div className={LoginandSecurityStyle["container"]}>
-      <HeaderInfo />
-      <FormUpdate />
-    </div>
+    <Grid container justifyContent={"center"}>
+      <Grid item xs={10}>
+        <div className={LoginandSecurityStyle[""]}>
+          <HeaderInfo />
+          <FormUpdate />
+        </div>
+      </Grid>
+    </Grid>
   );
 }
 

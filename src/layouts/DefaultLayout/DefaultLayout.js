@@ -11,108 +11,107 @@ import getNotification from "@/services/hotel/getNotification";
 import { SearchContext } from "@/utils/contexts";
 
 const guestsInitial = {
-    adult: 0,
-    child: 0,
-    infant: 0,
-    pet: 0,
+  adult: 0,
+  child: 0,
+  infant: 0,
+  pet: 0,
 };
 
 function DefaultLayout() {
-    const href = useHref();
-    const { user } = useContext(UserContext);
-    const current = useContext(WebSocketContext);
-    const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
-    const [notifs, setNotifs] = useState([]);
-    const [type, setType] = useState(1);
-    const [place, setPlace] = useState("Hà Nội");
-    const [selectedDays, setSelectedDays] = useState({});
-    const [guests, setGuests] = useState(guestsInitial);
-    const [isSearchAdvanceMode, setSearchAdvanceMode] = useState(false);
+  const href = useHref();
+  const { user } = useContext(UserContext);
+  const current = useContext(WebSocketContext);
+  const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
+  const [notifs, setNotifs] = useState([]);
+  const [type, setType] = useState(1);
+  const [place, setPlace] = useState("Hà Nội");
+  const [selectedDays, setSelectedDays] = useState({});
+  const [guests, setGuests] = useState(guestsInitial);
+  const [isSearchAdvanceMode, setSearchAdvanceMode] = useState(false);
 
-    const getBookmarkedHotel = () => {
-        getAllBookmarkedHotel(user.user_id).then((data) => {
-            setBookmarkedHotels(data);
-        });
+  const getBookmarkedHotel = () => {
+    getAllBookmarkedHotel(user.user_id).then((data) => {
+      setBookmarkedHotels(data);
+    });
+  };
+
+  const getNotifications = () => {
+    getNotification(user.user_id, type).then((data) => {
+      setNotifs(data);
+    });
+  };
+
+  const resetSearchAdvance = () => {
+    setPlace("");
+    setSelectedDays({});
+    setGuests(guestsInitial);
+  };
+
+  useEffect(() => {
+    getBookmarkedHotel();
+    getNotifications();
+
+    //eslint-disable-next-line
+  }, [user]);
+
+  const handleOnMessage = (event) => {
+    const newNotif = JSON.parse(event.data);
+    setNotifs((prev) => [newNotif, ...prev]);
+  };
+
+  const handleClose = (event) => {
+    console.log("close ", event.data);
+  };
+
+  useEffect(() => {
+    if (current) {
+      current.addEventListener("message", handleOnMessage);
+      current.addEventListener("close", handleClose);
+    }
+    return () => {
+      current?.removeEventListener("message", handleOnMessage);
+      current?.removeEventListener("close", handleClose);
     };
+  }, [current]);
 
-    const getNotifications = () => {
-        getNotification(user.user_id, type).then((data) => {
-            setNotifs(data)
-        });
+  const searchContextValue = useMemo(() => {
+    return {
+      place,
+      setPlace,
+      selectedDays,
+      setSelectedDays,
+      guests,
+      setGuests,
+      isSearchAdvanceMode,
+      setSearchAdvanceMode,
+      resetSearchAdvance,
     };
+  }, [place, guests, selectedDays, isSearchAdvanceMode]);
 
-    const resetSearchAdvance = () => {
-        setPlace("");
-        setSelectedDays({});
-        setGuests(guestsInitial);
-    }
-
-    useEffect(() => {
-        getBookmarkedHotel();
-        getNotifications();
-
-        //eslint-disable-next-line
-    }, [user]);
-
-    const handleOnMessage = (event) => {
-        const newNotif = JSON.parse(event.data);
-        setNotifs(prev => [newNotif, ...prev]);
-    }
-
-    const handleClose = (event) => {
-        console.log('close ', event.data);
-    }
-
-    useEffect(() => {
-        if (current) {
-            current.addEventListener("message", handleOnMessage)
-            current.addEventListener("close", handleClose)
-        }
-        return () => {
-            current?.removeEventListener("message", handleOnMessage)
-            current?.removeEventListener("close", handleClose)
-        };
-    }, [current])
-
-    const searchContextValue = useMemo(() => {
-        return {
-            place,
-            setPlace,
-            selectedDays,
-            setSelectedDays,
-            guests,
-            setGuests,
-            isSearchAdvanceMode, 
-            setSearchAdvanceMode,
-            resetSearchAdvance
-        };
-    }, [place, guests, selectedDays, isSearchAdvanceMode]);
-
-    console.log(isSearchAdvanceMode, place, guests, selectedDays);
-    return (
-        <SearchContext.Provider value={searchContextValue}>
-            <div className={styles["default-layout"]}>
-                <Header
-                    location={href}
-                    bookmarkedHotels={bookmarkedHotels}
-                    setBookmarkedHotels={setBookmarkedHotels}
-                    notifs={notifs}
-                    setNotifs={setNotifs}
-                />
-                <Box
-                    sx={{
-                        position: "relative",
-                        top: "72.78px",
-                    }}
-                >
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Outlet context={setBookmarkedHotels} />
-                    </Suspense>
-                </Box>
-                {/* <Footer /> */}
-            </div>
-        </SearchContext.Provider>
-    );
+  return (
+    <SearchContext.Provider value={searchContextValue}>
+      <div className={styles["default-layout"]}>
+        <Header
+          location={href}
+          bookmarkedHotels={bookmarkedHotels}
+          setBookmarkedHotels={setBookmarkedHotels}
+          notifs={notifs}
+          setNotifs={setNotifs}
+        />
+        <Box
+          sx={{
+            position: "relative",
+            top: "72.78px",
+          }}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet context={setBookmarkedHotels} />
+          </Suspense>
+        </Box>
+        {/* <Footer /> */}
+      </div>
+    </SearchContext.Provider>
+  );
 }
 
 export default memo(DefaultLayout);

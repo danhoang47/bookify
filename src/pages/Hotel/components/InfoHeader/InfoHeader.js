@@ -1,12 +1,25 @@
 import { UserContext } from "@/utils/contexts";
-import { faFlag, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFlag,
+  faHeart,
+  faStar,
+  faCheck,
+  faXmark,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { reportContext } from "../../Hotel";
 import { ToastMessageContext } from "@/utils/contexts";
-import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import {
+  getFailureToastMessage,
+  getSuccessToastMessage,
+} from "@/utils/reducers/toastMessageReducer";
 
 import InfoHeaderStyle from "./InfoHeader.module.scss";
+import verifiedHotel from "@/services/admin/verifiedHotel";
+import { useNavigate } from "react-router-dom";
+import disabledHotel from "@/services/admin/disabledHotel";
 
 function InfoHeader({
   reviews = 0,
@@ -15,9 +28,11 @@ function InfoHeader({
   rating = 0,
   isBookmarked = false,
   hotelId = null,
+  isVerified = false,
 }) {
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useContext(reportContext);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const { setToastMessages } = useContext(ToastMessageContext);
 
   const checkUser = () => {
@@ -48,6 +63,22 @@ function InfoHeader({
     }
   };
 
+  const setVerifiedHotel = async () => {
+    const data = await verifiedHotel(hotelId).then((data) => data);
+    navigate("/dashboard");
+    setToastMessages(
+      getSuccessToastMessage({ message: "Thay đổi trạng thái thành công" })
+    );
+  };
+
+  const setDisabledHotel = async () => {
+    const data = await disabledHotel(hotelId).then((data) => data);
+    navigate("/dashboard");
+    setToastMessages(
+      getSuccessToastMessage({ message: "Thay đổi trạng thái thành công" })
+    );
+  };
+
   return (
     <div className={InfoHeaderStyle["hotel_header"]}>
       <div className={InfoHeaderStyle["hotel_banner"]}>
@@ -63,7 +94,25 @@ function InfoHeader({
           - {roomType?.numberOfBathroom} phòng tắm
         </h5>
       </div>
+
       <div className={InfoHeaderStyle["hotel_options"]}>
+        {user.role === 3 ? (
+          isVerified ? (
+            <div className={InfoHeaderStyle["option_icon"]}>
+              <span onClick={setDisabledHotel}>
+                <FontAwesomeIcon icon={faXmark} style={{ minWidth: "1em" }} />
+              </span>
+            </div>
+          ) : (
+            <div className={InfoHeaderStyle["option_icon"]}>
+              <span onClick={setVerifiedHotel}>
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+            </div>
+          )
+        ) : (
+          ""
+        )}
         <div className={InfoHeaderStyle["option_icon"]}>
           <span
             onClick={() => {

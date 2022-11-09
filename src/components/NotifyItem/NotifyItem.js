@@ -13,7 +13,7 @@ const getNotifAction = (notif) => {
       return (
         <p className="action-infor">
           Khách sạn của bạn vừa nhận được 1 đơn đặt phòng bởi&nbsp;
-          <span className="notif-hightlight">{notif.actorName}</span>.
+          <span className="notif-hightlight">{notif.actorName}</span>
         </p>
       );
     case 1:
@@ -44,8 +44,8 @@ const getNotifAction = (notif) => {
       return (
         <p className="action-infor">
           Đơn đặt phòng của bạn vừa được&nbsp;
-          <span className="notif-hightlight">{notif.hotelName}</span> hủy bỏ.
-          Hãy kiểm tra ngay.
+          <span className="notif-hightlight">{notif.hotelName}</span> chấp nhận.
+          Hãy kiểm tra ngay
         </p>
       );
     case 5:
@@ -70,14 +70,8 @@ const getNotifAction = (notif) => {
 
 const getDateDiff = (notifDate) => {
   const today = new Date();
-  const diffInMinutes = differenceInMinutes(today, new Date(notifDate));
   const diffInHours = differenceInHours(today, new Date(notifDate));
-  if (diffInMinutes < 60) {
-    return {
-      diff: diffInMinutes,
-      type: "phút",
-    };
-  } else if (diffInHours < 24) {
+  if (diffInHours < 24) {
     return {
       diff: diffInHours,
       type: "giờ",

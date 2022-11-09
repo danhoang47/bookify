@@ -105,57 +105,53 @@ function HotelCard({
     }
   };
 
-    return (
-        <Link to={`hotel/${hotelId}`}>
-            <div className={"hotel-card"}>
-                <div className={"carousel"}>
-                    <Carousel controls={true} interval={null}>
-                        {allImages.map((src, index) => (
-                            <Carousel.Item key={index}>
-                                <img
-                                    className={"carousel-image"}
-                                    src={
-                                        "http://localhost:8080/bookify/images/hotels/" +
-                                        src
-                                    }
-                                    alt={hotelName}
-                                    loading="lazy"
-                                />
-                            </Carousel.Item>
-                        ))}
-                    </Carousel>
-                </div>
-                <div className={"hotel-info"}>
-                    <div className={"basic-info"}>
-                        <div className={"name-and-point"}>
-                            <h3 className={"hotel-name"}>{hotelName}</h3>
-                            <div className={"average-point"}>
-                                <FontAwesomeIcon icon={faStar} />
-                                <span>{rating}</span>
-                            </div>
-                        </div>
-                        <p
-                            className={"hotel-address"}
-                        >{`${country}, ${city}, ${district}, ${address}`}</p>
-                        <p
-                            className={"hotel-price-per-night"}
-                        >{`$${averagePirce}`}</p>
-                    </div>
-                </div>
-                <div
-                    className={[
-                        "bookmark-icon",
-                        bookmarked ? "bookmarked" : "",
-                    ].join(" ")}
-                    onClick={handleBookmark}
-                >
-                    <FontAwesomeIcon
-                        icon={bookmarked ? faHeartSolid : faHeart}
-                    />
-                </div>
+  return (
+    <Link to={`hotel/${hotelId}`}>
+      <div className={"hotel-card"}>
+        <div className={"carousel"}>
+          <Carousel controls={true} interval={null}>
+            {allImages.map((src, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  className={"carousel-image"}
+                  src={"http://localhost:8080/bookify/images/hotels/" + src}
+                  alt={hotelName}
+                  loading="lazy"
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </div>
+        <div className={"hotel-info"}>
+          <div className={"basic-info"}>
+            <div className={"name-and-point"}>
+              <h3 className={"hotel-name"}>{hotelName}</h3>
+              <div className={"average-point"}>
+                <FontAwesomeIcon icon={faStar} />
+                <span>{rating}</span>
+              </div>
             </div>
-        </Link>
-    );
+            <p
+              className={"hotel-address"}
+            >{`${country}, ${city}, ${district}, ${address}`}</p>
+            <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
+          </div>
+        </div>
+        {user.role === 0 ? (
+          ""
+        ) : (
+          <div
+            className={["bookmark-icon", bookmarked ? "bookmarked" : ""].join(
+              " "
+            )}
+            onClick={handleBookmark}
+          >
+            <FontAwesomeIcon icon={bookmarked ? faHeartSolid : faHeart} />
+          </div>
+        )}
+      </div>
+    </Link>
+  );
 }
 
 export default memo(HotelCard);

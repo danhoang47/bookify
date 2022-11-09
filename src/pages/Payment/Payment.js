@@ -40,74 +40,78 @@ function Payment() {
   }, [month]);
 
   return (
-    <div className={PaymentStyle["container"]}>
-      <HeaderInfo />
-      <OverrallContext.Provider value={[month, setMonth]}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid
-            container
-            spacing={1}
-            // direction={{
-            //   xs: "column-reverse",
-            //   sm: "column-reverse",
-            //   md: "row",
-            //   lg: "row",
-            // }}
-          >
-            <Grid item xs={12} md={6}>
-              <Box sx={{ width: "100%", typography: "body1" }}>
-                <TabContext value={value}>
-                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                    <TabList
-                      onChange={handleChange}
-                      aria-label="lab API tabs example"
-                      className={PaymentStyle["task1"]}
-                      TabIndicatorProps={{
-                        sx: {
-                          backgroundColor: "black",
-                          borderRadius: "10px",
-                          height: 2,
-                        },
-                      }}
-                      sx={{
-                        "& button": {},
-
-                        "& button.Mui-selected": {
-                          color: "black",
-                          fontWeight: 550,
-                        },
-                      }}
-                    >
-                      <Tab label="Thanh toán" value="1" />
-                      <Tab label="Phiếu giảm giá" value="2" />
-                    </TabList>
+    <Grid container justifyContent="center">
+      <Grid item xs={10}>
+        <div className={PaymentStyle[""]}>
+          <HeaderInfo />
+          <OverrallContext.Provider value={[month, setMonth]}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid
+                container
+                spacing={1}
+                // direction={{
+                //   xs: "column-reverse",
+                //   sm: "column-reverse",
+                //   md: "row",
+                //   lg: "row",
+                // }}
+              >
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ width: "100%", typography: "body1" }}>
+                    <TabContext value={value}>
+                      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        <TabList
+                          onChange={handleChange}
+                          aria-label="lab API tabs example"
+                          className={PaymentStyle["task1"]}
+                          TabIndicatorProps={{
+                            sx: {
+                              backgroundColor: "black",
+                              borderRadius: "10px",
+                              height: 2,
+                            },
+                          }}
+                          sx={{
+                            "& button": {},
+    
+                            "& button.Mui-selected": {
+                              color: "black",
+                              fontWeight: 550,
+                            },
+                          }}
+                        >
+                          <Tab label="Thanh toán" value="1" />
+                          <Tab label="Phiếu giảm giá" value="2" />
+                        </TabList>
+                      </Box>
+                      <TabPanel value="1">
+                        <OverrallDataContext.Provider
+                          value={[paymentList, setPaymentList]}
+                        >
+                          <OverrallChartDataContext.Provider
+                            value={[chartData, setChartData]}
+                          >
+                            <Overall />
+                          </OverrallChartDataContext.Provider>
+                        </OverrallDataContext.Provider>
+                      </TabPanel>
+                      <TabPanel value="2">
+                        <h1>Hiện chưa có</h1>
+                      </TabPanel>
+                    </TabContext>
                   </Box>
-                  <TabPanel value="1">
-                    <OverrallDataContext.Provider
-                      value={[paymentList, setPaymentList]}
-                    >
-                      <OverrallChartDataContext.Provider
-                        value={[chartData, setChartData]}
-                      >
-                        <Overall />
-                      </OverrallChartDataContext.Provider>
-                    </OverrallDataContext.Provider>
-                  </TabPanel>
-                  <TabPanel value="2">
-                    <h1>Hiện chưa có</h1>
-                  </TabPanel>
-                </TabContext>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <div className={PaymentStyle["bank-card"]}>
-                <BankCard bankWallet={walletAmount} />
-              </div>
-            </Grid>
-          </Grid>
-        </Box>
-      </OverrallContext.Provider>
-    </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <div className={PaymentStyle["bank-card"]}>
+                    <BankCard bankWallet={walletAmount} />
+                  </div>
+                </Grid>
+              </Grid>
+            </Box>
+          </OverrallContext.Provider>
+        </div>
+      </Grid>
+    </Grid>
   );
 }
 

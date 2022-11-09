@@ -47,7 +47,6 @@ function InputText({
               placeholder={inputPlaceholder}
               onChange={(e) => onValueChange(e.target.value)}
             />
-
             {type === "password" || label === "Card" ? (
               <button
                 className={InputTextStyles["button"]}

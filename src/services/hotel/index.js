@@ -18,26 +18,28 @@ import getAllTodayBooking from "./getAllTodayBooking";
 import acceptBooking from "./acceptBooking";
 import rejectBooking from "./rejectBooking";
 import getAllBooking from "./getAllBooking";
+import getAdvanceSearchHotels from "./getAdvanceSearchHotels";
 
 export {
-    getDistanceFromUser,
-    getExplorePlaces,
-    getHotel,
-    registerHotel,
-    searchDistrict,
-    SearchHotelTypes,
-    searchProvinces,
-    toGoogleApiUrl,
-    updateHotel,
-    getDefaultAmenities,
-    getDefaultAmenityTypes,
-    searchAdvanceHotel,
-    filterHotel,
-    getAllBookmarkedHotel,
-    searchBookingAvailable,
-    getHotelByOwnerId,
-    getAllTodayBooking,
-    acceptBooking,
-    rejectBooking,
-    getAllBooking
-}
+  getDistanceFromUser,
+  getExplorePlaces,
+  getHotel,
+  registerHotel,
+  searchDistrict,
+  SearchHotelTypes,
+  searchProvinces,
+  toGoogleApiUrl,
+  updateHotel,
+  getDefaultAmenities,
+  getDefaultAmenityTypes,
+  searchAdvanceHotel,
+  filterHotel,
+  getAllBookmarkedHotel,
+  searchBookingAvailable,
+  getHotelByOwnerId,
+  getAllTodayBooking,
+  acceptBooking,
+  rejectBooking,
+  getAllBooking,
+  getAdvanceSearchHotels,
+};

@@ -106,12 +106,11 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
 
   const handleBooking = async () => {
     console.log(isAllInformatioSelected);
+    if (!user.user_id) {
+      dispatch(getSignInModal({ isOpen: true }));
+      return;
+    }
     if (isAllInformatioSelected) {
-      if (!user.user_id) {
-        dispatch(getSignInModal({ isOpen: true }));
-        return;
-      }
-
       const isAvailable = await searchBookingAvailable(
         selectDays,
         hotelId

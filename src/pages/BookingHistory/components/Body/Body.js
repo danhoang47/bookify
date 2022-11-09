@@ -73,7 +73,7 @@ function Body() {
               <CustomizedTabPanel value="4">
                 <Tabs category={{ status: 0 }} />
               </CustomizedTabPanel>
-              <div className={BodyStyle["alert"]}>
+              {/* <div className={BodyStyle["alert"]}>
                 <div className={BodyStyle["alert-body"]}>
                   <h3>
                     <span>
@@ -89,7 +89,7 @@ function Body() {
                     <span> - Bookify</span>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </TabContext>
         </Box>

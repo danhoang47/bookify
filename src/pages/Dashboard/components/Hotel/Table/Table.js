@@ -2,8 +2,11 @@ import TableStyle from "../Hotel.module.scss";
 import moment from "moment";
 import { useMemo } from "react";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 function Table({ data, filter, hotels }) {
+  const navigate = useNavigate();
+
   return (
     <table>
       <thead>
@@ -41,7 +44,11 @@ function Table({ data, filter, hotels }) {
               )}
             </td>
             <td>
-              <button>
+              <button
+                onClick={() => {
+                  navigate(`/hotel/${row.hotelId}`);
+                }}
+              >
                 <b>Chi tiết</b>
               </button>
             </td>

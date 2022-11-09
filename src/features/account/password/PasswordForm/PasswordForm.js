@@ -17,7 +17,6 @@ import {
   getNewPasswordModal,
   getChangeCard,
 } from "@/utils/reducers/modalReducer";
-
 import { compareCurrentPassword } from "@/services/user";
 import {
   getFailureToastMessage,
