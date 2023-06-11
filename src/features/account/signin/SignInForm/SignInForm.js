@@ -16,6 +16,7 @@ import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 import { ToastMessageContext, UserContext } from "@/utils/contexts";
 import { signIn } from "@/services/user";
+import { SignIn } from "@/services-new/user";
 import { CircleLoading } from "@/components";
 import { format } from "date-fns";
 
@@ -52,20 +53,21 @@ function SignInForm({ setModalOpen }) {
         } else {
             setLoading(true);
             try {
-                await signIn(account.username, account.password).then(
+                await SignIn(account.username, account.password).then(
                     (data) => {
+                        console.log(data);
                         if (data?.error) {
                             console.log("account not found : " + data.error);
                         } else {
-                            localStorage.setItem("jwt", data.token);
-                            setUser(data.user);
-                            setLogin(true);
-                            setToastMessages(
-                                getSuccessToastMessage({
-                                    message: "Đăng nhập thành công",
-                                })
-                            );
-                            setModalOpen(event);
+                            // localStorage.setItem("jwt", data.token);
+                            // setUser(data.user);
+                            // setLogin(true);
+                            // setToastMessages(
+                            //     getSuccessToastMessage({
+                            //         message: "Đăng nhập thành công",
+                            //     })
+                            // );
+                            // setModalOpen(event);
                         }
                     }
                 );
