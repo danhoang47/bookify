@@ -16,6 +16,7 @@ export default function useSignIn() {
       console.log(data);
       setUser(data.user);
       setLogin(true);
+      localStorage.setItem("user", JSON.stringify(data.user));
       setToastMessages(
         getSuccessToastMessage({
           message: "Đăng nhập thành công",

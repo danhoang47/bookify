@@ -15,6 +15,7 @@ const appInitState = {
   isOpen: false,
   isOverlay: false,
 };
+const sessionUser = {};
 
 const userInitState = {
   account_number: "",
@@ -36,7 +37,8 @@ const websocketEndPoint = "ws://localhost:3001/notification";
 function App({ children }) {
   const [modalState, dispatch] = useReducer(modalReducer, appInitState);
   const [user, setUser] = useState(userInitState);
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState();
+  console.log(localStorage.getItem("user"));
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
   const websocket = useRef();
@@ -79,13 +81,14 @@ function App({ children }) {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/user/refresh", {
+    fetch("http://localhost:3001/user/verifyjwt", {
       method: "POST",
     })
       .then((res) => res.json())
       .then((data) => {
         setLogin(true);
-        setUser(data);
+        // setUser(data);
+        console.log(data);
       })
       .catch((err) => {
         setLogin(false);

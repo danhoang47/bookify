@@ -7,21 +7,20 @@ function VerifyAuth() {
   //   const navigate = useNavigate();
 
   useEffect(() => {
-      fetch("http://localhost:3001/user/refresh", {
-        method: "POST",
+    fetch("http://localhost:3001/user/verifyjwt", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLogin(true);
+        setUser(data);
+        console.log(data);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setLogin(true);
-          setUser(data);
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log("Login again: " + err);
-          setLogin(false);
-        });
-    }
-  , []);
+      .catch((err) => {
+        console.log("Login again: " + err);
+        setLogin(false);
+      });
+  }, []);
 
   return { user, isLogin };
 }

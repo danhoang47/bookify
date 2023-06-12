@@ -88,50 +88,64 @@ function RegisterSection({
 
     //eslint-disable-next-line
   }, []);
-
   useEffect(() => {
-    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-    const userForm = new FormData();
-    userForm.append("jwt", jwtString);
-    if (jwtString) {
-      fetch("http://localhost:3001/user/refresh", {
-        method: "POST",
-        body: userForm,
+    fetch("http://localhost:3001/user/verifyjwt", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLogin(true);
+        // setUser(data);
+        console.log(data);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.role === 1 || data.role === 2) {
-            setLogin(true);
-            setUser(data);
-          } else {
-            navigate("/");
-            setToastMessages(
-              getFailureToastMessage({
-                message: "Bạn không đủ quyền hạn",
-              })
-            );
-          }
-        })
-        .catch((err) => {
-          setUser({ role: 0 });
-          navigate("/");
-          setToastMessages(
-            getFailureToastMessage({
-              message: "Đăng nhập để truy cập",
-            })
-          );
-        });
-    } else {
-      navigate("/");
-      setUser({ role: 0 });
-      setToastMessages(
-        getFailureToastMessage({
-          message: "Đăng nhập để truy cập",
-        })
-      );
-    }
+      .catch((err) => {
+        setLogin(false);
+      });
   }, []);
+
+  // useEffect(() => {
+  //   const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+  //   const userForm = new FormData();
+  //   userForm.append("jwt", jwtString);
+  //   if (jwtString) {
+  //     fetch("http://localhost:3001/user/verifyjwt", {
+  //       method: "POST",
+  //       body: userForm,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         if (data.role === 1 || data.role === 2) {
+  //           setLogin(true);
+  //           setUser(data);
+  //         } else {
+  //           navigate("/");
+  //           setToastMessages(
+  //             getFailureToastMessage({
+  //               message: "Bạn không đủ quyền hạn",
+  //             })
+  //           );
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         setUser({ role: 0 });
+  //         navigate("/");
+  //         setToastMessages(
+  //           getFailureToastMessage({
+  //             message: "Đăng nhập để truy cập",
+  //           })
+  //         );
+  //       });
+  //   } else {
+  //     navigate("/");
+  //     setUser({ role: 0 });
+  //     setToastMessages(
+  //       getFailureToastMessage({
+  //         message: "Đăng nhập để truy cập",
+  //       })
+  //     );
+  //   }
+  // }, []);
 
   const registerContextValue = useMemo(
     () => ({

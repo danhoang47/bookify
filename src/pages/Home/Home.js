@@ -67,7 +67,7 @@ function Home() {
     isSearchAdvanceMode,
     setSearchAdvanceMode,
   } = useContext(SearchContext);
-
+  console.log(selectedDays);
   const getNumberOfFilterItemPicked = () => {
     const numberOfAmenitiesPicked = amenitiesPicked.length;
     const numberOfRoomAndBedRoomPicked = Object.keys(roomAndBedRoom).reduce(
