@@ -1,2 +1,3 @@
 import SignIn from "./SignIn";
-export {SignIn};
+import SignUp from "./SignUp.js";
+export {SignIn,SignUp};

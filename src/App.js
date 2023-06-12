@@ -31,12 +31,12 @@ const userInitState = {
   bank_card: "",
 };
 
-const websocketEndPoint = "ws://localhost:8080/bookify/notification";
+const websocketEndPoint = "ws://localhost:3001/notification";
 
 function App({ children }) {
   const [modalState, dispatch] = useReducer(modalReducer, appInitState);
   const [user, setUser] = useState(userInitState);
-  const [isLogin, setLogin] = useState(true);
+  const [isLogin, setLogin] = useState(false);
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
   const websocket = useRef();
@@ -79,23 +79,17 @@ function App({ children }) {
   }, []);
 
   useEffect(() => {
-    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-    const userForm = new FormData();
-    userForm.append("jwt", jwtString);
-    if (jwtString) {
-      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
-        method: "POST",
-        body: userForm,
+    fetch("http://localhost:3001/user/refresh", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLogin(true);
+        setUser(data);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setLogin(true);
-          setUser(data);
-        })
-        .catch((err) => {
-          setLogin(false);
-        });
-    }
+      .catch((err) => {
+        setLogin(false);
+      });
   }, []);
 
   useEffect(() => {

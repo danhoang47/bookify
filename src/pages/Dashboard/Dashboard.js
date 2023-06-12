@@ -124,7 +124,7 @@ function Dashboard() {
     const userForm = new FormData();
     userForm.append("jwt", jwtString);
     if (jwtString) {
-      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+      fetch("http://localhost:3001/user/refresh", {
         method: "POST",
         body: userForm,
       })

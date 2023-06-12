@@ -29,30 +29,30 @@ function DefaultLayout() {
   const [guests, setGuests] = useState(guestsInitial);
   const [isSearchAdvanceMode, setSearchAdvanceMode] = useState(false);
 
-  const getBookmarkedHotel = () => {
-    getAllBookmarkedHotel(user.user_id).then((data) => {
-      setBookmarkedHotels(data);
-    });
-  };
+  // const getBookmarkedHotel = () => {
+  //   getAllBookmarkedHotel(user._id).then((data) => {
+  //     setBookmarkedHotels(data);
+  //   });
+  // };
 
-  const getNotifications = () => {
-    getNotification(user.user_id, type).then((data) => {
-      setNotifs(data);
-    });
-  };
+  // const getNotifications = () => {
+  //   getNotification(user.user_id, type).then((data) => {
+  //     setNotifs(data);
+  //   });
+  // };
 
-  const resetSearchAdvance = () => {
-    setPlace("");
-    setSelectedDays({});
-    setGuests(guestsInitial);
-  };
+  // const resetSearchAdvance = () => {
+  //   setPlace("");
+  //   setSelectedDays({});
+  //   setGuests(guestsInitial);
+  // };
 
-  useEffect(() => {
-    getBookmarkedHotel();
-    getNotifications();
+  // useEffect(() => {
+  //   getBookmarkedHotel();
+  //   getNotifications();
 
-    //eslint-disable-next-line
-  }, [user]);
+  //   //eslint-disable-next-line
+  // }, [user]);
 
   const handleOnMessage = (event) => {
     const newNotif = JSON.parse(event.data);
@@ -84,7 +84,7 @@ function DefaultLayout() {
       setGuests,
       isSearchAdvanceMode,
       setSearchAdvanceMode,
-      resetSearchAdvance,
+      // resetSearchAdvance,
     };
   }, [place, guests, selectedDays, isSearchAdvanceMode]);
 

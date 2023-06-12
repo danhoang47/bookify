@@ -7,13 +7,8 @@ function VerifyAuth() {
   //   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-    const userForm = new FormData();
-    userForm.append("jwt", jwtString);
-    if (jwtString) {
-      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
+      fetch("http://localhost:3001/user/refresh", {
         method: "POST",
-        body: userForm,
       })
         .then((res) => res.json())
         .then((data) => {
@@ -26,7 +21,7 @@ function VerifyAuth() {
           setLogin(false);
         });
     }
-  }, []);
+  , []);
 
   return { user, isLogin };
 }
