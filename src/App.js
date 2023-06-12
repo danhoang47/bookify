@@ -81,8 +81,9 @@ function App({ children }) {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/user/verifyjwt", {
+    fetch("http://localhost:3001/user/testIsSave", {
       method: "POST",
+      withCredentials: true,
     })
       .then((res) => res.json())
       .then((data) => {

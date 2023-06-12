@@ -119,7 +119,7 @@ function Dashboard() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:3001/user/verifyjwt", {
+    fetch("http://localhost:3001/user/verifyjwt", {credentials: 'include' ,
       method: "POST",
     })
       .then((res) => res.json())

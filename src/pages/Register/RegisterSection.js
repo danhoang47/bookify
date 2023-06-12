@@ -90,7 +90,7 @@ function RegisterSection({
   }, []);
   useEffect(() => {
     fetch("http://localhost:3001/user/verifyjwt", {
-      method: "POST",
+      credentials: 'include' ,  method: "POST",
     })
       .then((res) => res.json())
       .then((data) => {
