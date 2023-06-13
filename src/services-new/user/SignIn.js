@@ -6,6 +6,8 @@ async function SignIn(username, password) {
   accountForm.append("password", password);
   const options = {
     method: "POST",
+    credentials: "include",
+    withCredentials: true,
     body: accountForm,
   };
 

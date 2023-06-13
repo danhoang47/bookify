@@ -1,28 +1,34 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts";
+import { VerifyJwt } from "@/services-new/user/VerifyJwt";
 
 function VerifyAuth() {
-  const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  // const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  const [firstLogin, setFirstLogin] = useState(false);
+  const [userLocal, setUser] = useState();
   //   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("http://localhost:3001/user/verifyjwt", {
-      credentials: 'include' , method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLogin(true);
-        setUser(data);
+  const verifyData = useQuery({
+    queryKey: ["verify"],
+    queryFn: VerifyJwt,
+    onSuccess: (data) => {
+      // console.log(data);
+      if (data.status === 500) {
+        setFirstLogin(false);
+        localStorage.removeItem("user");
+      } else {
+        setFirstLogin(true);
         console.log(data);
-      })
-      .catch((err) => {
-        console.log("Login again: " + err);
-        setLogin(false);
-      });
-  }, []);
+        setUser(data.user);
+      }
+      // setLogin(true);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
-  return { user, isLogin };
+  return { userLocal, firstLogin, verifyData };
 }
-
 export default VerifyAuth;

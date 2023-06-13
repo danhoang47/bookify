@@ -11,7 +11,7 @@ import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
-  const { setLogin } = useContext(UserContext);
+  const { isLogin, setLogin } = useContext(UserContext);
   const { user, setUser } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
