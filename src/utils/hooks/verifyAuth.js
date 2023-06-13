@@ -5,7 +5,7 @@ import { UserContext } from "../contexts";
 import { VerifyJwt } from "@/services-new/user/VerifyJwt";
 
 function VerifyAuth() {
-  // const { user, setUser, isLogin, setLogin } = useContext(UserContext);
+  const { user, isLogin, setLogin } = useContext(UserContext);
   const [firstLogin, setFirstLogin] = useState(false);
   const [userLocal, setUser] = useState();
   //   const navigate = useNavigate();
