@@ -90,7 +90,8 @@ function RegisterSection({
   }, []);
   useEffect(() => {
     fetch("http://localhost:3001/user/verifyjwt", {
-      credentials: 'include' ,  method: "POST",
+      credentials: "include",
+      method: "POST",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -218,7 +219,7 @@ function RegisterSection({
         viewImages,
         extraInfor,
         roomInfor,
-        user.user_id
+        user._id
       );
       setToastMessages(
         getSuccessToastMessage({ message: "Đăng ký khách sạn thành công" })

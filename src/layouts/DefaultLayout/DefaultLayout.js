@@ -36,7 +36,7 @@ function DefaultLayout() {
   // };
 
   // const getNotifications = () => {
-  //   getNotification(user.user_id, type).then((data) => {
+  //   getNotification(user._id, type).then((data) => {
   //     setNotifs(data);
   //   });
   // };

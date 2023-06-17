@@ -25,7 +25,7 @@ function Table({ data, filter, hotels }) {
                   ? row.hotelOwner.subname + " " + row.hotelOwner.name
                   : row.hotelOwner.username}
               </p>
-              <p>ID:{row.hotelOwner.user_id}</p>
+              <p>ID:{row.hotelOwner._id}</p>
             </td>
             <td>
               <p>{row.hotelName}</p>

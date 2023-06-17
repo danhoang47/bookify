@@ -3,23 +3,40 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts";
 import { VerifyJwt } from "@/services-new/user/VerifyJwt";
-
+const userInitState = {
+  account_number: "",
+  avatar: "",
+  dob: "",
+  email: "",
+  name: "",
+  phone: "",
+  role: 0,
+  self_description: "",
+  subname: "",
+  _id: null,
+  username: "",
+  bank_card: "",
+};
 function VerifyAuth() {
-  const { user, isLogin, setLogin } = useContext(UserContext);
-  const [firstLogin, setFirstLogin] = useState(false);
-  const [userLocal, setUser] = useState();
+  // const { user, isLogin, setLogin } = useContext(UserContext);
+  const [firstLogin, setFirstLogin] = useState(localStorage.getItem("login"));
+  const [userLocal, setUser] = useState(userInitState);
+
   //   const navigate = useNavigate();
   const verifyData = useQuery({
     queryKey: ["verify"],
     queryFn: VerifyJwt,
     onSuccess: (data) => {
       // console.log(data);
-      if (data.status === 500) {
+      if (data === 500) {
         setFirstLogin(false);
+        setUser(userInitState);
         localStorage.removeItem("user");
+        localStorage.removeItem("login");
       } else {
         setFirstLogin(true);
-        console.log(data);
+        // console.log(data);]\
+        localStorage.setItem("login", true);
         setUser(data.user);
       }
       // setLogin(true);

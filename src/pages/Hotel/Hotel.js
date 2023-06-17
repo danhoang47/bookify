@@ -32,7 +32,7 @@ function Hotel() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user.user_id}`
+      `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user._id}`
     )
       .then((res) => res.json())
       .then((result) => {

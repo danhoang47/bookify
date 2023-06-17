@@ -47,7 +47,7 @@ function PasswordForm({ submodal }) {
     } else {
       setLoading(true);
       try {
-        await compareCurrentPassword(user.user_id, password).then((data) => {
+        await compareCurrentPassword(user._id, password).then((data) => {
           if (data?.error) {
             console.log(data.error);
             setToastMessages(

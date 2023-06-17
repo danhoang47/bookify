@@ -28,7 +28,7 @@ function Payment() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8080/bookify/api/user/bookingHistory/transaction?userid=${user.user_id}&month=${month}`
+      `http://localhost:8080/bookify/api/user/bookingHistory/transaction?userid=${user._id}&month=${month}`
     )
       .then((res) => res.json())
       .then((result) => {
@@ -73,7 +73,7 @@ function Payment() {
                           }}
                           sx={{
                             "& button": {},
-    
+
                             "& button.Mui-selected": {
                               color: "black",
                               fontWeight: 550,

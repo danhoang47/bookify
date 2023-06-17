@@ -7,34 +7,35 @@ import { useContext } from "react";
 import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function IconButton({ icon, renderChild, isHasNotifUnRead = null }) {
-    const [isOpen, handleClick, containerRef] = useDropdown();
-    const { user } = useContext(UserContext);
-    const { dispatch } = useContext(ModalContext);
+  const [isOpen, handleClick, containerRef] = useDropdown();
+  const { user } = useContext(UserContext);
+  console.log(user);
+  const { dispatch } = useContext(ModalContext);
 
-    return (
-        <div
-            className={useClsx(iconButtonStyles["icon-button-wrapper"])}
-            ref={containerRef}
-        >
-            <button
-                className={useClsx(
-                    iconButtonStyles["icon-button"],
-                    isHasNotifUnRead ? iconButtonStyles["unread"] : ""
-                )}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    if (!user.user_id) {
-                        dispatch(getSignInModal({ isOpen: true }));
-                        return;
-                    } 
-                    handleClick(e)
-                }}
-            >
-                <FontAwesomeIcon icon={icon} />
-            </button>
-            {isOpen && renderChild(handleClick)}
-        </div>
-    );
+  return (
+    <div
+      className={useClsx(iconButtonStyles["icon-button-wrapper"])}
+      ref={containerRef}
+    >
+      <button
+        className={useClsx(
+          iconButtonStyles["icon-button"],
+          isHasNotifUnRead ? iconButtonStyles["unread"] : ""
+        )}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!user._id) {
+            dispatch(getSignInModal({ isOpen: true }));
+            return;
+          }
+          handleClick(e);
+        }}
+      >
+        <FontAwesomeIcon icon={icon} />
+      </button>
+      {isOpen && renderChild(handleClick)}
+    </div>
+  );
 }
 
 export default IconButton;

@@ -3,7 +3,7 @@ import Body from "./components/Body";
 import { HistoryContext, UserContext } from "@/utils/contexts";
 import { useContext, useEffect, useMemo, useState } from "react";
 import BookingHistoryStyle from "./BookingHistory.module.scss";
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 
 function BookingHistory() {
   const list = useMemo(
@@ -93,9 +93,7 @@ function BookingHistory() {
   const [value, setValue] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/bookify/api/user/bookingHistory/" + user.user_id
-    )
+    fetch("http://localhost:8080/bookify/api/user/bookingHistory/" + user._id)
       .then((res) => res.json())
       .then((result) => setValue(result));
   }, []);

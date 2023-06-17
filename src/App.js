@@ -1,5 +1,12 @@
 import "./_global.scss";
-import { useEffect, useMemo, useReducer, useState, useRef } from "react";
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import {
   ModalContext,
   UserContext,
@@ -18,32 +25,22 @@ const appInitState = {
 };
 const sessionUser = {};
 
-const userInitState = {
-  account_number: "",
-  avatar: "",
-  dob: "",
-  email: "",
-  name: "",
-  phone: "",
-  role: 0,
-  self_description: "",
-  subname: "",
-  _id: null,
-  username: "",
-  bank_card: "",
-};
-
 const websocketEndPoint = "ws://localhost:3001/notification";
 
 function App({ children }) {
   const { verifyData, firstLogin, userLocal } = VerifyAuth();
   const [modalState, dispatch] = useReducer(modalReducer, appInitState);
-  const [user, setUser] = useState(userInitState || userLocal);
+  const [user, setUser] = useState(userLocal);
   const [isLogin, setLogin] = useState(firstLogin);
+  const updateData = useCallback(() => {
+    setLogin(firstLogin);
+    setUser(userLocal);
+  }, [firstLogin, userLocal]);
   useEffect(() => {
-    console.log(isLogin);
-    console.log(userLocal);
-  }, []);
+    // console.log(user);
+    // console.log(isLogin);
+    updateData();
+  }, [firstLogin, userLocal]);
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
   const websocket = useRef();
@@ -62,7 +59,7 @@ function App({ children }) {
       isLogin,
       setLogin,
     }),
-    [isLogin, user]
+    [isLogin, user, firstLogin, userLocal]
   );
 
   const toastMessageContextValue = useMemo(
@@ -103,7 +100,7 @@ function App({ children }) {
   // }, []);
 
   useEffect(() => {
-    websocket.current = new WebSocket(`${websocketEndPoint}/${user.user_id}`);
+    websocket.current = new WebSocket(`${websocketEndPoint}/${user._id}`);
   }, [user]);
 
   return (

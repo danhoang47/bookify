@@ -13,6 +13,7 @@ function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
   const { isLogin, setLogin } = useContext(UserContext);
   const { user, setUser } = useContext(UserContext);
+  // console.log(user);
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
 
@@ -144,8 +145,13 @@ function OptionList({ handleClick }) {
         }}
       >
         {options.reduce(
-          (prev, { title, style, requiredRole, onClickHandler }, index) => {
-            if (requiredRole.includes(user.role)) {
+          (
+            prev,
+            { title, style, requiredRole, isLoginRequired, onClickHandler },
+            index
+          ) => {
+            if (isLoginRequired === isLogin) {
+              // console.log(prev);
               return [
                 ...prev,
                 <li

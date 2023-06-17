@@ -24,22 +24,20 @@ function Tabs({ category }) {
 
   useEffect(() => {
     if (category.filter === "all") {
-      fetch(
-        "http://localhost:8080/bookify/api/user/bookingHistory/" + user.user_id
-      )
+      fetch("http://localhost:8080/bookify/api/user/bookingHistory/" + user._id)
         .then((res) => res.json())
         .then((result) => setBookingData(result));
     }
     if (category.checkinDate) {
       fetch(
-        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user.user_id}&condition=${category.checkinDate}`
+        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.checkinDate}`
       )
         .then((res) => res.json())
         .then((result) => setBookingData(result));
     }
     if (category.status === 1 || category.status === 0) {
       fetch(
-        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user.user_id}&condition=${category.status}`
+        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.status}`
       )
         .then((res) => res.json())
         .then((result) => setBookingData(result));

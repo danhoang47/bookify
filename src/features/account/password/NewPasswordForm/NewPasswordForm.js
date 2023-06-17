@@ -49,18 +49,16 @@ function NewPasswordForm() {
     );
     if (checkPassword) {
       try {
-        await newPassowrdUpdate(user.user_id, newPassword.password).then(
-          (data) => {
-            if (data?.error) {
-              console.log(data.error);
-            } else {
-              console.log(data);
-              setToastMessages(
-                getSuccessToastMessage({ message: "Đổi mật khẩu thành công" })
-              );
-            }
+        await newPassowrdUpdate(user._id, newPassword.password).then((data) => {
+          if (data?.error) {
+            console.log(data.error);
+          } else {
+            console.log(data);
+            setToastMessages(
+              getSuccessToastMessage({ message: "Đổi mật khẩu thành công" })
+            );
           }
-        );
+        });
       } catch (e) {
         console.log(e);
       }

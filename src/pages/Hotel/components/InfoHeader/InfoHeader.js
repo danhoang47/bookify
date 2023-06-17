@@ -36,9 +36,9 @@ function InfoHeader({
   const { setToastMessages } = useContext(ToastMessageContext);
 
   const checkUser = () => {
-    if (user.user_id) {
+    if (user._id) {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/report?hotelid=${hotelId}&userid=${user.user_id}`
+        `http://localhost:8080/bookify/api/hotel/report?hotelid=${hotelId}&userid=${user._id}`
       )
         .then((res) => res.json())
         .then((result) => {

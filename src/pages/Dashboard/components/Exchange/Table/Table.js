@@ -51,7 +51,7 @@ function Table({ exchangeData }) {
             <tr key={key}>
               <td>
                 <p>{row.userFullName ? row.userFullName : row.username}</p>
-                <p>ID:{row.user_id}</p>
+                <p>ID:{row._id}</p>
               </td>
               <td>
                 <p>{format(new Date(row.check_out), "MMMM dd, yyyy")}</p>

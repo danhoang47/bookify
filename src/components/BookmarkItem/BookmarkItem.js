@@ -7,64 +7,59 @@ import { useContext } from "react";
 import { UserContext } from "@/utils/contexts";
 
 function BookmarkItem({
-    hotelId,
-    hotelName,
-    backgroundImg,
-    country,
-    district,
-    city,
-    address,
-    roomType,
-    handleDeleted,
+  hotelId,
+  hotelName,
+  backgroundImg,
+  country,
+  district,
+  city,
+  address,
+  roomType,
+  handleDeleted,
 }) {
-    const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-    const unBookmarkHotel = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        deleteHotelFromBookmark(hotelId, user.user_id);
-        handleDeleted(hotelId);
-    };
+  const unBookmarkHotel = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    deleteHotelFromBookmark(hotelId, user._id);
+    handleDeleted(hotelId);
+  };
 
-    return (
-        <Link to={`hotel/${hotelId}`}>
-            <div
-                className={bookmarkItemStyles["bookmark-item"]}
-                style={{
-                    backgroundImage: `url(${backgroundImg})`,
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                }}
-                tabIndex="-1"
+  return (
+    <Link to={`hotel/${hotelId}`}>
+      <div
+        className={bookmarkItemStyles["bookmark-item"]}
+        style={{
+          backgroundImage: `url(${backgroundImg})`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+        tabIndex="-1"
+      >
+        <div className={bookmarkItemStyles["item-infor"]} tabIndex="-1">
+          <div className={bookmarkItemStyles["infor-left"]}>
+            <h4 className={bookmarkItemStyles["hotel-name"]}>{hotelName}</h4>
+            <p className={bookmarkItemStyles["hotel-address"]}>
+              {`${address}, ${district}, ${city}, ${country}`}
+            </p>
+            <p className={bookmarkItemStyles["price"]}>
+              {`$${roomType?.price}`}
+            </p>
+          </div>
+          <div className={bookmarkItemStyles["infor-right"]} tabIndex="-1">
+            <button
+              className={bookmarkItemStyles["unbookmark-button"]}
+              onClick={unBookmarkHotel}
             >
-                <div className={bookmarkItemStyles["item-infor"]} tabIndex="-1">
-                    <div className={bookmarkItemStyles["infor-left"]}>
-                        <h4 className={bookmarkItemStyles["hotel-name"]}>
-                            {hotelName}
-                        </h4>
-                        <p className={bookmarkItemStyles["hotel-address"]}>
-                            {`${address}, ${district}, ${city}, ${country}`}
-                        </p>
-                        <p className={bookmarkItemStyles["price"]}>
-                            {`$${roomType?.price}`}
-                        </p>
-                    </div>
-                    <div
-                        className={bookmarkItemStyles["infor-right"]}
-                        tabIndex="-1"
-                    >
-                        <button
-                            className={bookmarkItemStyles["unbookmark-button"]}
-                            onClick={unBookmarkHotel}
-                        >
-                            <FontAwesomeIcon icon={faXmark} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </Link>
-    );
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
 }
 
 export default BookmarkItem;

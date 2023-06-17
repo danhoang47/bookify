@@ -78,14 +78,14 @@ function HotelCard({
 
   const handleBookmark = async (event) => {
     event.preventDefault();
-    if (!user.user_id) {
+    if (!user._id) {
       setToastMessages(
         getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
       );
       return;
     }
     if (bookmarked) {
-      const res = await deleteHotelFromBookmark(hotelId, user.user_id).then(
+      const res = await deleteHotelFromBookmark(hotelId, user._id).then(
         (res) => res
       );
       if (res?.ok) {
@@ -94,7 +94,7 @@ function HotelCard({
         setBookmarked(false);
       }
     } else {
-      const res = await addHotelToBookmark(hotelId, user.user_id).then(
+      const res = await addHotelToBookmark(hotelId, user._id).then(
         (res) => res
       );
       if (res?.ok) {

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useCallback, useRef } from "react";
 import FormUpdateStyle from "./FormUpdate.module.scss";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,10 +12,14 @@ import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import useFetchUser from "@/utils/hooks/useFetchUser";
 
 function FormUpdate({ account }) {
+  const { userData, isLoading, updateUser, setUserData } = useFetchUser();
+  const { user, setUser } = useContext(UserContext);
+  const changedKey = useRef();
   const { setToastMessages } = useContext(ToastMessageContext);
-  const [subname, setSubname] = useState(account.subname);
+  const [subname, setSubname] = useState();
   const [name, setName] = useState(account.name);
   const [email, setEmail] = useState(account.email);
   const [phone, setPhone] = useState(account.phone);
@@ -23,19 +27,9 @@ function FormUpdate({ account }) {
   const [des, setDes] = useState(account.self_description);
   const [avatar, setAvatar] = useState(account.avatar);
   const [readOnly, setReadOnly] = useState(true);
-
-  const onChangeSubname = (e) => {
-    setSubname(e.target.value);
-  };
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const onChangePhone = (e) => {
-    setPhone(e.target.value);
-  };
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
   const onChangeDob = (e) => {
     var currentDate = new Date(e.target.value);
     console.log(currentDate);
@@ -46,58 +40,31 @@ function FormUpdate({ account }) {
     var year = currentDate.getFullYear();
     var formattedDate = dateOfMonth + "/" + month + "/" + year;
     console.log("format " + formattedDate);
-    setDob(e.target.value);
+    setUserData((prev) => {
+      return { ...prev, ["dob"]: e.target.value };
+    });
   };
 
-  const onAvatarUpload = (data) => {
-    setAvatar(data);
-  };
-
+  const onUpdateInput = useCallback(
+    (value, key) => {
+      setUserData((prev) => {
+        return {
+          ...prev,
+          [key]: value,
+        };
+      });
+      changedKey.current = key;
+    },
+    [userData]
+  );
   const onSubmitClick = (e) => {
     e.preventDefault();
-
-    account.name = name;
-    account.subname = subname;
-    account.email = email;
-    account.phone = phone;
-    account.dob = dob;
-    account.des = des;
-    account.avatar = avatar;
-
-    const formData = new FormData();
-    formData.append("subname", subname);
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("dob", format(new Date(dob), "yyyy-MM-dd"));
-    formData.append("selfdescription", des);
-    formData.append("avatar", avatar);
-
-    fetch("http://localhost:8080/bookify/api/user/update/" + account.user_id, {
-      method: "POST",
-      body: formData,
-    })
-      .then((data) => {
-        data.json();
-      })
-      .then((result) => {
-        setToastMessages(
-          getSuccessToastMessage({
-            message: "Cập nhật thành công",
-          })
-        );
-        setReadOnly(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        setToastMessages(
-          getFailureToastMessage({
-            message: "Cập nhật thất bại",
-          })
-        );
-        setReadOnly(true);
-      });
+    updateUser(userData);
+    setReadOnly(true);
   };
+  if (isLoading === true) {
+    return <span>Loading...</span>;
+  }
 
   return (
     <div>
@@ -111,8 +78,10 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên đệm của bạn"}
                     name={"subname"}
-                    value={subname ? subname : ""}
-                    onChange={onChangeSubname}
+                    value={!isLoading ? userData.subName : ""}
+                    onChange={(event) =>
+                      onUpdateInput(event.target.value, "subName")
+                    }
                     labelContent={"Họ và tên đệm"}
                     readOnly={readOnly}
                   />
@@ -122,8 +91,10 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên bạn"}
                     name={"name"}
-                    value={name ? name : ""}
-                    onChange={onChangeName}
+                    value={!isLoading ? userData.name : ""}
+                    onChange={(event) =>
+                      onUpdateInput(event.target.value, "name")
+                    }
                     labelContent={"Tên"}
                     readOnly={readOnly}
                   />
@@ -135,8 +106,10 @@ function FormUpdate({ account }) {
                     type={"email"}
                     placeholder={"Điền Email"}
                     name={"email"}
-                    value={email}
-                    onChange={onChangeEmail}
+                    value={!isLoading ? userData.email : ""}
+                    onChange={(event) =>
+                      onUpdateInput(event.target.value, "email")
+                    }
                     labelContent={"Email"}
                     readOnly={readOnly}
                   />
@@ -148,8 +121,10 @@ function FormUpdate({ account }) {
                     type={"phone"}
                     placeholder={"Điền số điền thoại"}
                     name={"phone"}
-                    value={phone ? phone : ""}
-                    onChange={onChangePhone}
+                    value={!isLoading ? userData.phone : ""}
+                    onChange={(event) =>
+                      onUpdateInput(event.target.value, "phone")
+                    }
                     labelContent={"Số điện thoại"}
                     readOnly={readOnly}
                   />
@@ -160,7 +135,7 @@ function FormUpdate({ account }) {
                   {/* <PersonalInput /> */}
                   <DatePicker
                     name={"dob"}
-                    value={dob ? dob : ""}
+                    value={!isLoading ? userData.dob : ""}
                     onChange={onChangeDob}
                     labelContent={"Ngày sinh"}
                     readOnly={readOnly}
@@ -187,10 +162,10 @@ function FormUpdate({ account }) {
                           ? FormUpdateStyle["textarea-update"]
                           : FormUpdateStyle["textarea-update-readOnly"]
                       }
-                      onChange={(e) => {
-                        setDes(e.target.value);
+                      onChange={(event) => {
+                        onUpdateInput(event.target.value, "selfDescription");
                       }}
-                      defaultValue={des ? des : ""}
+                      defaultValue={isLoading ? userData.selfDescription : ""}
                       readOnly={readOnly}
                     ></textarea>
                     <label
@@ -208,13 +183,13 @@ function FormUpdate({ account }) {
                 <Grid item xs={12} md={5}>
                   <FileUpload
                     avatar={
-                      account.avatar !== "" ||
-                      account.avatar !==
+                      userData.avatar !== "" ||
+                      userData.avatar !==
                         "http://localhost:8080/bookify/images/users/null"
-                        ? account.avatar
+                        ? userData.avatar
                         : "http://localhost:8080/bookify/images/users/blankUser.jpg"
                     }
-                    onAvatarUpload={onAvatarUpload}
+                    onAvatarUpload={onUpdateInput}
                     readOnly={readOnly}
                   />
                 </Grid>

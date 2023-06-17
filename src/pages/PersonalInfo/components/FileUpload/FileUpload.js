@@ -35,7 +35,7 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
     // using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
     setPreview(e.target.files[0]);
-    onAvatarUpload(e.target.files[0]);
+    onAvatarUpload(e.target.files[0], "avatar");
     setIsFilePicked(true);
   };
   return (

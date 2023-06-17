@@ -100,11 +100,11 @@ function Home() {
     );
   };
 
-  const getHotel = () => {
-    fetch("http://localhost:8080/bookify/api/hotel/all?userid=" + user.user_id)
-      .then((res) => res.json())
-      .then((result) => setHotelsList(result));
-  };
+  // const getHotel = () => {
+  //   fetch("http://localhost:8080/bookify/api/hotel/all?userid=" + user._id)
+  //     .then((res) => res.json())
+  //     .then((result) => setHotelsList(result));
+  // };
 
   const getAdvanceSearchHotel = async () => {
     setLoading(true);
@@ -117,14 +117,14 @@ function Home() {
   useEffect(() => {
     if (type.filterType || type.filterTypeId) {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user.user_id}`
+        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user._id}`
       )
         .then((res) => res.json())
         .then((result) => {
           setHotelsList(result);
         });
     } else {
-      getHotel();
+      // getHotel();
     }
   }, [type]);
 
@@ -133,7 +133,7 @@ function Home() {
       getAdvanceSearchHotel();
     } else {
       setSearchAdvanceMode(false);
-      getHotel();
+      // getHotel();
     }
   }, [isSearchAdvanceMode]);
 

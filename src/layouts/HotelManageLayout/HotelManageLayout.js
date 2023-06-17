@@ -12,7 +12,7 @@ function HotelManageLayout() {
   const [hotel, setHotel] = useState({});
 
   useEffect(() => {
-    getHotelByOwnerId(user.user_id).then((hotel) => setHotel(hotel));
+    getHotelByOwnerId(user._id).then((hotel) => setHotel(hotel));
   }, [user]);
 
   return (

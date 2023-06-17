@@ -23,7 +23,7 @@ function CheckOutInfo() {
   const { user } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
   const current = useContext(WebSocketContext);
-  const { user_id } = user;
+  const { _id } = user;
   const [error, setError] = useState();
   const hotelInfo = useOutletContext();
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ function CheckOutInfo() {
       setError("Bạn chưa liên kết tài khoản thanh toán nào");
       return;
     }
-    const userAmount = await getAmount(user_id).then((data) => data);
+    const userAmount = await getAmount(_id).then((data) => data);
     if (isNaN(userAmount?.amount) || userAmount.amount < price) {
       setError("Số dư của bạn không đủ để thực hiện giao dịch này");
       return;
@@ -55,12 +55,12 @@ function CheckOutInfo() {
       const data = await bookingRoom(
         selectDays,
         guests,
-        user_id,
+        _id,
         hotelInfo.hotelId
       ).then((data) => data);
       if (data?.status) {
         const { bookingId } = data;
-        const notification = await getNotification(user_id, 2, bookingId).then(
+        const notification = await getNotification(_id, 2, bookingId).then(
           (data) => data
         );
         current.send(JSON.stringify(notification));

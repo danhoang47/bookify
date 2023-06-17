@@ -28,7 +28,7 @@ function AdvanceFilter({
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { user } = useContext(UserContext);
-  console.log(user.user_id);
+  console.log(user._id);
   useEffect(() => {
     setAdvanceFilterOpen(isOpen);
     //eslint-disable-next-line
@@ -39,7 +39,7 @@ function AdvanceFilter({
     console.log(content);
     const reportForm = new FormData();
     reportForm.append("hotelid", hotelInfo.hotelId);
-    reportForm.append("userid", user.user_id);
+    reportForm.append("userid", user._id);
     reportForm.append("title", title);
     reportForm.append("content", content);
     fetch("http://localhost:8080/bookify/api/hotel/report", {
@@ -59,7 +59,7 @@ function AdvanceFilter({
   };
 
   useEffect(() => {
-    if (!user.user_id) {
+    if (!user._id) {
       setToastMessages(
         getFailureToastMessage({
           message: "Đăng nhập để thực hiện",
