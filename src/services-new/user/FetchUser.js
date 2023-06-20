@@ -1,3 +1,4 @@
+import { CheckStatus } from "@/utils/validation";
 export default async function FetchUser(_id) {
   console.log(_id);
   const url = `http://localhost:3001/user/${_id}`;
@@ -9,8 +10,8 @@ export default async function FetchUser(_id) {
 
   try {
     return await fetch(url, option).then((response) => {
-      if (response.status === 500) return response.status;
-      return response.json();
+      if (CheckStatus(response.status)) return response.json();
+      return CheckStatus(response.status);
     });
   } catch (error) {
     console.log(error);

@@ -1,3 +1,4 @@
+import { CheckStatus } from "@/utils/validation";
 async function SignIn(username, password) {
   const url = "http://localhost:3001/user/login";
   const accountForm = new FormData();
@@ -12,7 +13,10 @@ async function SignIn(username, password) {
   };
 
   try {
-    return await fetch(url, options).then((response) => response.json());
+    return await fetch(url, options).then((response) => {
+      if (CheckStatus(response.status)) return response.json();
+      return CheckStatus(response.status);
+    });
   } catch (error) {
     console.log(error);
   }

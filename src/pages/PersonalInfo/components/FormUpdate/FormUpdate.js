@@ -12,10 +12,10 @@ import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
-import useFetchUser from "@/utils/hooks/useFetchUser";
+import { useUser } from "@/utils/hooks";
 
 function FormUpdate({ account }) {
-  const { userData, isLoading, updateUser, setUserData } = useFetchUser();
+  const { userData, isLoading, updateUser, setUserData } = useUser();
   const { user, setUser } = useContext(UserContext);
   const changedKey = useRef();
   const { setToastMessages } = useContext(ToastMessageContext);

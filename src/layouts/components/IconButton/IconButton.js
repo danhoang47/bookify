@@ -9,7 +9,7 @@ import { getSignInModal } from "@/utils/reducers/modalReducer";
 function IconButton({ icon, renderChild, isHasNotifUnRead = null }) {
   const [isOpen, handleClick, containerRef] = useDropdown();
   const { user } = useContext(UserContext);
-  console.log(user);
+  // console.log(user);
   const { dispatch } = useContext(ModalContext);
 
   return (

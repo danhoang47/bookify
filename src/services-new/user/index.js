@@ -1,3 +1,6 @@
 import SignIn from "./SignIn";
 import SignUp from "./SignUp.js";
-export {SignIn,SignUp};
+import compareCurrentPassword from "./PasswordConfirm";
+import FetchUser from "./FetchUser";
+import UpdateUser from "./UpdateUser";
+export {SignIn,SignUp,compareCurrentPassword,FetchUser,UpdateUser};

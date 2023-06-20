@@ -26,17 +26,17 @@ function VerifyAuth() {
   const verifyData = useQuery({
     queryKey: ["verify"],
     queryFn: VerifyJwt,
+    refetchInterval: 1000 * 60 * 5,
     onSuccess: (data) => {
       // console.log(data);
-      if (data !== 200) {
+      if (!data) {
         setFirstLogin(false);
         setUser(userInitState);
-        console.log("tpuch");
+        console.log(data);
         localStorage.removeItem("user");
         localStorage.setItem("login", false);
       } else {
         setFirstLogin(true);
-
         localStorage.setItem("login", true);
         setUser(data.user);
       }

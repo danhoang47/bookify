@@ -1,23 +1,53 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState, useEffect, useContext } from "react";
-import { SignUp } from "@/services-new/user";
+import { SignIn, SignUp } from "@/services-new/user";
 import {
   ToastMessageContext,
-  UserContext,
   ModalContext,
+  UserContext,
 } from "@/utils/contexts";
 import {
-  getFailureToastMessage,
   getSuccessToastMessage,
+  getFailureToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
 import { getSignInModal } from "@/utils/reducers/modalReducer";
 
-export default function useSignUp() {
+export default function useSignUser() {
   const { dispatch } = useContext(ModalContext);
   const { setUser, isLogin, setLogin } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
-  const [siginState, setSiginState] = useState();
-  const { mutate: SignUpFn, status } = useMutation({
+  const [loginState, setLoginState] = useState();
+  const { mutate: logInFn, status } = useMutation({
+    mutationFn: (account) => {
+      return SignIn(account.username, account.password);
+    },
+    onSuccess: (data) => {
+      if (!data) {
+        setToastMessages(
+          getFailureToastMessage({
+            message: "Đăng nhập thất bại",
+          })
+        );
+      } else {
+        console.log("login success");
+        console.log(data);
+        setUser(data.user);
+        setLogin(true);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setToastMessages(
+          getSuccessToastMessage({
+            message: "Đăng nhập thành công",
+          })
+        );
+
+        setLoginState({ status: true, user: data.user });
+      }
+    },
+    onError: (error) => {
+      console.log("log in error:" + error);
+    },
+  });
+  const { mutate: SignUpFn, status: siginUpStatus } = useMutation({
     mutationFn: (account) => {
       return SignUp(account.username, account.email, account.password);
     },
@@ -31,7 +61,6 @@ export default function useSignUp() {
           message: "Đăng Kí thành công",
         })
       );
-      setSiginState(true);
       dispatch(getSignInModal({ isOpen: true }));
     },
     onError: (error) => {
@@ -43,5 +72,5 @@ export default function useSignUp() {
       );
     },
   });
-  return { status, siginState, SignUpFn };
+  return { status, loginState, logInFn, SignUpFn };
 }

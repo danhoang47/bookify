@@ -10,7 +10,7 @@ import {
   useContext,
 } from "react";
 import { accountValidation } from "@/utils/validation";
-import { useUppercase, useSignUp } from "@/utils/hooks";
+import { useUppercase, useSignUser } from "@/utils/hooks";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -26,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function SignUpForm() {
-  const { status, siginState, SignUpFn } = useSignUp();
+  const { SignUpFn } = useSignUser();
   // const { setToastMessages } = useContext(ToastMessageContext);
   const [registerAccount, setRegisterAccount] = useState({
     username: null,

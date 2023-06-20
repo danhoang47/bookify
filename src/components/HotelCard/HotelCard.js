@@ -26,10 +26,11 @@ function HotelCard({
   address,
   // backgroundImg,
   images,
-  averagePirce,
+  averagePrice,
   rating,
   isBookmarked,
 }) {
+  console.log(averagePrice);
   // const backgroundImg2 = backgroundImg.split("/");
   // const allImages = [backgroundImg2[backgroundImg2.length - 1]];
   const { user } = useContext(UserContext);
@@ -53,7 +54,7 @@ function HotelCard({
 
         address,
         roomType: {
-          price: averagePirce,
+          price: averagePrice,
         },
       },
       ...prev,
@@ -136,7 +137,7 @@ function HotelCard({
             <p
               className={"hotel-address"}
             >{`${country},  ${district}, ${address}`}</p>
-            <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
+            <p className={"hotel-price-per-night"}>{`$${averagePrice}`}</p>
           </div>
         </div>
         {user.role === 0 ? (

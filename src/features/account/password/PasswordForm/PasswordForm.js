@@ -77,17 +77,6 @@ function PasswordForm({ submodal }) {
       }
     }
 
-    // if (password === "leduc") {
-    //   console.log(password);
-    //   dispatch(
-    //     getNewPasswordModal({
-    //       isOpen: true,
-    //       animation: "slide-in-right",
-    //     })
-    //   );
-    // } else {
-    //   console.log("password wrong");
-    // }
   };
   const handlePasswordChange = useCallback(
     (value) => {

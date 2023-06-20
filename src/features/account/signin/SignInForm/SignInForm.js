@@ -1,25 +1,17 @@
 import { InputField } from "@/components";
 import formStyles from "./SignInForm.module.scss";
-import {
-  useState,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useMemo,
-} from "react";
+import { useState, memo, useCallback, useEffect, useRef, useMemo } from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
 import { useUppercase } from "@/utils/hooks";
 import { accountValidation } from "@/utils/validation";
 // import { ToastMessageContext, UserContext } from "@/utils/contexts";
-import { useSignIn } from "@/utils/hooks/";
+import { useSignUser } from "@/utils/hooks/";
 import { CircleLoading } from "@/components";
 // import { format } from "date-fns";
 function SignInForm({ setModalOpen }) {
-
-  const { loginState, status, logInFn } = useSignIn();
+  const { loginState, status, logInFn } = useSignUser();
   const [account, setAccount] = useState({
     username: null,
     password: null,
