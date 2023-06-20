@@ -8,8 +8,8 @@ export async function VerifyJwt() {
   try {
     return await fetch(url, options).then((response) => {
       // console.log(response);()
-     if( response.status===500 ) return response.status 
-       return response.json() ;
+      if (response.status !== 200) return response.status;
+      return response.json();
     });
   } catch (error) {
     console.log(error);

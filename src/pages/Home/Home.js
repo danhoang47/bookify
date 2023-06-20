@@ -23,6 +23,7 @@ import {
 } from "./advanceFilterInitState";
 import { useClsx } from "@/utils/hooks";
 import { filterHotel, getAdvanceSearchHotels } from "@/services/hotel";
+import { useGetHotel } from "@/utils/hooks";
 
 const HotelCards = lazy(() => import("./components/HotelCards"));
 const AdvanceFilter = lazy(() => import("./components/AdvanceFilter"));
@@ -49,6 +50,7 @@ const trendingHotels = [
 function Home() {
   const [type, setType] = useState({});
   // const currentCoordinates = useContext(CoordinatesContext);
+  const { hotelsQuery, hotels } = useGetHotel();
   const { user } = useContext(UserContext);
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useState(false);
   const [hotelsList, setHotelsList] = useState([]);
@@ -215,10 +217,10 @@ function Home() {
             <Grid container spacing={1.5} overflow={"hidden"}>
               <Suspense fallback={<Loading />}>
                 {" "}
-                {isLoading ? (
+                {hotelsQuery.isLoading ? (
                   <Loading />
                 ) : (
-                  <HotelCards hotels={hotelsList} type={type} />
+                  <HotelCards hotels={hotelsQuery.data.hotels} type={type} />
                 )}
               </Suspense>
             </Grid>

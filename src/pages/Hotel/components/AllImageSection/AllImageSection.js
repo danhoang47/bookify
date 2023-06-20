@@ -7,14 +7,13 @@ import { ImageList, ImageListItem } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-const ImageItem = ({ src, index, setActiveImageIndex }) => {
-  console.log(src);
+const ImageItem = ({ src, index, id, setActiveImageIndex }) => {
   return (
     <ImageListItem
       className={"image-item"}
       onClick={() => setActiveImageIndex(index)}
     >
-      <img src={src} alt="" loading="lazy" />
+      <img src={`http://localhost:3001${src}`} alt="" loading="lazy" />
     </ImageListItem>
   );
 };
@@ -42,14 +41,14 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
         <div className={useClsx("image-section")}>
           <h3 className={useClsx("heading")}>Ảnh không gian xung quanh</h3>
           <ImageList variant="mansonry" cols={3} gap={8}>
-            {images.reduce((prev, { id, src, type }, index) => {
-              if (type === 0) {
+            {images.reduce((prev, { _id, imagePath, imageType }, index) => {
+              if (imageType === 0) {
                 return [
                   ...prev,
                   <ImageItem
-                    key={id}
-                    src={src}
-                    id={id}
+                    key={_id}
+                    src={imagePath}
+                    id={_id}
                     index={index + 1}
                     setActiveImageIndex={setActiveImageIndex}
                   />,
@@ -63,14 +62,14 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
         <div className={useClsx("image-section")}>
           <h3 className={useClsx("heading")}>Ảnh nội thất trong phòng</h3>
           <ImageList>
-            {images.reduce((prev, { id, src, type }, index) => {
-              if (type === 1) {
+            {images.reduce((prev, { _id, imagePath, imageType }, index) => {
+              if (imageType === 1) {
                 return [
                   ...prev,
                   <ImageItem
-                    key={id}
-                    src={src}
-                    id={id}
+                    key={_id}
+                    src={imagePath}
+                    id={_id}
                     index={index + 1}
                     setActiveImageIndex={setActiveImageIndex}
                   />,
@@ -89,8 +88,8 @@ function AllImageSection({ backgroundImage, images, setAllImageOpen }) {
             images={[
               {
                 id: uuid(),
-                src: backgroundImage,
-                type: 2,
+                imagePath: backgroundImage,
+                imageType: 2,
               },
               ...images,
             ]}

@@ -2,13 +2,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "./DefaultLayout.module.scss";
 import { memo, useEffect, useState, useMemo } from "react";
-import { Outlet, useHref } from "react-router-dom";
+import { Outlet, useHref, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Suspense, useContext } from "react";
 import { UserContext, WebSocketContext } from "@/utils/contexts";
 import { getAllBookmarkedHotel } from "@/services/hotel";
 import getNotification from "@/services/hotel/getNotification";
 import { SearchContext } from "@/utils/contexts";
+import VerifyAuth from "@/utils/hooks/verifyAuth";
 
 const guestsInitial = {
   adult: 0,
@@ -19,6 +20,8 @@ const guestsInitial = {
 
 function DefaultLayout() {
   const href = useHref();
+  const navigate = useNavigate();
+  const { firstLogin } = VerifyAuth();
   const { user } = useContext(UserContext);
   const current = useContext(WebSocketContext);
   const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
@@ -28,6 +31,12 @@ function DefaultLayout() {
   const [selectedDays, setSelectedDays] = useState({});
   const [guests, setGuests] = useState(guestsInitial);
   const [isSearchAdvanceMode, setSearchAdvanceMode] = useState(false);
+
+  useEffect(() => {
+    if (firstLogin === false) {
+      navigate("/");
+    }
+  }, [firstLogin]);
 
   // const getBookmarkedHotel = () => {
   //   getAllBookmarkedHotel(user._id).then((data) => {

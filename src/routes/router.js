@@ -57,9 +57,9 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route path="manager" element={<HotelManageLayout />}>
-          <Route path="hotel" element={<HotelManageMain />} />
-          <Route path="detail" element={<HotelManageDetail />} />
-          <Route path="booking" element={<HotelManageBooking />} />
+        <Route path="hotel" element={<HotelManageMain />} />
+        <Route path="detail" element={<HotelManageDetail />} />
+        <Route path="booking" element={<HotelManageBooking />} />
       </Route>
     </Route>
   )

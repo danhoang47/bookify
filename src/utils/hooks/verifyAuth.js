@@ -28,14 +28,15 @@ function VerifyAuth() {
     queryFn: VerifyJwt,
     onSuccess: (data) => {
       // console.log(data);
-      if (data === 500) {
+      if (data !== 200) {
         setFirstLogin(false);
         setUser(userInitState);
+        console.log("tpuch");
         localStorage.removeItem("user");
-        localStorage.removeItem("login");
+        localStorage.setItem("login", false);
       } else {
         setFirstLogin(true);
-        // console.log(data);]\
+
         localStorage.setItem("login", true);
         setUser(data.user);
       }

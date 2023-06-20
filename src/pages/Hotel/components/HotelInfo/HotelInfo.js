@@ -19,10 +19,11 @@ function HotelInfo({ hotelInfo }) {
     isVerified,
   } = hotelInfo;
   console.log(isVerified);
+  console.log(hotelInfo);
   return (
     <div>
       <div className={HotelInfoStyle["header"]}>
-        <InfoHeader
+        {/* <InfoHeader
           reviews={reviews}
           roomType={roomType}
           hotelName={hotelName}
@@ -30,7 +31,7 @@ function HotelInfo({ hotelInfo }) {
           isBookmarked={isBookmarked}
           hotelId={hotelId}
           isVerified={isVerified}
-        />
+        /> */}
       </div>
       <div className={HotelInfoStyle["details"]}>
         <Details

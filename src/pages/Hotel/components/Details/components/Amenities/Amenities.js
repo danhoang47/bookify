@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
 
 function Amenities({ hotelAmenities, roomType }) {
+  console.log(hotelAmenities);
   return (
     <div>
       <h3 className={AmenitiesStyle["title"]}>
@@ -20,7 +21,9 @@ function Amenities({ hotelAmenities, roomType }) {
                     <div className={AmenitiesStyle["icon"]}>
                       <FontAwesomeIcon icon={icon[item.icon]} />
                     </div>
-                    <h6 className={AmenitiesStyle["name"]}>{item.name}</h6>
+                    <h6 className={AmenitiesStyle["name"]}>
+                      {item.amenityName}
+                    </h6>
                   </div>
                 </Grid>
               );

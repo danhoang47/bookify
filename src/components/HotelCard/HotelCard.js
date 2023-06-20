@@ -19,39 +19,38 @@ import {
 } from "@/utils/reducers/toastMessageReducer";
 
 function HotelCard({
-  hotelId,
+  _id: hotelId,
   hotelName,
   country,
-  city,
   district,
   address,
-  backgroundImg,
+  // backgroundImg,
   images,
   averagePirce,
   rating,
   isBookmarked,
 }) {
-  const backgroundImg2 = backgroundImg.split("/");
-  const allImages = [backgroundImg2[backgroundImg2.length - 1]];
+  // const backgroundImg2 = backgroundImg.split("/");
+  // const allImages = [backgroundImg2[backgroundImg2.length - 1]];
   const { user } = useContext(UserContext);
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const { setToastMessages } = useContext(ToastMessageContext);
   const setBookmarkedHotels = useOutletContext(BookmarkContext);
 
-  images.forEach((image) => {
-    let imgName = image.src.split("/");
-    allImages.push(imgName[imgName.length - 1]);
-  });
+  // images.forEach((image) => {
+  //   let imgName = image.src.split("/");
+  //   allImages.push(imgName[imgName.length - 1]);
+  // });
 
   const addToBookmark = () => {
     setBookmarkedHotels((prev) => [
       {
         hotelId,
         hotelName,
-        backgroundImg,
+        // backgroundImg,
         country,
         district,
-        city,
+
         address,
         roomType: {
           price: averagePirce,
@@ -110,11 +109,11 @@ function HotelCard({
       <div className={"hotel-card"}>
         <div className={"carousel"}>
           <Carousel controls={true} interval={null}>
-            {allImages.map((src, index) => (
+            {images.map((element, index) => (
               <Carousel.Item key={index}>
                 <img
                   className={"carousel-image"}
-                  src={"http://localhost:8080/bookify/images/hotels/" + src}
+                  src={`http://localhost:3001${element.imagePath}`}
                   alt={hotelName}
                   loading="lazy"
                 />
@@ -128,12 +127,15 @@ function HotelCard({
               <h3 className={"hotel-name"}>{hotelName}</h3>
               <div className={"average-point"}>
                 <FontAwesomeIcon icon={faStar} />
-                <span>{rating}</span>
+                <span>{rating.communicationPoint}</span>
+                <span>{rating.accuracyPoint}</span>
+                <span>{rating.locationPoint}</span>
+                <span>{rating.valuePoint}</span>
               </div>
             </div>
             <p
               className={"hotel-address"}
-            >{`${country}, ${city}, ${district}, ${address}`}</p>
+            >{`${country},  ${district}, ${address}`}</p>
             <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
           </div>
         </div>

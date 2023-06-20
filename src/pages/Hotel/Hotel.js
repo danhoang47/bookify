@@ -5,7 +5,7 @@ import { useHref, useParams, Outlet } from "react-router-dom";
 import { useContext, useState, useMemo } from "react";
 import { UserContext, BookingContext } from "@/utils/contexts";
 import { useEffect, Suspense, lazy } from "react";
-import { useClsx } from "@/utils/hooks";
+import { useClsx, useGetHotel } from "@/utils/hooks";
 import { guestsInitial } from "./hotelInitState";
 import { Loading } from "../Home/components";
 import Report from "./components/Report";
@@ -19,6 +19,7 @@ export const reviewContext = createContext();
 export const reviewDataContext = createContext();
 
 function Hotel() {
+  const { hotel, getHotelbyId, queryLoading } = useGetHotel();
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [hotelInfo, setHotelInfo] = useState({});
@@ -29,18 +30,27 @@ function Hotel() {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [currentReview, setCurrentReview] = useState([]);
   const href = useHref();
-
   useEffect(() => {
-    fetch(
-      `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user._id}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        setCurrentReview(result.reviews);
-        setHotelInfo(result);
-      });
-    //eslint-disable-next-line
+    getHotelbyId(id);
+    console.log(hotel);
+    // setHotelInfo(hotel);
   }, [id]);
+  useEffect(() => {
+    console.log(hotel);
+    // setHotelInfo(hotel);
+  }, [hotel]);
+
+  // useEffect(() => {
+  //   fetch(
+  //     `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user._id}`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setCurrentReview(result.reviews);
+  //       setHotelInfo(result);
+  //     });
+  //   //eslint-disable-next-line
+  // }, [id]);
 
   const getAdvanceFilterHotel = () => {
     setAdvanceFilterOpen(false);
@@ -61,8 +71,8 @@ function Hotel() {
   );
 
   useEffect(() => {
-    document.title = hotelInfo.hotelName;
-  }, [hotelInfo]);
+    document.title = hotel.hotelName;
+  }, [hotel]);
 
   return (
     <BookingContext.Provider value={bookingContextValue}>
@@ -82,8 +92,8 @@ function Hotel() {
                 <Grid container justifyContent={"center"}>
                   <Grid item xs={10}>
                     <Album
-                      backgroundImage={hotelInfo.backgroundImg}
-                      images={hotelInfo.images || []}
+                      backgroundImage={hotel.backgroundImg}
+                      images={hotel.images || []}
                       isAllImageOpen={isAllImageOpen}
                       setAllImageOpen={setAllImageOpen}
                     />
@@ -97,7 +107,7 @@ function Hotel() {
                     >
                       <div className={hotelStyles["left"]}>
                         <Suspense fallback={<div>Loading...</div>}>
-                          <HotelInfo hotelInfo={hotelInfo} />
+                          <HotelInfo hotelInfo={hotel} />
                         </Suspense>
                         {/* Hotel Information */}
                       </div>
@@ -105,9 +115,9 @@ function Hotel() {
                         {/* Booking Form */}
                         <Suspense fallback={<div>Loading...</div>}>
                           <Booking
-                            roomType={hotelInfo?.roomType}
-                            isAllowPet={hotelInfo?.isAllowPet}
-                            hotelId={hotelInfo?.hotelId}
+                            roomType={hotel?.roomType}
+                            isAllowPet={hotel?.isAllowPet}
+                            hotelId={hotel?.hotelId}
                           />
                         </Suspense>
                       </div>
@@ -121,7 +131,7 @@ function Hotel() {
                           isAdvanceFilterOpen={isAdvanceFilterOpen}
                           setAdvanceFilterOpen={setAdvanceFilterOpen}
                           getAdvanceFilterHotel={getAdvanceFilterHotel}
-                          hotelInfo={hotelInfo}
+                          hotelInfo={hotel}
                         />
                       )}
                     </Suspense>
@@ -133,7 +143,7 @@ function Hotel() {
                           isReviewOpen={isReviewOpen}
                           setIsReviewOpen={setIsReviewOpen}
                           getReviewHotel={getReviewHotel}
-                          hotelInfo={hotelInfo}
+                          hotelInfo={hotel}
                         />
                       )}
                     </Suspense>
