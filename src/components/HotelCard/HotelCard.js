@@ -51,7 +51,6 @@ function HotelCard({
         // backgroundImg,
         country,
         district,
-
         address,
         roomType: {
           price: averagePrice,
@@ -114,7 +113,7 @@ function HotelCard({
               <Carousel.Item key={index}>
                 <img
                   className={"carousel-image"}
-                  src={`http://localhost:3001${element.imagePath}`}
+                  src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${element.imagePath}`}
                   alt={hotelName}
                   loading="lazy"
                 />

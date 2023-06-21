@@ -25,7 +25,7 @@ const appInitState = {
 };
 const sessionUser = {};
 
-const websocketEndPoint = "ws://localhost:3001/notification";
+const websocketEndPoint = `ws://localhost:${process.env.REACT_APP_BACK_END_PORT}/notification`;
 
 function App({ children }) {
   const { verifyData, firstLogin, userLocal } = VerifyAuth();
@@ -82,22 +82,6 @@ function App({ children }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/user/verifyjwt", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     withCredentials: true,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setLogin(true);
-  //       // setUser(data);
-  //       console.log(data);
-  //     })
-  //     .catch((err) => {
-  //       setLogin(false);
-  //     });
-  // }, []);
 
   useEffect(() => {
     websocket.current = new WebSocket(`${websocketEndPoint}/${user._id}`);

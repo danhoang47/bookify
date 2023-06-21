@@ -13,7 +13,7 @@ const ImageItem = ({ src, index, id, setActiveImageIndex }) => {
       className={"image-item"}
       onClick={() => setActiveImageIndex(index)}
     >
-      <img src={`http://localhost:3001${src}`} alt="" loading="lazy" />
+      <img src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${src}`} alt="" loading="lazy" />
     </ImageListItem>
   );
 };

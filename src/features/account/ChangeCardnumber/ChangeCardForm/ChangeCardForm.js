@@ -17,8 +17,10 @@ import { CircleLoading } from "@/components";
 import updateBankingAccount from "@/services/hotel/updateBankingAccount";
 import { getChangeCard } from "@/utils/reducers/modalReducer";
 import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useUser } from "@/utils/hooks";
 
 function ChangeCardForm({ setModalOpen }) {
+  const { updateCard } = useUser();
   const [cardNum, setCardnum] = useState("");
   const { user, setUser } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -41,21 +43,40 @@ function ChangeCardForm({ setModalOpen }) {
       setLoading(true);
 
       try {
-        const res = await updateBankingAccount(user._id, cardNum);
-        if (res?.success) {
-          setUser((prev) => ({
-            ...prev,
-            bankingAccountNumber: cardNum,
-          }));
-          setToastMessages(
-            getSuccessToastMessage({
-              message: "Liên kết tài khoản thành công",
-            })
-          );
-          dispatch(getChangeCard({ isOpen: false }));
-        } else {
-          setError(true);
-        }
+        updateCard(cardNum, {
+          onSuccess: (data) => {
+            console.log(data);
+            if (!data) {
+              setError(true);
+            } else {
+              setUser((prev) => ({
+                ...prev,
+                bankingAccountNumber: cardNum,
+              }));
+              setToastMessages(
+                getSuccessToastMessage({
+                  message: "Liên kết tài khoản thành công",
+                })
+              );
+              dispatch(getChangeCard({ isOpen: false }));
+            }
+          },
+        });
+        // const res = await updateBankingAccount(user._id, cardNum);
+        // if (res?.success) {
+        //   setUser((prev) => ({
+        //     ...prev,
+        //     bankingAccountNumber: cardNum,
+        //   }));
+        //   setToastMessages(
+        //     getSuccessToastMessage({
+        //       message: "Liên kết tài khoản thành công",
+        //     })
+        //   );
+        //   dispatch(getChangeCard({ isOpen: false }));
+        // } else {
+        //   setError(true);
+        // }
       } finally {
         setLoading(false);
       }
@@ -64,8 +85,10 @@ function ChangeCardForm({ setModalOpen }) {
   const handlecardNumChange = useCallback(
     (value, key) => {
       setCardnum(value);
+      console.log(cardNum);
       changedKey.current = key;
     },
+
     //eslint-disable-next-line
     [cardNum]
   );

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState, useEffect, useContext } from "react";
-import { SignIn, SignUp } from "@/services-new/user";
+import { SignIn, SignUp, compareCurrentPassword } from "@/services-new/user";
 import {
   ToastMessageContext,
   ModalContext,
@@ -72,5 +72,10 @@ export default function useSignUser() {
       );
     },
   });
-  return { status, loginState, logInFn, SignUpFn };
+  const { mutate: checkPass } = useMutation({
+    mutationKey: ["check-password"],
+    mutationFn: (password) => compareCurrentPassword(password),
+  });
+
+  return { status, loginState, logInFn, SignUpFn, checkPass };
 }

@@ -1,5 +1,5 @@
 async function SignUp(username, email, password) {
-  const url = "http://localhost:3001/user";
+  const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/user`;
   const accountForm = new FormData();
   accountForm.append("username", username);
   accountForm.append("email", email);

@@ -59,7 +59,7 @@ function ImageCarousel({ defaultActiveIndex, images, setActiveImageIndex }) {
               key={_id}
               className={imageCarouselStyles["carousel-item"]}
             >
-              <img src={`http://localhost:3001${imagePath}`} alt="" />
+              <img src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${imagePath}`} alt="" />
               <Carousel.Caption>
                 <h3>{getCaption(imageType)}</h3>
               </Carousel.Caption>

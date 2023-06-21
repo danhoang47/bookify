@@ -26,9 +26,9 @@ function VerifyAuth() {
   const verifyData = useQuery({
     queryKey: ["verify"],
     queryFn: VerifyJwt,
-    refetchInterval: 1000 * 60 * 5,
+    refetchInterval: 1000 * 30,
     onSuccess: (data) => {
-      // console.log(data);
+      console.log(data);
       if (!data) {
         setFirstLogin(false);
         setUser(userInitState);

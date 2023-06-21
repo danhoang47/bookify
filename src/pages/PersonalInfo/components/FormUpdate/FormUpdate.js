@@ -78,7 +78,7 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên đệm của bạn"}
                     name={"subname"}
-                    value={!isLoading ? userData.subName : ""}
+                    value={!isLoading ? userData?.subName : ""}
                     onChange={(event) =>
                       onUpdateInput(event.target.value, "subName")
                     }
@@ -91,7 +91,7 @@ function FormUpdate({ account }) {
                     type={"text"}
                     placeholder={"Điền tên bạn"}
                     name={"name"}
-                    value={!isLoading ? userData.name : ""}
+                    value={!isLoading ? userData?.name : ""}
                     onChange={(event) =>
                       onUpdateInput(event.target.value, "name")
                     }
@@ -106,7 +106,7 @@ function FormUpdate({ account }) {
                     type={"email"}
                     placeholder={"Điền Email"}
                     name={"email"}
-                    value={!isLoading ? userData.email : ""}
+                    value={!isLoading ? userData?.email : ""}
                     onChange={(event) =>
                       onUpdateInput(event.target.value, "email")
                     }
@@ -121,7 +121,7 @@ function FormUpdate({ account }) {
                     type={"phone"}
                     placeholder={"Điền số điền thoại"}
                     name={"phone"}
-                    value={!isLoading ? userData.phone : ""}
+                    value={!isLoading ? userData?.phone : ""}
                     onChange={(event) =>
                       onUpdateInput(event.target.value, "phone")
                     }
@@ -135,7 +135,7 @@ function FormUpdate({ account }) {
                   {/* <PersonalInput /> */}
                   <DatePicker
                     name={"dob"}
-                    value={!isLoading ? userData.dob : ""}
+                    value={!isLoading ? userData?.dob : ""}
                     onChange={onChangeDob}
                     labelContent={"Ngày sinh"}
                     readOnly={readOnly}
@@ -183,10 +183,10 @@ function FormUpdate({ account }) {
                 <Grid item xs={12} md={5}>
                   <FileUpload
                     avatar={
-                      userData.avatar !== "" ||
-                      userData.avatar !==
+                      userData?.avatar !== "" ||
+                      userData?.avatar !==
                         "http://localhost:8080/bookify/images/users/null"
-                        ? userData.avatar
+                        ? userData?.avatar
                         : "http://localhost:8080/bookify/images/users/blankUser.jpg"
                     }
                     onAvatarUpload={onUpdateInput}

@@ -6,7 +6,5 @@ export default function CheckStatus(status) {
     return true;
   } else if (unAuthorRegex.test(status) || internalRegex.test(status)) {
     return false;
-  } else {
-    return false;
   }
 }

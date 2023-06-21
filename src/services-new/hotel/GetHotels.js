@@ -1,5 +1,5 @@
 export default async function GetHotels() {
-  const url = `http://localhost:3001/hotel/`;
+  const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel/`;
   const option = {
     method: "GET",
     credentials: "include",

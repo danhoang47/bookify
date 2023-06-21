@@ -22,8 +22,10 @@ import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import { useSignUser } from "@/utils/hooks";
 
 function PasswordForm({ submodal }) {
+  const { checkPass } = useSignUser();
   const { dispatch } = useContext(ModalContext);
   const { user } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -47,36 +49,38 @@ function PasswordForm({ submodal }) {
     } else {
       setLoading(true);
       try {
-        await compareCurrentPassword(user._id, password).then((data) => {
-          if (data?.error) {
-            console.log(data.error);
-            setToastMessages(
-              getFailureToastMessage({ message: "Sai mật khẩu" })
-            );
-          } else {
-            console.log(data);
-            if (submodal === "new password") {
-              dispatch(
-                getNewPasswordModal({
-                  isOpen: true,
-                  animation: "slide-in-right",
-                })
+        checkPass(password, {
+          onSuccess: (data) => {
+            console.log("touched");
+            if (!data) {
+              console.log("incorrect compare");
+              setToastMessages(
+                getFailureToastMessage({ message: "Sai mật khẩu" })
               );
             } else {
-              dispatch(
-                getChangeCard({
-                  isOpen: true,
-                  animation: "slide-in-right",
-                })
-              );
+              console.log("correct compare");
+              if (submodal === "new password") {
+                dispatch(
+                  getNewPasswordModal({
+                    isOpen: true,
+                    animation: "slide-in-right",
+                  })
+                );
+              } else {
+                dispatch(
+                  getChangeCard({
+                    isOpen: true,
+                    animation: "slide-in-right",
+                  })
+                );
+              }
             }
-          }
+          },
         });
       } finally {
         setLoading(false);
       }
     }
-
   };
   const handlePasswordChange = useCallback(
     (value) => {

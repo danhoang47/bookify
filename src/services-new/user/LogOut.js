@@ -1,6 +1,6 @@
 export default async function LogOut() {
     console.log(_id);
-    const url = `http://localhost:3001/user/logout`;
+    const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/user/logout`;
     const option = {
       method: "GET",
       credentials: "include",

@@ -12,7 +12,7 @@ import { BrowserRouter } from "react-router-dom";
 function PasswordModal({ animation, submodal }) {
   const [isModalOpen, handleClick, containerRef] = usePopup(true);
   const { dispatch } = useContext(ModalContext);
-  console.log(submodal);
+  // console.log(submodal);
   useEffect(() => {
     if (!isModalOpen) {
       dispatch(getPasswordModal({ isOpen: true }));
