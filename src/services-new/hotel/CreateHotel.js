@@ -1,21 +1,16 @@
-import { types } from "./searchHotelTypes";
-
-export default async function registerHotel(
-  amenities,
-  basicHotelInfor,
-  backgroundImage,
-  roomImages,
-  viewImages,
-  extraInfor,
-  roomInfor,
-  userId
-) {
-  const hotelForm = new FormData();
+export default async function CreateHotel( amenities,
+    basicHotelInfor,
+    backgroundImage,
+    roomImages,
+    viewImages,
+    extraInfor,
+    roomInfor,){
+    const url=`http://localhost:${process.env.REACT_APP_BACK_END_PORT}}/hotel`;
+    const hotelForm = new FormData();
   const amenitiesId = [];
   const amenitiesNames = [];
   const amenitiesTypes = [];
 
-  console.log(userId);
 
   amenities.forEach ((item) => {
     amenitiesId.push(item.id);
@@ -84,17 +79,4 @@ export default async function registerHotel(
   hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
   hotelForm.append("roomNum", roomInfor.rooms);
 
-  hotelForm.append("userId", userId);
-
-  const data = await fetch(
-    "http://localhost:8080/bookify/api/hotel/signhotel",
-    {
-      method: "POST",
-      body: hotelForm,
-    }
-  )
-    .then((res) => res.json())
-    .then((result) => result);
-
-  return data;
 }

@@ -20,7 +20,7 @@ function AmenityInputField({
   const [amenity, setAmenity] = useState({
     ...amenityInitState,
     hotelId: hotelId,
-    amenityTypeId: amenityTypes[0]?.amenityTypeId,
+    amenityTypeId: [],
   });
   const [isTypeListOpen, setTypeListOpen] = useState(false);
 

@@ -13,57 +13,7 @@ function Introduction() {
     navigate("/hosting/register");
   };
 
-  const { user, setUser, isLogin, setLogin } = useContext(UserContext);
-  const { setToastMessages } = useContext(ToastMessageContext);
-  useEffect(() => {
-    fetch("http://localhost:3001/user/verifyjwt", {
-      credentials: 'include' , method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLogin(true);
-        // setUser(data);
-        console.log(data);
-      })
-      .catch((err) => {
-        setLogin(false);
-      });
-  }, []);
-
-  // useEffect(() => {
-  //   const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-  //   const userForm = new FormData();
-  //   userForm.append("jwt", jwtString);
-  //   if (jwtString) {
-  //     fetch("http://localhost:3001/user/verifyjwt", {
-  //       method: "POST",
-  //       body: userForm,
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setLogin(true);
-  //         setUser(data);
-  //       })
-  //       .catch((err) => {
-  //         setUser({ role: 0 });
-  //         navigate("/");
-  //         setToastMessages(
-  //           getFailureToastMessage({
-  //             message: "Đăng nhập để truy cập",
-  //           })
-  //         );
-  //       });
-  //   } else {
-  //     navigate("/");
-  //     setUser({ role: 0 });
-  //     setToastMessages(
-  //       getFailureToastMessage({
-  //         message: "Đăng nhập để truy cập",
-  //       })
-  //     );
-  //   }
-  // }, []);
-
+  
   return (
     <Grid container className={IntroductionStyle["introduction"]}>
       <Grid item xs={10} justifyContent="flex-start">
