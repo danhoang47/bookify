@@ -1,4 +1,5 @@
 import { types } from "@/services/hotel/searchHotelTypes";
+import { CheckStatus } from "@/utils/validation";
 
 const varToString = (varObj) => Object.keys(varObj)[0];
 const mergeTime = (timeObj) => {
@@ -14,7 +15,6 @@ const pushFilesToFormData = (formData, fileList, name) => {
 };
 
 export default async function UpdateHotel(
-    hotelId,
     amenities,
     basicHotelInfor,
     backgroundImage,
@@ -73,8 +73,13 @@ export default async function UpdateHotel(
         varToString({ updatedRoomImages })
     );
 
-    const data = await fetch(url, {
+   return await fetch(url, {
         method: "PUT",
         body: hotelUpdateForm,
+        credentials: "include",
+        withCredentials: true,
+    }).then(resp=>{
+        if(CheckStatus(resp.status)) return resp.json();
+        return false;
     });
 }

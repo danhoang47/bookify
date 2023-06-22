@@ -18,7 +18,7 @@ export default function useGetHotel() {
    mutationFn:(id)=>GetHotel(id),
    onSuccess:(data)=>{
     setHotel(data.hotel);
-    console.log(data);  
+    // console.log(data);  
    }
 });
   return {hotelsQuery,setFilter,hotel,hotels,setHotel,getHotelbyId,};

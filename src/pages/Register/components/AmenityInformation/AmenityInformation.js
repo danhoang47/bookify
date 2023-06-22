@@ -8,6 +8,7 @@ import { useClsx } from "@/utils/hooks";
 import { Grid } from '@mui/material'
 
 const AmenityCard = ({ amenity, setAmenities, isChecked }) => {
+    // console.log(amenity,isChecked);
     const handleOnClick = (e) => {
         setAmenities((prev) => {
             if (isChecked) {
@@ -19,7 +20,7 @@ const AmenityCard = ({ amenity, setAmenities, isChecked }) => {
     };
 
     return (
-        <Grid item key={amenity.id} md={6}>
+        <Grid item key={amenity._id} md={6}>
             <div
                 className={useClsx(
                     amenityInforStyles["amenity-card"],
@@ -28,7 +29,7 @@ const AmenityCard = ({ amenity, setAmenities, isChecked }) => {
                 onClick={handleOnClick}
             >
                 <FontAwesomeIcon icon={Icons[amenity.icon]} />
-                {amenity.name}
+                {amenity.amenityName}
             </div>
         </Grid>
     );
@@ -43,6 +44,7 @@ function AmenityInformation() {
         setDisplayAmenities,
         displayAmenitiesType,
     } = useContext(RegisterContext);
+    console.log(displayAmenities);
 
     return (
         <div className={amenityInforStyles["basic-information"]}>
@@ -59,7 +61,7 @@ function AmenityInformation() {
                                 amenity={amenity}
                                 setAmenities={setAmenities}
                                 isChecked={amenities.some(
-                                    ({ id }) => id === amenity.id
+                                    ({ _id }) => _id === amenity._id
                                 )}
                             />
                         ))}

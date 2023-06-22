@@ -32,9 +32,6 @@ function Album({ backgroundImage, images, isAllImageOpen, setAllImageOpen }) {
                       src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${imagePath}`}
                       alt=""
                     />
-                    {console.log(
-                      `http://localhost:${process.env.REACT_APP_BACK_END_PORT}${imagePath}`
-                    )}
                   </div>,
                 ];
               } else {

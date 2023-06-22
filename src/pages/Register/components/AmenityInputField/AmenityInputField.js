@@ -6,8 +6,8 @@ import { v4 as uuid } from "uuid";
 import { useClsx } from "@/utils/hooks";
 
 const amenityInitState = {
-  id: ``,
-  name: "",
+  _id: ``,
+  amenityName: "",
   icon: "faPencil",
 };
 
@@ -20,17 +20,17 @@ function AmenityInputField({
   const [amenity, setAmenity] = useState({
     ...amenityInitState,
     hotelId: hotelId,
-    amenityTypeId: [],
+    amenityTypeId: amenityTypes[0]?.amenityTypeId ,
   });
   const [isTypeListOpen, setTypeListOpen] = useState(false);
 
   const handleAmenityAdded = (e) => {
-    if (amenity.name.length === 0) {
+    if (amenity.amenityName.length === 0) {
       return;
     } else {
       const newAmenity = {
         ...amenity,
-        id: `new-${uuid()}`,
+        _id: `new-${uuid()}`,
       };
       handleClick((prev) => [...prev, newAmenity]);
       addNewAmenity((prev) => [...prev, newAmenity]);
@@ -81,11 +81,11 @@ function AmenityInputField({
           </div>
         </div>
         <input
-          value={amenity.name}
+          value={amenity.amenityName}
           onChange={(e) => {
             setAmenity((prev) => ({
               ...prev,
-              name: e.target.value,
+              amenityName: e.target.value,
             }));
           }}
         />

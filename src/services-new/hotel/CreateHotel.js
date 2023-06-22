@@ -1,29 +1,37 @@
-export default async function CreateHotel( amenities,
+import { CheckStatus } from "@/utils/validation";
+import { types } from "./searchHotelTypes";
+
+export default async function CreateHotel(
+    amenities,
     basicHotelInfor,
     backgroundImage,
     roomImages,
     viewImages,
     extraInfor,
     roomInfor,){
-    const url=`http://localhost:${process.env.REACT_APP_BACK_END_PORT}}/hotel`;
+    const url=`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel`;
     const hotelForm = new FormData();
-  const amenitiesId = [];
-  const amenitiesNames = [];
-  const amenitiesTypes = [];
+    console.log(   amenities,
+      basicHotelInfor,
+      backgroundImage,
+      roomImages,
+      viewImages,
+      extraInfor,
+      roomInfor,);
+  // const amenitiesId = [];
+  // const amenitiesNames = [];
+  // const amenitiesTypes = [];
+  // amenities.forEach ((item) => {
+  //   amenitiesId.push(item.id);
+  //   amenitiesNames.push(item.name);
+  //   if (item.type) {
+  //     amenitiesTypes.push(item.type);
+  //   } else {
+  //     amenitiesTypes.push(item.amenityTypeId);
+  //   }
+  // });
 
-
-  amenities.forEach ((item) => {
-    amenitiesId.push(item.id);
-    amenitiesNames.push(item.name);
-    if (item.type) {
-      amenitiesTypes.push(item.type);
-    } else {
-      amenitiesTypes.push(item.amenityTypeId);
-    }
-  });
-
-  const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0]
-    .code;
+  const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0].code;
 
   hotelForm.append("hotelType", typeId);
   hotelForm.append("hotelName", basicHotelInfor.name);
@@ -33,9 +41,10 @@ export default async function CreateHotel( amenities,
   hotelForm.append("district", basicHotelInfor.province);
   hotelForm.append("city", basicHotelInfor.district);
   hotelForm.append("address", basicHotelInfor.address);
-  hotelForm.append("amenitiesId", amenitiesId);
-  hotelForm.append("amenitiesName", amenitiesNames);
-  hotelForm.append("amenitiesTypes", amenitiesTypes);
+   hotelForm.append("amenities", amenities);
+  // hotelForm.append("amenitiesId", amenitiesId);
+  // hotelForm.append("amenitiesName", amenitiesNames);
+  // hotelForm.append("amenitiesTypes", amenitiesTypes);
   if (roomImages) {
     for (const file of roomImages) {
       console.log(file);
@@ -78,5 +87,14 @@ export default async function CreateHotel( amenities,
   hotelForm.append("maxGuest", roomInfor.numberOfGuests);
   hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
   hotelForm.append("roomNum", roomInfor.rooms);
-
+  const option={
+    method:"POST",
+    body:hotelForm,
+    credentials: "include",
+    withCredentials: true,
+  }
+return await fetch(url,option).then(resp=>{
+  if(CheckStatus(resp.status))return resp.json();
+  return CheckStatus(resp.status);
+})
 }
