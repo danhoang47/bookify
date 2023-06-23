@@ -11,13 +11,7 @@ export default async function CreateHotel(
     roomInfor,){
     const url=`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel`;
     const hotelForm = new FormData();
-    console.log(   amenities,
-      basicHotelInfor,
-      backgroundImage,
-      roomImages,
-      viewImages,
-      extraInfor,
-      roomInfor,);
+    console.log(   amenities);
   // const amenitiesId = [];
   // const amenitiesNames = [];
   // const amenitiesTypes = [];
@@ -29,8 +23,7 @@ export default async function CreateHotel(
   //   } else {
   //     amenitiesTypes.push(item.amenityTypeId);
   //   }
-  // });
-
+  // });  
   const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0].code;
 
   hotelForm.append("hotelType", typeId);

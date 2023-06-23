@@ -60,18 +60,18 @@ function Body() {
 
             <div className={BodyStyle["grid-container"]}>
               <CustomizedTabPanel value="1">
-                <Tabs category={{ filter: "all" }} />
+                <Tabs category={"all"} />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="2">
                 <Tabs
-                  category={{ checkinDate: format(new Date(), "yyyy-MM-dd") }}
+                  category={"today"}
                 />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="3">
-                <Tabs category={{ status: 1 }} />
+                <Tabs category={"booked"} />
               </CustomizedTabPanel>
               <CustomizedTabPanel value="4">
-                <Tabs category={{ status: 0 }} />
+                <Tabs category={"canceled"} />
               </CustomizedTabPanel>
               {/* <div className={BodyStyle["alert"]}>
                 <div className={BodyStyle["alert-body"]}>

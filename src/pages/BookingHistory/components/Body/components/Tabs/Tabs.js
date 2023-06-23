@@ -2,8 +2,10 @@ import ListStyle from "../../../../BookingHistory.module.scss";
 import { useContext, useState, useEffect, useMemo } from "react";
 import { HistoryContext, UserContext } from "@/utils/contexts";
 import { HistoryCard } from "@/features/account";
+import { useUser } from "@/utils/hooks";
 
 function Tabs({ category }) {
+  const {getBookingHistory}= useUser();
   const { user } = useContext(UserContext);
   const [value, setValue] = useContext(HistoryContext);
   const [order, setOrder] = useState(0);
@@ -23,25 +25,31 @@ function Tabs({ category }) {
   };
 
   useEffect(() => {
-    if (category.filter === "all") {
-      fetch("http://localhost:8080/bookify/api/user/bookingHistory/" + user._id)
-        .then((res) => res.json())
-        .then((result) => setBookingData(result));
-    }
-    if (category.checkinDate) {
-      fetch(
-        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.checkinDate}`
-      )
-        .then((res) => res.json())
-        .then((result) => setBookingData(result));
-    }
-    if (category.status === 1 || category.status === 0) {
-      fetch(
-        `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.status}`
-      )
-        .then((res) => res.json())
-        .then((result) => setBookingData(result));
-    }
+    console.log(category);
+    getBookingHistory(category,{onSuccess:(result) => { 
+      console.log(result);
+      setBookingData(result.booking);
+    }})
+    // if (category.filter === "all") {
+     
+    //   // fetch("http://localhost:8080/bookify/api/user/bookingHistory/" + user._id)
+    //   //   .then((res) => res.json())
+    //   //   .then((result) => setBookingData(result));
+    // }
+    // if (category.checkinDate) {
+    //   fetch(
+    //     `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.checkinDate}`
+    //   )
+    //     .then((res) => res.json())
+    //     .then((result) => setBookingData(result));
+    // }
+    // if (category.status === 1 || category.status === 0) {
+    //   fetch(
+    //     `http://localhost:8080/bookify/api/user/bookingHistory/filter?userid=${user._id}&condition=${category.status}`
+    //   )
+    //     .then((res) => res.json())
+    //     .then((result) => setBookingData(result));
+
   }, [category]);
 
   return (
@@ -66,8 +74,8 @@ function Tabs({ category }) {
       >
         {bookingData?.map((list, key) => (
           <HistoryCard
-            hotel={list.hotel.hotelName}
-            address={list.hotel.address}
+            hotel={list.hotelId.hotelName}
+            address={list.address}
             adult={list.adult}
             price={list.price}
             status={list.status}

@@ -93,7 +93,7 @@ function BookingHistory() {
   const [value, setValue] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/bookify/api/user/bookingHistory/" + user._id)
+    fetch(`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/user/bookingHistory?type=all` + user._id)
       .then((res) => res.json())
       .then((result) => setValue(result));
   }, []);

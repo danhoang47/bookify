@@ -8,11 +8,13 @@ import { useContext, useMemo } from "react";
 import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
 import { useNavigate } from "react-router-dom";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useSignUser } from "@/utils/hooks";
 
 function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
   const { isLogin, setLogin } = useContext(UserContext);
   const { user, setUser } = useContext(UserContext);
+  const {SignOut}= useSignUser();
   // console.log(user);
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
@@ -100,16 +102,19 @@ function OptionList({ handleClick }) {
         requiredRole: [1, 2, 3],
         isLoginRequired: true,
         onClickHandler: (e) => {
-          handleClick(e);
-          localStorage.removeItem("jwt");
+          SignOut({onSucess:(data)=>{
+            if(data){   
           setUser({ role: 0 });
           setLogin(false);
+          localStorage.setItem("login",false);
+          localStorage.removeItem("user");
           navigate("/");
           setToastMessages(
             getFailureToastMessage({
               message: "Đã đăng xuất",
             })
-          );
+          );}}})
+       
         },
       },
       {

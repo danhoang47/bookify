@@ -8,17 +8,18 @@ import {
   newPassowrdUpdate,
 } from "@/services-new/user";
 import { AddFavorite } from ".";
+import GetBookingHistory from "@/services-new/user/GetBookingHistory";
 export default function useUser() {
   const [userData, setUserData] = useState(); 
   const queryClient = useQueryClient();
   const { user } = useContext(UserContext);
-  console.log(user);
+  // console.log(user);
   const _id = user._id;
   const { isLoading, data } = useQuery({
     queryKey: ["fetchUser", _id],
     queryFn: () => FetchUser(user._id),
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       setUserData(data);
     },
   });
@@ -43,6 +44,7 @@ export default function useUser() {
     mutationKey:["add-bookmarked"],
     mutationKey:(_id)=>AddFavorite(_id)
   })
+  const {mutate:getBookingHistory}= useMutation({mutationKey:["booking-history:",_id],mutationFn:(filter)=>GetBookingHistory(filter)});
 
   return {
     isLoading,
@@ -51,5 +53,6 @@ export default function useUser() {
     setUserData,
     updatePass,
     updateCard,
+    addBookmarked,getBookingHistory
   };
 }

@@ -11,6 +11,7 @@ import {
   getFailureToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
 import { getSignInModal } from "@/utils/reducers/modalReducer";
+import LogOut from "@/services-new/user/LogOut";
 
 export default function useSignUser() {
   const { dispatch } = useContext(ModalContext);
@@ -76,6 +77,9 @@ export default function useSignUser() {
     mutationKey: ["check-password"],
     mutationFn: (password) => compareCurrentPassword(password),
   });
-
-  return { status, loginState, logInFn, SignUpFn, checkPass };
+const {mutate:SignOut} = useMutation({
+  mutationKey:["log-out"],
+  mutationFn:LogOut,
+})
+  return { status, loginState, logInFn, SignUpFn, checkPass ,SignOut};
 }

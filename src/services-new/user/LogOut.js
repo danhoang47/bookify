@@ -1,16 +1,16 @@
+import { CheckStatus } from "@/utils/validation";
 export default async function LogOut() {
-    console.log(_id);
     const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/user/logout`;
     const option = {
-      method: "GET",
+      method: "POST",
       credentials: "include",
       withCredentials: true,
     };
   
     try {
       return await fetch(url, option).then((response) => {
-        if (CheckStatus(response.status)) return response.json();
-        return CheckStatus(response.status);
+        if (CheckStatus(response.status)) return true;
+        return false
       });
     } catch (error) {
       console.log(error);
