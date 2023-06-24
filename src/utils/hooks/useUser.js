@@ -3,14 +3,16 @@ import { useContext, useState } from "react";
 import { UserContext } from "@/utils/contexts";
 import {
   FetchUser,
+  GetBookMarked,
   UpdateBankingCard,
   UpdateUser,
   newPassowrdUpdate,
+  GetBookingHistory,
 } from "@/services-new/user";
 import { AddFavorite } from ".";
-import GetBookingHistory from "@/services-new/user/GetBookingHistory";
+import AddDeleteBookMarked from "@/services-new/user/AddDeleteBookMarked";
 export default function useUser() {
-  const [userData, setUserData] = useState(); 
+  const [userData, setUserData] = useState();
   const queryClient = useQueryClient();
   const { user } = useContext(UserContext);
   // console.log(user);
@@ -22,6 +24,10 @@ export default function useUser() {
       // console.log(data);
       setUserData(data);
     },
+  });
+  const { data: bookMarkedData } = useQuery({
+    queryKeyKey: ["get-bookmarked"],
+    queryFn: GetBookMarked,
   });
   const { mutate: updateUser } = useMutation({
     mutationKey: ["update user", user._id],
@@ -40,11 +46,21 @@ export default function useUser() {
     mutationKey: ["update-Card_number"],
     mutationFn: (number) => UpdateBankingCard(number),
   });
-  const {mutate:addBookmarked}= useMutation({
-    mutationKey:["add-bookmarked"],
-    mutationKey:(_id)=>AddFavorite(_id)
-  })
-  const {mutate:getBookingHistory}= useMutation({mutationKey:["booking-history:",_id],mutationFn:(filter)=>GetBookingHistory(filter)});
+  const { mutate: addFavorite } = useMutation({
+    mutationKey: ["add-bookmarked"],
+    mutationKey: (_id) => AddFavorite(_id),
+  });
+  const { mutate: addBookMarked } = useMutation({
+    mutationKey: ["add-bookmarked"],
+    mutationFn: (id) => AddDeleteBookMarked(id),
+    onSettled: async () => {
+      await queryClient.refetchQueries("get-bookmarked");
+    },
+  });
+  const { mutate: getBookingHistory } = useMutation({
+    mutationKey: ["booking-history:", _id],
+    mutationFn: (filter) => GetBookingHistory(filter),
+  });
 
   return {
     isLoading,
@@ -53,6 +69,9 @@ export default function useUser() {
     setUserData,
     updatePass,
     updateCard,
-    addBookmarked,getBookingHistory
+    addFavorite,
+    getBookingHistory,
+    addBookMarked,
+    bookMarkedData,
   };
 }

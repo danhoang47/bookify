@@ -27,18 +27,20 @@ function VerifyAuth() {
     queryKey: ["verify"],
     queryFn: VerifyJwt,
     refetchInterval: 1000 * 30,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     onSuccess: (data) => {
       console.log(data);
       if (!data) {
         setFirstLogin(false);
         setUser(userInitState);
-        console.log(data);
         localStorage.removeItem("user");
         localStorage.setItem("login", false);
       } else {
         setFirstLogin(true);
         localStorage.setItem("login", true);
-        setUser(data.user);
+        console.log(JSON.parse(localStorage.getItem("user")));
+        setUser(JSON.parse(localStorage.getItem("user")));
       }
       // setLogin(true);
     },

@@ -50,7 +50,7 @@ const trendingHotels = [
 function Home() {
   const [type, setType] = useState({});
   // const currentCoordinates = useContext(CoordinatesContext);
-  const { hotelsQuery, hotels } = useGetHotel();
+  const { hotelsQuery } = useGetHotel();
   const { user } = useContext(UserContext);
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useState(false);
   const [hotelsList, setHotelsList] = useState([]);

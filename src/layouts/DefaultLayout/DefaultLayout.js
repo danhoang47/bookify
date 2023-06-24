@@ -10,7 +10,7 @@ import { getAllBookmarkedHotel } from "@/services/hotel";
 import getNotification from "@/services/hotel/getNotification";
 import { SearchContext } from "@/utils/contexts";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
-import { useGetHotel } from "@/utils/hooks";
+import { useGetHotel, useUser } from "@/utils/hooks";
 
 const guestsInitial = {
   adult: 0,
@@ -21,10 +21,11 @@ const guestsInitial = {
 
 function DefaultLayout() {
   const { getHotelbyId } = useGetHotel();
+  const { bookMarkedData } = useUser();
   const href = useHref();
   const navigate = useNavigate();
   const { firstLogin } = VerifyAuth();
-  const { user } = useContext(UserContext);
+  const { user, isLogin } = useContext(UserContext);
   const current = useContext(WebSocketContext);
   const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
   const [notifs, setNotifs] = useState([]);
@@ -41,13 +42,8 @@ function DefaultLayout() {
   }, [firstLogin]);
 
   const getBookmarkedHotel = () => {
-    user?.hotelBookmarked?.map((val) => {
-      getHotelbyId(val, {
-        onSuccess: (data) => {
-          setBookmarkedHotels((prev) => [...prev, data.hotel]);
-        },
-      });
-    });
+    console.log(bookMarkedData);
+    setBookmarkedHotels(bookMarkedData?.bookmarkedHotel);
   };
 
   // const getNotifications = () => {
@@ -67,7 +63,7 @@ function DefaultLayout() {
     // getNotifications();
 
     //eslint-disable-next-line
-  }, [user]);
+  }, [user, isLogin, bookMarkedData]);
 
   const handleOnMessage = (event) => {
     const newNotif = JSON.parse(event.data);

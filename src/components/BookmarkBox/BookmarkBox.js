@@ -22,7 +22,7 @@ function BookmarkBox({ bookmarkedHotels, setBookmarkedHotels }) {
     <DropdownBox
       heading={"Yêu thích"}
       extraButtonTittle={""}
-      isScrollable={bookmarkedHotels.length > 8}
+      isScrollable={bookmarkedHotels?.length > 8}
       tabs={tabs}
       activeIndex={0}
     >

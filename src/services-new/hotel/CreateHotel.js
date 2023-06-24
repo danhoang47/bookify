@@ -2,16 +2,17 @@ import { CheckStatus } from "@/utils/validation";
 import { types } from "./searchHotelTypes";
 
 export default async function CreateHotel(
-    amenities,
-    basicHotelInfor,
-    backgroundImage,
-    roomImages,
-    viewImages,
-    extraInfor,
-    roomInfor,){
-    const url=`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel`;
-    const hotelForm = new FormData();
-    console.log(   amenities);
+  amenities,
+  basicHotelInfor,
+  backgroundImage,
+  roomImages,
+  viewImages,
+  extraInfor,
+  roomInfor
+) {
+  const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel`;
+  const hotelForm = new FormData();
+  console.log(amenities);
   // const amenitiesId = [];
   // const amenitiesNames = [];
   // const amenitiesTypes = [];
@@ -23,10 +24,11 @@ export default async function CreateHotel(
   //   } else {
   //     amenitiesTypes.push(item.amenityTypeId);
   //   }
-  // });  
-  const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0].code;
+  // });
+  // const typeId = types.filter((item) => item.name === basicHotelInfor.type)[0]
+  //   .code;
 
-  hotelForm.append("hotelType", typeId);
+  hotelForm.append("hotelType", basicHotelInfor.hotelType._id);
   hotelForm.append("hotelName", basicHotelInfor.name);
   hotelForm.append("backgroundImage", backgroundImage);
   hotelForm.append("description", basicHotelInfor.description);
@@ -34,7 +36,7 @@ export default async function CreateHotel(
   hotelForm.append("district", basicHotelInfor.province);
   hotelForm.append("city", basicHotelInfor.district);
   hotelForm.append("address", basicHotelInfor.address);
-   hotelForm.append("amenities", amenities);
+  hotelForm.append("amenities", JSON.stringify(amenities));
   // hotelForm.append("amenitiesId", amenitiesId);
   // hotelForm.append("amenitiesName", amenitiesNames);
   // hotelForm.append("amenitiesTypes", amenitiesTypes);
@@ -80,14 +82,14 @@ export default async function CreateHotel(
   hotelForm.append("maxGuest", roomInfor.numberOfGuests);
   hotelForm.append("bedroomNum", roomInfor.numberOfRoom);
   hotelForm.append("roomNum", roomInfor.rooms);
-  const option={
-    method:"POST",
-    body:hotelForm,
+  const option = {
+    method: "POST",
+    body: hotelForm,
     credentials: "include",
     withCredentials: true,
-  }
-return await fetch(url,option).then(resp=>{
-  if(CheckStatus(resp.status))return resp.json();
-  return CheckStatus(resp.status);
-})
+  };
+  return await fetch(url, option).then((resp) => {
+    if (CheckStatus(resp.status)) return resp.json();
+    return CheckStatus(resp.status);
+  });
 }

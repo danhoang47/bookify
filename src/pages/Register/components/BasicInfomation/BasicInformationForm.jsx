@@ -17,9 +17,10 @@ const getInputFieldType = (key) => {
 
 function BasicInformationForm({ className, setNextTabValid }) {
   const { basicHotelInfor, setBasicHotelInfo } = useContext(RegisterContext);
+  console.log(basicHotelInfor);
   const [isInformationValid, setInformationValid] = useState({
     name: false,
-    type: false,
+    hotelType: false,
     country: true,
     province: false,
     district: false,

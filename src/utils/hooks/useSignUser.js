@@ -35,6 +35,7 @@ export default function useSignUser() {
         setUser(data.user);
         setLogin(true);
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("login", true);
         setToastMessages(
           getSuccessToastMessage({
             message: "Đăng nhập thành công",
@@ -57,6 +58,7 @@ export default function useSignUser() {
       console.log(data);
       setUser(data.user);
       setLogin(true);
+   
       setToastMessages(
         getSuccessToastMessage({
           message: "Đăng Kí thành công",

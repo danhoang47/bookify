@@ -3,18 +3,18 @@ import HostingRegisterHeader from "../components/HostingRegisterHeader";
 import VerifyAuth from "@/utils/hooks/verifyAuth";
 
 function HostingRegisterLayout() {
-    const navigate = useNavigate();
-    const href = useHref();
-    const {firstLogin}= VerifyAuth();
-    if (firstLogin==false){
-        navigate("/");
-    }
-    return (  
-        <>
-            <HostingRegisterHeader location={href}/>
-            <Outlet />
-        </>
-    );
+  const navigate = useNavigate();
+  const href = useHref();
+  const { firstLogin } = VerifyAuth();
+  if (firstLogin == false) {
+    navigate("/");
+  }
+  return (
+    <>
+      <HostingRegisterHeader location={href} />
+      <Outlet />
+    </>
+  );
 }
 
 export default HostingRegisterLayout;

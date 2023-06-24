@@ -5,6 +5,8 @@ import FetchUser from "./FetchUser";
 import UpdateUser from "./UpdateUser";
 import newPassowrdUpdate from "./NewPassword";
 import UpdateBankingCard from "./UpdateCard";
+import GetBookMarked from "./GetBookMarked";
+import GetBookingHistory from "./GetBookingHistory";
 export {
   SignIn,
   SignUp,
@@ -13,4 +15,6 @@ export {
   UpdateUser,
   newPassowrdUpdate,
   UpdateBankingCard,
+  GetBookMarked,
+  GetBookingHistory
 };

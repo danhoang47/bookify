@@ -6,15 +6,13 @@ import { deleteHotelFromBookmark } from "@/services/user";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/utils/contexts";
 import { useGetHotel } from "@/utils/hooks";
-import { useQuery } from "@tanstack/react-query";
-import { GetHotel } from "@/services-new/hotel";
 
 function BookmarkItem({ hotel, handleDeleted }) {
   const { user } = useContext(UserContext);
   const { getHotelbyId } = useGetHotel();
   const unBookmarkHotel = (event) => {
     event.preventDefault();
-    event.stopPropagation();
+  event.stopPropagation();
     deleteHotelFromBookmark(hotel, user._id);
     handleDeleted(hotel);
   };
