@@ -32,13 +32,12 @@ function Hotel() {
   const href = useHref();
   useEffect(() => {
     getHotelbyId(id);
-    console.log(hotel);
-    // setHotelInfo(hotel);
-  }, [id]);
+    // console.log(hotel);
+    setHotelInfo(hotel);
+  }, [user, id]);
   useEffect(() => {
-    console.log(hotel);
-    // setHotelInfo(hotel);
-  }, [hotel]);
+    console.log(hotelInfo);
+  }, [hotelInfo]);
 
   const getAdvanceFilterHotel = () => {
     setAdvanceFilterOpen(false);

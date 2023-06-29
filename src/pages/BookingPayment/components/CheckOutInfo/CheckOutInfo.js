@@ -8,7 +8,7 @@ import {
   WebSocketContext,
 } from "@/utils/contexts";
 import { useContext, useMemo, useState } from "react";
-import { useClsx, useFormatDate } from "@/utils/hooks";
+import { useClsx, useFormatDate, useUser } from "@/utils/hooks";
 import { differenceInDays } from "date-fns";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { DatePicker } from "@/components";
@@ -16,8 +16,12 @@ import { getAmount } from "@/services/user";
 import bookingRoom from "@/services/hotel/bookingRoom";
 import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
 import getNotification from "@/services/hotel/getNotification";
+import { useGetHotel } from "@/utils/hooks";
 
 function CheckOutInfo() {
+  const { bookingHotel } = useGetHotel();
+  const { Userdetail } = useUser();
+
   const { selectDays, setSelectedDays, guests, setGuests } =
     useContext(BookingContext);
   const { user } = useContext(UserContext);
@@ -28,10 +32,13 @@ function CheckOutInfo() {
   const hotelInfo = useOutletContext();
   const navigate = useNavigate();
   const { roomType } = hotelInfo;
+  console.log(user);
   const price = useMemo(
-    () => differenceInDays(selectDays.to, selectDays.from) * roomType?.price,
+    () =>
+      differenceInDays(selectDays.to, selectDays.from) * roomType?.roomPrice,
     [selectDays, roomType]
   );
+  console.log(differenceInDays(selectDays.to, selectDays.from));
   const guestNumber = useMemo(
     () =>
       Object.keys(guests).reduce(
@@ -42,35 +49,28 @@ function CheckOutInfo() {
   );
 
   const handleBookingPayment = async (e) => {
-    if (!user?.bankingAccountNumber) {
+    if (!Userdetail?.bankingAccountNumber) {
       setError("Bạn chưa liên kết tài khoản thanh toán nào");
-      return;
-    }
-    const userAmount = await getAmount(_id).then((data) => data);
-    if (isNaN(userAmount?.amount) || userAmount.amount < price) {
-      setError("Số dư của bạn không đủ để thực hiện giao dịch này");
       return;
     } else {
       setError("");
-      const data = await bookingRoom(
-        selectDays,
-        guests,
-        _id,
-        hotelInfo.hotelId
-      ).then((data) => data);
-      if (data?.status) {
-        const { bookingId } = data;
-        const notification = await getNotification(_id, 2, bookingId).then(
-          (data) => data
-        );
-        current.send(JSON.stringify(notification));
-        navigate(-1);
-        setToastMessages(
-          getSuccessToastMessage({
-            message: "Đặt phòng thành công",
-          })
-        );
-      }
+      bookingHotel(selectDays, guests, hotelInfo._id, price, {
+        onSuccess: (data) => {
+          if (data) {
+            setToastMessages(
+              getSuccessToastMessage({
+                message: "Đặt phòng thành công",
+              })
+            );
+            // const { bookingId } = data;
+            // const notification = getNotification(_id, 2, bookingId).then(
+            //   (data) => data
+            // );
+            // current.send(JSON.stringify(notification));
+            navigate(-1);
+          }
+        },
+      });
     }
   };
   return (

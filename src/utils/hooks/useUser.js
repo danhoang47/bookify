@@ -18,7 +18,7 @@ export default function useUser() {
   const { user } = useContext(UserContext);
   // console.log(user);
   const _id = user?._id || "";
-  const { isLoading, data } = useQuery({
+  const { isLoading, data: Userdetail } = useQuery({
     queryKey: ["fetchUser"],
     queryFn: () => FetchUser(_id),
     onSuccess: (data) => {
@@ -70,6 +70,7 @@ export default function useUser() {
   });
 
   return {
+    Userdetail,
     isLoading,
     updateUser,
     userData,

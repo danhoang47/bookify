@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetHotel, getHotelType } from "@/services-new/hotel";
-import GetHotels from "@/services-new/hotel/GetHotels";
+import {
+  GetHotel,
+  getHotelType,
+  bookingRoom,
+  GetHotels,
+} from "@/services-new/hotel";
 export default function useGetHotel() {
   const [hotels, setHotels] = useState([]);
   const [hotel, setHotel] = useState({});
@@ -10,7 +14,7 @@ export default function useGetHotel() {
     queryKey: ["gethotels"],
     queryFn: GetHotels,
     onSuccess: (data) => {
-      console.log(data.hotels);
+      // console.log(data.hotels);
       setHotels(data.hotels);
     },
   });
@@ -18,13 +22,19 @@ export default function useGetHotel() {
     queryKey: ["hoteltype"],
     queryFn: getHotelType,
   });
-  const { mutate: getHotelbyId, isLoading: queryLoading } = useMutation({
+  const { mutate: getHotelbyId, isSuccess } = useMutation({
     mutationKey: ["mutate"],
     mutationFn: (id) => GetHotel(id),
     onSuccess: (data) => {
       setHotel(data.hotel);
-    // console.log(data);
+      // console.log(data);
     },
+  });
+  const { mutate: bookingHotel } = useMutation({
+    mutationKey: ["booking hotel"],
+    mutationFn: ({ selectDays, guests, hotelId, price }) =>
+      bookingRoom(selectDays, guests, hotelId, price),
+    enabled: isSuccess,
   });
   return {
     hotelsQuery,
@@ -33,6 +43,7 @@ export default function useGetHotel() {
     hotels,
     setHotel,
     getHotelbyId,
+    bookingHotel,
     hotelTypes,
   };
 }

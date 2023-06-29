@@ -34,7 +34,6 @@ function formatDay(date) {
 }
 
 function Booking({ roomType, isAllowPet = true, hotelId }) {
-  const [isLoading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const { dispatch } = useContext(ModalContext);
   const navigate = useNavigate();
@@ -111,16 +110,28 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
       return;
     }
     if (isAllInformatioSelected) {
-      const isAvailable = await searchBookingAvailable(
-        selectDays,
-        hotelId
-      ).then((data) => {
-        console.log(data);
-        return data;
-      });
-      if (isAvailable?.check) {
-        navigate("booking");
-      }
+      console.log(selectDays, guests, hotelId, price);
+      navigate("booking");
+      // bookingHotel(
+      //   { selectDays, guests, hotelId, price },
+      //   {
+      //     onSuccess: (data) => {
+      //       if (data) {
+      //       }
+      //       console.log("Something wrong");
+      //     },
+      //   }
+      // );
+      // const isAvailable = await searchBookingAvailable(
+      //   selectDays,
+      //   hotelId
+      // ).then((data) => {
+      //   console.log(data);
+      //   return data;
+      // });
+      // if (isAvailable?.check) {
+      //   navigate("booking");
+      // }
     }
   };
 
