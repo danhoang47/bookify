@@ -37,7 +37,7 @@ function App({ children }) {
     setUser(userLocal);
   }, [firstLogin, userLocal]);
   useEffect(() => {
-    // console.log(user);
+    console.log(user);
     // console.log(isLogin);
     updateData();
   }, [firstLogin, userLocal]);
@@ -82,9 +82,8 @@ function App({ children }) {
     });
   }, []);
 
-
   useEffect(() => {
-    websocket.current = new WebSocket(`${websocketEndPoint}/${user._id}`);
+    websocket.current = new WebSocket(`${websocketEndPoint}/${user?._id}`);
   }, [user]);
 
   return (

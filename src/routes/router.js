@@ -25,12 +25,19 @@ import {
   HostingRegisterLayout,
   HotelManageLayout,
 } from "@/layouts";
-
+import ErrorBoundary from "@/utils/error/ErrorBoundary";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="" element={<Home />} />
+        <Route
+          path=""
+          element={
+            <ErrorBoundary fallback="Error">
+              <Home />
+            </ErrorBoundary>
+          }
+        />
         <Route path="hotel">
           <Route
             path=":id"

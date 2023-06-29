@@ -17,13 +17,13 @@ function Description({ description, hotelOwner }) {
         </div>
         <div className={DescriptionStyle["host"]}>
           <h4 className={DescriptionStyle["host-name"]}>
-            {hotelOwner?.subname || hotelOwner?.name
-              ? hotelOwner?.subname + " " + hotelOwner?.name
+            {hotelOwner?.subName || hotelOwner?.name
+              ? hotelOwner?.subName + " " + hotelOwner?.name
               : hotelOwner?.username}
           </h4>
           <p className={DescriptionStyle["host-sub"]}>
-            Đã tham gia vào tháng {new Date(hotelOwner?.signAt).getDate()} năm{" "}
-            {new Date(hotelOwner?.signAt).getFullYear()}
+            Đã tham gia vào tháng {new Date(hotelOwner?.createdAt).getMonth()}{" "}
+            năm {new Date(hotelOwner?.createdAt).getFullYear()}
           </p>
         </div>
       </div>

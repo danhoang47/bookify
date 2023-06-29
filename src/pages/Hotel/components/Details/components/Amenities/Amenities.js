@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
 
 function Amenities({ hotelAmenities, roomType }) {
-  console.log(hotelAmenities);
+  console.log(hotelAmenities, roomType);
   return (
     <div>
       <h3 className={AmenitiesStyle["title"]}>
@@ -43,7 +43,7 @@ function Amenities({ hotelAmenities, roomType }) {
                 </div>
                 <h6 className={AmenitiesStyle["sub-name"]}>Phòng ngủ</h6>
                 <p className={AmenitiesStyle["sub-des"]}>
-                  {roomType.numberOfBed + " " + roomType.bedType}
+                  {roomType.bedNum + " " + roomType.bedType}
                 </p>
               </div>
             </Grid>
@@ -54,7 +54,7 @@ function Amenities({ hotelAmenities, roomType }) {
                 </div>
                 <h6 className={AmenitiesStyle["sub-name"]}>Phòng tắm</h6>
                 <p className={AmenitiesStyle["sub-des"]}>
-                  {roomType.numberOfBathroom + " " + roomType.bathroomType}
+                  {roomType.bathNum + " " + roomType.bathroomType}
                 </p>
               </div>
             </Grid>

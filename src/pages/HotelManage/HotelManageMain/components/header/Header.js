@@ -10,7 +10,7 @@ function Header() {
       <Grid container justifyContent={"center"}>
         <Grid item xs={10}>
           <div className={HeaderStyle["header-text"]}>
-            <h2>{hotel.hotelName}</h2>
+            <h2>{hotel?.hotelName}</h2>
             <p className={HeaderStyle["sub-title"]}>
               Xem xét hoạt động và đánh giá mức độ yêu thích của khách hàng dành
               cho khách sạn.

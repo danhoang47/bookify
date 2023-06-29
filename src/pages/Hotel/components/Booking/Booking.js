@@ -82,7 +82,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
     if (!selectDateDiff) {
       return;
     } else {
-      setPrice(roomType.price * selectDateDiff);
+      setPrice(roomType.roomPrice * selectDateDiff);
     }
   }, [selectDateDiff, roomType]);
 
@@ -128,7 +128,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
     <div id={bookingStyles["booking"]}>
       <div className={bookingStyles["heading-row"]}>
         <p className={bookingStyles["price"]}>
-          <span>${roomType?.price}</span>/đêm
+          <span>${roomType?.roomPrice}</span>/đêm
         </p>
         <div className={bookingStyles["ticket"]}></div>
       </div>
@@ -257,7 +257,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
           <div className={bookingStyles["provisional"]}>
             <div className={bookingStyles["price-for-all-nights"]}>
               <p className={bookingStyles["price-label"]}>
-                ${roomType.price}
+                ${roomType.roomPrice}
                 <span>x</span>
                 {selectDateDiff} đêm
               </p>

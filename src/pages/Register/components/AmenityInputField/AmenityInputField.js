@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 import { useClsx } from "@/utils/hooks";
 
 const amenityInitState = {
-  _id: ``,
   amenityName: "",
   icon: "faPencil",
 };
@@ -20,8 +19,9 @@ function AmenityInputField({
   const [amenity, setAmenity] = useState({
     ...amenityInitState,
     hotelId: hotelId,
-    amenityTypeId: amenityTypes[0]?.amenityTypeId ,
+    amenityTypeId: amenityTypes[0]?._id,
   });
+  // console.log(amenityTypes, amenity);
   const [isTypeListOpen, setTypeListOpen] = useState(false);
 
   const handleAmenityAdded = (e) => {
@@ -30,28 +30,24 @@ function AmenityInputField({
     } else {
       const newAmenity = {
         ...amenity,
-        _id: `new-${uuid()}`,
       };
       handleClick((prev) => [...prev, newAmenity]);
       addNewAmenity((prev) => [...prev, newAmenity]);
       setAmenity({
         ...amenityInitState,
         hotelId: hotelId,
-        amenityTypeId: amenityTypes[0].amenityTypeId,
+        amenityTypeId: amenityTypes[0]._id,
       });
     }
-    console.log(amenity);
   };
-
   return (
     <div className={amenityStyle["add-amenity"]}>
       <div className={amenityStyle["amenity-input"]}>
         <div className={amenityStyle["amenity-type-select"]}>
           <p>
             {
-              amenityTypes.find(
-                ({ amenityTypeId }) => amenityTypeId === amenity.amenityTypeId
-              )["amenityTypeName"]
+              amenityTypes.find(({ _id }) => _id === amenity.amenityTypeId)
+                .amenityTypeName
             }
           </p>
           <button onClick={() => setTypeListOpen((prev) => !prev)}>
@@ -63,13 +59,13 @@ function AmenityInputField({
               isTypeListOpen ? amenityStyle["d-block"] : ""
             )}
           >
-            {amenityTypes.map(({ amenityTypeId, amenityTypeName }, index) => (
+            {amenityTypes.map(({ _id, amenityTypeName }, index) => (
               <div
                 key={index}
                 onClick={() => {
                   setAmenity((prev) => ({
                     ...prev,
-                    amenityTypeId: amenityTypeId,
+                    amenityTypeId: _id,
                   }));
                   setTypeListOpen((prev) => !prev);
                 }}

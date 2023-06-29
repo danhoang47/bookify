@@ -8,6 +8,7 @@ export async function VerifyJwt() {
   };
   try {
     return await fetch(url, options).then((response) => {
+      console.log(response.status);
       return CheckStatus(response.status);
     });
   } catch (error) {

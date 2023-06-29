@@ -28,7 +28,7 @@ function Body() {
         title: "Thay đổi cài đặt khách sạn",
         handleClick: () => {
           if (hotel) {
-            navigate(`/hosting/update/${hotel.hotelId}`);
+            navigate(`/hosting/update/${hotel._id}`);
           }
         },
       },
@@ -37,7 +37,7 @@ function Body() {
         title: "Tinh chỉnh giá phòng",
         handleClick: () => {
           if (hotel) {
-            navigate(`/hosting/update/${hotel.hotelId}`);
+            navigate(`/hosting/update/${hotel._id}`);
           }
         },
       },
@@ -46,7 +46,7 @@ function Body() {
         title: "Cập nhật trạng thái khả dụng",
         handleClick: () => {
           if (hotel) {
-            navigate(`/hosting/update/${hotel.hotelId}`);
+            navigate(`/hosting/update/${hotel._id}`);
           }
         },
       },

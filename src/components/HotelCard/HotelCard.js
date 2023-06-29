@@ -25,13 +25,12 @@ function HotelCard({
   country,
   district,
   address,
-  // backgroundImg,
+
   images,
   averagePrice,
   rating,
   isBookmarked,
 }) {
-  console.log(isBookmarked);
   const { user } = useContext(UserContext);
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -43,7 +42,6 @@ function HotelCard({
       {
         hotelId,
         hotelName,
-        // backgroundImg,
         country,
         district,
         address,
@@ -58,6 +56,9 @@ function HotelCard({
     );
     setBookmarked(true);
   };
+  useEffect(() => {
+    setBookmarked(isBookmarked);
+  }, [isBookmarked]);
 
   const removeFromBookmark = () => {
     setBookmarkedHotels((prev) => {
@@ -74,33 +75,23 @@ function HotelCard({
     event.preventDefault();
     if (!user._id) {
       setToastMessages(
-        getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
+        getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
       );
       return;
     }
     addBookMarked(hotelId, {
       onSuccess: () => {
-        setBookmarked(!bookmarked);
+        if (!isBookmarked) {
+          setToastMessages(
+            getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
+          );
+        } else {
+          setToastMessages(
+            getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
+          );
+        }
       },
-    }); // if (bookmarked) {
-    //   const res = await deleteHotelFromBookmark(hotelId, user._id).then(
-    //     (res) => res
-    //   );
-    //   if (res?.ok) {
-    //     removeFromBookmark();
-    //   } else {
-    //     setBookmarked(false);
-    //   }
-    // } else {
-    //   const res = await addHotelToBookmark(hotelId, user._id).then(
-    //     (res) => res
-    //   );
-    //   if (res?.ok) {
-    //     addToBookmark();
-    //   } else {
-    //     setBookmarked(true);
-    //   }
-    // }
+    });
   };
 
   return (
@@ -138,7 +129,7 @@ function HotelCard({
             <p className={"hotel-price-per-night"}>{`$${averagePrice}`}</p>
           </div>
         </div>
-        {user.role === 0 ? (
+        {user?.role === 0 ? (
           ""
         ) : (
           <div

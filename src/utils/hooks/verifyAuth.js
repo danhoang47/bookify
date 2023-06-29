@@ -13,7 +13,7 @@ const userInitState = {
   role: 0,
   self_description: "",
   subname: "",
-  _id: null,
+  _id: "",
   username: "",
   bank_card: "",
 };
@@ -27,19 +27,18 @@ function VerifyAuth() {
     queryKey: ["verify"],
     queryFn: VerifyJwt,
     refetchInterval: 1000 * 30,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+
     onSuccess: (data) => {
       console.log(data);
       if (!data) {
         setFirstLogin(false);
         setUser(userInitState);
-        localStorage.removeItem("user");
+        // localStorage.removeItem("user");
         localStorage.setItem("login", false);
       } else {
         setFirstLogin(true);
-        localStorage.setItem("login", true);
-        console.log(JSON.parse(localStorage.getItem("user")));
+        // localStorage.setItem("login", true);
+        // console.log(JSON.parse(localStorage.getItem("user")));
         setUser(JSON.parse(localStorage.getItem("user")));
       }
       // setLogin(true);

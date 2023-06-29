@@ -5,15 +5,18 @@ import HotelManageHeader from "../components/HotelManageHeader";
 import manageLayoutStyles from "./HotelManageLayout.module.scss";
 import Footer from "../components/Footer";
 import { UserContext } from "@/utils/contexts";
-import { getHotelByOwnerId } from "@/services/hotel";
+import { useUser } from "@/utils/hooks";
+// import { getHotelByOwnerId } from "@/services/hotel";
 
 function HotelManageLayout() {
   const { user } = useContext(UserContext);
   const [hotel, setHotel] = useState({});
+  const { Owner_hotel } = useUser();
 
   useEffect(() => {
-    getHotelByOwnerId(user._id).then((hotel) => setHotel(hotel));
-  }, [user]);
+    console.log(Owner_hotel);
+    setHotel(Owner_hotel?.hotel);
+  }, [Owner_hotel, user]);
 
   return (
     <div id={manageLayoutStyles["hotel-manage-layout"]}>

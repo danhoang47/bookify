@@ -17,8 +17,12 @@ import tabs from "./tabs";
 import { getSuccessToastMessage } from "@/utils/reducers/toastMessageReducer";
 
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
-import {CreateHotel,   
-  getDefaultAmenities, UpdateHotel, getDefaultAmenityTypes} from "@/services-new/hotel";
+import {
+  CreateHotel,
+  getDefaultAmenities,
+  UpdateHotel,
+  getDefaultAmenityTypes,
+} from "@/services-new/hotel";
 
 function RegisterSection({
   hotelId,
@@ -65,7 +69,6 @@ function RegisterSection({
     });
 
     getDefaultAmenities().then((defaultAmenties) => {
-      
       setDisplayAmenities((prev) => {
         const mergedAmenities = [...prev];
         Array.from(defaultAmenties.amenities).forEach((defaultAmenity) => {
@@ -84,12 +87,12 @@ function RegisterSection({
         return mergedAmenities;
       });
     });
-  
+
     //eslint-disable-next-line
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     console.log(displayAmenities);
-  },[displayAmenities])
+  }, [displayAmenities]);
   const registerContextValue = useMemo(
     () => ({
       hotelId,
@@ -159,15 +162,17 @@ function RegisterSection({
         roomImages,
         viewImages,
         extraInfor,
-        roomInfor,
+        roomInfor
       );
-      console.log( amenities,
+      console.log(
+        amenities,
         basicHotelInfor,
         backgroundImage,
         roomImages,
         viewImages,
         extraInfor,
-        roomInfor,);
+        roomInfor
+      );
       setToastMessages(
         getSuccessToastMessage({ message: "Đăng ký khách sạn thành công" })
       );

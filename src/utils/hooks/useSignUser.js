@@ -58,7 +58,7 @@ export default function useSignUser() {
       console.log(data);
       setUser(data.user);
       setLogin(true);
-   
+
       setToastMessages(
         getSuccessToastMessage({
           message: "Đăng Kí thành công",
@@ -79,9 +79,9 @@ export default function useSignUser() {
     mutationKey: ["check-password"],
     mutationFn: (password) => compareCurrentPassword(password),
   });
-const {mutate:SignOut} = useMutation({
-  mutationKey:["log-out"],
-  mutationFn:LogOut,
-})
-  return { status, loginState, logInFn, SignUpFn, checkPass ,SignOut};
+  const { mutate: SignOut } = useMutation({
+    mutationKey: ["log-out"],
+    mutationFn: LogOut,
+  });
+  return { status, loginState, logInFn, SignUpFn, checkPass, SignOut };
 }

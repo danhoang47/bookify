@@ -40,18 +40,6 @@ function Hotel() {
     // setHotelInfo(hotel);
   }, [hotel]);
 
-  // useEffect(() => {
-  //   fetch(
-  //     `http://localhost:8080/bookify/api/hotel/?id=${id}&userid=${user._id}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       setCurrentReview(result.reviews);
-  //       setHotelInfo(result);
-  //     });
-  //   //eslint-disable-next-line
-  // }, [id]);
-
   const getAdvanceFilterHotel = () => {
     setAdvanceFilterOpen(false);
   };
@@ -117,7 +105,7 @@ function Hotel() {
                           <Booking
                             roomType={hotel?.roomType}
                             isAllowPet={hotel?.isAllowPet}
-                            hotelId={hotel?.hotelId}
+                            hotelId={hotel?._id}
                           />
                         </Suspense>
                       </div>

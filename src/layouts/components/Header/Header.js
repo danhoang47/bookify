@@ -18,7 +18,7 @@ function Header({
   notifs,
   setNotifs,
 }) {
-  console.log(bookmarkedHotels);
+  // console.log(bookmarkedHotels);
   const isHasNotifUnRead = useMemo(
     () => notifs?.some(({ isRead }) => !isRead),
     [notifs]

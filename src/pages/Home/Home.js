@@ -24,6 +24,7 @@ import {
 import { useClsx } from "@/utils/hooks";
 import { filterHotel, getAdvanceSearchHotels } from "@/services/hotel";
 import { useGetHotel } from "@/utils/hooks";
+import ErrorBoundary from "@/utils/error/ErrorBoundary";
 
 const HotelCards = lazy(() => import("./components/HotelCards"));
 const AdvanceFilter = lazy(() => import("./components/AdvanceFilter"));
@@ -220,7 +221,9 @@ function Home() {
                 {hotelsQuery.isLoading ? (
                   <Loading />
                 ) : (
-                  <HotelCards hotels={hotelsQuery.data.hotels} type={type} />
+                  <ErrorBoundary fallback="Error">
+                    <HotelCards hotels={hotelsQuery.data.hotels} type={type} />
+                  </ErrorBoundary>
                 )}
               </Suspense>
             </Grid>

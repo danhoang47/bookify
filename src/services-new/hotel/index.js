@@ -7,6 +7,7 @@ import getDefaultAmenities from "./getDefaultAmenities";
 import getDefaultAmenityTypes from "./getDefaultAmenityTypes";
 import checkHotelBook from "./checkHotelBook";
 import getHotelType from "./getHotelType";
+import getHotelbyOwner from "./getHotelbyOwner";
 export {
   GetHotel,
   CreateHotel,
@@ -17,4 +18,5 @@ export {
   UpdateHotel,
   getDefaultAmenityTypes,
   getHotelType,
+  getHotelbyOwner,
 };

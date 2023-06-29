@@ -23,7 +23,7 @@ import disabledHotel from "@/services/admin/disabledHotel";
 import { checkHotelBook } from "@/services-new/hotel";
 
 function InfoHeader({
-  Rooms=[],
+  Rooms = [],
   reviews = [],
   roomType = null,
   hotelName = null,
@@ -32,7 +32,7 @@ function InfoHeader({
   hotelId = null,
   isVerified = false,
 }) {
-  console.log(rating);
+  // console.log(rating);
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useContext(reportContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -40,20 +40,19 @@ function InfoHeader({
 
   const checkUser = () => {
     if (user._id) {
-    checkHotelBook(hotelId)
-        .then((result) => {
-          console.log(result);
-          if (!result) {
-            setToastMessages(
-              getFailureToastMessage({
-                message: "Bạn chưa từng ở khách sạn này",
-              })
-            );
-          }
-          if (result) {
-            setAdvanceFilterOpen(true);
-          }
-        });
+      checkHotelBook(hotelId).then((result) => {
+        console.log(result);
+        if (!result) {
+          setToastMessages(
+            getFailureToastMessage({
+              message: "Bạn chưa từng ở khách sạn này",
+            })
+          );
+        }
+        if (result) {
+          setAdvanceFilterOpen(true);
+        }
+      });
     } else {
       setToastMessages(
         getFailureToastMessage({
@@ -90,8 +89,8 @@ function InfoHeader({
         </h6>
         <h1 className={InfoHeaderStyle["hotel_name"]}>{hotelName}</h1>
         <h5 className={InfoHeaderStyle["hotel_guest_limit"]}>
-          {roomType?.maxGuest} người - {roomType?.bedroomNum } phòng ngủ
-          - {roomType?.bathNum} phòng tắm
+          {roomType?.maxGuest} người - {roomType?.bedroomNum} phòng ngủ -{" "}
+          {roomType?.bathNum} phòng tắm
         </h5>
       </div>
 
