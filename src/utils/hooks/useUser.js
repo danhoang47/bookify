@@ -22,7 +22,7 @@ export default function useUser() {
     queryKey: ["fetchUser"],
     queryFn: () => FetchUser(_id),
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       setUserData(data);
     },
     enabled: user?._id !== "",

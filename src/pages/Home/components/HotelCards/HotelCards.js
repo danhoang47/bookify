@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { memo } from "react";
 
 function HotelCards({ hotels, type = null }) {
-  console.log(hotels);
+  // console.log(hotels);
   return (
     <>
       {hotels.map((hotel) => (

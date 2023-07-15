@@ -51,7 +51,7 @@ function PasswordForm({ submodal }) {
       try {
         checkPass(password, {
           onSuccess: (data) => {
-            console.log("touched");
+            // console.log("touched");
             if (!data) {
               console.log("incorrect compare");
               setToastMessages(

@@ -42,7 +42,7 @@ function DefaultLayout() {
   }, [firstLogin]);
 
   const getBookmarkedHotel = () => {
-    console.log(bookMarkedData);
+    // console.log(bookMarkedData);
     setBookmarkedHotels(bookMarkedData?.bookmarkedHotel);
   };
 

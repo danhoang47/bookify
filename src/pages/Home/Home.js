@@ -163,7 +163,7 @@ function Home() {
     document.title = "Bookify";
   }, []);
 
-  console.log(isSearchAdvanceMode);
+  // console.log(isSearchAdvanceMode);
   return (
     <AdvanceFilterContext.Provider value={advanceFilterContextValue}>
       <div

@@ -37,7 +37,7 @@ function App({ children }) {
     setUser(userLocal);
   }, [firstLogin, userLocal]);
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     // console.log(isLogin);
     updateData();
   }, [firstLogin, userLocal]);
