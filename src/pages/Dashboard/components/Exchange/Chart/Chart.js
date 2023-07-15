@@ -27,7 +27,7 @@ const months = [
 ];
 
 function Chart({ exchangeData }) {
-  const [year, setYear] = useState(2022);
+  const [year, setYear] = useState(2023);
   const [select, setSelect] = useState("months");
 
   let sumByYear = getYearSum(exchangeData, year);

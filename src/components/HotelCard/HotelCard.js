@@ -37,7 +37,7 @@ function HotelCard({
   const setBookmarkedHotels = useOutletContext(BookmarkContext);
   const { addBookMarked } = useUser();
   useEffect(() => {
-    if (user.hotelBookmarked.includes(hotelId)) setBookmarked(true);
+    if (user?.hotelBookmarked?.includes(hotelId)) setBookmarked(true);
     else setBookmarked(false);
   }, []);
 
