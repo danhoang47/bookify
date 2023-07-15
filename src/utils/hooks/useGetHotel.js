@@ -7,17 +7,7 @@ import {
   GetHotels,
 } from "@/services-new/hotel";
 export default function useGetHotel() {
-  const [hotels, setHotels] = useState([]);
   const [hotel, setHotel] = useState({});
-  const [filter, setFilter] = useState();
-  const hotelsQuery = useQuery({
-    queryKey: ["gethotels"],
-    queryFn: GetHotels,
-    onSuccess: (data) => {
-      // console.log(data.hotels);
-      setHotels(data.hotels);
-    },
-  });
   const { data: hotelTypes } = useQuery({
     queryKey: ["hoteltype"],
     queryFn: getHotelType,
@@ -37,10 +27,7 @@ export default function useGetHotel() {
     enabled: isSuccess,
   });
   return {
-    hotelsQuery,
-    setFilter,
     hotel,
-    hotels,
     setHotel,
     getHotelbyId,
     bookingHotel,
