@@ -51,7 +51,6 @@ const trendingHotels = [
 function Home() {
   const [type, setType] = useState({});
   // const currentCoordinates = useContext(CoordinatesContext);
-  const { hotelsQuery } = useGetHotel();
   const { user } = useContext(UserContext);
   const [isAdvanceFilterOpen, setAdvanceFilterOpen] = useState(false);
   const [hotelsList, setHotelsList] = useState([]);
@@ -62,7 +61,7 @@ function Home() {
   const [houseType, setHouseType] = useState(null);
   const [price, setPrice] = useState(priceInitState);
   const [amenitiesPicked, setAmenitiesPicked] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const {
     place,
     selectedDays,
@@ -70,7 +69,6 @@ function Home() {
     isSearchAdvanceMode,
     setSearchAdvanceMode,
   } = useContext(SearchContext);
-  console.log(selectedDays);
   const getNumberOfFilterItemPicked = () => {
     const numberOfAmenitiesPicked = amenitiesPicked.length;
     const numberOfRoomAndBedRoomPicked = Object.keys(roomAndBedRoom).reduce(
@@ -103,11 +101,18 @@ function Home() {
     );
   };
 
-  // const getHotel = () => {
-  //   fetch("http://localhost:8080/bookify/api/hotel/all?userid=" + user._id)
-  //     .then((res) => res.json())
-  //     .then((result) => setHotelsList(result));
-  // };
+  const getHotel = () => {
+    fetch(`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel/`, {
+      method: "GET",
+      credentials: "include",
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setHotelsList(result.hotels);
+        setLoading(false);
+      });
+  };
 
   const getAdvanceSearchHotel = async () => {
     setLoading(true);
@@ -120,14 +125,14 @@ function Home() {
   useEffect(() => {
     if (type.filterType || type.filterTypeId) {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user._id}`
+        `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user._id}`
       )
         .then((res) => res.json())
         .then((result) => {
           setHotelsList(result);
         });
     } else {
-      // getHotel();
+      getHotel();
     }
   }, [type]);
 
@@ -136,7 +141,7 @@ function Home() {
       getAdvanceSearchHotel();
     } else {
       setSearchAdvanceMode(false);
-      // getHotel();
+      getHotel();
     }
   }, [isSearchAdvanceMode]);
 
@@ -217,12 +222,11 @@ function Home() {
           <div className={homeStyles["hotel-cards"]}>
             <Grid container spacing={1.5} overflow={"hidden"}>
               <Suspense fallback={<Loading />}>
-                {" "}
-                {hotelsQuery.isLoading ? (
+                {isLoading ? (
                   <Loading />
                 ) : (
                   <ErrorBoundary fallback="Error">
-                    <HotelCards hotels={hotelsQuery.data.hotels} type={type} />
+                    <HotelCards hotels={hotelsList} type={type} />
                   </ErrorBoundary>
                 )}
               </Suspense>
