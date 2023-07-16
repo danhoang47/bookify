@@ -5,7 +5,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState, Suspense, lazy } from "react";
-import { getAllTodayBooking } from "@/services/hotel";
+import { GetAllTodayBooking } from "@/services-new/hotel";
 import { useOutletContext } from "react-router-dom";
 
 const BookingTabs = lazy(() => import("@/components/Tabs/BookingTabs"));
@@ -17,7 +17,7 @@ const tabPanelStyle = {
 };
 
 function BookingList() {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("pending");
   const [bookingList, setBookingList] = useState([]);
   const [hotel, setHotel] = useOutletContext();
 
@@ -29,9 +29,10 @@ function BookingList() {
     if (!hotel) {
       return;
     }
-    getAllTodayBooking(hotel.hotelId, value).then((data) =>
-      setBookingList(data)
-    );
+    GetAllTodayBooking(hotel._id, value).then((data) => {
+      console.log(data.data);
+      setBookingList(data.data);
+    });
   };
 
   useEffect(() => {
@@ -65,12 +66,12 @@ function BookingList() {
                   },
                 }}
               >
-                <Tab label="Đang chờ" value="1" />
-                <Tab label="Đang được đặt" value="2" />
-                <Tab label="Trả phòng" value="3" />
+                <Tab label="Đang chờ" value="pending" />
+                <Tab label="Đang được đặt" value="booked" />
+                <Tab label="Trả phòng" value="checkout" />
               </TabList>
             </Box>
-            <TabPanel value="1" sx={tabPanelStyle}>
+            <TabPanel value="pending" sx={tabPanelStyle}>
               <Suspense fallback={<div>Loading...</div>}>
                 <BookingTabs
                   list={bookingList}
@@ -78,7 +79,7 @@ function BookingList() {
                 />
               </Suspense>
             </TabPanel>
-            <TabPanel value="2" sx={tabPanelStyle}>
+            <TabPanel value="booked" sx={tabPanelStyle}>
               <Suspense fallback={<div>Loading...</div>}>
                 <BookingTabs
                   list={bookingList}
@@ -86,7 +87,7 @@ function BookingList() {
                 />
               </Suspense>
             </TabPanel>
-            <TabPanel value="3" sx={tabPanelStyle}>
+            <TabPanel value="checkout" sx={tabPanelStyle}>
               <Suspense fallback={<div>Loading...</div>}>
                 <BookingTabs
                   list={bookingList}

@@ -32,13 +32,13 @@ function CheckOutInfo() {
   const hotelInfo = useOutletContext();
   const navigate = useNavigate();
   const { roomType } = hotelInfo;
-  console.log(user);
+  // console.log(user);
   const price = useMemo(
     () =>
       differenceInDays(selectDays.to, selectDays.from) * roomType?.roomPrice,
     [selectDays, roomType]
   );
-  console.log(differenceInDays(selectDays.to, selectDays.from));
+  // console.log(differenceInDays(selectDays.to, selectDays.from));
   const guestNumber = useMemo(
     () =>
       Object.keys(guests).reduce(
@@ -53,24 +53,35 @@ function CheckOutInfo() {
       setError("Bạn chưa liên kết tài khoản thanh toán nào");
       return;
     } else {
-      setError("");
-      bookingHotel(selectDays, guests, hotelInfo._id, price, {
-        onSuccess: (data) => {
-          if (data) {
-            setToastMessages(
-              getSuccessToastMessage({
-                message: "Đặt phòng thành công",
-              })
-            );
-            // const { bookingId } = data;
-            // const notification = getNotification(_id, 2, bookingId).then(
-            //   (data) => data
-            // );
-            // current.send(JSON.stringify(notification));
-            navigate(-1);
-          }
-        },
-      });
+      console.log(selectDays, guests, hotelInfo._id, price);
+      const hotelId = hotelInfo._id;
+      bookingHotel(
+        { selectDays, guests, hotelId, price },
+        {
+          onSuccess: (data) => {
+            console.log(data);
+            if (data.message === "Your booking has been successfully") {
+              setToastMessages(
+                getSuccessToastMessage({
+                  message: "Đặt phòng thành công",
+                })
+              );
+              // const { bookingId } = data;
+              // const notification = getNotification(_id, 2, bookingId).then(
+              //   (data) => data
+              // );
+              // current.send(JSON.stringify(notification));
+              navigate(-1);
+            } else {
+              setToastMessages(
+                getSuccessToastMessage({
+                  message: "Phòng đã đặt",
+                })
+              );
+            }
+          },
+        }
+      );
     }
   };
   return (

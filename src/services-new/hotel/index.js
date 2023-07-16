@@ -10,7 +10,11 @@ import getHotelType from "./getHotelType";
 import getHotelbyOwner from "./getHotelbyOwner";
 import bookingRoom from "./bookingRoom";
 import GetAdvanceSearchHotels from "./GetAdvanceSearchHotels";
+import GetAllTodayBooking from "./GetAllTodayBooking";
+import GetAllBooking from "./GetAllBooking";
 export {
+  GetAllBooking,
+  GetAllTodayBooking,
   GetHotel,
   CreateHotel,
   checkHotelBook,

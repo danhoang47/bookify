@@ -4,6 +4,7 @@ import { income } from "./fakeIncomeData";
 import { lazy, useState, Suspense, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { getRandomExpected, getTotal } from "./IncomeService";
+import getHotelManage from "@/services-new/hotel/getHotelManage";
 
 const Chart = lazy(() => import("./components/Chart"));
 
@@ -16,15 +17,12 @@ function Income() {
   const incomeByMonth = [];
 
   useEffect(() => {
-    fetch(
-      `http://localhost:8080/bookify/api/hotel/manage/income?hotelid=${hotel.hotelId}&month=${month}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setDays2(result.incomeDays);
-        setTotalIncome(result.totalIncomePerDays);
-      });
+    console.log(hotel);
+    getHotelManage(hotel._id, "income", month).then((result) => {
+      console.log(result);
+      setDays2(result.income.label);
+      setTotalIncome(result.income.value);
+    });
   }, [month]);
 
   const expectIncome2 = getRandomExpected(totalIncome);

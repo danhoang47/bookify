@@ -17,9 +17,9 @@ import {
 } from "@/utils/reducers/toastMessageReducer";
 
 import InfoHeaderStyle from "./InfoHeader.module.scss";
-import verifiedHotel from "@/services/admin/verifiedHotel";
+import verifiedHotel from "@/services-new/admin/verifiedHotel";
 import { useNavigate } from "react-router-dom";
-import disabledHotel from "@/services/admin/disabledHotel";
+import disabledHotel from "@/services-new/admin/disabledHotel";
 import { checkHotelBook } from "@/services-new/hotel";
 
 function InfoHeader({

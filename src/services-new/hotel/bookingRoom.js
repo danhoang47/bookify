@@ -17,7 +17,12 @@ export default async function bookingRoom(selectDays, guests, hotelId, price) {
   bookingData.append("pet", pet);
 
   const url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/booking`;
-  const data = await fetch(url, { method: "POST" }).then((res) => {
+  const data = await fetch(url, {
+    method: "POST",
+    body: bookingData,
+    credentials: "include",
+    withCredentials: true,
+  }).then((res) => {
     if (CheckStatus(res.status)) return res.json();
     return false;
   });

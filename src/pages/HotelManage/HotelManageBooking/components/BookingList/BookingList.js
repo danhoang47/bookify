@@ -6,7 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { useOutletContext } from "react-router-dom";
-import { getAllBooking } from "@/services/hotel";
+import { GetAllBooking } from "@/services-new/hotel";
 
 const tabPanelStyle = {
   padding: "1em 0",
@@ -26,7 +26,7 @@ function BookingList({ width, bookList }) {
     if (!hotel) {
       return;
     }
-    getAllBooking(hotel.hotelId, value).then((data) => setBookingList(data));
+    GetAllBooking(hotel._id, value).then((data) => setBookingList(data.data));
   };
 
   useEffect(() => {

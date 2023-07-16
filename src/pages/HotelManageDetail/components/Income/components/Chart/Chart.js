@@ -27,40 +27,20 @@ function ChartComponent({
         <p>Đã thu được trong tháng {months}</p>
       </div>
 
-      {/* {!monthIncome ? (
-        <>
-          <div className={ChartStyle["sub-static"]}>
-            <h4 className={ChartStyle["realistic"]}>${total}</h4>
-            <h4 className={ChartStyle["expected"]}>${expectIncome}</h4>
-          </div>
-          <DualLineChart
-            labels={months}
-            label1="Đã thu"
-            label2="Ước tính"
-            data1={incomeByMonth}
-            data2={expected}
-          />
-        </>
-      ) : ( */}
-      <>
-        <div className={ChartStyle["sub-static"]}>
-          <h4 className={ChartStyle["realistic"]}>${daysTotal}</h4>
-          <h4 className={ChartStyle["expected"]}>
-            ${Math.floor(expectIncome)}
-          </h4>
-        </div>
-        <div className={ChartStyle["signleChart-static"]}>
-          {/* <SingleLineChart labels={days} label="Đã thu" data={dayIncome} /> */}
-          <DualLineChart
-            labels={days}
-            label1="Đã thu"
-            label2="Ước tính"
-            data1={dayIncome}
-            data2={expected}
-          />
-        </div>
-      </>
-      {/* )} */}
+      <div className={ChartStyle["sub-static"]}>
+        <h4 className={ChartStyle["realistic"]}>${daysTotal}</h4>
+        <h4 className={ChartStyle["expected"]}>${Math.floor(expectIncome)}</h4>
+      </div>
+      <div className={ChartStyle["signleChart-static"]}>
+        {/* <SingleLineChart labels={days} label="Đã thu" data={dayIncome} /> */}
+        <DualLineChart
+          labels={days}
+          label1="Đã thu"
+          label2="Ước tính"
+          data1={dayIncome}
+          data2={expected}
+        />
+      </div>
     </div>
   );
 }

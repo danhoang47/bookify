@@ -23,13 +23,18 @@ function Views() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:8080/bookify/api/hotel/manage/views?hotelid=${hotel?.hotelId}&month=${monthChanged}`
+      `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/hotels/manage/details/${hotel._id}?type=views&month=${monthChanged}`,
+      {
+        method: "GET",
+        credentials: "include",
+        withCredentials: true,
+      }
     )
       .then((res) => res.json())
       .then((result) => {
         setViewData(result);
-        setBookingday(result.bookingDays);
-        setBookingValue(result.totalBookingPerDay);
+        setBookingday(result.dailyBookings?.label);
+        setBookingValue(result.dailyBookings?.value);
       });
   }, [monthChanged]);
 
@@ -40,7 +45,7 @@ function Views() {
           <FontAwesomeIcon icon={faEye} />
           <div className={ViewStyle["static"]}>
             <h6>Lượt xem trong tháng</h6>
-            <h1>{viewData?.accessNumber}</h1>
+            <h1>{viewData?.totalViewsNumber}</h1>
           </div>
         </div>
         <div className={ViewStyle["book-number"]}>
@@ -53,7 +58,7 @@ function Views() {
           <div className={ViewStyle["static"]}>
             <h6>Lượt đặt phòng trong tháng</h6>
             <h1>
-              {viewData?.totalBookingPerDay.reduce((prev, cur) => {
+              {viewData?.dailyBookings?.value.reduce((prev, cur) => {
                 return prev + cur;
               }, 0) || 0}
             </h1>
