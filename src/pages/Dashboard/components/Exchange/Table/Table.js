@@ -47,7 +47,7 @@ function Table({ exchangeData }) {
           <th>Chi tiết</th>
         </thead>
         <tbody>
-          {exchangeData?.map((row, key) => (
+          {exchangeData?.transactData?.map((row, key) => (
             <tr key={key}>
               <td>
                 <p>

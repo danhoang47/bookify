@@ -14,8 +14,8 @@ function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
   const { isLogin, setLogin } = useContext(UserContext);
   const { user, setUser } = useContext(UserContext);
-  const {SignOut}= useSignUser();
-  // console.log(user);
+  const { SignOut } = useSignUser();
+  console.log(user);
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ function OptionList({ handleClick }) {
         title: "Quản lý thông tin",
         style: "primary",
         requiredRole: [3],
+        isLoginRequired: true,
         onClickHandler: (event) => {
           event.stopPropagation();
           navigate("/dashboard");
@@ -102,19 +103,22 @@ function OptionList({ handleClick }) {
         requiredRole: [1, 2, 3],
         isLoginRequired: true,
         onClickHandler: (e) => {
-          SignOut({onSucess:(data)=>{
-            if(data){   
-          setUser({ role: 0 });
-          setLogin(false);
-          localStorage.setItem("login",false);
-          localStorage.removeItem("user");
-          navigate("/");
-          setToastMessages(
-            getFailureToastMessage({
-              message: "Đã đăng xuất",
-            })
-          );}}})
-       
+          SignOut({
+            onSucess: (data) => {
+              if (data) {
+                setUser({ role: 0 });
+                setLogin(false);
+                localStorage.setItem("login", false);
+                localStorage.removeItem("user");
+                navigate("/");
+                setToastMessages(
+                  getFailureToastMessage({
+                    message: "Đã đăng xuất",
+                  })
+                );
+              }
+            },
+          });
         },
       },
       {
@@ -155,7 +159,10 @@ function OptionList({ handleClick }) {
             { title, style, requiredRole, isLoginRequired, onClickHandler },
             index
           ) => {
-            if (isLoginRequired === isLogin) {
+            if (
+              isLoginRequired == isLogin &&
+              requiredRole.includes(user.role)
+            ) {
               // console.log(prev);
               return [
                 ...prev,

@@ -10,9 +10,15 @@ function Hotel() {
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/bookify/api/hotel/all/dashboard")
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/hotels`, {
+        method: "GET",
+        credentials: "include",
+        withCredentials: true,
+      }
+    )
       .then((res) => res.json())
-      .then((result) => setHotels(result));
+      .then((result) => setHotels(result.hotels));
   }, []);
 
   const handleChange = useCallback(

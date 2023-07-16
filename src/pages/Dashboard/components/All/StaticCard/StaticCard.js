@@ -3,47 +3,50 @@ import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { useMemo, useContext } from "react";
+import { useMemo, useContext, useEffect } from "react";
 import { getIncreasePercent2 } from "../AllService";
 import { MonthContext } from "../All";
 
 function StaticCard({ prevMonthData, currentMonthData, month }) {
   // const [month, setMonth] = useContext(MonthContext);
   let staticTracking = getIncreasePercent2(
-    prevMonthData,
-    currentMonthData,
+    prevMonthData.overallData,
+    currentMonthData.overallData,
     month
   );
+  useEffect(() => {
+    console.log(staticTracking);
+  }, [prevMonthData, currentMonthData]);
 
   const options = [
     {
       class: "booking-number",
       title: "Lượt đặt phòng",
-      data: currentMonthData?.bookingNumber || 0,
+      data: currentMonthData?.overallData?.numberOfBooking?.total || 0,
       tracking: staticTracking.booking,
     },
     {
       class: "views-number",
       title: "Lượt truy cập",
-      data: currentMonthData?.accessNumber || 0,
+      data: currentMonthData?.overallData?.numberOfVisitors?.total || 0,
       tracking: staticTracking.views,
     },
     {
       class: "checkout-number",
       title: "Lượt thanh toán",
-      data: currentMonthData?.paymentNumber || 0,
+      data: currentMonthData?.overallData?.numberOfPayment?.total || 0,
       tracking: staticTracking.checkOut,
     },
     {
       class: "rate-number",
       title: "Lượt đánh giá",
-      data: currentMonthData?.reviewNumber || 0,
+      data: currentMonthData?.overallData?.numberOfRating?.total || 0,
       tracking: staticTracking.rating,
     },
     {
       class: "register-number",
       title: "Lượt đăng ký",
-      data: currentMonthData?.userRegisNumber || 0,
+      data: currentMonthData?.overallData?.numberOfNewUser?.total || 0,
       tracking: staticTracking.register,
     },
   ];

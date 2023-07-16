@@ -22,9 +22,11 @@ import {
   roomAndBedRoomInitialState,
 } from "./advanceFilterInitState";
 import { useClsx } from "@/utils/hooks";
-import { filterHotel, getAdvanceSearchHotels } from "@/services/hotel";
-import { useGetHotel } from "@/utils/hooks";
+import { getAdvanceSearchHotels } from "@/services/hotel";
+import { FilterHotel } from "@/services-new/hotel";
+
 import ErrorBoundary from "@/utils/error/ErrorBoundary";
+import getAdvancedTab from "@/services-new/hotel/getAdvancedTab";
 
 const HotelCards = lazy(() => import("./components/HotelCards"));
 const AdvanceFilter = lazy(() => import("./components/AdvanceFilter"));
@@ -69,6 +71,20 @@ function Home() {
     isSearchAdvanceMode,
     setSearchAdvanceMode,
   } = useContext(SearchContext);
+  const advanceFilterContextValue = useMemo(
+    () => ({
+      roomAndBedRoom,
+      setRoomAndBedRoom,
+      houseType,
+      setHouseType,
+      price,
+      setPrice,
+      amenitiesPicked,
+      setAmenitiesPicked,
+    }),
+    [roomAndBedRoom, houseType, price, amenitiesPicked]
+  );
+
   const getNumberOfFilterItemPicked = () => {
     const numberOfAmenitiesPicked = amenitiesPicked.length;
     const numberOfRoomAndBedRoomPicked = Object.keys(roomAndBedRoom).reduce(
@@ -92,9 +108,11 @@ function Home() {
   };
 
   const getAdvanceFilterHotel = () => {
-    filterHotel(roomAndBedRoom, houseType, price, amenitiesPicked).then(
+    // console.log(roomAndBedRoom, houseType, price, amenitiesPicked);
+    FilterHotel(roomAndBedRoom, houseType, price, amenitiesPicked).then(
       (data) => {
-        setHotelsList(data);
+        console.log(data);
+        setHotelsList(data.hotels);
         setAdvanceFilterOpen(false);
         setNumberOfFilterPicked(getNumberOfFilterItemPicked());
       }
@@ -123,14 +141,12 @@ function Home() {
   };
 
   useEffect(() => {
+    console.log(type);
     if (type.filterType || type.filterTypeId) {
-      fetch(
-        `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user._id}`
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setHotelsList(result);
-        });
+      const filterPayload = `${type.filterType}=${type.filterTypeId}`;
+      getAdvancedTab(filterPayload).then((result) => {
+        setHotelsList(result.hotels);
+      });
     } else {
       getHotel();
     }
@@ -144,20 +160,6 @@ function Home() {
       getHotel();
     }
   }, [isSearchAdvanceMode]);
-
-  const advanceFilterContextValue = useMemo(
-    () => ({
-      roomAndBedRoom,
-      setRoomAndBedRoom,
-      houseType,
-      setHouseType,
-      price,
-      setPrice,
-      amenitiesPicked,
-      setAmenitiesPicked,
-    }),
-    [roomAndBedRoom, houseType, price, amenitiesPicked]
-  );
 
   useEffect(() => {
     document.title = "Bookify";

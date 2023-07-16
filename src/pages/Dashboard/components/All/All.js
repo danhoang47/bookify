@@ -44,11 +44,31 @@ function All() {
   const [prevMonthData, setPrevMonthData] = useState(currentMonthInitialData);
 
   useEffect(() => {
-    fetch("http://localhost:8080/bookify/api/dashboard?month=" + month)
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/income?month=` +
+        month,
+      {
+        method: "GET",
+        credentials: "include",
+        withCredentials: true,
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
-        setCurrentMonthData(result[0]);
-        setPrevMonthData(result[1]);
+        setCurrentMonthData(result);
+      });
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/income?month=` +
+        (month - 1),
+      {
+        method: "GET",
+        credentials: "include",
+        withCredentials: true,
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setPrevMonthData(result);
       });
   }, [month]);
 
@@ -69,12 +89,13 @@ function All() {
           <div className={AllStyle["charts"]}>
             <Chart
               typeBooking={{
-                type: currentMonthData.bookingHotelType,
-                numberBooking: currentMonthData.bookingHotelTypeNumber,
+                type: currentMonthData.chartData?.trendingBooking.label,
+                numberBooking:
+                  currentMonthData.chartData?.trendingBooking.value,
               }}
               bookingNumber={{
-                day: currentMonthData.bookingDate,
-                numberBooking: currentMonthData.bookingDateNumber,
+                day: currentMonthData.chartData?.dailyBooking.label,
+                numberBooking: currentMonthData.chartData?.dailyBooking.value,
               }}
             />
           </div>
@@ -82,9 +103,7 @@ function All() {
             <Suspense fallback={<div>Loading</div>}>
               <Report
                 reportData={
-                  currentMonthData.listReport
-                    ? currentMonthData.listReport
-                    : null
+                  currentMonthData.reports ? currentMonthData.reports : null
                 }
               />
             </Suspense>

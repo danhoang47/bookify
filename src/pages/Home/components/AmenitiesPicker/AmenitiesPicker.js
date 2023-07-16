@@ -5,24 +5,12 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const types = [
   {
-    amenityType: "230198c8-317c-4f60-8a60-78e6ab002963",
-    title: "Gia đình",
+    amenityType: "646da50ffb5bbb622131c3c5",
+    title: "Trong nhà",
   },
   {
-    amenityType: "30550c0c-0985-43ae-890e-9b8979a6e6c6",
-    title: "Dịch vụ",
-  },
-  {
-    amenityType: "b84a89d6-7831-4c72-8a03-8fba95d0d318",
+    amenityType: "646da568801beac8854b56f9",
     title: "Ngoài trời",
-  },
-  {
-    amenityType: "e5db1bd1-4708-44e5-aaf0-089a85ea239b",
-    title: "Đò dùng nấu bếp và ăn uống",
-  },
-  {
-    amenityType: "f7bedf8c-7c2c-43e8-a8ec-fc327eb0f520",
-    title: "Giải trí",
   },
 ];
 

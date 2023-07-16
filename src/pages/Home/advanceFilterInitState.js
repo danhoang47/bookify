@@ -1,9 +1,9 @@
 // icon
 import {
-  faCampground,
-  faBowlFood,
-  faBowlRice,
-  faSwimmingPool,
+  faHotel,
+  faHouseChimney,
+  faHouse,
+  faUmbrellaBeach,
 } from "@fortawesome/free-solid-svg-icons";
 
 const pickers = [
@@ -26,37 +26,37 @@ const pickers = [
 
 const houseAndRoomTypes = [
   {
-    id: "64724a36c56247dbde3ca5e9",
-    type: "Cam trai 5",
-    icon: faCampground,
+    id: "646d87a5768a15b96656358c",
+    type: "Private House",
+    icon: faHouse,
   },
   {
-    id: "64724a36c56247dbde3ca5ea",
-    type: "BBQ 2",
-    icon: faBowlFood,
+    id: "646d87b5768a15b96656358f",
+    type: "Resort",
+    icon: faUmbrellaBeach,
   },
 
   {
-    id: "6475ca1dcc850fed9ef393da",
-    type: "Restaurant",
-    icon: faBowlRice,
+    id: "64909fb613adcb5397bf961f",
+    type: "Hotel",
+    icon: faHotel,
   },
   {
-    id: "649a51ae5c7e584fe505376b",
-    type: "Pool",
-    icon: faSwimmingPool,
+    id: "6490a14fb92c2e38f936b1d5",
+    type: "Expensive Apartment",
+    icon: faHouseChimney,
   },
 ];
 
 const roomAndBedRoomInitialState = {
-  rooms: 0,
-  numberOfBed: 0,
-  numberOfBathroom: 0,
+  rooms: null,
+  numberOfBed: null,
+  numberOfBathroom: null,
 };
 
 const priceInitState = {
   min: 0,
-  max: 1000,
+  max: 0,
 };
 
 export {

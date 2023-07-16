@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import { useState } from "react";
 import YearPickerStyle from "./YearPicker.module.scss";
 
-const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
 function YearPicker({ yearChanging }) {
-  const [year, setYear] = useState(2022);
+  const [year, setYear] = useState(2023);
   const [yearCur, setYearCur] = useState(years[year]);
   const refLeft = useRef();
   const refRight = useRef();
@@ -17,9 +17,9 @@ function YearPicker({ yearChanging }) {
       refLeft.current.style.display = "none";
       setYear(2014);
       setYearCur(years[year]);
-    } else if (year >= 2022) {
+    } else if (year >= 2023) {
       refRight.current.style.display = "none";
-      setYear(2022);
+      setYear(2023);
       setYearCur(years[year]);
     } else {
       setYearCur(years[year]);

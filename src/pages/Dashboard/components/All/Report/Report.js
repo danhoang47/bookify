@@ -17,7 +17,7 @@ function Report({ reportData = [] }) {
                   <div className={ReportStyle["card-avatar"]}>
                     <div className={ReportStyle["avatar-wrapper"]}>
                       <img
-                        src={data.avatar}
+                        src={data?.user?.avatar ? data?.user?.avatar : ""}
                         alt="avatar"
                         height={30}
                         width={30}
@@ -26,9 +26,9 @@ function Report({ reportData = [] }) {
                   </div>
                   <div className={ReportStyle["card-body"]}>
                     <div className={ReportStyle["card-title"]}>
-                      <h4>{data.username}</h4>
-                      <Link to={`/hotel/${data.hotelId}`}>
-                        <h6>{data.hotelName}</h6>
+                      <h4>{data?.user?.username}</h4>
+                      <Link to={`/hotel/${data._id}`}>
+                        <h6>{data?.hotelName}</h6>
                       </Link>
 
                       {/* Onclick navigate in later --------------------------------------------------------- */}
@@ -40,7 +40,7 @@ function Report({ reportData = [] }) {
                       <p>{data.content}</p>
                     </div>
                     <div className={ReportStyle["card-time"]}>
-                      <p>{format(new Date(data.reportDate), "yyyy-MM-dd")}</p>
+                      <p>{format(new Date(data.createdAt), "yyyy-MM-dd")}</p>
                     </div>
                   </div>
                 </div>

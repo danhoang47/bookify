@@ -11,34 +11,10 @@ import {
 import YearPicker from "./YearPicker";
 import { useState, useMemo } from "react";
 import ChartStyle from "../Exchange.module.scss";
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
 
-function Chart({ exchangeData }) {
-  const [year, setYear] = useState(2023);
-  const [select, setSelect] = useState("months");
-
-  let sumByYear = getYearSum(exchangeData, year);
-  let transYears = getYearsSum(exchangeData);
-
-  let monthsData = getMonthData(exchangeData, year);
-
-  let transYearsNumber2 = TransactionDataYears2(exchangeData);
-
+function Chart({ exchangeData, year, setYear, type, setType }) {
   const handleChange = (e) => {
-    setSelect(e.target.value);
+    setType(e.target.value);
   };
   const yearChanging = (data) => {
     setYear(data);
@@ -52,8 +28,8 @@ function Chart({ exchangeData }) {
           id="year"
           name="chart"
           onChange={handleChange}
-          value="months"
-          checked={select === "months"}
+          value="month"
+          checked={type === "month"}
         />
         <label htmlFor="year">Theo tháng</label>
         <input
@@ -61,28 +37,28 @@ function Chart({ exchangeData }) {
           id="years"
           name="chart"
           onChange={handleChange}
-          value="years"
+          value="year"
         />
         <label htmlFor="years">Theo năm</label>
 
-        {select === "months" ? (
-          <h2>${sumByYear}.00</h2>
+        {type === "month" ? (
+          <h2>${exchangeData?.total}.00</h2>
         ) : (
-          <h2>${transYears}.00</h2>
+          <h2>${exchangeData?.total}.00</h2>
         )}
-        {select === "months" ? (
+        {type === "month" ? (
           <b>Thu được trong năm {year}</b>
         ) : (
           <b>Tổng thu nhập</b>
         )}
       </div>
       <div className={ChartStyle["chart-body"]}>
-        {select === "months" ? (
+        {type === "month" ? (
           <>
             <SingleLineChart
               label={"Tổng tiền giao dịch"}
-              labels={months}
-              data={monthsData || []}
+              labels={exchangeData?.income?.label}
+              data={exchangeData?.income?.value || []}
               isY={false}
               color={"#f72585"}
             />
@@ -94,8 +70,8 @@ function Chart({ exchangeData }) {
           <>
             <SingleLineChart
               label={"Tổng tiền giao dịch"}
-              labels={transYearsNumber2.year}
-              data={transYearsNumber2.transNumber}
+              labels={exchangeData?.income?.label}
+              data={exchangeData?.income?.value}
               isY={false}
               color={"#f72585"}
             />

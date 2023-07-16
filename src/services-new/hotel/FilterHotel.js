@@ -1,44 +1,30 @@
 export default async function FilterHotel(
-    roomAndBedRoom,
-    houseType,
-    price,
-    amenitiesPicked
+  roomAndBedRoom,
+  hotelType,
+  price,
+  amenitiesPicked
 ) {
-    const advanceFilterFormData = new FormData();
-    advanceFilterFormData.append(
-        "houseType",
-        houseType != null ? houseType : ""
-    );
-    advanceFilterFormData.append(
-        "amenitiesPicked",
-        amenitiesPicked.length > 0 ? amenitiesPicked : []
-    );
-    advanceFilterFormData.append(
-        "rooms",
-        roomAndBedRoom.rooms > 0 ? roomAndBedRoom.rooms : 0
-    );
-    advanceFilterFormData.append(
-        "numberOfBed",
-        roomAndBedRoom.numberOfBed > 0 ? roomAndBedRoom.numberOfBed : 0
-    );
-    advanceFilterFormData.append(
-        "numberOfBathroom",
-        roomAndBedRoom.numberOfBathroom > 0
-            ? roomAndBedRoom.numberOfBathroom
-            : 0
-    );
-    advanceFilterFormData.append("min", price.min ? parseInt(price.min) : 0);
-    advanceFilterFormData.append("max", price.max ? parseInt(price.max) : 0);
+  //   console.log(roomAndBedRoom, hotelType, price, amenitiesPicked);
+  let url = `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel?`;
 
-    const data = await fetch(
-        "http://localhost:3001/bookify/api/hotel/filteradvanced",
-        {
-            method: "POST",
-            body: advanceFilterFormData,
-        }
-    )
-        .then((res) => res.json())
-        .then((result) => result);
-    
-    return data;
+  if (hotelType != null) url += `hotelType=${hotelType}&`;
+  if (amenitiesPicked.length > 0) url += `hotelAmenities=${amenitiesPicked}&`;
+  if (roomAndBedRoom.rooms > 0)
+    url += `roomType.bedroomNum=${roomAndBedRoom.rooms}&`;
+  if (roomAndBedRoom.numberOfBed > 0)
+    url += `roomType.bedNum=${roomAndBedRoom.numberOfBed}&`;
+  if (roomAndBedRoom.numberOfBathroom > 0)
+    url += `roomType.bathNum=${roomAndBedRoom.numberOfBathroom}&`;
+  if (price.min) url += `roomType.minPrice=${price.min}&`;
+  if (price.max > 0) url += `roomType.maxPrice=${price.max}&`;
+  console.log(url);
+  const data = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+    withCredentials: true,
+  })
+    .then((res) => res.json())
+    .then((result) => result);
+
+  return data;
 }
