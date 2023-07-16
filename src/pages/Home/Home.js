@@ -22,8 +22,7 @@ import {
   roomAndBedRoomInitialState,
 } from "./advanceFilterInitState";
 import { useClsx } from "@/utils/hooks";
-import { getAdvanceSearchHotels } from "@/services/hotel";
-import { FilterHotel } from "@/services-new/hotel";
+import { FilterHotel, GetAdvanceSearchHotels } from "@/services-new/hotel";
 
 import ErrorBoundary from "@/utils/error/ErrorBoundary";
 import getAdvancedTab from "@/services-new/hotel/getAdvancedTab";
@@ -134,8 +133,8 @@ function Home() {
 
   const getAdvanceSearchHotel = async () => {
     setLoading(true);
-    await getAdvanceSearchHotels(place, selectedDays, guests).then((data) => {
-      setHotelsList(data);
+    await GetAdvanceSearchHotels(place, selectedDays, guests).then((data) => {
+      setHotelsList(data.hotels);
       setLoading(false);
     });
   };

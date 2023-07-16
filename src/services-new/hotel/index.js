@@ -9,6 +9,7 @@ import checkHotelBook from "./checkHotelBook";
 import getHotelType from "./getHotelType";
 import getHotelbyOwner from "./getHotelbyOwner";
 import bookingRoom from "./bookingRoom";
+import GetAdvanceSearchHotels from "./GetAdvanceSearchHotels";
 export {
   GetHotel,
   CreateHotel,
@@ -18,6 +19,7 @@ export {
   GetHotels,
   UpdateHotel,
   getDefaultAmenityTypes,
+  GetAdvanceSearchHotels,
   getHotelType,
   getHotelbyOwner,
   bookingRoom,
