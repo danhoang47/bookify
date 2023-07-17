@@ -14,6 +14,7 @@ import { getSignInModal } from "@/utils/reducers/modalReducer";
 import LogOut from "@/services-new/user/LogOut";
 
 export default function useSignUser() {
+  
   const { dispatch } = useContext(ModalContext);
   const { setUser, isLogin, setLogin } = useContext(UserContext);
   const { setToastMessages } = useContext(ToastMessageContext);
@@ -82,6 +83,17 @@ export default function useSignUser() {
   const { mutate: SignOut } = useMutation({
     mutationKey: ["log-out"],
     mutationFn: LogOut,
+    onSucess: (data) => {
+      setUser({ role: 0 });
+      setLogin(false);
+      localStorage.setItem("login", false);
+      localStorage.removeItem("user");
+      setToastMessages(
+        getFailureToastMessage({
+          message: "Đã đăng xuất",
+        })
+      );
+    },
   });
   return { status, loginState, logInFn, SignUpFn, checkPass, SignOut };
 }

@@ -35,10 +35,8 @@ function BookingItem({ booking, handleBookingAction }) {
   const handleAcceptedBooking = async (event) => {
     if (!isLoading) {
       setLoading(true);
-      const data = await fetch(acceptBooking(booking?._id)).then(
-        (data) => data
-      );
-      if (data?.status) {
+      const data = await acceptBooking(booking?._id, "accept");
+      if (data?.message == "Accept booking successfully") {
         setLoading(false);
         handleBookingAction(booking._id, "accept");
       }
@@ -48,10 +46,8 @@ function BookingItem({ booking, handleBookingAction }) {
   const handleRejectedBooking = async (event) => {
     if (!isLoading) {
       setLoading(true);
-      const data = await fetch(acceptBooking(booking?._id)).then(
-        (data) => data
-      );
-      if (data?.status) {
+      const data = await acceptBooking(booking?._id, "disable");
+      if (data?.message == "Accept booking successfully") {
         setLoading(false);
         handleBookingAction(booking._id, "reject");
       }
@@ -65,7 +61,7 @@ function BookingItem({ booking, handleBookingAction }) {
         <p>
           {roomType?.bedType || "Normal"} -{" "}
           {getBookingGuestsTitle({
-            adult: booking?.adult,
+            adult: booking?.aldult,
             child: booking?.child,
             infant: booking?.infant,
             pet: booking?.pet,
@@ -86,7 +82,7 @@ function BookingItem({ booking, handleBookingAction }) {
             src={
               user.avatar
                 ? user.avatar
-                : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
             }
             alt="avatar"
           />
@@ -113,7 +109,7 @@ function BookingItem({ booking, handleBookingAction }) {
               {isLoading ? <CircleLoading /> : "Hủy bỏ"}
             </button>
           </>
-        ) : booking.status === true ? (
+        ) : booking.status == true ? (
           <button className={bookingItemStyles["accept-button"]}>
             {"Đã chấp nhận"}
           </button>

@@ -71,7 +71,7 @@ function RegisterSection({
     getDefaultAmenities().then((defaultAmenties) => {
       setDisplayAmenities((prev) => {
         const mergedAmenities = [...prev];
-        Array.from(defaultAmenties.amenities).forEach((defaultAmenity) => {
+        Array.from(defaultAmenties?.amenities).forEach((defaultAmenity) => {
           console.log(defaultAmenity);
           let isIncluded = false;
           prev.forEach(({ amenityName }) => {

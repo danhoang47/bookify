@@ -39,6 +39,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
   const navigate = useNavigate();
   const { selectDays, setSelectedDays, guests, setGuests } =
     useContext(BookingContext);
+  console.log(selectDays);
   const [isSelectBoxOpen, setSelectBoxOpen] = useState({
     roomTypeBox: false,
     datePickerBox: false,

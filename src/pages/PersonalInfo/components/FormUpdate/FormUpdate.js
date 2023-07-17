@@ -187,7 +187,7 @@ function FormUpdate({ account }) {
                       userData?.avatar !==
                         "http://localhost:8080/bookify/images/users/null"
                         ? userData?.avatar
-                        : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                        : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
                     }
                     onAvatarUpload={onUpdateInput}
                     readOnly={readOnly}

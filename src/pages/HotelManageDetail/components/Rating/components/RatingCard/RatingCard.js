@@ -20,7 +20,7 @@ function Filter({ data, rating }) {
                   src={
                     item.user.avatar
                       ? `http://localhost:${process.env.REACT_APP_BACK_END_PORT}${item.user.avatar}`
-                      : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                      : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
                   }
                   alt="avatar"
                   height={30}

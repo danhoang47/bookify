@@ -68,7 +68,7 @@ function OptionList({ handleClick }) {
         isLoginRequired: true,
         onClickHandler: (event) => {
           event.stopPropagation();
-          if (!user.bankingAccountNumber) {
+          if (!user.bankingAccount) {
             setToastMessages(
               getFailureToastMessage({
                 message: "Bạn chưa liên kết tài khoản ngân hàng",
@@ -103,22 +103,9 @@ function OptionList({ handleClick }) {
         requiredRole: [1, 2, 3],
         isLoginRequired: true,
         onClickHandler: (e) => {
-          SignOut({
-            onSucess: (data) => {
-              if (data) {
-                setUser({ role: 0 });
-                setLogin(false);
-                localStorage.setItem("login", false);
-                localStorage.removeItem("user");
-                navigate("/");
-                setToastMessages(
-                  getFailureToastMessage({
-                    message: "Đã đăng xuất",
-                  })
-                );
-              }
-            },
-          });
+          e.stopPropagation();
+          SignOut();
+          navigate(0);
         },
       },
       {

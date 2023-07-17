@@ -19,7 +19,7 @@ export const reviewContext = createContext();
 export const reviewDataContext = createContext();
 
 function Hotel() {
-  const { hotel, getHotelbyId, queryLoading } = useGetHotel();
+  const { hotel, getHotelbyId, selectDay } = useGetHotel();
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [hotelInfo, setHotelInfo] = useState({});
@@ -32,7 +32,8 @@ function Hotel() {
   const href = useHref();
   useEffect(() => {
     getHotelbyId(id);
-    // console.log(hotel);
+    setSelectedDays(selectDay);
+    // console.log(selectDay);
     setHotelInfo(hotel);
   }, [user, id]);
   useEffect(() => {

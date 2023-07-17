@@ -16,7 +16,7 @@ const getType = (type) => {
 export default async function GetAllBooking(hotelId, type) {
   const url = `http://localhost:${
     process.env.REACT_APP_BACK_END_PORT
-  }/dashboard/hotels/manage/booking/today/${hotelId}?type=${getType(type)}`;
+  }/dashboard/hotels/manage/booking/${hotelId}?type=${getType(type)}`;
   const data = await fetch(url, {
     method: "GET",
     credentials: "include",

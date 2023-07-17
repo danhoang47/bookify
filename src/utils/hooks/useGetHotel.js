@@ -8,6 +8,7 @@ import {
 } from "@/services-new/hotel";
 export default function useGetHotel() {
   const [hotel, setHotel] = useState({});
+  const [selectDay, setSelectDay] = useState([]);
   const { data: hotelTypes } = useQuery({
     queryKey: ["hoteltype"],
     queryFn: getHotelType,
@@ -17,6 +18,7 @@ export default function useGetHotel() {
     mutationFn: (id) => GetHotel(id),
     onSuccess: (data) => {
       setHotel(data.hotel);
+      setSelectDay(data.fullyBookedDates);
       // console.log(data);
     },
   });
@@ -26,11 +28,5 @@ export default function useGetHotel() {
       bookingRoom(selectDays, guests, hotelId, price),
     enabled: isSuccess,
   });
-  return {
-    hotel,
-    setHotel,
-    getHotelbyId,
-    bookingHotel,
-    hotelTypes,
-  };
+  return { selectDay, hotel, setHotel, getHotelbyId, bookingHotel, hotelTypes };
 }
