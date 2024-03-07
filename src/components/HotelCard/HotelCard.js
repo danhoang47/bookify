@@ -6,7 +6,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { Link, useOutletContext } from "react-router-dom";
-import { useContext, useState, memo } from "react";
+import { useContext, useState, memo, useEffect } from "react";
 import {
   BookmarkContext,
   ToastMessageContext,
@@ -17,92 +17,54 @@ import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import { useUser } from "@/utils/hooks";
 
 function HotelCard({
-  hotelId,
+  _id: hotelId,
   hotelName,
   country,
-  city,
   district,
   address,
-  backgroundImg,
   images,
-  averagePirce,
+  averagePrice,
   rating,
   isBookmarked,
 }) {
-  const backgroundImg2 = backgroundImg.split("/");
-  const allImages = [backgroundImg2[backgroundImg2.length - 1]];
   const { user } = useContext(UserContext);
-  const [bookmarked, setBookmarked] = useState(isBookmarked);
+
+  const [bookmarked, setBookmarked] = useState(false);
   const { setToastMessages } = useContext(ToastMessageContext);
   const setBookmarkedHotels = useOutletContext(BookmarkContext);
-
-  images.forEach((image) => {
-    let imgName = image.src.split("/");
-    allImages.push(imgName[imgName.length - 1]);
-  });
-
-  const addToBookmark = () => {
-    setBookmarkedHotels((prev) => [
-      {
-        hotelId,
-        hotelName,
-        backgroundImg,
-        country,
-        district,
-        city,
-        address,
-        roomType: {
-          price: averagePirce,
-        },
-      },
-      ...prev,
-    ]);
-    setToastMessages(
-      getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
-    );
-    setBookmarked(true);
-  };
-
-  const removeFromBookmark = () => {
-    setBookmarkedHotels((prev) => {
-      const thisHotelId = hotelId;
-      return prev.filter(({ hotelId }) => hotelId !== thisHotelId);
-    });
-    setToastMessages(
-      getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
-    );
-    setBookmarked(false);
-  };
+  const { addBookMarked } = useUser();
+  useEffect(() => {
+    if (user?.hotelBookmarked?.includes(hotelId)) setBookmarked(true);
+    else setBookmarked(false);
+  }, []);
 
   const handleBookmark = async (event) => {
     event.preventDefault();
-    if (!user.user_id) {
+    if (!user._id) {
       setToastMessages(
-        getFailureToastMessage({ message: "Bạn cần phải đăng nhập" })
+        getSuccessToastMessage({ message: "Đăng nhập để dùng" })
       );
       return;
     }
-    if (bookmarked) {
-      const res = await deleteHotelFromBookmark(hotelId, user.user_id).then(
-        (res) => res
-      );
-      if (res?.ok) {
-        removeFromBookmark();
-      } else {
-        setBookmarked(false);
-      }
-    } else {
-      const res = await addHotelToBookmark(hotelId, user.user_id).then(
-        (res) => res
-      );
-      if (res?.ok) {
-        addToBookmark();
-      } else {
-        setBookmarked(true);
-      }
-    }
+    addBookMarked(hotelId, {
+      onSuccess: () => {
+        if (!bookmarked) {
+          setBookmarked(!bookmarked);
+          setToastMessages(
+            getSuccessToastMessage({ message: "Đã thêm vào mục yêu thích" })
+          );
+          return;
+        } else {
+          setBookmarked(!bookmarked);
+          setToastMessages(
+            getSuccessToastMessage({ message: "Đã xóa khỏi mục yêu thích" })
+          );
+        }
+      },
+    });
   };
 
   return (
@@ -110,11 +72,11 @@ function HotelCard({
       <div className={"hotel-card"}>
         <div className={"carousel"}>
           <Carousel controls={true} interval={null}>
-            {allImages.map((src, index) => (
+            {images.map((element, index) => (
               <Carousel.Item key={index}>
                 <img
                   className={"carousel-image"}
-                  src={"http://localhost:8080/bookify/images/hotels/" + src}
+                  src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${element.imagePath}`}
                   alt={hotelName}
                   loading="lazy"
                 />
@@ -128,16 +90,19 @@ function HotelCard({
               <h3 className={"hotel-name"}>{hotelName}</h3>
               <div className={"average-point"}>
                 <FontAwesomeIcon icon={faStar} />
-                <span>{rating}</span>
+                <span>{rating.communicationPoint}</span>
+                <span>{rating.accuracyPoint}</span>
+                <span>{rating.locationPoint}</span>
+                <span>{rating.valuePoint}</span>
               </div>
             </div>
             <p
               className={"hotel-address"}
-            >{`${country}, ${city}, ${district}, ${address}`}</p>
-            <p className={"hotel-price-per-night"}>{`$${averagePirce}`}</p>
+            >{`${country},  ${district}, ${address}`}</p>
+            <p className={"hotel-price-per-night"}>{`$${averagePrice}`}</p>
           </div>
         </div>
-        {user.role === 0 ? (
+        {user?.role === 0 ? (
           ""
         ) : (
           <div

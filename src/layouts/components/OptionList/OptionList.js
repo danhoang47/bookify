@@ -8,11 +8,14 @@ import { useContext, useMemo } from "react";
 import { getSignUpModal, getSignInModal } from "@/utils/reducers/modalReducer";
 import { useNavigate } from "react-router-dom";
 import { getFailureToastMessage } from "@/utils/reducers/toastMessageReducer";
+import { useSignUser } from "@/utils/hooks";
 
 function OptionList({ handleClick }) {
   const { dispatch } = useContext(ModalContext);
-  const { setLogin } = useContext(UserContext);
+  const { isLogin, setLogin } = useContext(UserContext);
   const { user, setUser } = useContext(UserContext);
+  const { SignOut } = useSignUser();
+  console.log(user);
   const { setToastMessages } = useContext(ToastMessageContext);
   const navigate = useNavigate();
 
@@ -37,6 +40,7 @@ function OptionList({ handleClick }) {
         title: "Quản lý thông tin",
         style: "primary",
         requiredRole: [3],
+        isLoginRequired: true,
         onClickHandler: (event) => {
           event.stopPropagation();
           navigate("/dashboard");
@@ -64,7 +68,7 @@ function OptionList({ handleClick }) {
         isLoginRequired: true,
         onClickHandler: (event) => {
           event.stopPropagation();
-          if (!user.bankingAccountNumber) {
+          if (!user.bankingAccount) {
             setToastMessages(
               getFailureToastMessage({
                 message: "Bạn chưa liên kết tài khoản ngân hàng",
@@ -99,16 +103,9 @@ function OptionList({ handleClick }) {
         requiredRole: [1, 2, 3],
         isLoginRequired: true,
         onClickHandler: (e) => {
-          handleClick(e);
-          localStorage.removeItem("jwt");
-          setUser({ role: 0 });
-          setLogin(false);
-          navigate("/");
-          setToastMessages(
-            getFailureToastMessage({
-              message: "Đã đăng xuất",
-            })
-          );
+          e.stopPropagation();
+          SignOut();
+          navigate(0);
         },
       },
       {
@@ -144,8 +141,16 @@ function OptionList({ handleClick }) {
         }}
       >
         {options.reduce(
-          (prev, { title, style, requiredRole, onClickHandler }, index) => {
-            if (requiredRole.includes(user.role)) {
+          (
+            prev,
+            { title, style, requiredRole, isLoginRequired, onClickHandler },
+            index
+          ) => {
+            if (
+              isLoginRequired == isLogin &&
+              requiredRole.includes(user.role)
+            ) {
+              // console.log(prev);
               return [
                 ...prev,
                 <li

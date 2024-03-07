@@ -2,13 +2,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "./DefaultLayout.module.scss";
 import { memo, useEffect, useState, useMemo } from "react";
-import { Outlet, useHref } from "react-router-dom";
+import { Outlet, useHref, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Suspense, useContext } from "react";
 import { UserContext, WebSocketContext } from "@/utils/contexts";
 import { getAllBookmarkedHotel } from "@/services/hotel";
 import getNotification from "@/services/hotel/getNotification";
 import { SearchContext } from "@/utils/contexts";
+import VerifyAuth from "@/utils/hooks/verifyAuth";
+import { useGetHotel, useUser } from "@/utils/hooks";
 
 const guestsInitial = {
   adult: 0,
@@ -18,8 +20,12 @@ const guestsInitial = {
 };
 
 function DefaultLayout() {
+  const { getHotelbyId } = useGetHotel();
+  const { bookMarkedData } = useUser();
   const href = useHref();
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { firstLogin } = VerifyAuth();
+  const { user, isLogin } = useContext(UserContext);
   const current = useContext(WebSocketContext);
   const [bookmarkedHotels, setBookmarkedHotels] = useState([]);
   const [notifs, setNotifs] = useState([]);
@@ -29,30 +35,35 @@ function DefaultLayout() {
   const [guests, setGuests] = useState(guestsInitial);
   const [isSearchAdvanceMode, setSearchAdvanceMode] = useState(false);
 
+  useEffect(() => {
+    if (firstLogin === false) {
+      navigate("/");
+    }
+  }, [firstLogin]);
+
   const getBookmarkedHotel = () => {
-    getAllBookmarkedHotel(user.user_id).then((data) => {
-      setBookmarkedHotels(data);
-    });
+    // console.log(bookMarkedData);
+    setBookmarkedHotels(bookMarkedData?.bookmarkedHotel);
   };
 
-  const getNotifications = () => {
-    getNotification(user.user_id, type).then((data) => {
-      setNotifs(data);
-    });
-  };
+  // const getNotifications = () => {
+  //   getNotification(user._id, type).then((data) => {
+  //     setNotifs(data);
+  //   });
+  // };
 
-  const resetSearchAdvance = () => {
-    setPlace("");
-    setSelectedDays({});
-    setGuests(guestsInitial);
-  };
+  // const resetSearchAdvance = () => {
+  //   setPlace("");
+  //   setSelectedDays({});
+  //   setGuests(guestsInitial);
+  // };
 
   useEffect(() => {
     getBookmarkedHotel();
-    getNotifications();
+    // getNotifications();
 
     //eslint-disable-next-line
-  }, [user]);
+  }, [user, isLogin, bookMarkedData]);
 
   const handleOnMessage = (event) => {
     const newNotif = JSON.parse(event.data);
@@ -84,7 +95,7 @@ function DefaultLayout() {
       setGuests,
       isSearchAdvanceMode,
       setSearchAdvanceMode,
-      resetSearchAdvance,
+      // resetSearchAdvance,
     };
   }, [place, guests, selectedDays, isSearchAdvanceMode]);
 

@@ -9,15 +9,14 @@ import Photos from "./Photos";
 
 function HotelInfo() {
   const hotelInfo = useOutletContext();
+  console.log(hotelInfo);
 
   return (
     <div className={HotelInfoStyle["hotelInfo-wrapper"]}>
       <div className={HotelInfoStyle["hotel-header"]}>
-        <h2 className={HotelInfoStyle["hotel-name"]}>
-          {hotelInfo.hotelName}
-        </h2>
+        <h2 className={HotelInfoStyle["hotel-name"]}>{hotelInfo?.hotelName}</h2>
         <h4 className={HotelInfoStyle["rating-stars"]}>
-          {hotelInfo.rating} <FontAwesomeIcon icon={faStar} />
+          {hotelInfo?.rating?.valuePoint} <FontAwesomeIcon icon={faStar} />
         </h4>
       </div>
       <div className={HotelInfoStyle["photo-section"]}>

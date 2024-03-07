@@ -17,9 +17,9 @@ function Comments({ reviews, hotelId }) {
   const [currentReview, setCurrentReview] = useContext(reviewDataContext);
   console.log(currentReview);
   const checkUser = () => {
-    if (user.user_id) {
+    if (user._id) {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/review?hotelid=${hotelId}&userid=${user.user_id}`
+        `http://localhost:8080/bookify/api/hotel/review?hotelid=${hotelId}&userid=${user._id}`
       )
         .then((res) => res.json())
         .then((result) => {
@@ -59,7 +59,7 @@ function Comments({ reviews, hotelId }) {
                           src={
                             review.avatar
                               ? review.avatar
-                              : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                              : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
                           }
                           alt=""
                         />

@@ -47,18 +47,20 @@ function Table({ exchangeData }) {
           <th>Chi tiết</th>
         </thead>
         <tbody>
-          {exchangeData?.map((row, key) => (
+          {exchangeData?.transactData?.map((row, key) => (
             <tr key={key}>
               <td>
-                <p>{row.userFullName ? row.userFullName : row.username}</p>
-                <p>ID:{row.user_id}</p>
+                <p>
+                  {row.subName} {row.name}
+                </p>
+                <p>ID:{row._id}</p>
               </td>
               <td>
-                <p>{format(new Date(row.check_out), "MMMM dd, yyyy")}</p>
+                <p>{format(new Date(row.createdAt), "MMMM dd, yyyy")}</p>
                 <p>Lúc: 12:10</p>
               </td>
               <td>
-                <p>{row.booking_id}</p>
+                <p>{row.bookingId}</p>
               </td>
               <td>
                 <p>${row.price} USD</p>

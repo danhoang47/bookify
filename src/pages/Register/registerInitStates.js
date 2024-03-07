@@ -1,6 +1,6 @@
 const basicHotelInforInitState = {
   name: "",
-  type: "",
+  hotelType: "",
   country: "Việt Nam",
   province: "",
   district: "",

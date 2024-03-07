@@ -35,7 +35,7 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
     // using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
     setPreview(e.target.files[0]);
-    onAvatarUpload(e.target.files[0]);
+    onAvatarUpload(e.target.files[0], "avatar");
     setIsFilePicked(true);
   };
   return (
@@ -54,7 +54,7 @@ function FileUpload({ avatar, onAvatarUpload, readOnly }) {
               src={
                 !preview ||
                 preview === "http://localhost:8080/bookify/images/users/null"
-                  ? "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                  ? "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
                   : preview
               }
               accept="image/*"

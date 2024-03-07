@@ -1,33 +1,33 @@
 const amenities = [
   {
-    id: "01d8e6d4-bd0e-49d4-b21a-660cd2809184",
-    amenityTitle: "Hồ bơi",
-    type: "230198c8-317c-4f60-8a60-78e6ab002963",
+    id: "64724a36c56247dbde3ca5e9",
+    amenityTitle: "Cam trai 5",
+    type: "646da50ffb5bbb622131c3c5",
   },
   {
-    id: "0d9fd954-78d7-49ae-a465-043be9c1d07c",
-    amenityTitle: "Wifi",
-    type: "230198c8-317c-4f60-8a60-78e6ab002963",
+    id: "64724a36c56247dbde3ca5ea",
+    amenityTitle: "BBQ ",
+    type: "646da568801beac8854b56f9",
   },
   {
-    id: "56b783ce-d881-4287-b0e7-0a8f8f6140cf",
-    amenityTitle: "Phòng Gym",
-    type: "30550c0c-0985-43ae-890e-9b8979a6e6c6",
+    id: "6475ca1dcc850fed9ef393da",
+    amenityTitle: "Restaurant",
+    type: "646da568801beac8854b56f9",
   },
   {
-    id: "6ac90bf9-0a08-48c2-a2aa-3092c6f3574f",
-    amenityTitle: "BBQ",
-    type: "b84a89d6-7831-4c72-8a03-8fba95d0d318",
+    id: "649a51ae5c7e584fe505376b",
+    amenityTitle: "Pool",
+    type: "646da568801beac8854b56f9",
   },
   {
     id: "73c67c79-1657-4b03-9b8b-925d4f38d48d",
     amenityTitle: "Lò sưởi",
-    type: "b84a89d6-7831-4c72-8a03-8fba95d0d318",
+    type: "646da50ffb5bbb622131c3c5",
   },
   {
     id: "d26df333-4df2-4e84-94ee-80eaa6bd97a9",
     amenityTitle: "Điều hòa",
-    type: "230198c8-317c-4f60-8a60-78e6ab002963",
+    type: "646da50ffb5bbb622131c3c5",
   },
   {
     id: "fe384dc7-b633-4ed8-a86e-60a2fb4705f0",
@@ -37,7 +37,7 @@ const amenities = [
   {
     id: "99fd19a0-818b-412f-a6e2-fc13f69dff58",
     amenityTitle: "Khu vực ăn tối ngoài trời",
-    type: "b84a89d6-7831-4c72-8a03-8fba95d0d318",
+    type: "646da568801beac8854b56f9",
   },
 ];
 

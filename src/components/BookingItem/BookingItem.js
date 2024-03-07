@@ -4,6 +4,7 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useState, memo } from "react";
 import { acceptBooking } from "@/services/hotel";
 import CircleLoading from "../CircleLoading";
+import { format } from "date-fns";
 
 const getBookingGuestsTitle = (guests) => {
   const bookingGuestsTitle = Object.keys(guests).reduce((prev, key) => {
@@ -24,7 +25,7 @@ const getBookingGuestsTitle = (guests) => {
       }
     }
   }, []);
-  return bookingGuestsTitle.join(", ");
+  return bookingGuestsTitle.join(",");
 };
 
 function BookingItem({ booking, handleBookingAction }) {
@@ -34,12 +35,10 @@ function BookingItem({ booking, handleBookingAction }) {
   const handleAcceptedBooking = async (event) => {
     if (!isLoading) {
       setLoading(true);
-      const data = await fetch(acceptBooking(booking?.bookingId)).then(
-        (data) => data
-      );
-      if (data?.status) {
+      const data = await acceptBooking(booking?._id, "accept");
+      if (data?.message == "Accept booking successfully") {
         setLoading(false);
-        handleBookingAction(booking.bookingId, "accept");
+        handleBookingAction(booking._id, "accept");
       }
     }
   };
@@ -47,24 +46,22 @@ function BookingItem({ booking, handleBookingAction }) {
   const handleRejectedBooking = async (event) => {
     if (!isLoading) {
       setLoading(true);
-      const data = await fetch(acceptBooking(booking?.bookingId)).then(
-        (data) => data
-      );
-      if (data?.status) {
+      const data = await acceptBooking(booking?._id, "disable");
+      if (data?.message == "Accept booking successfully") {
         setLoading(false);
-        handleBookingAction(booking.bookingId, "reject");
+        handleBookingAction(booking._id, "reject");
       }
     }
   };
 
   return (
-    <div className={bookingItemStyles["tab-card"]} key={booking?.bookingId}>
+    <div className={bookingItemStyles["tab-card"]} key={booking?._id}>
       <div className={bookingItemStyles["card-header"]}>
         <b className={bookingItemStyles["color-blue"]}>Hôm nay</b>
         <p>
-          {roomType?.bedType} -{" "}
+          {roomType?.bedType || "Normal"} -{" "}
           {getBookingGuestsTitle({
-            adult: booking?.adult,
+            adult: booking?.aldult,
             child: booking?.child,
             infant: booking?.infant,
             pet: booking?.pet,
@@ -75,7 +72,8 @@ function BookingItem({ booking, handleBookingAction }) {
         <div className={bookingItemStyles["info"]}>
           <p className={bookingItemStyles["user-name"]}>{user?.username}</p>
           <p>
-            <span> {booking.checkin}</span> - <span> {booking.checkout}</span>
+            <span> {format(new Date(booking.checkin), "MM dd,yyyy")}</span> -{" "}
+            <span> {format(new Date(booking.checkout), "MM dd,yyyy")}</span>
           </p>
         </div>
         {booking?.user ? (
@@ -84,7 +82,7 @@ function BookingItem({ booking, handleBookingAction }) {
             src={
               user.avatar
                 ? user.avatar
-                : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
             }
             alt="avatar"
           />
@@ -96,7 +94,7 @@ function BookingItem({ booking, handleBookingAction }) {
         )}
       </div>
       <div className={bookingItemStyles["button-group"]}>
-        {booking.status === 0 ? (
+        {booking.status === false ? (
           <>
             <button
               onClick={handleAcceptedBooking}
@@ -111,7 +109,7 @@ function BookingItem({ booking, handleBookingAction }) {
               {isLoading ? <CircleLoading /> : "Hủy bỏ"}
             </button>
           </>
-        ) : booking.status === 1 ? (
+        ) : booking.status == true ? (
           <button className={bookingItemStyles["accept-button"]}>
             {"Đã chấp nhận"}
           </button>

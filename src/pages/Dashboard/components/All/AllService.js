@@ -120,18 +120,22 @@ export const getIncreasePercent2 = (prevData, curData, month) => {
     return increasePercent;
   }
 
-  // prevData.paymentNumber = 1;
-  // prevData.reviewNumber = 1;
-  // prevData.userRegisNumber = 1;
+  // prevData.numberOfPayment?.total = 1;
+  // prevData.numberOfRating?.total = 1;
+  // prevData.numberOfNewUser?.total = 1;
   // prevData.bookingNumber = 1;
-  // prevData.userRegisNumber = 5;
+  // prevData.numberOfNewUser?.total = 5;
 
-  if (prevData.accessNumber !== 0 && curData.accessNumber !== 0) {
+  if (
+    prevData?.numberOfVisitors?.total !== 0 &&
+    curData?.numberOfVisitors?.total !== 0
+  ) {
     increasePercent.views = parseFloat(
       (
         ((1 -
-          (curData.accessNumber - prevData.accessNumber) /
-            prevData.accessNumber) *
+          (curData?.numberOfVisitors?.total -
+            prevData?.numberOfVisitors?.total) /
+            prevData?.numberOfVisitors?.total) *
           100 *
           100) /
         100
@@ -139,12 +143,15 @@ export const getIncreasePercent2 = (prevData, curData, month) => {
     );
   }
 
-  if (prevData.bookingNumber !== 0 && curData.bookingNumber !== 0) {
+  if (
+    prevData?.numberOfBooking?.total !== 0 &&
+    curData?.numberOfBooking?.total !== 0
+  ) {
     increasePercent.booking = parseFloat(
       (
         ((1 -
-          (curData.bookingNumber - prevData.bookingNumber) /
-            curData.bookingNumber) *
+          (curData?.numberOfBooking?.total - prevData?.numberOfBooking?.total) /
+            curData?.numberOfBooking?.total) *
           100 *
           100) /
         100
@@ -152,12 +159,15 @@ export const getIncreasePercent2 = (prevData, curData, month) => {
     );
   }
 
-  if (prevData.paymentNumber !== 0 && curData.paymentNumber !== 0) {
+  if (
+    prevData?.numberOfPayment?.total !== 0 &&
+    curData?.numberOfPayment?.total !== 0
+  ) {
     increasePercent.checkOut = parseFloat(
       (
         ((1 -
-          (curData.paymentNumber - prevData.paymentNumber) /
-            curData.paymentNumber) *
+          (curData?.numberOfPayment?.total - prevData?.numberOfPayment?.total) /
+            curData?.numberOfPayment?.total) *
           100 *
           100) /
         100
@@ -165,11 +175,14 @@ export const getIncreasePercent2 = (prevData, curData, month) => {
     );
   }
 
-  if (prevData.reviewNumber !== 0 && curData.reviewNumber !== 0) {
+  if (
+    prevData?.numberOfRating?.total !== 0 &&
+    curData?.numberOfRating?.total !== 0
+  ) {
     increasePercent.rating = parseFloat(
       (
-        (((curData.reviewNumber - prevData.reviewNumber) /
-          prevData.reviewNumber) *
+        (((curData?.numberOfRating?.total - prevData?.numberOfRating?.total) /
+          prevData?.numberOfRating?.total) *
           100 *
           100) /
         100
@@ -177,11 +190,14 @@ export const getIncreasePercent2 = (prevData, curData, month) => {
     );
   }
 
-  if (prevData.userRegisNumber !== 0 && curData.userRegisNumber !== 0) {
+  if (
+    prevData?.numberOfNewUser?.total !== 0 &&
+    curData?.numberOfNewUser?.total !== 0
+  ) {
     increasePercent.register = parseFloat(
       (
-        (((curData.userRegisNumber - prevData.userRegisNumber) /
-          prevData.userRegisNumber) *
+        (((curData?.numberOfNewUser?.total - prevData?.numberOfNewUser?.total) /
+          prevData?.numberOfNewUser?.total) *
           100 *
           100) /
         100

@@ -22,6 +22,7 @@ function Details({
   hotelId,
   signAt,
 }) {
+  // console.log(rating);
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {

@@ -10,19 +10,12 @@ import {
   useContext,
 } from "react";
 import { accountValidation } from "@/utils/validation";
-import { useUppercase } from "@/utils/hooks";
+import { useUppercase, useSignUser } from "@/utils/hooks";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SignUp } from "@/services/user";
-import { ModalContext, ToastMessageContext, UserContext } from "@/utils/contexts";
-import {
-  getFailureToastMessage,
-  getSuccessToastMessage,
-} from "@/utils/reducers/toastMessageReducer";
-import { getSignInModal } from "@/utils/reducers/modalReducer";
 
 function SignUpForm() {
-  const { setToastMessages } = useContext(ToastMessageContext);
+  const { SignUpFn } = useSignUser();
   const [registerAccount, setRegisterAccount] = useState({
     username: null,
     email: null,
@@ -35,7 +28,6 @@ function SignUpForm() {
     password: true,
     rePassword: true,
   });
-  const { dispatch } = useContext(ModalContext);
   const [isLoading, setLoading] = useState(false);
   const isInformationFilled = useMemo(() => {
     const isAllFilled = Object.keys(registerAccount).every((key) => {
@@ -57,27 +49,7 @@ function SignUpForm() {
     } else {
       setLoading(true);
       try {
-        await SignUp(
-          registerAccount.username,
-          registerAccount.email,
-          registerAccount.password
-        ).then((data) => {
-          if (data?.error) {
-            console.log("account not found : " + data.error);
-            setToastMessages(
-              getFailureToastMessage({
-                message: data.error,
-              })
-            );
-          } else {
-            setToastMessages(
-              getSuccessToastMessage({
-                message: data.message || "Đăng ký thành công",
-              })
-            );
-            dispatch(getSignInModal({ isOpen: true }));
-          }
-        });
+        SignUpFn(registerAccount);
       } finally {
         setLoading(false);
       }

@@ -11,7 +11,7 @@ function Table({ data, filter, hotels }) {
     <table>
       <thead>
         <th>Tên chủ khách sạn</th>
-        <th>Tên khách sạn</th>
+        <th style={{ marginLeft: "2rem" }}>Tên khách sạn</th>
         <th>Thời gian</th>
         <th>Trạng thái</th>
         <th>Chi tiết</th>
@@ -21,17 +21,17 @@ function Table({ data, filter, hotels }) {
           <tr>
             <td>
               <p>
-                {row.hotelOwner.subname && row.hotelOwner.name
-                  ? row.hotelOwner.subname + " " + row.hotelOwner.name
-                  : row.hotelOwner.username}
+                {row.user.subName && row.user.name
+                  ? row.user.subName + " " + row.user.name
+                  : row.user.username}
               </p>
-              <p>ID:{row.hotelOwner.user_id}</p>
+              <p>ID:{row.user._id}</p>
             </td>
-            <td>
+            <td style={{ marginLeft: "2rem" }}>
               <p>{row.hotelName}</p>
             </td>
             <td>
-              <p>{format(new Date(row.signAt), "MM dd,yyyy")}</p>
+              <p>{format(new Date(row.createdAt), "MM dd,yyyy")}</p>
               <p>Lúc: 12:00</p>
             </td>
             <td>
@@ -46,7 +46,7 @@ function Table({ data, filter, hotels }) {
             <td>
               <button
                 onClick={() => {
-                  navigate(`/hotel/${row.hotelId}`);
+                  navigate(`/hotel/${row._id}`);
                 }}
               >
                 <b>Chi tiết</b>

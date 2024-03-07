@@ -10,20 +10,20 @@ import {
   useContext,
 } from "react";
 import { accountValidation } from "@/utils/validation";
-import { compareCurrentPassword, newPassowrdUpdate } from "@/services/user";
 import { ToastMessageContext, UserContext } from "@/utils/contexts";
 import {
   getFailureToastMessage,
   getSuccessToastMessage,
 } from "@/utils/reducers/toastMessageReducer";
+import { useUser } from "@/utils/hooks";
 
 function NewPasswordForm() {
+  const { updatePass } = useUser();
   const { setToastMessages } = useContext(ToastMessageContext);
   const [newPassword, setNewPassword] = useState({
     password: null,
     rePassword: null,
   });
-  const { user } = useContext(UserContext);
   const [isPasswordValid, setPasswordValid] = useState({
     password: true,
     rePassword: false,
@@ -49,18 +49,18 @@ function NewPasswordForm() {
     );
     if (checkPassword) {
       try {
-        await newPassowrdUpdate(user.user_id, newPassword.password).then(
-          (data) => {
-            if (data?.error) {
-              console.log(data.error);
+        updatePass(newPassword.password, {
+          onSuccess: (data) => {
+            if (!data) {
+              console.log("error code:" + data);
             } else {
               console.log(data);
               setToastMessages(
                 getSuccessToastMessage({ message: "Đổi mật khẩu thành công" })
               );
             }
-          }
-        );
+          },
+        });
       } catch (e) {
         console.log(e);
       }

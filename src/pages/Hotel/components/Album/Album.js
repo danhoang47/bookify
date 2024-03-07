@@ -7,22 +7,31 @@ function Album({ backgroundImage, images, isAllImageOpen, setAllImageOpen }) {
       <div className={albumStyles["initial-hotel-album"]}>
         <div className={albumStyles["left"]}>
           <div className={albumStyles["preview-hotel-image"]}>
-            <img src={backgroundImage} alt="" />
+            <img
+              src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${backgroundImage}`}
+              alt=""
+            />
           </div>
         </div>
         <div className={albumStyles["right"]}>
           <div className={albumStyles["top-right"]}>
             <div className={albumStyles["preview-hotel-image"]}>
-              <img src={images[0]?.src} alt="" />
+              <img
+                src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${images[0]?.imagePath}`}
+                alt=""
+              />
             </div>
           </div>
           <div className={albumStyles["bottom-right"]}>
-            {images?.reduce((prev, { id, src }, index) => {
+            {images?.reduce((prev, { _id, imagePath }, index) => {
               if (index <= 2 && index >= 1) {
                 return [
                   ...prev,
-                  <div key={id} className={albumStyles["preview-hotel-image"]}>
-                    <img src={src} alt="" />
+                  <div key={_id} className={albumStyles["preview-hotel-image"]}>
+                    <img
+                      src={`http://localhost:${process.env.REACT_APP_BACK_END_PORT}${imagePath}`}
+                      alt=""
+                    />
                   </div>,
                 ];
               } else {

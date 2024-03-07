@@ -9,7 +9,7 @@ function Setting({ setting }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setting.handleClick();
+  setting.handleClick();
   };
 
   return (

@@ -45,7 +45,7 @@ function AdvanceFilter({
 
     const reportForm = new FormData();
     reportForm.append("hotelid", hotelInfo.hotelId);
-    reportForm.append("userid", user.user_id);
+    reportForm.append("userid", user._id);
     reportForm.append("content", content);
     reportForm.append("accuracy_point", point.accuracy_point);
     reportForm.append("location_point", point.location_point);
@@ -69,7 +69,7 @@ function AdvanceFilter({
             location_point: point.location_point,
             reviewId: uuid(),
             sourceId: 0,
-            userId: user.user_id,
+            userId: user._id,
             username:
               user.subname && user.name ? user.subname + " " + user.name : null,
             avatar: user.avatar ? user.avatar : null,

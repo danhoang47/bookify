@@ -12,10 +12,11 @@ function Rating({ reviews, rating, hotelId }) {
   return (
     <div>
       <h4 className={RatingStyle["title"]}>
-        {rating} <FontAwesomeIcon icon={faStar} /> - {reviews?.length} đánh giá
+        {rating.valuePoint} <FontAwesomeIcon icon={faStar} /> -{" "}
+        {reviews?.length} đánh giá
       </h4>
       <div className={RatingStyle["Rating"]}>
-        <Point pointsData={pointsData} />
+        <Point pointsData={rating} />
       </div>
       <div className={RatingStyle["comment-container"]}>
         <Comments reviews={reviews} hotelId={hotelId} />

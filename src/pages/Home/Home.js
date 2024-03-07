@@ -22,7 +22,10 @@ import {
   roomAndBedRoomInitialState,
 } from "./advanceFilterInitState";
 import { useClsx } from "@/utils/hooks";
-import { filterHotel, getAdvanceSearchHotels } from "@/services/hotel";
+import { FilterHotel, GetAdvanceSearchHotels } from "@/services-new/hotel";
+
+import ErrorBoundary from "@/utils/error/ErrorBoundary";
+import getAdvancedTab from "@/services-new/hotel/getAdvancedTab";
 
 const HotelCards = lazy(() => import("./components/HotelCards"));
 const AdvanceFilter = lazy(() => import("./components/AdvanceFilter"));
@@ -59,7 +62,7 @@ function Home() {
   const [houseType, setHouseType] = useState(null);
   const [price, setPrice] = useState(priceInitState);
   const [amenitiesPicked, setAmenitiesPicked] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const {
     place,
     selectedDays,
@@ -67,6 +70,19 @@ function Home() {
     isSearchAdvanceMode,
     setSearchAdvanceMode,
   } = useContext(SearchContext);
+  const advanceFilterContextValue = useMemo(
+    () => ({
+      roomAndBedRoom,
+      setRoomAndBedRoom,
+      houseType,
+      setHouseType,
+      price,
+      setPrice,
+      amenitiesPicked,
+      setAmenitiesPicked,
+    }),
+    [roomAndBedRoom, houseType, price, amenitiesPicked]
+  );
 
   const getNumberOfFilterItemPicked = () => {
     const numberOfAmenitiesPicked = amenitiesPicked.length;
@@ -91,9 +107,11 @@ function Home() {
   };
 
   const getAdvanceFilterHotel = () => {
-    filterHotel(roomAndBedRoom, houseType, price, amenitiesPicked).then(
+    // console.log(roomAndBedRoom, houseType, price, amenitiesPicked);
+    FilterHotel(roomAndBedRoom, houseType, price, amenitiesPicked).then(
       (data) => {
-        setHotelsList(data);
+        console.log(data);
+        setHotelsList(data.hotels);
         setAdvanceFilterOpen(false);
         setNumberOfFilterPicked(getNumberOfFilterItemPicked());
       }
@@ -101,28 +119,33 @@ function Home() {
   };
 
   const getHotel = () => {
-    fetch("http://localhost:8080/bookify/api/hotel/all?userid=" + user.user_id)
+    fetch(`http://localhost:${process.env.REACT_APP_BACK_END_PORT}/hotel/`, {
+      method: "GET",
+      credentials: "include",
+      withCredentials: true,
+    })
       .then((res) => res.json())
-      .then((result) => setHotelsList(result));
+      .then((result) => {
+        setHotelsList(result.hotels);
+        setLoading(false);
+      });
   };
 
   const getAdvanceSearchHotel = async () => {
     setLoading(true);
-    await getAdvanceSearchHotels(place, selectedDays, guests).then((data) => {
-      setHotelsList(data);
+    await GetAdvanceSearchHotels(place, selectedDays, guests).then((data) => {
+      setHotelsList(data.hotels);
       setLoading(false);
     });
   };
 
   useEffect(() => {
+    console.log(type);
     if (type.filterType || type.filterTypeId) {
-      fetch(
-        `http://localhost:8080/bookify/api/hotel/filter?type=${type.filterType}&id=${type.filterTypeId}&userid=${user.user_id}`
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setHotelsList(result);
-        });
+      const filterPayload = `${type.filterType}=${type.filterTypeId}`;
+      getAdvancedTab(filterPayload).then((result) => {
+        setHotelsList(result.hotels);
+      });
     } else {
       getHotel();
     }
@@ -137,25 +160,11 @@ function Home() {
     }
   }, [isSearchAdvanceMode]);
 
-  const advanceFilterContextValue = useMemo(
-    () => ({
-      roomAndBedRoom,
-      setRoomAndBedRoom,
-      houseType,
-      setHouseType,
-      price,
-      setPrice,
-      amenitiesPicked,
-      setAmenitiesPicked,
-    }),
-    [roomAndBedRoom, houseType, price, amenitiesPicked]
-  );
-
   useEffect(() => {
     document.title = "Bookify";
   }, []);
 
-  console.log(isSearchAdvanceMode);
+  // console.log(isSearchAdvanceMode);
   return (
     <AdvanceFilterContext.Provider value={advanceFilterContextValue}>
       <div
@@ -214,11 +223,12 @@ function Home() {
           <div className={homeStyles["hotel-cards"]}>
             <Grid container spacing={1.5} overflow={"hidden"}>
               <Suspense fallback={<Loading />}>
-                {" "}
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  <HotelCards hotels={hotelsList} type={type} />
+                  <ErrorBoundary fallback="Error">
+                    <HotelCards hotels={hotelsList} type={type} />
+                  </ErrorBoundary>
                 )}
               </Suspense>
             </Grid>

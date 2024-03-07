@@ -34,12 +34,12 @@ function formatDay(date) {
 }
 
 function Booking({ roomType, isAllowPet = true, hotelId }) {
-  const [isLoading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const { dispatch } = useContext(ModalContext);
   const navigate = useNavigate();
   const { selectDays, setSelectedDays, guests, setGuests } =
     useContext(BookingContext);
+  console.log(selectDays);
   const [isSelectBoxOpen, setSelectBoxOpen] = useState({
     roomTypeBox: false,
     datePickerBox: false,
@@ -82,7 +82,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
     if (!selectDateDiff) {
       return;
     } else {
-      setPrice(roomType.price * selectDateDiff);
+      setPrice(roomType.roomPrice * selectDateDiff);
     }
   }, [selectDateDiff, roomType]);
 
@@ -106,21 +106,33 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
 
   const handleBooking = async () => {
     console.log(isAllInformatioSelected);
-    if (!user.user_id) {
+    if (!user._id) {
       dispatch(getSignInModal({ isOpen: true }));
       return;
     }
     if (isAllInformatioSelected) {
-      const isAvailable = await searchBookingAvailable(
-        selectDays,
-        hotelId
-      ).then((data) => {
-        console.log(data);
-        return data;
-      });
-      if (isAvailable?.check) {
-        navigate("booking");
-      }
+      console.log(selectDays, guests, hotelId, price);
+      navigate("booking");
+      // bookingHotel(
+      //   { selectDays, guests, hotelId, price },
+      //   {
+      //     onSuccess: (data) => {
+      //       if (data) {
+      //       }
+      //       console.log("Something wrong");
+      //     },
+      //   }
+      // );
+      // const isAvailable = await searchBookingAvailable(
+      //   selectDays,
+      //   hotelId
+      // ).then((data) => {
+      //   console.log(data);
+      //   return data;
+      // });
+      // if (isAvailable?.check) {
+      //   navigate("booking");
+      // }
     }
   };
 
@@ -128,7 +140,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
     <div id={bookingStyles["booking"]}>
       <div className={bookingStyles["heading-row"]}>
         <p className={bookingStyles["price"]}>
-          <span>${roomType?.price}</span>/đêm
+          <span>${roomType?.roomPrice}</span>/đêm
         </p>
         <div className={bookingStyles["ticket"]}></div>
       </div>
@@ -257,7 +269,7 @@ function Booking({ roomType, isAllowPet = true, hotelId }) {
           <div className={bookingStyles["provisional"]}>
             <div className={bookingStyles["price-for-all-nights"]}>
               <p className={bookingStyles["price-label"]}>
-                ${roomType.price}
+                ${roomType.roomPrice}
                 <span>x</span>
                 {selectDateDiff} đêm
               </p>

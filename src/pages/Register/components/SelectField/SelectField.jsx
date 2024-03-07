@@ -3,11 +3,11 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { memo, useState, useRef, useEffect, useCallback } from "react";
 import { basicHotelInforValidation } from "@/utils/validation";
 import { types } from "@/utils/validation/basicHotelInforValidation";
-import searchHotelTypes from "@/services/hotel/searchHotelTypes";
 import searchProvinces from "@/services/hotel/searchProvinces";
 import { getHotelRegisterErrorMessage } from "@/utils/validation";
 import { useClsx, useDebounce } from "@/utils/hooks";
 import "./SelectField.scss";
+import { getHotelType } from "@/services-new/hotel";
 
 const getDebouncedFunction = (type) => {
   switch (type) {
@@ -16,7 +16,7 @@ const getDebouncedFunction = (type) => {
     case types.DISTRICT:
       return () => {};
     case types.HOTEL_TYPE:
-      return searchHotelTypes;
+      return getHotelType;
     default:
       return () => {};
   }
@@ -25,18 +25,31 @@ const getDebouncedFunction = (type) => {
 function SelectField({ id, label, value, setValue, setInformationValid }) {
   const [isFocus, setFocused] = useState(false);
   const inputRef = useRef();
+  // console.log(id);
   const [selectionList, setSelectionList] = useState([]);
   const [isSelectionListOpen, setSelectionListOpen] = useState(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearchFunction = useCallback(
     useDebounce((searchTerm) => {
+      console.log(getDebouncedFunction(id));
       const debouncedFunction = getDebouncedFunction(id);
-      debouncedFunction(searchTerm)?.then((data) => setSelectionList(data));
+      if (id === "hotelType") {
+        debouncedFunction(searchTerm)?.then((data) => {
+          // console.log(data?.types);
+          setSelectionList(data?.types);
+        });
+      } else {
+        debouncedFunction(searchTerm)?.then((data) => {
+          // console.log(data);
+          setSelectionList(data);
+        });
+      }
     }, 300),
     []
   );
+  // const isValid = true;
   const isValid = basicHotelInforValidation(id, value, selectionList);
-
+  console.log(selectionList);
   const handleFocus = (e) => {
     e.stopPropagation();
     setFocused(true);
@@ -56,6 +69,7 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
 
   useEffect(() => {
     debouncedSearchFunction(value);
+    console.log(value);
     setInformationValid((prev) => ({
       ...prev,
       [id]: isValid,
@@ -65,15 +79,27 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
 
   return (
     <div className={useClsx("input-field select-field")}>
-      <input
-        id={id}
-        type="text"
-        value={value ?? ""}
-        onChange={(e) => {
-          setValue(e.target.value, id);
-        }}
-        ref={inputRef}
-      />
+      {id === "hotelType" ? (
+        <input
+          id={id}
+          type="text"
+          value={value.hotelType ?? ""}
+          onChange={(e) => {
+            setValue(e.target.value, id);
+          }}
+          ref={inputRef}
+        />
+      ) : (
+        <input
+          id={id}
+          type="text"
+          value={value ?? ""}
+          onChange={(e) => {
+            setValue(e.target.value, id);
+          }}
+          ref={inputRef}
+        />
+      )}
       <label htmlFor={id} className={useClsx("input-label")}>
         {!isValid && isFocus ? getHotelRegisterErrorMessage(id) : label}
       </label>
@@ -96,11 +122,11 @@ function SelectField({ id, label, value, setValue, setInformationValid }) {
             key={value.code}
             onClick={() => {
               setSelectionListOpen(false);
-              setValue(value.name, id);
+              value.name ? setValue(value.name, id) : setValue(value, id);
             }}
             className={"selection-item"}
           >
-            {value.name}
+            {value.name ? value.name : value.hotelType}
           </div>
         ))}
       </div>

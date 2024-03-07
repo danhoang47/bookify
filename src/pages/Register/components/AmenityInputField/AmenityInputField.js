@@ -6,8 +6,7 @@ import { v4 as uuid } from "uuid";
 import { useClsx } from "@/utils/hooks";
 
 const amenityInitState = {
-  id: ``,
-  name: "",
+  amenityName: "",
   icon: "faPencil",
 };
 
@@ -20,38 +19,35 @@ function AmenityInputField({
   const [amenity, setAmenity] = useState({
     ...amenityInitState,
     hotelId: hotelId,
-    amenityTypeId: amenityTypes[0]?.amenityTypeId,
+    amenityTypeId: amenityTypes[0]?._id,
   });
+  // console.log(amenityTypes, amenity);
   const [isTypeListOpen, setTypeListOpen] = useState(false);
 
   const handleAmenityAdded = (e) => {
-    if (amenity.name.length === 0) {
+    if (amenity.amenityName.length === 0) {
       return;
     } else {
       const newAmenity = {
         ...amenity,
-        id: `new-${uuid()}`,
       };
       handleClick((prev) => [...prev, newAmenity]);
       addNewAmenity((prev) => [...prev, newAmenity]);
       setAmenity({
         ...amenityInitState,
         hotelId: hotelId,
-        amenityTypeId: amenityTypes[0].amenityTypeId,
+        amenityTypeId: amenityTypes[0]._id,
       });
     }
-    console.log(amenity);
   };
-
   return (
     <div className={amenityStyle["add-amenity"]}>
       <div className={amenityStyle["amenity-input"]}>
         <div className={amenityStyle["amenity-type-select"]}>
           <p>
             {
-              amenityTypes.find(
-                ({ amenityTypeId }) => amenityTypeId === amenity.amenityTypeId
-              )["amenityTypeName"]
+              amenityTypes.find(({ _id }) => _id === amenity.amenityTypeId)
+                .amenityTypeName
             }
           </p>
           <button onClick={() => setTypeListOpen((prev) => !prev)}>
@@ -63,13 +59,13 @@ function AmenityInputField({
               isTypeListOpen ? amenityStyle["d-block"] : ""
             )}
           >
-            {amenityTypes.map(({ amenityTypeId, amenityTypeName }, index) => (
+            {amenityTypes.map(({ _id, amenityTypeName }, index) => (
               <div
                 key={index}
                 onClick={() => {
                   setAmenity((prev) => ({
                     ...prev,
-                    amenityTypeId: amenityTypeId,
+                    amenityTypeId: _id,
                   }));
                   setTypeListOpen((prev) => !prev);
                 }}
@@ -81,11 +77,11 @@ function AmenityInputField({
           </div>
         </div>
         <input
-          value={amenity.name}
+          value={amenity.amenityName}
           onChange={(e) => {
             setAmenity((prev) => ({
               ...prev,
-              name: e.target.value,
+              amenityName: e.target.value,
             }));
           }}
         />

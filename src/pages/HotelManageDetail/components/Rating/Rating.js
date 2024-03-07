@@ -7,7 +7,11 @@ import { lazy } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const RatingCard = lazy(() => import("./components/RatingCard"));
-
+const options = {
+  method: "GET",
+  credentials: "include",
+  withCredentials: true,
+};
 export const RatingContext = createContext();
 
 function Rating() {
@@ -18,20 +22,21 @@ function Rating() {
   useEffect(() => {
     if (filter === 0) {
       fetch(
-        "http://localhost:8080/bookify/api/hotel/manage/rating?hotelid=" +
-          hotel.hotelId
+        `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/hotels/manage/details/${hotel._id}?type=ratings`,
+        options
       )
         .then((res) => res.json())
         .then((data) => {
-          setComments(data);
+          setComments(data.ratings);
         });
     } else {
       fetch(
-        `http://localhost:8080/bookify/api/hotel/manage/rating/point?hotelid=${hotel.hotelId}&point=${filter}`
+        `http://localhost:${process.env.REACT_APP_BACK_END_PORT}/dashboard/hotels/manage/details/${hotel._id}?type=ratings&point=${filter}`,
+        options
       )
         .then((res) => res.json())
         .then((data) => {
-          setComments(data);
+          setComments(data.ratings);
         });
     }
   }, [filter]);

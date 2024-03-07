@@ -18,9 +18,9 @@ function Filter({ data, rating }) {
               <div className={RatingCartStyle["avatar-wrapper"]}>
                 <img
                   src={
-                    item.avatar
-                      ? item.avatar
-                      : "http://localhost:8080/bookify/images/users/blankUser.jpg"
+                    item.user.avatar
+                      ? `http://localhost:${process.env.REACT_APP_BACK_END_PORT}${item.user.avatar}`
+                      : "https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
                   }
                   alt="avatar"
                   height={30}
@@ -30,13 +30,13 @@ function Filter({ data, rating }) {
             </div>
             <div className={RatingCartStyle["card-body"]}>
               <div className={RatingCartStyle["card-title"]}>
-                <h4>{item.username ? item.username : item.usernameAcount}</h4> -
+                <h4>{item.user.subName ? item.user.subName : item.name}</h4> -
                 <span>
                   {Math.floor(
-                    (item.accuracy_point +
-                      item.communication_point +
-                      item.location_point +
-                      item.value_point) /
+                    (item.accuracyPoint +
+                      item.communicationPoint +
+                      item.locationPoint +
+                      item.valuePoint) /
                       4
                   )}
                   {"  "}
@@ -47,9 +47,7 @@ function Filter({ data, rating }) {
                 <p>{item.content}</p>
               </div>
               <div className={RatingCartStyle["card-time"]}>
-                <p>
-                  {item.minute} {format(new Date(item.createdAt), "dd/MM/yyyy")}
-                </p>
+                <p>{format(new Date(item.createdAt), "dd/MM/yyyy")}</p>
               </div>
             </div>
           </div>

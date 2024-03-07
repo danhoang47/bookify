@@ -17,7 +17,7 @@ export default async function registerHotel(
 
   console.log(userId);
 
-  amenities.forEach((item) => {
+  amenities.forEach ((item) => {
     amenitiesId.push(item.id);
     amenitiesNames.push(item.name);
     if (item.type) {

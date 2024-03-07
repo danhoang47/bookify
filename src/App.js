@@ -1,5 +1,12 @@
 import "./_global.scss";
-import { useEffect, useMemo, useReducer, useState, useRef } from "react";
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import {
   ModalContext,
   UserContext,
@@ -10,33 +17,30 @@ import {
 import { modalReducer, toastMessageReducer } from "./utils/reducers";
 import { Modal, ToastMessage, ToastMessageBox } from "./components";
 import { Container } from "@mui/material";
+import VerifyAuth from "./utils/hooks/verifyAuth";
 
 const appInitState = {
   isOpen: false,
   isOverlay: false,
 };
+const sessionUser = {};
 
-const userInitState = {
-  account_number: "",
-  avatar: "",
-  dob: "",
-  email: "",
-  name: "",
-  phone: "",
-  role: 0,
-  self_description: "",
-  subname: "",
-  user_id: null,
-  username: "",
-  bank_card: "",
-};
-
-const websocketEndPoint = "ws://localhost:8080/bookify/notification";
+const websocketEndPoint = `ws://localhost:${process.env.REACT_APP_BACK_END_PORT}/notification`;
 
 function App({ children }) {
+  const { verifyData, firstLogin, userLocal } = VerifyAuth();
   const [modalState, dispatch] = useReducer(modalReducer, appInitState);
-  const [user, setUser] = useState(userInitState);
-  const [isLogin, setLogin] = useState(true);
+  const [user, setUser] = useState(userLocal);
+  const [isLogin, setLogin] = useState(firstLogin);
+  const updateData = useCallback(() => {
+    setLogin(firstLogin);
+    setUser(userLocal);
+  }, [firstLogin, userLocal]);
+  useEffect(() => {
+    // console.log(user);
+    // console.log(isLogin);
+    updateData();
+  }, [firstLogin, userLocal]);
   const [currentCoordinates, setCurrentCoordinates] = useState();
   const [toastMessages, setToastMessages] = useReducer(toastMessageReducer, []);
   const websocket = useRef();
@@ -55,7 +59,7 @@ function App({ children }) {
       isLogin,
       setLogin,
     }),
-    [isLogin, user]
+    [isLogin, user, firstLogin, userLocal]
   );
 
   const toastMessageContextValue = useMemo(
@@ -79,27 +83,7 @@ function App({ children }) {
   }, []);
 
   useEffect(() => {
-    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-    const userForm = new FormData();
-    userForm.append("jwt", jwtString);
-    if (jwtString) {
-      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
-        method: "POST",
-        body: userForm,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setLogin(true);
-          setUser(data);
-        })
-        .catch((err) => {
-          setLogin(false);
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    websocket.current = new WebSocket(`${websocketEndPoint}/${user.user_id}`);
+    websocket.current = new WebSocket(`${websocketEndPoint}/${user?._id}`);
   }, [user]);
 
   return (

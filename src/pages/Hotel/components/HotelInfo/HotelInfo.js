@@ -6,10 +6,10 @@ import { reviewDataContext } from "../../Hotel";
 
 function HotelInfo({ hotelInfo }) {
   const {
-    hotelId,
+    _id: hotelId,
     description,
     hotelAmenities,
-    hotelOwner,
+    user,
     hotelName,
     rating,
     reviews,
@@ -17,8 +17,10 @@ function HotelInfo({ hotelInfo }) {
     isBookmarked,
     signAt,
     isVerified,
+    Rooms,
   } = hotelInfo;
-  console.log(isVerified);
+  // console.log(isVerified);
+  // console.log(user);
   return (
     <div>
       <div className={HotelInfoStyle["header"]}>
@@ -28,6 +30,7 @@ function HotelInfo({ hotelInfo }) {
           hotelName={hotelName}
           rating={rating}
           isBookmarked={isBookmarked}
+          Rooms={Rooms}
           hotelId={hotelId}
           isVerified={isVerified}
         />
@@ -37,7 +40,7 @@ function HotelInfo({ hotelInfo }) {
           reviews={reviews}
           description={description}
           hotelAmenities={hotelAmenities}
-          hotelOwner={hotelOwner}
+          hotelOwner={user}
           roomType={roomType}
           rating={rating}
           hotelId={hotelId}

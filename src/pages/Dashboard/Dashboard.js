@@ -118,50 +118,65 @@ function Dashboard() {
   };
 
   const navigate = useNavigate();
-
   useEffect(() => {
-    const jwtString = JSON.stringify(localStorage.getItem("jwt"));
-    const userForm = new FormData();
-    userForm.append("jwt", jwtString);
-    if (jwtString) {
-      fetch("http://localhost:8080/bookify/api/user/verifyjwt", {
-        method: "POST",
-        body: userForm,
+    fetch("http://localhost:3001/user/verifyjwt", {
+      credentials: "include",
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLogin(true);
+        // setUser(data);
+        console.log(data);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.role === 3) {
-            setLogin(true);
-            setUser(data);
-          } else {
-            navigate("/");
-            setToastMessages(
-              getFailureToastMessage({
-                message: "Bạn không đủ quyền hạn",
-              })
-            );
-          }
-        })
-        .catch((err) => {
-          setUser({ role: 0 });
-          navigate("/");
-          setToastMessages(
-            getFailureToastMessage({
-              message: "Đăng nhập để truy cập",
-            })
-          );
-        });
-    } else {
-      navigate("/");
-      setUser({ role: 0 });
-      setToastMessages(
-        getFailureToastMessage({
-          message: "Đăng nhập để truy cập",
-        })
-      );
-    }
+      .catch((err) => {
+        setLogin(false);
+      });
   }, []);
+
+  // useEffect(() => {
+  //   const jwtString = JSON.stringify(localStorage.getItem("jwt"));
+
+  //   userForm.append("jwt", jwtString);
+  //   if (jwtString) {
+  //     fetch("http://localhost:3001/user/verifyjwt", {
+  //       method: "POST",
+  //       body: userForm,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         if (data.role === 3) {
+  //           setLogin(true);
+  //           setUser(data);
+  //         } else {
+  //           navigate("/");
+  //           setToastMessages(
+  //             getFailureToastMessage({
+  //               message: "Bạn không đủ quyền hạn",
+  //             })
+  //           );
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         setUser({ role: 0 });
+  //         navigate("/");
+  //         setToastMessages(
+  //           getFailureToastMessage({
+  //             message: "Đăng nhập để truy cập",
+  //           })
+  //         );
+  //       });
+  //   } else {
+  //     navigate("/");
+  //     setUser({ role: 0 });
+  //     setToastMessages(
+  //       getFailureToastMessage({
+  //         message: "Đăng nhập để truy cập",
+  //       })
+  //     );
+  //   }
+  // }, []);
 
   return (
     <HotelContext.Provider value={hotelData}>
